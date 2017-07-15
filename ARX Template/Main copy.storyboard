@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Yq9-Ea-qxA">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Game View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="SceneKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <sceneKitView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </sceneKitView>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--Character Animation Picker View Controller-->
+        <scene sceneID="8qw-ak-DNi">
+            <objects>
+                <viewController id="Yq9-Ea-qxA" customClass="CharacterAnimationPickerViewController" customModule="SceneKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QZK-eH-ub3"/>
+                        <viewControllerLayoutGuide type="bottom" id="sNv-ud-gKS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dJG-Up-YaK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ecv-RW-1vq">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="333.5"/>
+                            </sceneKitView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="VWz-MU-Wqs">
+                                <rect key="frame" x="35" y="300" width="304" height="31"/>
+                                <connections>
+                                    <action selector="onSliderTouchUpInside:" destination="Yq9-Ea-qxA" eventType="touchUpInside" id="gvK-Oc-s8F"/>
+                                    <action selector="onSliderTouchUpOutside:" destination="Yq9-Ea-qxA" eventType="touchUpOutside" id="BrB-j2-9xa"/>
+                                </connections>
+                            </slider>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bPy-Ra-Uet">
+                                <rect key="frame" x="0.0" y="333.5" width="375" height="333.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AnimationCell" id="0GS-eV-eyu">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0GS-eV-eyu" id="LG3-pN-o7G">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ecv-RW-1vq" firstAttribute="top" secondItem="QZK-eH-ub3" secondAttribute="bottom" constant="-20" id="3Gi-hs-qKa"/>
+                            <constraint firstItem="bPy-Ra-Uet" firstAttribute="leading" secondItem="dJG-Up-YaK" secondAttribute="leadingMargin" constant="-16" id="Ivq-Cd-ksp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ecv-RW-1vq" secondAttribute="trailing" constant="-16" id="Izt-qw-QAF"/>
+                            <constraint firstItem="ecv-RW-1vq" firstAttribute="leading" secondItem="dJG-Up-YaK" secondAttribute="leadingMargin" constant="-16" id="Mci-2k-EzE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bPy-Ra-Uet" secondAttribute="trailing" constant="-16" id="Tyz-EM-EqR"/>
+                            <constraint firstItem="VWz-MU-Wqs" firstAttribute="width" secondItem="dJG-Up-YaK" secondAttribute="width" multiplier="0.8" id="WxX-Dy-7VE"/>
+                            <constraint firstItem="VWz-MU-Wqs" firstAttribute="centerX" secondItem="dJG-Up-YaK" secondAttribute="centerX" id="agV-E4-Zab"/>
+                            <constraint firstItem="bPy-Ra-Uet" firstAttribute="top" secondItem="ecv-RW-1vq" secondAttribute="bottom" id="lkb-f6-6e4"/>
+                            <constraint firstItem="sNv-ud-gKS" firstAttribute="top" secondItem="bPy-Ra-Uet" secondAttribute="bottom" id="pQf-Dc-dh6"/>
+                            <constraint firstItem="VWz-MU-Wqs" firstAttribute="top" secondItem="ecv-RW-1vq" secondAttribute="bottom" constant="-33.5" id="r1l-IF-Uf7"/>
+                            <constraint firstItem="ecv-RW-1vq" firstAttribute="height" secondItem="dJG-Up-YaK" secondAttribute="height" multiplier="0.5" id="rhu-oS-qQI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="ecv-RW-1vq" id="ves-dg-3Za"/>
+                        <outlet property="sliderView" destination="VWz-MU-Wqs" id="3zi-qE-npE"/>
+                        <outlet property="tableView" destination="bPy-Ra-Uet" id="NF2-HF-cCv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iQX-Vr-qpH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="94" y="726"/>
+        </scene>
+    </scenes>
+</document>

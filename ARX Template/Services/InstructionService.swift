@@ -1,0 +1,70 @@
+//
+//  InstructionService.swift
+//  ARX Template
+//
+//  Created by Daniel Ho on 6/25/17.
+//  Copyright © 2017 Daniel Ho. All rights reserved.
+//
+
+import Foundation
+
+protocol InstructionServiceDelegate {
+    func didUpdateInstruction(instruction: AnimationInstructionData)
+}
+
+class InstructionService: NSObject {
+    internal var instructionDataArray: [AnimationInstructionData] = []
+    internal var startTime = Date()
+    internal var pauseTime = Date()
+    internal var currentSpeed: Double = 1
+    var delegate: InstructionServiceDelegate!
+    
+    init(delegate: InstructionServiceDelegate) {
+        self.delegate = delegate
+        super.init()
+    }
+    
+    init(instructionDataArray: [AnimationInstructionData], delegate: InstructionServiceDelegate) {
+        self.instructionDataArray = instructionDataArray
+        self.delegate = delegate
+        super.init()
+    }
+    
+    func updateInstructions(instructionDataArray: [AnimationInstructionData]) {
+        self.instructionDataArray = instructionDataArray
+    }
+    
+    func start(speed: Double = 1, timeOffset: TimeInterval = 0) {
+        // todo: add those ^^
+        startTime = Date()
+        currentSpeed = speed
+        for instruction in instructionDataArray {
+            self.perform(#selector(fireInstruction(instruction:)), with: instruction, afterDelay: (instruction.timestamp / 1000) / currentSpeed)
+        }
+    }
+    
+    func stop() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+    }
+    
+    func pause() {
+        pauseTime = Date()
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+    }
+    
+    func resume() {
+        let offset = pauseTime.timeIntervalSince(startTime) * currentSpeed
+        for instruction in instructionDataArray {
+            let delay = (instruction.timestamp - offset) / currentSpeed
+            if (delay > 0) {
+                self.perform(#selector(fireInstruction(instruction:)), with: instruction, afterDelay: delay)
+            }
+        }
+    }
+    
+    @objc func fireInstruction(instruction: Any) {
+        if let instruction = instruction as? AnimationInstructionData {
+            delegate.didUpdateInstruction(instruction: instruction)
+        }
+    }
+}

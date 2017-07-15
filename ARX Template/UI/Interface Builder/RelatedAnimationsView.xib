@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RelatedAnimationsView" customModule="ARX_Template" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bif-9E-wto">
+                    <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="NiQ-LZ-IxT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="light"/>
+                </visualEffectView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DK2-qi-1lb">
+                    <rect key="frame" x="37" y="166.5" width="300" height="333.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lesson Complete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClC-Bu-BNH">
+                            <rect key="frame" x="83.5" y="26" width="133" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyQ-OX-9sY">
+                            <rect key="frame" x="127" y="68" width="46" height="30"/>
+                            <state key="normal" title="Replay">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="onReplayTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="no5-Hc-15L"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGG-qz-NPQ">
+                            <rect key="frame" x="130" y="104.5" width="40" height="30"/>
+                            <state key="normal" title="Share">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="onShareTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="FZN-Nh-4SI"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Related Techniques" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dS-Cm-46L">
+                            <rect key="frame" x="15" y="156.5" width="270" height="21"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="anz-Cj-Lag">
+                            <rect key="frame" x="0.0" y="197.5" width="300" height="136"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </tableView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCO-ai-zzt">
+                            <rect key="frame" x="250" y="8" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fk2-aM-G6a">
+                            <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="onDismissTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="kOL-hc-dDu"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="8dS-Cm-46L" firstAttribute="centerY" secondItem="DK2-qi-1lb" secondAttribute="centerY" id="3yU-PY-MLL"/>
+                        <constraint firstAttribute="bottom" secondItem="anz-Cj-Lag" secondAttribute="bottom" id="7ZD-r8-AvH"/>
+                        <constraint firstAttribute="trailing" secondItem="8dS-Cm-46L" secondAttribute="trailing" constant="15" id="88I-Bz-fSS"/>
+                        <constraint firstItem="WGG-qz-NPQ" firstAttribute="top" secondItem="gyQ-OX-9sY" secondAttribute="bottom" constant="6.5" id="8ik-b1-Zai"/>
+                        <constraint firstItem="TCO-ai-zzt" firstAttribute="top" secondItem="DK2-qi-1lb" secondAttribute="top" constant="8" id="9rp-8s-a2b"/>
+                        <constraint firstItem="Fk2-aM-G6a" firstAttribute="top" secondItem="DK2-qi-1lb" secondAttribute="top" id="GRr-XV-9O0"/>
+                        <constraint firstItem="ClC-Bu-BNH" firstAttribute="top" secondItem="DK2-qi-1lb" secondAttribute="top" constant="26" id="HYo-xJ-Uvu"/>
+                        <constraint firstItem="WGG-qz-NPQ" firstAttribute="centerX" secondItem="DK2-qi-1lb" secondAttribute="centerX" id="HZH-Co-JUV"/>
+                        <constraint firstItem="anz-Cj-Lag" firstAttribute="top" secondItem="8dS-Cm-46L" secondAttribute="bottom" constant="20" id="KFn-KQ-seg"/>
+                        <constraint firstItem="gyQ-OX-9sY" firstAttribute="top" secondItem="ClC-Bu-BNH" secondAttribute="bottom" constant="21" id="RGj-ol-abq"/>
+                        <constraint firstItem="anz-Cj-Lag" firstAttribute="leading" secondItem="DK2-qi-1lb" secondAttribute="leading" id="V5F-vC-xwf"/>
+                        <constraint firstItem="8dS-Cm-46L" firstAttribute="leading" secondItem="DK2-qi-1lb" secondAttribute="leading" constant="15" id="XXr-mg-mGy"/>
+                        <constraint firstItem="Fk2-aM-G6a" firstAttribute="leading" secondItem="DK2-qi-1lb" secondAttribute="leading" id="jyx-KK-e59"/>
+                        <constraint firstItem="ClC-Bu-BNH" firstAttribute="centerX" secondItem="DK2-qi-1lb" secondAttribute="centerX" id="q0L-g0-Thj"/>
+                        <constraint firstItem="gyQ-OX-9sY" firstAttribute="centerX" secondItem="DK2-qi-1lb" secondAttribute="centerX" id="raN-6H-Eq3"/>
+                        <constraint firstAttribute="trailing" secondItem="anz-Cj-Lag" secondAttribute="trailing" id="tIC-zs-TCj"/>
+                        <constraint firstAttribute="trailing" secondItem="TCO-ai-zzt" secondAttribute="trailing" constant="8" id="wS8-IT-uBI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="DK2-qi-1lb" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="979-ln-so9"/>
+                <constraint firstItem="bif-9E-wto" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Lw3-aU-9lu"/>
+                <constraint firstItem="bif-9E-wto" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="UHU-CH-cSn"/>
+                <constraint firstItem="DK2-qi-1lb" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="eI5-tU-GRg"/>
+                <constraint firstItem="DK2-qi-1lb" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.8" id="nBV-6n-Y92"/>
+                <constraint firstItem="DK2-qi-1lb" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.5" id="q0X-jJ-Si6"/>
+                <constraint firstItem="bif-9E-wto" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="usa-iy-eMa"/>
+                <constraint firstItem="bif-9E-wto" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="z4r-Jp-74s"/>
+            </constraints>
+            <connections>
+                <outlet property="alertContainerView" destination="DK2-qi-1lb" id="PWT-7g-fJp"/>
+                <outlet property="dismissButton" destination="Fk2-aM-G6a" id="6Xq-jL-DQt"/>
+                <outlet property="lessonCompleteLabel" destination="ClC-Bu-BNH" id="jcl-ty-NVx"/>
+                <outlet property="playCountLabel" destination="TCO-ai-zzt" id="KvT-0h-NmA"/>
+                <outlet property="replayButton" destination="gyQ-OX-9sY" id="8vl-hU-GnI"/>
+                <outlet property="shareButton" destination="WGG-qz-NPQ" id="O39-Gh-50r"/>
+                <outlet property="tableView" destination="anz-Cj-Lag" id="5bk-fa-yTd"/>
+                <outlet property="titleLabel" destination="8dS-Cm-46L" id="QRy-gA-JWL"/>
+                <outlet property="visualEffectView" destination="bif-9E-wto" id="28J-FR-UDW"/>
+            </connections>
+            <point key="canvasLocation" x="124.5" y="53.5"/>
+        </view>
+    </objects>
+</document>
