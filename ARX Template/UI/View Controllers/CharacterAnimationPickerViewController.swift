@@ -52,14 +52,15 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         
         DispatchQueue.global().async {
             // retrieve the SCNView
-            self.sceneView.scene = SCNScene(named: "Models.scnassets/jiujitsu/JiujitsuModel.dae")!
-            let target = self.sceneView.scene!.rootNode.childNode(withName: "Armtr", recursively: true)
-//            let test = ColladaRig(modelNamed: "Armtr", daeNamed: "Models.scnassets/nakedman/NakedMaleWithTextures")
+            // hack to test animation
+//            self.sceneView.scene = SCNScene(named: "Models.scnassets/jiujitsu/JiujitsuModel.dae")!
+//            let target = self.sceneView.scene!.rootNode.childNode(withName: "Armtr", recursively: true)
 
-//            let male = Instructor()
-//            male.loadModel()
-//            self.model = male
-//            let target = male.armatureNode()
+            self.sceneView.scene = SCNScene()
+            let male = Instructor()
+            male.loadModel()
+            self.model = male
+            let target = male.armatureNode()
 
             // create a new scene using the Collada file imported fom Blender
             
@@ -69,7 +70,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
             
             // place the camera
             cameraNode.position = SCNVector3(x: 0, y: 1, z: 2)
-            let constraint = SCNLookAtConstraint(target: target?.childNode(withName: "Hips", recursively: true))
+            let constraint = SCNLookAtConstraint(target: target?.childNode(withName: "Pelvis", recursively: true))
             cameraNode.constraints = [constraint]
             
             // create and add a light to the scene
@@ -84,7 +85,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
             ambientLightNode.light!.type = .ambient
             ambientLightNode.light!.color = UIColor.darkGray
             DispatchQueue.main.async {
-//                self.sceneView.scene?.rootNode.addChildNode(male)
+                self.sceneView.scene?.rootNode.addChildNode(male)
                 self.sceneView.scene?.rootNode.addChildNode(cameraNode)
                 self.sceneView.scene?.rootNode.addChildNode(lightNode)
                 self.sceneView.scene?.rootNode.addChildNode(ambientLightNode)
@@ -166,16 +167,16 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
 extension CharacterAnimationPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        var animation: CAAnimation?
-        if let scene = SCNScene(named: "Models.scnassets/jiujitsu/Perception.dae") {
-            scene.rootNode.enumerateChildNodes({ (child, stop) in
-                if child.animationKeys.count > 0 {
-                    animation = child.animation(forKey: child.animationKeys.first!)
-                    stop.initialize(to: true)
-                }
-            })
-        }
-        
+         // trying to debug what is happening with keyframes not loading on simulator
+//        var animation: CAAnimation?
+//        if let scene = SCNScene(named: "Models.scnassets/jiujitsu/Perception.dae") {
+//            scene.rootNode.enumerateChildNodes({ (child, stop) in
+//                if child.animationKeys.count > 0 {
+//                    animation = child.animation(forKey: child.animationKeys.first!)
+//                    stop.initialize(to: true)
+//                }
+//            })
+//        }
 //        if let animationGroup = animation as? CAAnimationGroup, let animations = animationGroup.animations {
 //            for subanimation in animations {
 //                if let keyframeAnimation = subanimation as? CAKeyframeAnimation {
@@ -191,16 +192,12 @@ extension CharacterAnimationPickerViewController: UITableViewDelegate {
 //                }
 //            }
 //        }
-        
-        let armtr = sceneView.scene!.rootNode.childNode(withName: "Armtr", recursively: true)
-        armtr?.addAnimation(animation!, forKey: "messi")
-        print(armtr)
-        
-        
-        
-        
-        
-        return
+
+        // this works on device
+//        let armtr = sceneView.scene!.rootNode.childNode(withName: "Armtr", recursively: true)
+//        armtr?.addAnimation(animation!, forKey: "messi")
+//        print(armtr)
+//        return
         
         
         

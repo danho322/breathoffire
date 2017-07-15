@@ -40,18 +40,19 @@ class Uke: VirtualObject {
     }
     
     override func loadCurrentAnimationIndex() {
+        var shouldHide = true
         if currentAnimationIndex < animationSequence.count {
             let currentAnimation = animationSequence[currentAnimationIndex]
-            if let animationName = currentAnimation.ukeAnimation, let animationData = DataLoader.sharedInstance.characterAnimation(name: animationName) {
+            if let animationName = currentAnimation.ukeAnimation, let animationData = DataLoader.sharedInstance.characterAnimation(name: animationName), animationName.characters.count > 0 {
                 loadAnimationData(animationData: animationData, speed: currentAnimation.speed, repeatCount: currentAnimation.repeatCount)
-                isHidden = false
-            } else {
-                isHidden = true
+                shouldHide = false
             }
+            
         }
+        isHidden = shouldHide
     }
     
-    func armatureNode() -> SCNNode? {
+    override func armatureNode() -> SCNNode? {
         return childNode(withName: armatureName, recursively: true)
     }
 }

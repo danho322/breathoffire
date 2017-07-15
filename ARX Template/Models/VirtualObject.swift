@@ -112,10 +112,7 @@ class VirtualObject: SCNNode {
     internal func loadAnimationData(animationData: CharacterAnimationData, speed: Double, repeatCount: Float) {
         refreshInstructionService(animationData: animationData, speed: speed)
         let speedToUse = Float(max(0.01, speed))
-        //removeAllAnimations()
-        
-        
-        
+        removeAllAnimations()
         
         if let animation = CAAnimation.animationWithSceneNamed(animationData.fileName) {
             var animationsToSave: [CAAnimation] = []
@@ -140,34 +137,25 @@ class VirtualObject: SCNNode {
         }
     }
     
+    func armatureNode() -> SCNNode? {
+        return self
+    }
+    
     func loadAnimation(_ animation: CAAnimation, key: String) {
-        
-        if let animationGroup = animation as? CAAnimationGroup, let animations = animationGroup.animations {
-            for subanimation in animations {
-                if let keyframeAnimation = subanimation as? CAKeyframeAnimation {
-                    print(keyframeAnimation.keyPath)
-                    if let nodePath = keyframeAnimation.keyPath?.replacingOccurrences(of: "/", with: "") {
-                        let nodeName = nodePath.replacingOccurrences(of: ".transform", with: "")
-                        if let node = childNode(withName: nodeName, recursively: true) {
-                            keyframeAnimation.keyPath = "transform"
-                            print(keyframeAnimation.values)
-                            node.addAnimation(keyframeAnimation, forKey: "\(nodeName)Animation")
-                        }
-                    }
-                }
-            }
-        }
-        
-        
-        addAnimation(animation, forKey: key)
+        armatureNode()?.addAnimation(animation, forKey: key)
     }
     
     func updateAnimationSpeed(speed: Double) {
         currentSpeed = max(0.01, speed)
-        for key in animationKeys {
-            if let player = animationPlayer(forKey: key) {
-                player.speed = CGFloat(speed)
+        if let armtrNode = armatureNode() {
+            print("keys: \(armtrNode.animationKeys)")
+            for key in armtrNode.animationKeys {
+                // this is beta so is subject to change: https://developer.apple.com/documentation/scenekit/scnanimatable/2866031-addanimationplayer?changes=latest_major
+                if let player = animationPlayer(forKey: key) {
+                    player.speed = CGFloat(speed)
+                }
             }
+
         }
     }
     

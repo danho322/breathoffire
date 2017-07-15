@@ -86,7 +86,7 @@ extension CAAnimation {
 //            }
 //        }
         
-        scene = SCNScene(named: "art.scnassets/MessiIdle.dae")
+        scene = SCNScene(named: name)
         // this is the way we were doing it before
         if scene == nil {   // Try documents directory
             let docURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)

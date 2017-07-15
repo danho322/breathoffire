@@ -17,7 +17,7 @@ class Instructor: VirtualObject {
     override init() {
         super.init()
         self.name = "Virtual object root node"
-        self.modelName = "Messi"
+        self.modelName = "JiujitsuModel"
         self.fileExtension = "dae"
         self.thumbImage = UIImage(named: "cup")
         self.title = "Jiujitsu"
@@ -31,7 +31,7 @@ class Instructor: VirtualObject {
     override func loadModel() {
         // also maybe try as a scenesource
         
-        guard let virtualObjectScene = SCNScene(named: "\(modelName).\(fileExtension)", inDirectory: "art.scnassets") else {
+        guard let virtualObjectScene = SCNScene(named: "\(modelName).\(fileExtension)", inDirectory: "Models.scnassets/jiujitsu") else {
             return
         }
         
@@ -44,39 +44,16 @@ class Instructor: VirtualObject {
 ////            child.geometry?.firstMaterial?.lightingModel = .physicallyBased
 //            child.movabilityHint = .movable
 //        }
-
-        
-//        for node in virtualObjectScene.rootNode.childNodes {
-//            addChildNode(node)
-//        }
-        // original
-        let wrapperNode = SCNNode()
-        
-        for child in virtualObjectScene.rootNode.childNodes {
-            child.geometry?.firstMaterial?.lightingModel = .physicallyBased
-            child.movabilityHint = .movable
-            wrapperNode.addChildNode(child)
+    
+        for node in virtualObjectScene.rootNode.childNodes {
+            addChildNode(node)
         }
-        self.addChildNode(wrapperNode)
+//        scene = virtualObjectScene
         
         modelLoaded = true
     }
     
-    func armatureNode() -> SCNNode? {
+    override func armatureNode() -> SCNNode? {
         return childNode(withName: armatureName, recursively: true)
-    }
-    
-    override func loadAnimation(_ animation: CAAnimation, key: String) {
-//        enumerateChildNodes({ node, stop in
-//            print("self childnode: \(node)")
-//        })
-//
-//        scene?.rootNode.enumerateChildNodes({ node, stop in
-//            print("scene childnode: \(node)")
-//        })
-        
-//        childNode(withName: "Root", recursively: true)?.addAnimation(animation, forKey: key)
-        let armtr = armatureNode()
-        armtr?.addAnimation(animation, forKey: key)
     }
 }
