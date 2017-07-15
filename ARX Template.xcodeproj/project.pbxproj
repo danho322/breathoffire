@@ -108,6 +108,7 @@
 		D43D4BA41F048282002F369F /* TextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextManager.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/TextManager.swift; sourceTree = "<group>"; };
 		D43D4BA51F048282002F369F /* VirtualObjectSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VirtualObjectSelectionViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/VirtualObjectSelectionViewController.swift; sourceTree = "<group>"; };
 		D44B24E31F182E7E00459032 /* VirtualObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObject.swift; sourceTree = "<group>"; };
+		D44B737C1F1A661E00115C64 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		D44EE60E1EFCDFA0003A1A3E /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		D44EE6101EFD388F003A1A3E /* TechniqueSceneKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueSceneKitViewController.swift; sourceTree = "<group>"; };
 		D45352BA1EFDDC5100C09259 /* CharacterHUDView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterHUDView.xib; sourceTree = "<group>"; };
@@ -306,6 +307,7 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D44B737C1F1A661E00115C64 /* SceneKit.framework */,
 				D46F91741F0F0224003B7F8A /* MediaPlayer.framework */,
 				D46F91721F0F0167003B7F8A /* libicucore.tbd */,
 				D46F91701F0F012D003B7F8A /* CoreMotion.framework */,

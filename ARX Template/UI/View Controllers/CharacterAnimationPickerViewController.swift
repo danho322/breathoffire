@@ -52,7 +52,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         
         DispatchQueue.global().async {
             // retrieve the SCNView
-            self.sceneView.scene = SCNScene(named: "art.scnassets/Messi.dae")!
+            self.sceneView.scene = SCNScene(named: "Models.scnassets/jiujitsu/JiujitsuModel.dae")!
             let target = self.sceneView.scene!.rootNode.childNode(withName: "Armtr", recursively: true)
 //            let test = ColladaRig(modelNamed: "Armtr", daeNamed: "Models.scnassets/nakedman/NakedMaleWithTextures")
 
@@ -68,7 +68,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
             cameraNode.camera = SCNCamera()
             
             // place the camera
-            cameraNode.position = SCNVector3(x: 0, y: 4, z: 15)
+            cameraNode.position = SCNVector3(x: 0, y: 1, z: 2)
             let constraint = SCNLookAtConstraint(target: target?.childNode(withName: "Hips", recursively: true))
             cameraNode.constraints = [constraint]
             
@@ -167,34 +167,33 @@ extension CharacterAnimationPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         var animation: CAAnimation?
-        if let scene = SCNScene(named: "art.scnassets/MessiIdle.dae") {
+        if let scene = SCNScene(named: "Models.scnassets/jiujitsu/Perception.dae") {
             scene.rootNode.enumerateChildNodes({ (child, stop) in
                 if child.animationKeys.count > 0 {
-//                    let player = child.animationPlayer(forKey: child.animationKeys.first!)
-//                    animation = player?.animation
                     animation = child.animation(forKey: child.animationKeys.first!)
                     stop.initialize(to: true)
                 }
             })
         }
         
-        if let animationGroup = animation as? CAAnimationGroup, let animations = animationGroup.animations {
-            for subanimation in animations {
-                if let keyframeAnimation = subanimation as? CAKeyframeAnimation {
-                    print(keyframeAnimation.keyPath)
-                    if let nodePath = keyframeAnimation.keyPath?.replacingOccurrences(of: "/", with: "") {
-                        let nodeName = nodePath.replacingOccurrences(of: ".transform", with: "")
-                        if let node = sceneView.scene!.rootNode.childNode(withName: nodeName, recursively: true) {
-                            keyframeAnimation.keyPath = "transform"
-                            print(keyframeAnimation.values)
-                            node.addAnimation(keyframeAnimation, forKey: "\(nodeName)Animation")
-                        }
-                    }
-                }
-            }
-        }
+//        if let animationGroup = animation as? CAAnimationGroup, let animations = animationGroup.animations {
+//            for subanimation in animations {
+//                if let keyframeAnimation = subanimation as? CAKeyframeAnimation {
+//                    print(keyframeAnimation.keyPath)
+//                    if let nodePath = keyframeAnimation.keyPath?.replacingOccurrences(of: "/", with: "") {
+//                        let nodeName = nodePath.replacingOccurrences(of: ".transform", with: "")
+//                        if let node = sceneView.scene!.rootNode.childNode(withName: nodeName, recursively: true) {
+//                            keyframeAnimation.keyPath = "transform"
+//                            print(keyframeAnimation.values)
+//                            node.addAnimation(keyframeAnimation, forKey: "\(nodeName)Animation")
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         let armtr = sceneView.scene!.rootNode.childNode(withName: "Armtr", recursively: true)
+        armtr?.addAnimation(animation!, forKey: "messi")
         print(armtr)
         
         

@@ -141,6 +141,24 @@ class VirtualObject: SCNNode {
     }
     
     func loadAnimation(_ animation: CAAnimation, key: String) {
+        
+        if let animationGroup = animation as? CAAnimationGroup, let animations = animationGroup.animations {
+            for subanimation in animations {
+                if let keyframeAnimation = subanimation as? CAKeyframeAnimation {
+                    print(keyframeAnimation.keyPath)
+                    if let nodePath = keyframeAnimation.keyPath?.replacingOccurrences(of: "/", with: "") {
+                        let nodeName = nodePath.replacingOccurrences(of: ".transform", with: "")
+                        if let node = childNode(withName: nodeName, recursively: true) {
+                            keyframeAnimation.keyPath = "transform"
+                            print(keyframeAnimation.values)
+                            node.addAnimation(keyframeAnimation, forKey: "\(nodeName)Animation")
+                        }
+                    }
+                }
+            }
+        }
+        
+        
         addAnimation(animation, forKey: key)
     }
     

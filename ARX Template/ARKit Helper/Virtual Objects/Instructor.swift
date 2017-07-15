@@ -35,20 +35,29 @@ class Instructor: VirtualObject {
             return
         }
         
-        virtualObjectScene.rootNode.enumerateChildNodes({ node, stop in
-            node.movabilityHint = .movable
-            print(node.name)
-        })
+//        virtualObjectScene.rootNode.enumerateChildNodes({ node, stop in
+//            node.movabilityHint = .movable
+//            print(node.name)
+//        })
 //        for child in virtualObjectScene.rootNode.childNodes {
 //            print("child set to movable: \(child).. should we set subchildren too?")
 ////            child.geometry?.firstMaterial?.lightingModel = .physicallyBased
 //            child.movabilityHint = .movable
 //        }
-    
-        for node in virtualObjectScene.rootNode.childNodes {
-            addChildNode(node)
+
+        
+//        for node in virtualObjectScene.rootNode.childNodes {
+//            addChildNode(node)
+//        }
+        // original
+        let wrapperNode = SCNNode()
+        
+        for child in virtualObjectScene.rootNode.childNodes {
+            child.geometry?.firstMaterial?.lightingModel = .physicallyBased
+            child.movabilityHint = .movable
+            wrapperNode.addChildNode(child)
         }
-//        scene = virtualObjectScene
+        self.addChildNode(wrapperNode)
         
         modelLoaded = true
     }
