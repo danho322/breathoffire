@@ -27,6 +27,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var virtualObjects: [VirtualObject] = []
     internal var currentPlacementState: ARObjectPlacementState = .ScanningEmpty
     internal weak var relatedAnimationsView: RelatedAnimationsView?
+    internal var hasSetupLights = false
     
     // MARK: - Main Setup & View Controller methods
     override func viewDidLoad() {
@@ -71,7 +72,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if !currentPlacementState.isPlaced() {
             for (anchor, plane) in planes {
                 print(anchor.extent)    // calculate some progress?
-                if anchor.extent.x > 0.4 && anchor.extent.z > 0.4 {
+                if anchor.extent.x > 0.3 && anchor.extent.z > 0.3 {
                     currentPlacementState = .ScanningReady
                 }
             }
@@ -522,12 +523,60 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
     }
     
+    func setupShadowLightsIfNeeded(target: SCNNode) {
+        if hasSetupLights {
+            return
+        }
+        hasSetupLights = true
+        
+        // create and add a light to the scene
+        let lightNode = SCNNode()
+        lightNode.light = SCNLight()
+        lightNode.light?.type = .directional
+        lightNode.light?.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+        lightNode.light?.shadowMode = .deferred
+        lightNode.light?.castsShadow = true
+        lightNode.position = SCNVector3(x: target.position.x, y: target.position.y + 20, z: target.position.z + 8)
+        sceneView.scene.rootNode.addChildNode(lightNode)
+        
+        // Points directional light at target
+        let constraint = SCNLookAtConstraint(target: target)
+        lightNode.constraints = [constraint]
+        
+        let omniLightNode = SCNNode()
+        omniLightNode.light = SCNLight()
+        omniLightNode.light?.type = .omni
+        omniLightNode.position = SCNVector3(x: target.position.x, y: target.position.y + 20, z: target.position.z)
+        sceneView.scene.rootNode.addChildNode(omniLightNode)
+        
+        // create and add an ambient light to the scene
+        let ambientLightNode = SCNNode()
+        ambientLightNode.light = SCNLight()
+        ambientLightNode.light!.type = .ambient
+        ambientLightNode.light!.color = UIColor(red: 1, green: 1, blue: 1, alpha: 0.4)  // Set this to what the environment light is
+        sceneView.scene.rootNode.addChildNode(ambientLightNode)
+        
+        let planeGeo = SCNPlane(width: 15, height: 15)
+        let planeNode = SCNNode(geometry: planeGeo)
+        planeNode.rotation = SCNVector4Make(1, 0, 0, -Float(Double.pi / 2));
+        let planeMaterial = SCNMaterial()
+        planeMaterial.diffuse.contents = UIColor.white
+        planeMaterial.colorBufferWriteMask = SCNColorMask(rawValue: 0)
+        planeGeo.materials = [planeMaterial]
+        planeNode.position = target.position
+        sceneView.scene.rootNode.addChildNode(planeNode)
+    }
+    
     func setVirtualObject(object: VirtualObject, at pos: SCNVector3) {
         object.position = pos
         
+        setupShadowLightsIfNeeded(target: object)
+
         if object.parent == nil {
             sceneView.scene.rootNode.addChildNode(object)
         }
+        
+        
     }
 
 	func resetVirtualObject() {
