@@ -89,6 +89,7 @@
 		D4A04B021F0B146200BEA822 /* RelatedAnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A04B011F0B146200BEA822 /* RelatedAnimationsView.swift */; };
 		D4A04B041F0B173000BEA822 /* RelatedAnimationsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A04B031F0B173000BEA822 /* RelatedAnimationsView.xib */; };
 		D4A04B081F0B1CF100BEA822 /* Spruce.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A04B071F0B1CCC00BEA822 /* Spruce.framework */; };
+		D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A43C051F1C858400978F69 /* StoreKitService.swift */; };
 		D4ADB2B31F1C3A3500D2D1A2 /* SwiftyStoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */; };
 		D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */; };
 		D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49103121EFB068E008A528E /* SceneKitExtensions.swift */; };
@@ -183,6 +184,7 @@
 		D4A04B011F0B146200BEA822 /* RelatedAnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedAnimationsView.swift; sourceTree = "<group>"; };
 		D4A04B031F0B173000BEA822 /* RelatedAnimationsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelatedAnimationsView.xib; sourceTree = "<group>"; };
 		D4A04B071F0B1CCC00BEA822 /* Spruce.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spruce.framework; path = Carthage/Build/iOS/Spruce.framework; sourceTree = "<group>"; };
+		D4A43C051F1C858400978F69 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
 		D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyStoreKit.framework; path = Carthage/Build/iOS/SwiftyStoreKit.framework; sourceTree = "<group>"; };
 		D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -419,6 +421,7 @@
 				D45621471F0CB3D00052E218 /* StatManager.swift */,
 				D46F91761F0F04AA003B7F8A /* SessionManager.swift */,
 				D46A6E171F0FEECF0096446C /* FirebaseService.swift */,
+				D4A43C051F1C858400978F69 /* StoreKitService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -579,6 +582,7 @@
 				D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */,
 				D49102FF1EFB05CE008A528E /* TechniqueARViewController.swift in Sources */,
 				D43D4BAC1F048282002F369F /* Plane.swift in Sources */,
+				D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */,
 				D45352BD1EFDDCA600C09259 /* CharacterHUDView.swift in Sources */,
 				D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */,
 				D43D4BAE1F048282002F369F /* ARCameraTrackingState.swift in Sources */,

@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAnalytics
 import FirebaseDatabase
+import SwiftyStoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
         SessionManager.sharedInstance.onStart()
+        
+        SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+            for purchase in purchases {
+                if purchase.transaction.transactionState == .purchased || purchase.transaction.transactionState == .restored {
+                    if purchase.needsFinishTransaction {
+                        // Deliver content from server, then:
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+                    print("purchased: \(purchase)")
+                }
+            }
+        }
         
         return true
     }
