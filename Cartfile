@@ -2,3 +2,4 @@ github "lkzhao/Hero" == 0.3.6
 github "PrideChung/FontAwesomeKit" == 2.2.1
 github "willowtreeapps/spruce-ios"
 github "rs/SDWebImage"
+github "bizz84/SwiftyStoreKit"

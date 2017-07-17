@@ -68,14 +68,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     // MARK: - Placing Object
     
     internal func updatePlacementUI() {
-        print("update placement UI")
         if !currentPlacementState.isPlaced() {
-            for (anchor, plane) in planes {
-                print(anchor.extent)    // calculate some progress?
-                if anchor.extent.x > 0.3 && anchor.extent.z > 0.3 {
-                    currentPlacementState = .ScanningReady
+            planes.forEach({ anchor, plane in
+                if plane.anchor.extent.x > 0.3 && plane.anchor.extent.z > 0.3 {
+                    self.currentPlacementState = .ScanningReady
                 }
-            }
+            })
         }
         
         statusLabel.text = DataLoader.sharedInstance.textForPlacementState(currentPlacementState)
@@ -251,10 +249,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
         
         DispatchQueue.main.async {
-            self.updatePlacementUI()
             if let planeAnchor = anchor as? ARPlaneAnchor {
                 self.removePlane(anchor: planeAnchor)
             }
+            self.updatePlacementUI()
         }
     }
 	
@@ -575,8 +573,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if object.parent == nil {
             sceneView.scene.rootNode.addChildNode(object)
         }
-        
-        
     }
 
 	func resetVirtualObject() {
@@ -933,7 +929,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 			
 			self.setupFocusSquare()
 			self.resetVirtualObject()
-			self.restartPlaneDetection()
+			
+            self.planes.forEach({ key, value in
+                value.removeFromParentNode()
+            })
+            self.planes.removeAll()
+            self.restartPlaneDetection()
             
             self.currentPlacementState = .ScanningEmpty
             self.updatePlacementUI()

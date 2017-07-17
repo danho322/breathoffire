@@ -29,6 +29,38 @@ class FirebaseService {
     
     // MARK: - Realtime DB
     
+    func setUserAttribute(userId: String, userName: String) {
+        let userRef = Database.database().reference().child("users/\(Constants.AppKey)")
+        
+        userRef.child("\(userId)/userName").setValue(userName)
+        userRef.child("\(userId)/lastLoggedIn").setValue(Date().description)
+        
+        incrementAttributeCount(userId: userId, attributeName: "playCount")
+    }
+    
+    func incrementAttributeCount(userId: String, attributeName: String) {
+        let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
+        ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
+            if var post = currentData.value as? [String : AnyObject] {
+                var starCount = post[attributeName] as? Int ?? 0
+                starCount += 1
+                post[attributeName] = starCount as AnyObject?
+                
+                // Set value and report transaction success
+                currentData.value = post
+                
+                return TransactionResult.success(withValue: currentData)
+            }
+            return TransactionResult.success(withValue: currentData)
+        }) { (error, committed, snapshot) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    // MARK: - Image loading
+    
     func retrieveBackgroundImage(completion: @escaping (UIImage) -> Void) {
         let sectionNamesRef = Database.database().reference().child("config/\(Constants.AppKey)/menuBackgroundImage")
         sectionNamesRef.observe(.value, with: { [unowned self] snapshot in
@@ -41,6 +73,8 @@ class FirebaseService {
             }
         })
     }
+    
+    // MARK: - DB Syncing
     
     func retrieveDB() {
         let sectionNamesRef = Database.database().reference().child("sequenceListSections/\(Constants.AppKey)")

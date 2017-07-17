@@ -21,6 +21,9 @@ class SessionManager {
             if let user = user {
                 self.uid = user.uid
                 self.isAnonymous = user.isAnonymous
+                
+                FirebaseService.sharedInstance.setUserAttribute(userId: user.uid, userName: "Dan")
+//                permision denied
             }
         })
         
