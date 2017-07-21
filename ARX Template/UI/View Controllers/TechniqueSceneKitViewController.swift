@@ -74,6 +74,7 @@ class TechniqueSceneKitViewController: UIViewController {
             
             // allows the user to manipulate the camera
             self.sceneView.pointOfView = cameraNode
+            self.sceneView.allowsCameraControl = true
             
             // show statistics such as fps and timing information
             self.sceneView.showsStatistics = true

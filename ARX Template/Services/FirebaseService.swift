@@ -118,6 +118,7 @@ class FirebaseService {
                     let sequence = AnimationSequenceDataContainer(sequenceName: sequenceName, snapshotDict: sequenceDataDict)
                     self.retrieveAnimationDataFromSequenceData(sequenceDataContainer: sequence)
                     self.sequenceDataDict[sequenceName] = sequence
+                    print("stored \(sequenceName)")
                 }
             })
             sequenceRefs[sequenceName] = sequenceDataRef

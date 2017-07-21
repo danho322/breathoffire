@@ -34,21 +34,10 @@ class Instructor: VirtualObject {
         guard let virtualObjectScene = SCNScene(named: "\(modelName).\(fileExtension)", inDirectory: "Models.scnassets/jiujitsu") else {
             return
         }
-        
-//        virtualObjectScene.rootNode.enumerateChildNodes({ node, stop in
-//            node.movabilityHint = .movable
-//            print(node.name)
-//        })
-//        for child in virtualObjectScene.rootNode.childNodes {
-//            print("child set to movable: \(child).. should we set subchildren too?")
-////            child.geometry?.firstMaterial?.lightingModel = .physicallyBased
-//            child.movabilityHint = .movable
-//        }
-    
         for node in virtualObjectScene.rootNode.childNodes {
             addChildNode(node)
         }
-//        scene = virtualObjectScene
+//        self.opacity = 0
         
         modelLoaded = true
     }

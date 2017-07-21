@@ -17,48 +17,7 @@ struct DataLoader {
     
     let armatureName = "Armtr"
     let sceneFile = "Models.scnassets/nakedman/NakedMaleWithTextures.dae"
-//    let characterAnimationDatas = [
-//        CharacterAnimationData(fileName: "Models.scnassets/nakedman/TaiChi_1_468.dae",
-//                               instructorAnimation: "Tai Chi 1",
-//                               ukeAnimation: "Salsa",
-//                               instructionData: [
-//                                AnimationInstructionData(timestamp: 0.1, text: "Tai Chi"),
-//                                AnimationInstructionData(timestamp: 3, text: "Shake your hands like an old man"),
-//                                AnimationInstructionData(timestamp: 6, text: "Slowly raise up your arms"),
-//                                AnimationInstructionData(timestamp: 10, text: "Hold the pose"),
-//                                AnimationInstructionData(timestamp: 15, text: "Do some karate stuff"),
-//                                AnimationInstructionData(timestamp: 18, text: "Look badass while you're doing it"),
-//                                AnimationInstructionData(timestamp: 24, text: "Flex the core, keep it flexxed, flex it up"),
-//                                AnimationInstructionData(timestamp: 28, text: "Hold the flex"),
-//                                AnimationInstructionData(timestamp: 35, text: "Now for the grand finale, look like you might slap a bitch"),
-//                                AnimationInstructionData(timestamp: 37, text: "But don't slap anyone")],
-//                               relatedAnimations: ["Tai Chi 2"]),
-//        CharacterAnimationData(fileName: "Models.scnassets/nakedman/Salsa.dae",
-//                               instructorAnimation: "Salsa",
-//                               ukeAnimation: nil,
-//                               instructionData: nil,
-//                               relatedAnimations: nil),
-//        CharacterAnimationData(fileName: "Models.scnassets/nakedman/TaiChi_468_738_transition.dae",
-//                               instructorAnimation: "Tai Chi 2",
-//                               ukeAnimation: nil,
-//                               instructionData: nil,
-//                               relatedAnimations: ["Tai Chi 3"]),
-//        CharacterAnimationData(fileName: "Models.scnassets/nakedman/TaiChi_738_1581.dae",
-//                               instructorAnimation: "Tai Chi 3",
-//                               ukeAnimation: nil,
-//                               instructionData: nil,
-//                               relatedAnimations: ["Tai Chi 4"]),
-//        CharacterAnimationData(fileName: "Models.scnassets/nakedman/TaiChi_1581_3104_transition.dae",
-//                               instructorAnimation: "Tai Chi 4",
-//                               ukeAnimation: nil,
-//                               instructionData: nil,
-//                               relatedAnimations: ["Tai Chi 5"]),
-//        CharacterAnimationData(fileName: "Models.scnassets/nakedman/TaiChi_3104_3559.dae",
-//                               instructorAnimation: "Tai Chi 5",
-//                               ukeAnimation: nil,
-//                               instructionData: nil,
-//                               relatedAnimations: ["Tai Chi 1"])
-//                                  ]
+
     
     // Labels
     

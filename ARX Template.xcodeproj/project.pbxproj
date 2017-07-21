@@ -68,6 +68,7 @@
 		D46F91731F0F0175003B7F8A /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F91721F0F0167003B7F8A /* libicucore.tbd */; };
 		D46F91751F0F022B003B7F8A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F91741F0F0224003B7F8A /* MediaPlayer.framework */; };
 		D46F91771F0F04AA003B7F8A /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46F91761F0F04AA003B7F8A /* SessionManager.swift */; };
+		D470B8D11F1F19CC00920CAB /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D470B8D01F1F19CC00920CAB /* ThemeManager.swift */; };
 		D4730ED91F14444D003097BE /* TechniqueSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4730ED81F14444D003097BE /* TechniqueSearchViewController.swift */; };
 		D48A5F701EFC9BA000A46A73 /* Hero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48A5F6F1EFC9B5600A46A73 /* Hero.framework */; };
 		D48A5F741EFCC48F00A46A73 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48A5F731EFCC48F00A46A73 /* MenuViewController.swift */; };
@@ -89,8 +90,11 @@
 		D4A04B021F0B146200BEA822 /* RelatedAnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A04B011F0B146200BEA822 /* RelatedAnimationsView.swift */; };
 		D4A04B041F0B173000BEA822 /* RelatedAnimationsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A04B031F0B173000BEA822 /* RelatedAnimationsView.xib */; };
 		D4A04B081F0B1CF100BEA822 /* Spruce.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A04B071F0B1CCC00BEA822 /* Spruce.framework */; };
+		D4A091C01F2070AE00C03805 /* ARXUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A091BF1F2070AE00C03805 /* ARXUtilities.swift */; };
+		D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A091C11F2071C900C03805 /* ARXConstants.swift */; };
 		D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A43C051F1C858400978F69 /* StoreKitService.swift */; };
 		D4ADB2B31F1C3A3500D2D1A2 /* SwiftyStoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */; };
+		D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */; };
 		D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */; };
 		D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49103121EFB068E008A528E /* SceneKitExtensions.swift */; };
 		D4D7318B1EFB8B8400C65E99 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49103141EFB068E008A528E /* DataLoader.swift */; };
@@ -158,6 +162,7 @@
 		D46F91721F0F0167003B7F8A /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		D46F91741F0F0224003B7F8A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		D46F91761F0F04AA003B7F8A /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		D470B8D01F1F19CC00920CAB /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		D4730ED81F14444D003097BE /* TechniqueSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueSearchViewController.swift; sourceTree = "<group>"; };
 		D48A5F6F1EFC9B5600A46A73 /* Hero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hero.framework; path = Carthage/Build/iOS/Hero.framework; sourceTree = "<group>"; };
 		D48A5F731EFCC48F00A46A73 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -184,8 +189,11 @@
 		D4A04B011F0B146200BEA822 /* RelatedAnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedAnimationsView.swift; sourceTree = "<group>"; };
 		D4A04B031F0B173000BEA822 /* RelatedAnimationsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelatedAnimationsView.xib; sourceTree = "<group>"; };
 		D4A04B071F0B1CCC00BEA822 /* Spruce.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spruce.framework; path = Carthage/Build/iOS/Spruce.framework; sourceTree = "<group>"; };
+		D4A091BF1F2070AE00C03805 /* ARXUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXUtilities.swift; sourceTree = "<group>"; };
+		D4A091C11F2071C900C03805 /* ARXConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXConstants.swift; sourceTree = "<group>"; };
 		D4A43C051F1C858400978F69 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
 		D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyStoreKit.framework; path = Carthage/Build/iOS/SwiftyStoreKit.framework; sourceTree = "<group>"; };
+		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
 		D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -252,6 +260,7 @@
 				D427C9441F0770C20096C2A1 /* InstructionView.swift */,
 				D4A04B011F0B146200BEA822 /* RelatedAnimationsView.swift */,
 				D45621411F0B59730052E218 /* TechniqueTableCell.swift */,
+				D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -409,6 +418,8 @@
 				D45352C01EFDDDBC00C09259 /* UIViewExtensions.swift */,
 				D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */,
 				D45621451F0BEDC40052E218 /* UIViewProtocols.swift */,
+				D4A091BF1F2070AE00C03805 /* ARXUtilities.swift */,
+				D4A091C11F2071C900C03805 /* ARXConstants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -422,6 +433,7 @@
 				D46F91761F0F04AA003B7F8A /* SessionManager.swift */,
 				D46A6E171F0FEECF0096446C /* FirebaseService.swift */,
 				D4A43C051F1C858400978F69 /* StoreKitService.swift */,
+				D470B8D01F1F19CC00920CAB /* ThemeManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -553,6 +565,7 @@
 			files = (
 				D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */,
 				D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */,
+				D4A091C01F2070AE00C03805 /* ARXUtilities.swift in Sources */,
 				D45621461F0BEDC40052E218 /* UIViewProtocols.swift in Sources */,
 				D4A04AFB1F09FF2100BEA822 /* Cup.swift in Sources */,
 				D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */,
@@ -577,6 +590,7 @@
 				D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */,
 				D43D4BAA1F048282002F369F /* Gesture.swift in Sources */,
 				D45621481F0CB3D00052E218 /* StatManager.swift in Sources */,
+				D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */,
 				D4A04AF81F09FD7900BEA822 /* Uke.swift in Sources */,
 				D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */,
 				D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */,
@@ -586,6 +600,7 @@
 				D45352BD1EFDDCA600C09259 /* CharacterHUDView.swift in Sources */,
 				D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */,
 				D43D4BAE1F048282002F369F /* ARCameraTrackingState.swift in Sources */,
+				D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */,
 				D44EE6111EFD388F003A1A3E /* TechniqueSceneKitViewController.swift in Sources */,
 				D44B24E41F182E7E00459032 /* VirtualObject.swift in Sources */,
 				D49102FB1EFB05CE008A528E /* AppDelegate.swift in Sources */,
@@ -594,6 +609,7 @@
 				D43D4BB51F048282002F369F /* TextManager.swift in Sources */,
 				D43D4BAF1F048282002F369F /* Utilities.swift in Sources */,
 				D46F91771F0F04AA003B7F8A /* SessionManager.swift in Sources */,
+				D470B8D11F1F19CC00920CAB /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

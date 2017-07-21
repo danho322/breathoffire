@@ -33,10 +33,15 @@ class Uke: VirtualObject {
             child.movabilityHint = .movable
         }
         
-        
+        self.opacity = 0
         self.addChildNode(virtualObjectScene.rootNode)
         
         modelLoaded = true
+    }
+    
+    override func loadAnimationSequence(animationSequence: [AnimationSequenceData]) {
+        
+        super.loadAnimationSequence(animationSequence: animationSequence)
     }
     
     override func loadCurrentAnimationIndex() {

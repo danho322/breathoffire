@@ -31,6 +31,10 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         isHeroEnabled = false
         
         // Do any additional setup after loading the view.
+        view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        tableView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        tableView.separatorColor = ThemeManager.sharedInstance.backgroundColor()
+        
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -39,10 +43,10 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         animationView = tableView
         
         let loadIcon = FAKFoundationIcons.playIcon(withSize: 25)
-        loadIcon?.addAttribute("NSForegroundColorAttributeName", value: UIColor.white)
+        loadIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
-        backIcon?.addAttribute("NSForegroundColorAttributeName", value: UIColor.white)
+        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         
         loadButton.setAttributedTitle(loadIcon?.attributedString(), for: .normal)
         backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
@@ -98,7 +102,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
                 self.sceneView.showsStatistics = true
                 
                 // configure the view
-                self.sceneView.backgroundColor = UIColor.black
+                self.sceneView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
                 
                 let alphaAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut, animations: {
                     self.view.alpha = 1
@@ -151,15 +155,36 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
             if let sectionName = DataLoader.sharedInstance.sequenceSections()[safe: indexPath.section],
                 let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName),
                 let sequenceName = sequenceRowArray[safe: indexPath.row] {
-                cell.titleLabel.text = sequenceName
+                cell.update(with: sequenceName)
             }
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return DataLoader.sharedInstance.sequenceSections()[safe: section] ?? ""
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let sectionName = DataLoader.sharedInstance.sequenceSections()[safe: indexPath.section],
+            let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName),
+            let sequenceName = sequenceRowArray[safe: indexPath.row] {
+            return TechniqueTableCell.cellSize(sequenceName: sequenceName)
+        }
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
+        view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        let label = UILabel(frame: CGRect(x: 10, y: 0, width: tableView.frame.size.width - 50, height: 30))
+        label.backgroundColor = UIColor.clear
+        label.textColor = ThemeManager.sharedInstance.labelTitleColor()
+        label.font = ThemeManager.sharedInstance.defaultFont(14)
+        label.text = DataLoader.sharedInstance.sequenceSections()[safe: section] ?? ""
+        view.addSubview(label)
+        return view
     }
 }
 

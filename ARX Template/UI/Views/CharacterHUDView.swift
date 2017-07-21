@@ -20,15 +20,16 @@ protocol CharacterHUDViewDelegate {
 }
 
 class CharacterHUDView: XibView {
+    @IBOutlet weak var showBGView: UIView!
     @IBOutlet weak var showHudButton: UIButton!
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var backwardsButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
-    @IBOutlet weak var forwardButton: UIButton!
     @IBOutlet weak var instructorSwitch: UISwitch!
     @IBOutlet weak var ukeSwitch: UISwitch!
     internal var sliderValue: Float = 0.5
     internal var isShowing = false
+    internal var isPaused = true
     var delegate: CharacterHUDViewDelegate?
 
     override func setupUI() {
@@ -36,24 +37,28 @@ class CharacterHUDView: XibView {
             fatalError("view is not of type CharacterHUDView")
         }
         
+        let color = ThemeManager.sharedInstance.backgroundColor()
+        let gradient:CAGradientLayer = CAGradientLayer()
+        gradient.frame.size = CGSize(width: Sizes.ScreenWidth, height: view.frame.size.height)
+        gradient.colors = [color.withAlphaComponent(0).cgColor, color.cgColor] //Or any colors
+        view.layer.insertSublayer(gradient, at: 0)
+        
         updateShowHudButtonIcon(view: view)
         
+        view.showBGView.backgroundColor = color
+        
         let backwardIcon = FAKMaterialIcons.replayIcon(withSize: 25)
-        backwardIcon?.addAttribute("NSForegroundColorAttributeName", value: UIColor.white)
+        backwardIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         view.backwardsButton.setAttributedTitle(backwardIcon?.attributedString(), for: .normal)
         
         let pauseIcon = FAKMaterialIcons.pauseIcon(withSize: 25)
-        pauseIcon?.addAttribute("NSForegroundColorAttributeName", value: UIColor.white)
+        pauseIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         view.pauseButton.setAttributedTitle(pauseIcon?.attributedString(), for: .normal)
-        
-        let forwardIcon = FAKMaterialIcons.playIcon(withSize: 25)
-        forwardIcon?.addAttribute("NSForegroundColorAttributeName", value: UIColor.white)
-        view.forwardButton.setAttributedTitle(forwardIcon?.attributedString(), for: .normal)
     }
     
     internal func updateShowHudButtonIcon(view: CharacterHUDView) {
         let buttonIcon = isShowing ? FAKIonIcons.iosArrowDownIcon(withSize: 25) : FAKIonIcons.iosArrowUpIcon(withSize: 25)
-        buttonIcon?.addAttribute("NSForegroundColorAttributeName", value: UIColor.white)
+        buttonIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         view.showHudButton.setAttributedTitle(buttonIcon?.attributedString(), for: .normal)
     }
     
@@ -69,12 +74,17 @@ class CharacterHUDView: XibView {
         delegate?.hudDidTapRewind()
     }
     
-    @IBAction func onPlayTap(_ sender: Any) {
-        delegate?.hudDidTapPlay()
-    }
-    
     @IBAction func onPauseTap(_ sender: Any) {
-        delegate?.hudDidTapPause()
+        if isPaused {
+            delegate?.hudDidTapPause()
+        } else {
+            delegate?.hudDidTapPlay()
+        }
+        isPaused = !isPaused
+        
+        let icon = isPaused ? FAKMaterialIcons.pauseIcon(withSize: 25) : FAKMaterialIcons.playIcon(withSize: 25)
+        icon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        pauseButton.setAttributedTitle(icon?.attributedString(), for: .normal)
     }
     
     @IBAction func onUkeSwitch(_ sender: Any) {

@@ -86,7 +86,11 @@ class VirtualObject: SCNNode {
     // MARK: - Animations
     
     func loadAnimationSequence(animationSequence: [AnimationSequenceData]) {
-        //        clothed and nakedmale have different skeletons! thats why they don't match
+        let animator = UIViewPropertyAnimator(duration: 0.1, curve: .easeIn, animations: {
+            self.opacity = 1
+        })
+        animator.startAnimation()
+        
         currentAnimationIndex = 0
         self.animationSequence = animationSequence
         loadCurrentAnimationIndex()
