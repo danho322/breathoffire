@@ -85,39 +85,37 @@ class MenuViewController: UIViewController {
             let sceneFrame0 = CGRect(x: borderWidth, y: borderWidth, width: self.sceneContainer0.frame.size.width - 2 * borderWidth, height: self.sceneContainer0.frame.size.height - 2 * borderWidth)
             let sceneFrame1 = CGRect(x: borderWidth, y: borderWidth, width: self.sceneContainer1.frame.size.width - 2 * borderWidth, height: self.sceneContainer1.frame.size.height - 2 * borderWidth)
             
-            DispatchQueue.global().async {
-                let characterScene0 = ARXCharacterSceneView(frame: sceneFrame0)
-                characterScene0.isUserInteractionEnabled = false
-                let characterScene1 = ARXCharacterSceneView(frame: sceneFrame1)
-                characterScene1.isUserInteractionEnabled = false
-
-                DispatchQueue.main.async {
-                    let sequence0 = DataLoader.sharedInstance.sequenceData(sequenceName: "Movement Test")
-                    characterScene0.startAnimation(sequence: sequence0)
-                    characterScene1.startAnimation(sequence: DataLoader.sharedInstance.sequenceData(sequenceName: "Alan Test Armbar"))
-                    
-                    self.sceneContainer0.addSubview(characterScene0)
-                    self.sceneContainer1.addSubview(characterScene1)
-                    
-                    let tap0 = UITapGestureRecognizer(target: self, action: #selector(self.onScene0Tap))
-                    self.sceneContainer0.addGestureRecognizer(tap0)
-                    
-                    let tap1 = UITapGestureRecognizer(target: self, action: #selector(self.onScene1Tap))
-                    self.sceneContainer1.addGestureRecognizer(tap1)
-                    
-                    self.sportLabelTopConstraint.constant = 100
-                    let alphaAnimator = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut, animations: {
-                        self.sportLabel.alpha = 1
-                        self.selectLabel.alpha = 1
-                        self.sceneContainer0.alpha = 1
-                        self.sceneContainer1.alpha = 1
-                        self.sportLabelTopConstraint.constant = 20
-                        //            self.view.layoutIfNeeded()
-                    })
-                    alphaAnimator.startAnimation()
-                    
-                }
+            let characterScene0 = ARXCharacterSceneView(frame: sceneFrame0)
+            characterScene0.isUserInteractionEnabled = false
+            let characterScene1 = ARXCharacterSceneView(frame: sceneFrame1)
+            characterScene1.isUserInteractionEnabled = false
+            
+            if let fire = SCNParticleSystem(named: "Fire.scnp", inDirectory: nil) {
+                characterScene0.model?.childNode(withName: "spine_03", recursively: true)?.addParticleSystem(fire)
             }
+
+            let data0 = DataLoader.sharedInstance.characterAnimation(name: "Tai Chi 3")
+            characterScene0.repeatAnimationData(data: data0)
+            characterScene1.repeatAnimationData(data: DataLoader.sharedInstance.characterAnimation(name: "Movement Test 1"))
+            
+            self.sceneContainer0.addSubview(characterScene0)
+            self.sceneContainer1.addSubview(characterScene1)
+            
+            let tap0 = UITapGestureRecognizer(target: self, action: #selector(self.onScene0Tap))
+            self.sceneContainer0.addGestureRecognizer(tap0)
+            
+            let tap1 = UITapGestureRecognizer(target: self, action: #selector(self.onScene1Tap))
+            self.sceneContainer1.addGestureRecognizer(tap1)
+            
+            self.sportLabelTopConstraint.constant = 100
+            let alphaAnimator = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut, animations: {
+                self.sportLabel.alpha = 1
+                self.selectLabel.alpha = 1
+                self.sceneContainer0.alpha = 1
+                self.sceneContainer1.alpha = 1
+                self.sportLabelTopConstraint.constant = 20
+            })
+            alphaAnimator.startAnimation()
         }
     }
     

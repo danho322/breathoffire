@@ -98,6 +98,8 @@
 		D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */; };
 		D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49103121EFB068E008A528E /* SceneKitExtensions.swift */; };
 		D4D7318B1EFB8B8400C65E99 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49103141EFB068E008A528E /* DataLoader.swift */; };
+		D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */ = {isa = PBXBuildFile; fileRef = D4ECE16B1F22C7F400E8B788 /* Fire.scnp */; };
+		D4ECE16E1F22C7F400E8B788 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = D4ECE16C1F22C7F400E8B788 /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -194,6 +196,8 @@
 		D4A43C051F1C858400978F69 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
 		D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyStoreKit.framework; path = Carthage/Build/iOS/SwiftyStoreKit.framework; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
+		D4ECE16B1F22C7F400E8B788 /* Fire.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Fire.scnp; sourceTree = "<group>"; };
+		D4ECE16C1F22C7F400E8B788 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -394,6 +398,7 @@
 		D49102F91EFB05CE008A528E /* ARX Template */ = {
 			isa = PBXGroup;
 			children = (
+				D4ECE16A1F22C7CB00E8B788 /* Particles */,
 				D44B24E21F182E6300459032 /* Models */,
 				D42A6C4F1F14229300A3F2F0 /* Protocols */,
 				D48AAFB31F04806C0091B261 /* ARKit Helper */,
@@ -462,6 +467,15 @@
 			path = "Virtual Objects";
 			sourceTree = "<group>";
 		};
+		D4ECE16A1F22C7CB00E8B788 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				D4ECE16B1F22C7F400E8B788 /* Fire.scnp */,
+				D4ECE16C1F22C7F400E8B788 /* spark.png */,
+			);
+			path = Particles;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -524,9 +538,11 @@
 				D4A04B001F0A09A400BEA822 /* Models.scnassets in Resources */,
 				D46F91581F0EFB94003B7F8A /* GINInviteResources.bundle in Resources */,
 				D46F91591F0EFB94003B7F8A /* GoogleSignIn.bundle in Resources */,
+				D4ECE16E1F22C7F400E8B788 /* spark.png in Resources */,
 				D49102FD1EFB05CE008A528E /* art.scnassets in Resources */,
 				D46F90221F0EF078003B7F8A /* GoogleService-Info.plist in Resources */,
 				D49103071EFB05CE008A528E /* LaunchScreen.storyboard in Resources */,
+				D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */,
 				D49103041EFB05CE008A528E /* Assets.xcassets in Resources */,
 				D45352BB1EFDDC5100C09259 /* CharacterHUDView.xib in Resources */,
 				D46F915A1F0EFB94003B7F8A /* GPPACLPickerResources.bundle in Resources */,

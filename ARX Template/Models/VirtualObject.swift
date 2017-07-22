@@ -113,7 +113,7 @@ class VirtualObject: SCNNode {
         }
     }
     
-    internal func loadAnimationData(animationData: CharacterAnimationData, speed: Double, repeatCount: Float) {
+    func loadAnimationData(animationData: CharacterAnimationData, speed: Double, repeatCount: Float) {
         refreshInstructionService(animationData: animationData, speed: speed)
         let speedToUse = Float(max(0.01, speed))
         removeAllAnimations()

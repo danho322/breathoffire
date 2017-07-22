@@ -21,9 +21,9 @@ class ARXCharacterSceneView: SCNView {
         setupScene()
     }
     
-    func startAnimation(sequence: AnimationSequenceDataContainer?) {
-        if let sequence = sequence {
-            model?.loadAnimationSequence(animationSequence: sequence.sequenceArray)
+    func repeatAnimationData(data: CharacterAnimationData?) {
+        if let data = data {
+            model?.loadAnimationData(animationData: data, speed: 1, repeatCount: Float.greatestFiniteMagnitude)
         }
     }
     
@@ -41,7 +41,7 @@ class ARXCharacterSceneView: SCNView {
         cameraNode.camera = SCNCamera()
         
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 1, z: 2)
+        cameraNode.position = SCNVector3(x: 0, y: 1, z: 3)
         let constraint = SCNLookAtConstraint(target: target?.childNode(withName: "Pelvis", recursively: true))
         cameraNode.constraints = [constraint]
         
@@ -56,6 +56,9 @@ class ARXCharacterSceneView: SCNView {
         ambientLightNode.light = SCNLight()
         ambientLightNode.light!.type = .ambient
         ambientLightNode.light!.color = UIColor.darkGray
+        
+        // rotating model
+        male.rotation = SCNVector4Make(0, 1, 0, -Float(Double.pi))
         self.scene?.rootNode.addChildNode(male)
         self.scene?.rootNode.addChildNode(cameraNode)
         self.scene?.rootNode.addChildNode(lightNode)
