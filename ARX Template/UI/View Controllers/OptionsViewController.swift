@@ -9,43 +9,35 @@
 import UIKit
 import FontAwesomeKit
 
+struct OptionsConstants {
+    static let MOTDIdentifier = "MOTDCellIdentifier"
+}
+
 class OptionsViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var workoutButton: UIButton!
-    @IBOutlet weak var techniquesButton: UIButton!
-    @IBOutlet weak var exploreButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
+        tableView.dataSource = self
+        let motdNib = UINib(nibName: "OptionsMOTDTableViewCell", bundle: nil)
+        tableView.register(motdNib , forCellReuseIdentifier: OptionsConstants.MOTDIdentifier)
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        workoutButton.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
-        techniquesButton.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
-        exploreButton.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         titleLabel.textColor = ThemeManager.sharedInstance.textColor()
         titleLabel.font = ThemeManager.sharedInstance.defaultFont(20)
         
         
         isHeroEnabled = true
         
-        let workoutIcon = FAKMaterialIcons.playCircleIcon(withSize: 25)
-        workoutIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
-        
-        let techniqueIcon = FAKFoundationIcons.listIcon(withSize: 25)
-        techniqueIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
-        
-        let exploreIcon = FAKMaterialIcons.searchIcon(withSize: 25)
-        exploreIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
-        
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
         backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         
-        workoutButton.setAttributedTitle(workoutIcon?.attributedString(), for: .normal)
-        techniquesButton.setAttributedTitle(techniqueIcon?.attributedString(), for: .normal)
-        exploreButton.setAttributedTitle(exploreIcon?.attributedString(), for: .normal)
         backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
     }
     
@@ -58,5 +50,24 @@ class OptionsViewController: UIViewController {
             workoutVC.loadWorkout = true
             workoutVC.animationToLoad = DataLoader.sharedInstance.characterAnimation(name: "Salsa")
         }
+    }
+}
+
+extension OptionsViewController: UITableViewDelegate {
+
+}
+
+extension OptionsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: OptionsConstants.MOTDIdentifier, for: indexPath)
+        if let cell = cell as? OptionsMOTDTableViewCell {
+            cell.titleLabel.text = "\(indexPath.row)"
+            cell.moveDescriptionLabel.text = "This is a realy long text that should span multiple lines so lets see if the cell with auto adjust"
+        }
+        return cell
     }
 }

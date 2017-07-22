@@ -203,77 +203,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kaK-G0-Aqx">
-                                <rect key="frame" x="76" y="293.5" width="80" height="80"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="cbe-5d-0tm"/>
-                                    <constraint firstAttribute="height" constant="80" id="x45-YM-v7a"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Workout">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="fade() scale(0.5) source(enter)"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="workout"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="40"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="So6-it-XyA" kind="show" identifier="WorkoutIdentifier" id="CLb-qx-otG"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHg-wb-xjS">
-                                <rect key="frame" x="218" y="293.5" width="80" height="80"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="4rm-X1-0Hb"/>
-                                    <constraint firstAttribute="width" constant="80" id="YYC-mT-3aq"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Techniques">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="fade() scale(0.5) source(enter)"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="techniques"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="40"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="BLy-Dr-lhJ" kind="show" id="Kv9-Ep-kc6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVR-Tk-jqK">
-                                <rect key="frame" x="147" y="440" width="80" height="80"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="4Ij-IC-UJh"/>
-                                    <constraint firstAttribute="width" constant="80" id="xh0-5d-w8o"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Explore">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="fade() scale(0.5) source(enter)"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="40"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="search"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="bFl-kI-aDA" kind="show" id="WUA-I1-jZB"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhb-qz-Ed2">
-                                <rect key="frame" x="170" y="617" width="34" height="30"/>
+                                <rect key="frame" x="16" y="20" width="34" height="30"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
@@ -281,7 +212,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's Train" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J7H-27-Xjl">
-                                <rect key="frame" x="123" y="90" width="130.5" height="36"/>
+                                <rect key="frame" x="123" y="20" width="130.5" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -289,32 +220,39 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="fade scale(0.8)"/>
                                 </userDefinedRuntimeAttributes>
                             </label>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="0uf-gm-Yqg">
+                                <rect key="frame" x="0.0" y="611" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Czc-2J-RLh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="547"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="J7H-27-Xjl" firstAttribute="top" secondItem="4wG-n0-gAd" secondAttribute="bottom" constant="70" id="6p4-mO-FfD"/>
-                            <constraint firstItem="kaK-G0-Aqx" firstAttribute="leading" secondItem="ARi-FN-off" secondAttribute="leading" constant="76" id="PjR-qr-Kqt"/>
-                            <constraint firstItem="kaK-G0-Aqx" firstAttribute="centerY" secondItem="ARi-FN-off" secondAttribute="centerY" id="Qcs-Gp-fI9"/>
-                            <constraint firstItem="wVR-Tk-jqK" firstAttribute="centerX" secondItem="ARi-FN-off" secondAttribute="centerX" id="fJf-0l-FiB"/>
-                            <constraint firstItem="Rvs-GC-xHA" firstAttribute="top" secondItem="vhb-qz-Ed2" secondAttribute="bottom" constant="20" id="hg8-Xd-rqg"/>
-                            <constraint firstItem="FHg-wb-xjS" firstAttribute="centerY" secondItem="kaK-G0-Aqx" secondAttribute="centerY" id="ixB-wL-I3U"/>
+                            <constraint firstItem="0uf-gm-Yqg" firstAttribute="leading" secondItem="ARi-FN-off" secondAttribute="leading" id="2Yt-Z7-xJM"/>
+                            <constraint firstItem="J7H-27-Xjl" firstAttribute="top" secondItem="4wG-n0-gAd" secondAttribute="bottom" id="6p4-mO-FfD"/>
+                            <constraint firstAttribute="trailing" secondItem="0uf-gm-Yqg" secondAttribute="trailing" id="Edx-hK-WTi"/>
+                            <constraint firstItem="0uf-gm-Yqg" firstAttribute="top" secondItem="Czc-2J-RLh" secondAttribute="bottom" id="HKO-Hy-AFA"/>
+                            <constraint firstItem="Czc-2J-RLh" firstAttribute="leading" secondItem="ARi-FN-off" secondAttribute="leading" id="W3n-NP-Fin"/>
+                            <constraint firstAttribute="trailing" secondItem="Czc-2J-RLh" secondAttribute="trailing" id="fQM-iO-ekj"/>
+                            <constraint firstItem="Czc-2J-RLh" firstAttribute="top" secondItem="4wG-n0-gAd" secondAttribute="bottom" constant="44" id="fXp-jL-ytm"/>
+                            <constraint firstItem="Rvs-GC-xHA" firstAttribute="top" secondItem="0uf-gm-Yqg" secondAttribute="bottom" id="jWt-yg-xFP"/>
+                            <constraint firstItem="vhb-qz-Ed2" firstAttribute="top" secondItem="4wG-n0-gAd" secondAttribute="bottom" id="jgm-T4-kj1"/>
                             <constraint firstItem="J7H-27-Xjl" firstAttribute="centerX" secondItem="ARi-FN-off" secondAttribute="centerX" id="nt7-P1-oF3"/>
-                            <constraint firstAttribute="trailing" secondItem="FHg-wb-xjS" secondAttribute="trailing" constant="77" id="pvV-zM-OEZ"/>
-                            <constraint firstItem="vhb-qz-Ed2" firstAttribute="centerX" secondItem="ARi-FN-off" secondAttribute="centerX" id="smg-EE-NTv"/>
-                            <constraint firstItem="wVR-Tk-jqK" firstAttribute="top" secondItem="FHg-wb-xjS" secondAttribute="bottom" constant="66.5" id="xAG-pA-GV0"/>
+                            <constraint firstItem="vhb-qz-Ed2" firstAttribute="leading" secondItem="ARi-FN-off" secondAttribute="leading" constant="16" id="otm-Dd-E13"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="vhb-qz-Ed2" id="Vji-Xw-Er7"/>
-                        <outlet property="exploreButton" destination="wVR-Tk-jqK" id="zsX-j8-yoc"/>
-                        <outlet property="techniquesButton" destination="FHg-wb-xjS" id="fOo-86-6Kr"/>
+                        <outlet property="tableView" destination="Czc-2J-RLh" id="uaO-Jq-kk5"/>
                         <outlet property="titleLabel" destination="J7H-27-Xjl" id="qmo-9Z-OcG"/>
-                        <outlet property="workoutButton" destination="kaK-G0-Aqx" id="mcV-40-Ctn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O9n-fC-0ld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1484" y="116"/>
+            <point key="canvasLocation" x="-1484" y="115.59220389805098"/>
         </scene>
         <!--Character Animation Picker View Controller-->
         <scene sceneID="he5-sS-zzr">
