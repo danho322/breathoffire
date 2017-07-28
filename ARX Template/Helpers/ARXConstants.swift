@@ -13,3 +13,11 @@ struct Sizes {
     static let ScreenHeight: CGFloat = UIScreen.main.bounds.height
 }
 
+struct CellIdentifiers {
+    static let Technique = "TechniqueCell"
+    static let MOTD = "MOTDCellIdentifier"
+    static let MyPackages = "MyPackagesCellIdentifier"
+    static let Package = "PackageCellIdentifier"
+    static let ViewAllTechniques = "TechniquesCellIdentifier"
+    static let PackageDescription = "DescriptionCellIdentifier"
+}

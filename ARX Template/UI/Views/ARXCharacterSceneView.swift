@@ -10,9 +10,13 @@ import SceneKit
 
 class ARXCharacterSceneView: SCNView {
     var model: VirtualObject?
+    var charactorRotation: SCNVector4?
+    var cameraPosition: SCNVector3?
     
-    override init(frame: CGRect, options: [String : Any]? = nil) {
+    init(frame: CGRect, options: [String : Any]? = nil, characterRotation: SCNVector4? = nil, cameraPosition: SCNVector3? = nil) {
         super.init(frame: frame, options: options)
+        self.charactorRotation = characterRotation
+        self.cameraPosition = cameraPosition
         setupScene()
     }
     
@@ -41,7 +45,11 @@ class ARXCharacterSceneView: SCNView {
         cameraNode.camera = SCNCamera()
         
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 1, z: 3)
+        if let cameraPosition = cameraPosition {
+            cameraNode.position = cameraPosition
+        } else {
+            cameraNode.position = SCNVector3(x: 0, y: 0.7, z: 2)
+        }
         let constraint = SCNLookAtConstraint(target: target?.childNode(withName: "Pelvis", recursively: true))
         cameraNode.constraints = [constraint]
         
@@ -58,7 +66,9 @@ class ARXCharacterSceneView: SCNView {
         ambientLightNode.light!.color = UIColor.darkGray
         
         // rotating model
-        male.rotation = SCNVector4Make(0, 1, 0, -Float(Double.pi))
+        if let characterRotation = charactorRotation {
+            male.rotation = characterRotation
+        }
         self.scene?.rootNode.addChildNode(male)
         self.scene?.rootNode.addChildNode(cameraNode)
         self.scene?.rootNode.addChildNode(lightNode)

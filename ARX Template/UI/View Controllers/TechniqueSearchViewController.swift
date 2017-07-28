@@ -13,7 +13,6 @@ class TechniqueSearchViewController: UIViewController, TechniqueSearchable {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var searchImageView: NSLayoutConstraint!
     var searchableArray: [SearchableData] = []
     var filteredSearchableArray: [SearchableData] = []
     
@@ -24,10 +23,15 @@ class TechniqueSearchViewController: UIViewController, TechniqueSearchable {
         // Do any additional setup after loading the view.
         isHeroEnabled = false
         
+        view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        tableView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        ThemeManager.sharedInstance.formatSearchBar(searchBar)
+        
         tableView.dataSource = self
         tableView.register(UINib(nibName: "TechniqueTableCell", bundle: nil), forCellReuseIdentifier: "TechniqueCell")
         
         searchBar.delegate = self
+        searchBar.becomeFirstResponder()
         
         searchableArray = DataLoader.sharedInstance.allSearchableData()
     }
@@ -40,6 +44,10 @@ extension TechniqueSearchViewController: UISearchBarDelegate {
             self.filteredSearchableArray = filteredArray
             self.tableView.reloadData()
         }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

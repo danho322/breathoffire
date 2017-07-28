@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D422C2AE1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */; };
+		D422C2B01F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */; };
 		D427C9451F0770D30096C2A1 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D427C9441F0770C20096C2A1 /* InstructionView.swift */; };
 		D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42A6C501F1422AE00A3F2F0 /* TechniqueSearchable.swift */; };
 		D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B971F048282002F369F /* FocusSquare.swift */; };
@@ -34,6 +36,9 @@
 		D45621441F0B5B420052E218 /* SpruceAnimatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */; };
 		D45621461F0BEDC40052E218 /* UIViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621451F0BEDC40052E218 /* UIViewProtocols.swift */; };
 		D45621481F0CB3D00052E218 /* StatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621471F0CB3D00052E218 /* StatManager.swift */; };
+		D45AAC011F250E1F00BE41E0 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D45AAC001F250DC000BE41E0 /* SDWebImage.framework */; };
+		D45AAC021F250E1F00BE41E0 /* SDWebImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D45AAC001F250DC000BE41E0 /* SDWebImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D45AAC051F2563CC00BE41E0 /* PackageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45AAC041F2563CC00BE41E0 /* PackageDetailsViewController.swift */; };
 		D4612E2F1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4612E2E1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib */; };
 		D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A6E171F0FEECF0096446C /* FirebaseService.swift */; };
 		D46F91451F0EFB64003B7F8A /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F913D1F0EFB0A003B7F8A /* FirebaseAnalytics.framework */; };
@@ -77,6 +82,10 @@
 		D49103071EFB05CE008A528E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D49103051EFB05CE008A528E /* LaunchScreen.storyboard */; };
 		D49418891F231E0200CA83E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4612E301F231C08007D13C3 /* GoogleService-Info.plist */; };
 		D494188B1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D494188A1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift */; };
+		D494188D1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D494188C1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib */; };
+		D494188F1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D494188E1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift */; };
+		D49418911F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49418901F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift */; };
+		D49418931F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D49418921F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib */; };
 		D4A04AF81F09FD7900BEA822 /* Uke.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A04AF71F09FD7900BEA822 /* Uke.swift */; };
 		D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A04AF11F09FD3C00BEA822 /* Candle.swift */; };
 		D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A04AF21F09FD3C00BEA822 /* Chair.swift */; };
@@ -92,6 +101,8 @@
 		D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A091C11F2071C900C03805 /* ARXConstants.swift */; };
 		D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A43C051F1C858400978F69 /* StoreKitService.swift */; };
 		D4ADB2B31F1C3A3500D2D1A2 /* SwiftyStoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */; };
+		D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */; };
+		D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */; };
 		D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */; };
 		D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */; };
 		D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49103121EFB068E008A528E /* SceneKitExtensions.swift */; };
@@ -100,7 +111,23 @@
 		D4ECE16E1F22C7F400E8B788 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = D4ECE16C1F22C7F400E8B788 /* spark.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D45AAC031F250E1F00BE41E0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D45AAC021F250E1F00BE41E0 /* SDWebImage.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailsDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageDetailsDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		D427C9441F0770C20096C2A1 /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		D42A6C501F1422AE00A3F2F0 /* TechniqueSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueSearchable.swift; sourceTree = "<group>"; };
 		D43D4B951F048282002F369F /* ARSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARSettingsViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/ARSettingsViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +155,8 @@
 		D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpruceAnimatingViewController.swift; sourceTree = "<group>"; };
 		D45621451F0BEDC40052E218 /* UIViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewProtocols.swift; sourceTree = "<group>"; };
 		D45621471F0CB3D00052E218 /* StatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatManager.swift; sourceTree = "<group>"; };
+		D45AAC001F250DC000BE41E0 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
+		D45AAC041F2563CC00BE41E0 /* PackageDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailsViewController.swift; sourceTree = "<group>"; };
 		D4612E2E1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsMOTDTableViewCell.xib; sourceTree = "<group>"; };
 		D4612E301F231C08007D13C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4612E321F231D66007D13C3 /* GINInviteResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GINInviteResources.bundle; sourceTree = "<group>"; };
@@ -179,6 +208,10 @@
 		D49103121EFB068E008A528E /* SceneKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitExtensions.swift; sourceTree = "<group>"; };
 		D49103141EFB068E008A528E /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		D494188A1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsMOTDTableViewCell.swift; sourceTree = "<group>"; };
+		D494188C1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsMyPackagesTableViewCell.xib; sourceTree = "<group>"; };
+		D494188E1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsMyPackagesTableViewCell.swift; sourceTree = "<group>"; };
+		D49418901F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTechniquesTableViewCell.swift; sourceTree = "<group>"; };
+		D49418921F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsTechniquesTableViewCell.xib; sourceTree = "<group>"; };
 		D4A04AF11F09FD3C00BEA822 /* Candle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candle.swift; sourceTree = "<group>"; };
 		D4A04AF21F09FD3C00BEA822 /* Chair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chair.swift; sourceTree = "<group>"; };
 		D4A04AF31F09FD3C00BEA822 /* Cup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cup.swift; sourceTree = "<group>"; };
@@ -194,6 +227,8 @@
 		D4A091C11F2071C900C03805 /* ARXConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXConstants.swift; sourceTree = "<group>"; };
 		D4A43C051F1C858400978F69 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
 		D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyStoreKit.framework; path = Carthage/Build/iOS/SwiftyStoreKit.framework; sourceTree = "<group>"; };
+		D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsPackageTableViewCell.xib; sourceTree = "<group>"; };
+		D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPackageTableViewCell.swift; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
 		D4ECE16B1F22C7F400E8B788 /* Fire.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Fire.scnp; sourceTree = "<group>"; };
 		D4ECE16C1F22C7F400E8B788 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -224,6 +259,7 @@
 				D46F91471F0EFB64003B7F8A /* FirebaseCore.framework in Frameworks */,
 				D46F91481F0EFB64003B7F8A /* FirebaseCoreDiagnostics.framework in Frameworks */,
 				D46F91491F0EFB64003B7F8A /* FirebaseCrash.framework in Frameworks */,
+				D45AAC011F250E1F00BE41E0 /* SDWebImage.framework in Frameworks */,
 				D46F914A1F0EFB64003B7F8A /* FirebaseDatabase.framework in Frameworks */,
 				D46F914B1F0EFB64003B7F8A /* FirebaseInstanceID.framework in Frameworks */,
 				D46F914C1F0EFB64003B7F8A /* FirebaseMessaging.framework in Frameworks */,
@@ -252,6 +288,7 @@
 				D44EE6101EFD388F003A1A3E /* TechniqueSceneKitViewController.swift */,
 				D49102FE1EFB05CE008A528E /* TechniqueARViewController.swift */,
 				D4730ED81F14444D003097BE /* TechniqueSearchViewController.swift */,
+				D45AAC041F2563CC00BE41E0 /* PackageDetailsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -259,12 +296,16 @@
 		D40478EF1F02222E00E9F2D9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D49418901F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift */,
 				D45352BC1EFDDCA600C09259 /* CharacterHUDView.swift */,
 				D427C9441F0770C20096C2A1 /* InstructionView.swift */,
 				D4A04B011F0B146200BEA822 /* RelatedAnimationsView.swift */,
 				D45621411F0B59730052E218 /* TechniqueTableCell.swift */,
 				D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */,
 				D494188A1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift */,
+				D494188E1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift */,
+				D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */,
+				D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,6 +348,10 @@
 				D4A04B031F0B173000BEA822 /* RelatedAnimationsView.xib */,
 				D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */,
 				D4612E2E1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib */,
+				D494188C1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib */,
+				D49418921F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib */,
+				D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */,
+				D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */,
 			);
 			path = "Interface Builder";
 			sourceTree = "<group>";
@@ -325,6 +370,7 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D45AAC001F250DC000BE41E0 /* SDWebImage.framework */,
 				D4612E311F231D66007D13C3 /* Resources */,
 				D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */,
 				D44B737C1F1A661E00115C64 /* SceneKit.framework */,
@@ -487,6 +533,7 @@
 				D49102F41EFB05CE008A528E /* Frameworks */,
 				D49102F51EFB05CE008A528E /* Resources */,
 				D48A5F721EFC9BF500A46A73 /* ShellScript */,
+				D45AAC031F250E1F00BE41E0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -539,9 +586,13 @@
 				D4A04B001F0A09A400BEA822 /* Models.scnassets in Resources */,
 				D4ECE16E1F22C7F400E8B788 /* spark.png in Resources */,
 				D49102FD1EFB05CE008A528E /* art.scnassets in Resources */,
+				D422C2B01F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib in Resources */,
 				D49103071EFB05CE008A528E /* LaunchScreen.storyboard in Resources */,
+				D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */,
+				D49418931F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib in Resources */,
 				D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */,
 				D49103041EFB05CE008A528E /* Assets.xcassets in Resources */,
+				D494188D1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib in Resources */,
 				D45352BB1EFDDC5100C09259 /* CharacterHUDView.xib in Resources */,
 				D45621401F0B58BB0052E218 /* TechniqueTableCell.xib in Resources */,
 				D4A04B041F0B173000BEA822 /* RelatedAnimationsView.xib in Resources */,
@@ -580,10 +631,12 @@
 				D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */,
 				D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */,
 				D4A091C01F2070AE00C03805 /* ARXUtilities.swift in Sources */,
+				D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */,
 				D45621461F0BEDC40052E218 /* UIViewProtocols.swift in Sources */,
 				D4A04AFB1F09FF2100BEA822 /* Cup.swift in Sources */,
 				D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */,
 				D4A04AFC1F09FF2100BEA822 /* Instructor.swift in Sources */,
+				D494188F1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift in Sources */,
 				D4A04AFD1F09FF2100BEA822 /* Lamp.swift in Sources */,
 				D4A04AFE1F09FF2100BEA822 /* Vase.swift in Sources */,
 				D427C9451F0770D30096C2A1 /* InstructionView.swift in Sources */,
@@ -597,6 +650,7 @@
 				D45352C11EFDDDBC00C09259 /* UIViewExtensions.swift in Sources */,
 				D4A04B021F0B146200BEA822 /* RelatedAnimationsView.swift in Sources */,
 				D44EE60F1EFCDFA0003A1A3E /* OptionsViewController.swift in Sources */,
+				D49418911F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift in Sources */,
 				D43D4BAD1F048282002F369F /* PlaneDebugVisualization.swift in Sources */,
 				D43D4BB61F048282002F369F /* VirtualObjectSelectionViewController.swift in Sources */,
 				D48A5F741EFCC48F00A46A73 /* MenuViewController.swift in Sources */,
@@ -610,6 +664,7 @@
 				D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */,
 				D49102FF1EFB05CE008A528E /* TechniqueARViewController.swift in Sources */,
 				D43D4BAC1F048282002F369F /* Plane.swift in Sources */,
+				D422C2AE1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift in Sources */,
 				D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */,
 				D45352BD1EFDDCA600C09259 /* CharacterHUDView.swift in Sources */,
 				D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */,
@@ -624,6 +679,7 @@
 				D43D4BAF1F048282002F369F /* Utilities.swift in Sources */,
 				D46F91771F0F04AA003B7F8A /* SessionManager.swift in Sources */,
 				D470B8D11F1F19CC00920CAB /* ThemeManager.swift in Sources */,
+				D45AAC051F2563CC00BE41E0 /* PackageDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

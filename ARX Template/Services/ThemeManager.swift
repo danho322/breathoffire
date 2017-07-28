@@ -23,6 +23,10 @@ struct ThemeManager {
         return UIColor(red: 92 / 255.0, green: 179 / 255.0, blue: 126 / 255.0, alpha: 1)
     }
     
+    func focusForegroundColor() -> UIColor {
+        return UIColor.white
+    }
+    
     func labelTitleColor() -> UIColor {
         return UIColor(red: 152 / 255.0, green: 138 / 255.0, blue: 178 / 255.0, alpha: 1)
     }
@@ -36,18 +40,26 @@ struct ThemeManager {
     }
     
     func defaultFont(_ size: CGFloat) -> UIFont {
-        let fontFamilyNames = UIFont.familyNames
-        for familyName in fontFamilyNames {
-            print("------------------------------")
-            print("Font Family Name = [\(familyName)]")
-            let names = UIFont.fontNames(forFamilyName: familyName)
-            print("Font Names = [\(names)]")
-        }
+//        let fontFamilyNames = UIFont.familyNames
+//        for familyName in fontFamilyNames {
+//            print("------------------------------")
+//            print("Font Family Name = [\(familyName)]")
+//            let names = UIFont.fontNames(forFamilyName: familyName)
+//            print("Font Names = [\(names)]")
+//        }
         
         return UIFont(name: "AvenirNext-Regular", size: size) ?? UIFont.systemFont(ofSize: size)
     }
     
     func heavyFont(_ size: CGFloat) -> UIFont {
         return UIFont(name: "AvenirNext-Bold", size: size) ?? UIFont.boldSystemFont(ofSize: size)
+    }
+    
+    func formatSearchBar(_ searchBar: UISearchBar) {
+        UIBarButtonItem.appearance(whenContainedInInstancesOf:[UISearchBar.self]).tintColor = focusForegroundColor()
+
+        searchBar.barTintColor = foregroundColor()
+        searchBar.backgroundColor = backgroundColor()
+        searchBar.tintColor = focusForegroundColor()
     }
 }

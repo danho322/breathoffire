@@ -13,6 +13,23 @@ import UIKit
 struct Constants {
     static let AppKey = "jiujitsu"
 }
+
+// This class stores the remote app data
+
+struct UserData {
+    let tokenCount: Int
+    let purchasedPackages: [String: Any]
+    
+    init(snapshotDict: NSDictionary) {
+        tokenCount = snapshotDict["tokenCount"] as? Int ?? 0
+        if let packagesDict = snapshotDict["purchasedPackages"] as? [String: Any] {
+            purchasedPackages = packagesDict
+        } else {
+            purchasedPackages = Dictionary<String, Any>()
+        }
+    }
+}
+
 class FirebaseService {
     static let sharedInstance = FirebaseService()
     
@@ -21,6 +38,7 @@ class FirebaseService {
     var animationRefs: [String: DatabaseReference] = Dictionary()
     var instructionRefs: [String: DatabaseReference] = Dictionary()
     
+    var animationPackages: [AnimationPackage] = []
     var sequenceSections: [String] = []
     var sequenceRows: [String: [String]] = Dictionary()
     var sequenceDataDict: [String: AnimationSequenceDataContainer] = Dictionary()
@@ -29,13 +47,55 @@ class FirebaseService {
     
     // MARK: - Realtime DB
     
-    func setUserAttribute(userId: String, userName: String) {
-        let userRef = Database.database().reference().child("users/\(Constants.AppKey)")
+    func retrieveUser(userId: String, handler: @escaping ((UserData) -> Void)) {
+        let userRef = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
+        userRef.observe(.value, with: { snapshot in
+            if let userDict = snapshot.value as? NSDictionary {
+                handler(UserData(snapshotDict: userDict))
+            }
+        })
+    }
+    
+    func setUserName(userId: String, userName: String) {
+        let userRef = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         
-        userRef.child("\(userId)/userName").setValue(userName)
-        userRef.child("\(userId)/lastLoggedIn").setValue(Date().description)
+        userRef.child("userName").setValue(userName)
+        userRef.child("lastLoggedIn").setValue(Date().description)
         
         incrementAttributeCount(userId: userId, attributeName: "playCount")
+    }
+    
+    func setUserAttribute(userId: String, attributeName: String, value: Any) {
+        let userRef = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
+        
+        userRef.child(attributeName).setValue(value)
+    }
+    
+    func purchasePackageAndDecrementToken(userId: String, packageName: String, completed: @escaping ((Bool) -> Void)) {
+        let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
+        ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
+            if var user = currentData.value as? [String : AnyObject] {
+                var packageDict = user["purchasedPackages"] as? [String: Any] ?? Dictionary<String, Any>()
+                packageDict[packageName] = 1
+                user["purchasedPackages"] = packageDict as AnyObject?
+                
+                var tokenCount = user["tokenCount"] as? Int ?? 0
+                tokenCount -= 1
+                tokenCount = tokenCount >= 0 ? tokenCount : 0
+                user["tokenCount"] = tokenCount as AnyObject?
+                
+                // Set value and report transaction success
+                currentData.value = user
+                
+                return TransactionResult.success(withValue: currentData)
+            }
+            return TransactionResult.success(withValue: currentData)
+        }) { (error, committed, snapshot) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            completed(committed)
+        }
     }
     
     func incrementAttributeCount(userId: String, attributeName: String) {
@@ -59,7 +119,37 @@ class FirebaseService {
         }
     }
     
+    func decrementAttributeCount(userId: String, attributeName: String) {
+        let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
+        ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
+            if var post = currentData.value as? [String : AnyObject] {
+                var starCount = post[attributeName] as? Int ?? 0
+                starCount -= 1
+                starCount = starCount >= 0 ? starCount : 0
+                post[attributeName] = starCount as AnyObject?
+                
+                // Set value and report transaction success
+                currentData.value = post
+                
+                return TransactionResult.success(withValue: currentData)
+            }
+            return TransactionResult.success(withValue: currentData)
+        }) { (error, committed, snapshot) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     // MARK: - Image loading
+    
+    func retrieveImageAtPath(path: String, completion: @escaping (UIImage) -> Void) {
+        self.downloadFileIfNecessary(path: path) {
+            if let image = UIImage(contentsOfFile: "\(self.getDocumentsDirectory())/\(path)") {
+                completion(image)
+            }
+        }
+    }
     
     func retrieveBackgroundImage(completion: @escaping (UIImage) -> Void) {
         let sectionNamesRef = Database.database().reference().child("config/\(Constants.AppKey)/menuBackgroundImage")
@@ -85,6 +175,21 @@ class FirebaseService {
                     if let sectionString = sectionSequence as? String {
                         self.retrieveSection(sectionSequence: sectionString)
                         self.sequenceSections.append(sectionString)
+                    }
+                }
+            }
+        })
+        
+        let packagesRef = Database.database().reference().child("animationPackages/\(Constants.AppKey)")
+        packagesRef.observe(.value, with: { [unowned self] snapshot in
+            self.animationPackages.removeAll()
+            if let animationPackagesArray = snapshot.value as? NSArray {
+                for animationPackage in animationPackagesArray {
+                    if let animationPackage = animationPackage as? NSDictionary {
+                        let package = AnimationPackage(snapshotDict: animationPackage)
+                        if package.packageName.characters.count > 0 {
+                            self.animationPackages.append(package)
+                        }
                     }
                 }
             }
@@ -132,6 +237,7 @@ class FirebaseService {
         }
     }
     
+    // need a way to retrieve orphan animations too? or just keep addding to dummy sequence
     internal func retrieveAnimationData(animationName: String?, retrieveInstruction: Bool = false) {
         guard let animationName = animationName else {
             return
@@ -189,8 +295,10 @@ class FirebaseService {
         print(path)
         let downloadTask = imageRef.write(toFile: URL(fileURLWithPath: "\(getDocumentsDirectory())/\(path)")) { url, error in
             if let error = error {
+                print("ERROR: \(error)")
                 // Uh-oh, an error occurred!
             } else {
+                print("File written successfully")
                 // Local file URL for "images/island.jpg" is returned
                 completion?()
             }
@@ -215,15 +323,30 @@ class FirebaseService {
     }
 }
 
+struct AnimationPackage {
+    let packageName: String
+    let packageDescription: String
+    let imageBGPath: String
+    let tokenCost: Int
+    
+    init(snapshotDict: NSDictionary) {
+        packageName = snapshotDict["packageName"] as? String ?? ""
+        packageDescription = snapshotDict["packageDescription"] as? String ?? ""
+        imageBGPath = snapshotDict["imageBGPath"] as? String ?? ""
+        tokenCost = snapshotDict["tokenCost"] as? Int ?? 1
+    }
+}
+
 struct AnimationSequenceDataContainer: SearchableData {
     let sequenceName: String
     let sequenceDescription: String
     let sequenceArray: [AnimationSequenceData]
+    let packageName: String
     
     init(sequenceName: String, snapshotDict: NSDictionary) {
         self.sequenceName = sequenceName
         sequenceDescription = snapshotDict["sequenceDescription"] as? String ?? ""
-        
+        packageName = snapshotDict["packageName"] as? String ?? ""
         var sequenceArrayTemp: [AnimationSequenceData] = []
         if let sequenceDataArray = snapshotDict["sequenceArray"] as? NSArray {
             for sequenceData in sequenceDataArray {
@@ -232,7 +355,6 @@ struct AnimationSequenceDataContainer: SearchableData {
                     sequenceArrayTemp.append(sequence)
                 }
             }
-            
         }
         sequenceArray = sequenceArrayTemp
     }

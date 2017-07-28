@@ -73,6 +73,7 @@ class MenuViewController: UIViewController {
         sportLabel.alpha = 0
         sportLabel.alpha = 0
         
+        selectLabel.text = "SELECT MODE"
         selectLabel.alpha = 0
         sceneContainer0.alpha = 0
         sceneContainer1.alpha = 0
@@ -85,16 +86,16 @@ class MenuViewController: UIViewController {
             let sceneFrame0 = CGRect(x: borderWidth, y: borderWidth, width: self.sceneContainer0.frame.size.width - 2 * borderWidth, height: self.sceneContainer0.frame.size.height - 2 * borderWidth)
             let sceneFrame1 = CGRect(x: borderWidth, y: borderWidth, width: self.sceneContainer1.frame.size.width - 2 * borderWidth, height: self.sceneContainer1.frame.size.height - 2 * borderWidth)
             
-            let characterScene0 = ARXCharacterSceneView(frame: sceneFrame0)
+            let characterScene0 = ARXCharacterSceneView(frame: sceneFrame0, cameraPosition: SCNVector3(x: 0, y: 0.3, z: 2))
             characterScene0.isUserInteractionEnabled = false
-            let characterScene1 = ARXCharacterSceneView(frame: sceneFrame1)
+            let characterScene1 = ARXCharacterSceneView(frame: sceneFrame1, characterRotation: SCNVector4Make(0, 1, 0, -Float(Double.pi)))
             characterScene1.isUserInteractionEnabled = false
             
             if let fire = SCNParticleSystem(named: "Fire.scnp", inDirectory: nil) {
                 characterScene0.model?.childNode(withName: "spine_03", recursively: true)?.addParticleSystem(fire)
             }
 
-            let data0 = DataLoader.sharedInstance.characterAnimation(name: "Tai Chi 3")
+            let data0 = DataLoader.sharedInstance.characterAnimation(name: "Menu Meditation")
             characterScene0.repeatAnimationData(data: data0)
             characterScene1.repeatAnimationData(data: DataLoader.sharedInstance.characterAnimation(name: "Movement Test 1"))
             
@@ -125,8 +126,9 @@ class MenuViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            if let optionsVC = self.storyboard?.instantiateViewController(withIdentifier: "OptionsIdentifier") {
+            if let optionsVC = self.storyboard?.instantiateViewController(withIdentifier: "OptionsIdentifier") as? OptionsViewController {
                 self.show(optionsVC, sender: self)
+                optionsVC.titleLabel.text = selectLabel.text
             }
         }
     }
@@ -135,11 +137,13 @@ class MenuViewController: UIViewController {
         sceneContainer0.backgroundColor = ThemeManager.sharedInstance.focusColor()
         sceneContainer1.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         selectedMode = .breathe
+        selectLabel.text = "BREATHE"
     }
     
     @objc internal func onScene1Tap(sender: AnyObject) {
         sceneContainer0.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         sceneContainer1.backgroundColor = ThemeManager.sharedInstance.focusColor()
         selectedMode = .jiujitsu
+        selectLabel.text = "JIUJITSU"
     }
 }

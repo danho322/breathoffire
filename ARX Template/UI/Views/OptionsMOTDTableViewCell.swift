@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class OptionsMOTDTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -17,6 +18,19 @@ class OptionsMOTDTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        titleLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
+        moveTitleLabel.textColor = ThemeManager.sharedInstance.textColor()
+        moveDescriptionLabel.textColor = ThemeManager.sharedInstance.textColor()
+        
+        titleLabel.font = ThemeManager.sharedInstance.heavyFont(16)
+        moveTitleLabel.font = ThemeManager.sharedInstance.heavyFont(16)
+        moveDescriptionLabel.font = ThemeManager.sharedInstance.defaultFont(16)
+    
+        let chevronIcon = FAKIonIcons.chevronRightIcon(withSize: 20)
+        chevronIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        loadButton.setAttributedTitle(chevronIcon?.attributedString(), for: .normal)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -107,6 +107,24 @@ struct DataLoader {
             return FirebaseService.sharedInstance.fileExist(path: animation.fileName)
         }
     }
+    
+    // Content
+    
+    func moveOfTheDay() -> AnimationSequenceDataContainer? {
+        return sequenceData(sequenceName: "Alan Test Armbar")
+    }
+    
+    func packages() -> [AnimationPackage] {
+        return FirebaseService.sharedInstance.animationPackages
+    }
+    
+    func package(packageName: String) -> AnimationPackage? {
+        return FirebaseService.sharedInstance.animationPackages.filter({ $0.packageName == packageName }).first
+    }
+    
+    func sequencesInPackage(packageName: String) -> [AnimationSequenceDataContainer] {
+        return FirebaseService.sharedInstance.sequenceDataDict.values.filter({ $0.packageName == packageName })
+    }
 }
 
 struct SceneModelData {

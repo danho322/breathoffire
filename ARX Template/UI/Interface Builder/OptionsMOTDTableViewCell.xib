@@ -26,7 +26,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igf-OQ-M3H">
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igf-OQ-M3H">
                         <rect key="frame" x="322" y="79" width="45" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="45" id="lAv-o5-Th4"/>
@@ -34,13 +34,13 @@
                         <state key="normal" title="Button"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYT-p1-cdC">
-                        <rect key="frame" x="8" y="71" width="304" height="106.5"/>
+                        <rect key="frame" x="8" y="71" width="304" height="66.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PAU-SW-5m8">
-                        <rect key="frame" x="-0.5" y="8" width="375" height="21"/>
+                        <rect key="frame" x="8" y="8" width="42" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="iO7-1N-72B"/>
                         </constraints>
@@ -50,9 +50,9 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="PAU-SW-5m8" firstAttribute="width" secondItem="T1i-9T-5xb" secondAttribute="width" id="7gb-9t-3Bz"/>
                     <constraint firstItem="lYT-p1-cdC" firstAttribute="top" secondItem="g7W-iC-T5u" secondAttribute="bottom" constant="3" id="JGd-lm-pWL"/>
                     <constraint firstItem="PAU-SW-5m8" firstAttribute="top" secondItem="T1i-9T-5xb" secondAttribute="top" constant="8" id="YqZ-Sw-fTr"/>
+                    <constraint firstItem="PAU-SW-5m8" firstAttribute="leading" secondItem="T1i-9T-5xb" secondAttribute="leading" constant="8" id="cQS-tN-JrC"/>
                     <constraint firstItem="g7W-iC-T5u" firstAttribute="leading" secondItem="T1i-9T-5xb" secondAttribute="leading" constant="8" id="efK-WH-pBD"/>
                     <constraint firstItem="Igf-OQ-M3H" firstAttribute="centerY" secondItem="T1i-9T-5xb" secondAttribute="centerY" id="ejQ-ZJ-cit"/>
                     <constraint firstItem="lYT-p1-cdC" firstAttribute="leading" secondItem="g7W-iC-T5u" secondAttribute="leading" id="f9c-Re-mwT"/>
@@ -60,8 +60,7 @@
                     <constraint firstItem="lYT-p1-cdC" firstAttribute="width" secondItem="g7W-iC-T5u" secondAttribute="width" id="lcl-1H-IRC"/>
                     <constraint firstItem="Igf-OQ-M3H" firstAttribute="leading" secondItem="g7W-iC-T5u" secondAttribute="trailing" constant="10" id="lzO-c9-Cjv"/>
                     <constraint firstItem="g7W-iC-T5u" firstAttribute="top" secondItem="PAU-SW-5m8" secondAttribute="bottom" constant="18" id="qKo-9j-PE2"/>
-                    <constraint firstAttribute="bottom" secondItem="lYT-p1-cdC" secondAttribute="bottom" constant="10" id="qqv-jS-yYK"/>
-                    <constraint firstItem="PAU-SW-5m8" firstAttribute="centerX" secondItem="T1i-9T-5xb" secondAttribute="centerX" id="sQ7-7l-l6h"/>
+                    <constraint firstAttribute="bottom" secondItem="lYT-p1-cdC" secondAttribute="bottom" constant="50" id="qqv-jS-yYK"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

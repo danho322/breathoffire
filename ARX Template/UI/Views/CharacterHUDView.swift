@@ -27,6 +27,8 @@ class CharacterHUDView: XibView {
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var instructorSwitch: UISwitch!
     @IBOutlet weak var ukeSwitch: UISwitch!
+    @IBOutlet weak var instructorSwitchLabel: UILabel!
+    @IBOutlet weak var ukeSwitchLabel: UILabel!
     internal var sliderValue: Float = 0.5
     internal var isShowing = false
     internal var isPaused = true
@@ -54,6 +56,11 @@ class CharacterHUDView: XibView {
         let pauseIcon = FAKMaterialIcons.pauseIcon(withSize: 25)
         pauseIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         view.pauseButton.setAttributedTitle(pauseIcon?.attributedString(), for: .normal)
+        
+        view.instructorSwitchLabel.font = ThemeManager.sharedInstance.defaultFont(12)
+        view.instructorSwitchLabel.textColor = ThemeManager.sharedInstance.textColor()
+        view.ukeSwitchLabel.font = ThemeManager.sharedInstance.defaultFont(12)
+        view.ukeSwitchLabel.textColor = ThemeManager.sharedInstance.textColor()
     }
     
     internal func updateShowHudButtonIcon(view: CharacterHUDView) {

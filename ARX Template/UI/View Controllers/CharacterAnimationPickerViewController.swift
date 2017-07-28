@@ -13,6 +13,10 @@ import Hero
 import FontAwesomeKit
 import Spruce
 
+struct CharacterAnimationPickerConstants {
+    
+}
+
 class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
 
     @IBOutlet weak var sceneView: SCNView!
@@ -20,27 +24,53 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var loadButton: UIButton!
     
-    var model: VirtualObject?
+    var packageName: String?
     
-    var sequenceToLoad: [AnimationSequenceData] = []
-    var sliderValue: Float = 0
+    internal var sectionSequenceDict = Dictionary<String, [String]>()
+    internal var sectionNames: [String] = []
+    
+    internal var model: VirtualObject?
+    internal var sequenceToLoad: [AnimationSequenceData] = []
+    internal var sliderValue: Float = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         isHeroEnabled = false
         
-        // Do any additional setup after loading the view.
+        sectionNames = DataLoader.sharedInstance.sequenceSections()
+        for sectionName in sectionNames {
+            if let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName) {
+                if let packageName = packageName {
+                    var filteredArray: [String] = []
+                    for sequenceName in sequenceRowArray {
+                        if let sequenceData = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName) {
+                            if sequenceData.packageName == packageName {
+                                filteredArray.append(sequenceName)
+                            }
+                        }
+                    }
+                    sectionSequenceDict[sectionName] = filteredArray
+                } else {
+                    sectionSequenceDict[sectionName] = sequenceRowArray
+                }
+            }
+        }
+        
+        let techniquesNib = UINib(nibName: String(describing: TechniqueTableCell.self), bundle: nil)
+        tableView.register(techniquesNib , forCellReuseIdentifier: CellIdentifiers.Technique)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         tableView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         tableView.separatorColor = ThemeManager.sharedInstance.backgroundColor()
         
-        tableView.dataSource = self
-        tableView.delegate = self
         
-        animations = [.slide(.up, .slightly), .fadeIn]
-        sortFunction = LinearSortFunction(direction: .topToBottom, interObjectDelay: 0.05)
-        animationView = tableView
+//        animations = [.slide(.up, .slightly), .fadeIn]
+//        sortFunction = LinearSortFunction(direction: .topToBottom, interObjectDelay: 0.05)
+//        animationView = tableView
         
         let loadIcon = FAKFoundationIcons.playIcon(withSize: 25)
         loadIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
@@ -51,15 +81,9 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         loadButton.setAttributedTitle(loadIcon?.attributedString(), for: .normal)
         backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
         
-        tableView.register(UINib(nibName: "TechniqueTableCell", bundle: nil), forCellReuseIdentifier: "TechniqueCell")
         view.alpha = 0
         
         DispatchQueue.global().async {
-            // retrieve the SCNView
-            // hack to test animation
-//            self.sceneView.scene = SCNScene(named: "Models.scnassets/jiujitsu/JiujitsuModel.dae")!
-//            let target = self.sceneView.scene!.rootNode.childNode(withName: "Armtr", recursively: true)
-
             self.sceneView.scene = SCNScene()
             let male = Instructor()
             male.loadModel()
@@ -124,12 +148,13 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         }
     }
     
-    internal func sequenceDataArray(indexPath: IndexPath) -> [AnimationSequenceData]? {
-        if let sectionName = DataLoader.sharedInstance.sequenceSections()[safe: indexPath.section],
-            let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName),
-            let sequenceName = sequenceRowArray[safe: indexPath.row] {
-            let dataContainer = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName)
-            return dataContainer?.sequenceArray
+//    refactor this to return container and then for everything to use this correctly
+    internal func sequenceDataArray(indexPath: IndexPath) -> AnimationSequenceDataContainer? {
+        let sectionName = sectionNames[indexPath.section]
+        if let sequenceArray = sectionSequenceDict[sectionName], let sequenceName = sequenceArray[safe: indexPath.row] {
+            if let sequenceData = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName) {
+                return sequenceData
+            }
         }
         return nil
     }
@@ -138,98 +163,54 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
 // MARK: - UITableViewDataSource
 extension CharacterAnimationPickerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let sectionName = DataLoader.sharedInstance.sequenceSections()[safe: section],
-            let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName) {
-                return sequenceRowArray.count
-        }
-        return 0
+        let sequenceDict = sectionSequenceDict[sectionNames[section]]
+        return sequenceDict?.count ?? 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return DataLoader.sharedInstance.sequenceSections().count
+        return sectionNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TechniqueCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier:  CellIdentifiers.Technique, for: indexPath)
         if let cell = cell as? TechniqueTableCell {
-            if let sectionName = DataLoader.sharedInstance.sequenceSections()[safe: indexPath.section],
-                let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName),
-                let sequenceName = sequenceRowArray[safe: indexPath.row] {
-                cell.update(with: sequenceName)
+            if let sequenceContainer = sequenceDataArray(indexPath: indexPath) {
+                cell.update(with: sequenceContainer.sequenceName)
             }
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let sectionName = DataLoader.sharedInstance.sequenceSections()[safe: indexPath.section],
-            let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName),
-            let sequenceName = sequenceRowArray[safe: indexPath.row] {
-            return TechniqueTableCell.cellSize(sequenceName: sequenceName)
-        }
-        return 50
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        let rowCount = sectionSequenceDict[sectionNames[section]]?.count ?? 0
+        return rowCount > 0 ? 30 : CGFloat.leastNonzeroMagnitude
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
-        view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        let label = UILabel(frame: CGRect(x: 10, y: 0, width: tableView.frame.size.width - 50, height: 30))
-        label.backgroundColor = UIColor.clear
-        label.textColor = ThemeManager.sharedInstance.labelTitleColor()
-        label.font = ThemeManager.sharedInstance.defaultFont(14)
-        label.text = DataLoader.sharedInstance.sequenceSections()[safe: section] ?? ""
-        view.addSubview(label)
-        return view
+        let sectionName = sectionNames[section]
+        let rowCount = sectionSequenceDict[sectionName]?.count ?? 0
+        if rowCount > 0 {
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
+            view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+            let label = UILabel(frame: CGRect(x: 10, y: 0, width: tableView.frame.size.width - 50, height: 30))
+            label.backgroundColor = UIColor.clear
+            label.textColor = ThemeManager.sharedInstance.labelTitleColor()
+            label.font = ThemeManager.sharedInstance.defaultFont(14)
+            label.text = sectionName
+            view.addSubview(label)
+            return view
+        }
+        return nil
     }
 }
 
 // MARK: - UITableViewDelegate
 extension CharacterAnimationPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-         // trying to debug what is happening with keyframes not loading on simulator
-//        var animation: CAAnimation?
-//        if let scene = SCNScene(named: "Models.scnassets/jiujitsu/Perception.dae") {
-//            scene.rootNode.enumerateChildNodes({ (child, stop) in
-//                if child.animationKeys.count > 0 {
-//                    animation = child.animation(forKey: child.animationKeys.first!)
-//                    stop.initialize(to: true)
-//                }
-//            })
-//        }
-//        if let animationGroup = animation as? CAAnimationGroup, let animations = animationGroup.animations {
-//            for subanimation in animations {
-//                if let keyframeAnimation = subanimation as? CAKeyframeAnimation {
-//                    print(keyframeAnimation.keyPath)
-//                    if let nodePath = keyframeAnimation.keyPath?.replacingOccurrences(of: "/", with: "") {
-//                        let nodeName = nodePath.replacingOccurrences(of: ".transform", with: "")
-//                        if let node = sceneView.scene!.rootNode.childNode(withName: nodeName, recursively: true) {
-//                            keyframeAnimation.keyPath = "transform"
-//                            print(keyframeAnimation.values)
-//                            node.addAnimation(keyframeAnimation, forKey: "\(nodeName)Animation")
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
-        // this works on device
-//        let armtr = sceneView.scene!.rootNode.childNode(withName: "Armtr", recursively: true)
-//        armtr?.addAnimation(animation!, forKey: "messi")
-//        print(armtr)
-//        return
-        
-        
-        
-        
-        if let sequenceDataArray = sequenceDataArray(indexPath: indexPath) {
-            sequenceToLoad = sequenceDataArray
-            model?.loadAnimationSequence(animationSequence: sequenceDataArray)
+        if let sequenceContainer = sequenceDataArray(indexPath: indexPath) {
+            sequenceToLoad = sequenceContainer.sequenceArray
+            model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray)
         }
     }
 }
