@@ -133,7 +133,7 @@ extension OptionsViewController: UITableViewDelegate {
                 self.present(packageDetailsVC, animated: true, completion: nil)
             }
         } else {
-            handlePackageTap(packageName: nil)
+            handlePackageTap(packageName: "Jiujitsu Basics")
         }
     }
 }

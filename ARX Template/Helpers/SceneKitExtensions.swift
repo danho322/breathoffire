@@ -8,8 +8,14 @@
 
 import SceneKit
 import SpriteKit
+import Foundation
 
 // MARK: SceneKit
+
+extension FloatingPoint {
+    var degreesToRadians: Self { return self * .pi / 180 }
+    var radiansToDegrees: Self { return self * 180 / .pi }
+}
 
 extension SCNTransaction {
     class func animateWithDuration(_ duration: CFTimeInterval = 0.25, timingFunction: CAMediaTimingFunction? = nil, completionBlock: (() -> Void)? = nil, animations: () -> Void) {

@@ -13,7 +13,7 @@ class Uke: VirtualObject {
     override init() {
         super.init()
         self.name = "Virtual object root node"
-        self.modelName = "NakedMaleWithTextures"
+        self.modelName = "JiujitsuModel4"
         self.fileExtension = "dae"
         self.thumbImage = UIImage(named: "cup")
         self.title = "NakedMale"
@@ -25,7 +25,7 @@ class Uke: VirtualObject {
     }
     
     override func loadModel() {
-        guard let virtualObjectScene = SCNScene(named: "\(modelName).\(fileExtension)", inDirectory: "Models.scnassets/nakedman") else {
+        guard let virtualObjectScene = SCNScene(named: "\(modelName).\(fileExtension)", inDirectory: "Models.scnassets/jiujitsu") else {
             return
         }
         

@@ -101,6 +101,8 @@
 		D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A091C11F2071C900C03805 /* ARXConstants.swift */; };
 		D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A43C051F1C858400978F69 /* StoreKitService.swift */; };
 		D4ADB2B31F1C3A3500D2D1A2 /* SwiftyStoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */; };
+		D4B06A901F2AD87C004DFE50 /* Nodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B06A8F1F2AD87C004DFE50 /* Nodes.swift */; };
+		D4B06A941F2BA1F0004DFE50 /* PortalRoomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */; };
 		D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */; };
 		D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */; };
 		D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */; };
@@ -227,6 +229,9 @@
 		D4A091C11F2071C900C03805 /* ARXConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXConstants.swift; sourceTree = "<group>"; };
 		D4A43C051F1C858400978F69 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
 		D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyStoreKit.framework; path = Carthage/Build/iOS/SwiftyStoreKit.framework; sourceTree = "<group>"; };
+		D4B06A8F1F2AD87C004DFE50 /* Nodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nodes.swift; sourceTree = "<group>"; };
+		D4B06A921F2BA1C5004DFE50 /* Media.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Media.scnassets; sourceTree = "<group>"; };
+		D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalRoomObject.swift; sourceTree = "<group>"; };
 		D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsPackageTableViewCell.xib; sourceTree = "<group>"; };
 		D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPackageTableViewCell.swift; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
@@ -282,6 +287,7 @@
 		D40478EE1F02221900E9F2D9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D48AAFB11F04803F0091B261 /* ARTechniqueViewController.swift */,
 				D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */,
 				D48A5F731EFCC48F00A46A73 /* MenuViewController.swift */,
 				D44EE60E1EFCDFA0003A1A3E /* OptionsViewController.swift */,
@@ -335,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				D44B24E31F182E7E00459032 /* VirtualObject.swift */,
+				D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -413,13 +420,13 @@
 			isa = PBXGroup;
 			children = (
 				D4A04AF01F09FD3C00BEA822 /* Virtual Objects */,
-				D48AAFB11F04803F0091B261 /* ARTechniqueViewController.swift */,
 				D43D4B9C1F048282002F369F /* ARCameraTrackingState.swift */,
 				D43D4B951F048282002F369F /* ARSettingsViewController.swift */,
 				D43D4BA41F048282002F369F /* TextManager.swift */,
 				D43D4B961F048282002F369F /* UI Elements */,
 				D43D4B9D1F048282002F369F /* Utilities.swift */,
 				D43D4BA51F048282002F369F /* VirtualObjectSelectionViewController.swift */,
+				D4B06A8F1F2AD87C004DFE50 /* Nodes.swift */,
 			);
 			path = "ARKit Helper";
 			sourceTree = "<group>";
@@ -455,6 +462,7 @@
 				D49102FA1EFB05CE008A528E /* AppDelegate.swift */,
 				D49102FC1EFB05CE008A528E /* art.scnassets */,
 				D49103031EFB05CE008A528E /* Assets.xcassets */,
+				D4B06A921F2BA1C5004DFE50 /* Media.scnassets */,
 				D4A04AFF1F0A08D100BEA822 /* Models.scnassets */,
 				D49103081EFB05CE008A528E /* Info.plist */,
 			);
@@ -673,7 +681,9 @@
 				D44EE6111EFD388F003A1A3E /* TechniqueSceneKitViewController.swift in Sources */,
 				D44B24E41F182E7E00459032 /* VirtualObject.swift in Sources */,
 				D49102FB1EFB05CE008A528E /* AppDelegate.swift in Sources */,
+				D4B06A901F2AD87C004DFE50 /* Nodes.swift in Sources */,
 				D45352BF1EFDDD5600C09259 /* XibView.swift in Sources */,
+				D4B06A941F2BA1F0004DFE50 /* PortalRoomObject.swift in Sources */,
 				D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */,
 				D43D4BB51F048282002F369F /* TextManager.swift in Sources */,
 				D43D4BAF1F048282002F369F /* Utilities.swift in Sources */,
