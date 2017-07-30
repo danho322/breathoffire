@@ -29,6 +29,9 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal weak var relatedAnimationsView: RelatedAnimationsView?
     internal var hasSetupLights = false
     
+    // touch
+    internal var initialTouchPosition: CGPoint?
+    
     // physics
     internal var ball: SCNNode?
     
@@ -70,10 +73,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     // MARK: - Ball
     
-    internal func setupBall(position: SCNVector3) {
+    internal func setupBall(position: SCNVector3, velocity: SCNVector3 = SCNVector3Zero) {
         removeBall()
         
-        let ballGeom = SCNSphere(radius:1.0)
+        let ballGeom = SCNSphere(radius:0.2)
         let ballMaterial = SCNMaterial()
         ballMaterial.diffuse.contents = UIColor(red: 0.1, green: 0.5, blue: 0.1, alpha: 1.0)
         ballMaterial.specular.contents = UIColor.black
@@ -84,7 +87,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         ball!.physicsBody?.mass = 0.5
         ball!.physicsBody?.restitution = 0.4
         
-        ball!.physicsBody?.velocity = SCNVector3Zero
+        ball!.physicsBody?.velocity = velocity
         ball!.position = position
 
         sceneView.scene.rootNode.addChildNode(ball!)
@@ -197,6 +200,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     func setupScene() {
         // set up sceneView
+//        sceneView.debugOptions = [.showPhysicsShapes]
         sceneView.delegate = self
         sceneView.session = session
 		sceneView.antialiasingMode = .multisampling4X
@@ -388,6 +392,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
         
 		displayVirtualObjectTransform()
+        
+        initialTouchPosition = touches.first?.location(in: sceneView)
 	}
 	
 	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -405,6 +411,29 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		}
 		
 		currentGesture = currentGesture?.updateGestureFromTouches(touches, .touchEnded)
+        
+        if currentPlacementState == .PlacedReady {
+            if let initialTouchPosition = initialTouchPosition, let latestTouchPosition = touches.first?.location(in: sceneView) {
+                let diff = CGPoint(x: latestTouchPosition.x - initialTouchPosition.x, y: latestTouchPosition.y - initialTouchPosition.y)
+                print("diff: \(diff)")
+                if diff.y < 0 {
+                    
+                    // refactor this into own method
+                    if let cameraPos = sceneView.pointOfView?.position, let virtualObjectPos = virtualObjects.first?.position {
+                        let velocity = SCNVector3(virtualObjectPos.x - cameraPos.x, 3, virtualObjectPos.z - cameraPos.z)
+                        
+                        TODO: this has to do with the angle?
+                        if let currentFrame = self.session.currentFrame {
+                            let angle = currentFrame.camera.eulerAngles
+                        }
+                        
+                        setupBall(position: SCNVector3(cameraPos.x - velocity.x / 2, cameraPos.y, cameraPos.z - velocity.z / 2),
+                                  velocity: SCNVector3(velocity.x * 2, velocity.y, velocity.z * 2))
+                        
+                    }
+                }
+            }
+        }
 	}
 	
 	override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -592,17 +621,18 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         planeNode.rotation = SCNVector4Make(1, 0, 0, -Float(Double.pi / 2));
         let planeMaterial = SCNMaterial()
         planeMaterial.diffuse.contents = UIColor.white
-        planeMaterial.colorBufferWriteMask = SCNColorMask(rawValue: 0)
+//        planeMaterial.colorBufferWriteMask = SCNColorMask(rawValue: 0)
         planeGeo.materials = [planeMaterial]
-        planeNode.position = target.position
+        planeNode.position = SCNVector3(target.position.x, target.position.y, target.position.z)
+        
+        // this should provide collision
+        planeNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.static,
+                                               shape: SCNPhysicsShape(geometry: planeGeo, options: nil))
         sceneView.scene.rootNode.addChildNode(planeNode)
     }
     
     func setVirtualObject(object: VirtualObject, at pos: SCNVector3) {
         object.position = pos
-        
-        // temp for ball
-        setupBall(position: SCNVector3(pos.x, pos.y + 5, pos.z))
         
         setupShadowLightsIfNeeded(target: object)
 
@@ -731,13 +761,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 			let object = VirtualObject.availableObjects[index]
 			object.viewController = self
             object.delegate = self
-            object.renderingOrder = 300
-            
-            object.enumerateChildNodes({ node, stop in
-                print(node)
-                node.renderingOrder = 300
-                node.geometry?.firstMaterial?.readsFromDepthBuffer = true
-            })
             
 			object.loadModel()
             self.virtualObjects.append(object)
@@ -781,7 +804,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             currentPlacementState = .PlacedReady
             if let virtualObject = virtualObjects.first {
                 // testing portal
-                addPortal(position: virtualObject.position)
+                //addPortal(position: virtualObject.position)
             }
         } else if currentPlacementState == .PlacedRotating {
             currentPlacementState = .PlacedMoving
@@ -885,7 +908,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     func addPortal(position: SCNVector3) {
         let portal = PortalRoomObject()
-        portal.position = SCNVector3(position.x, position.y - Float(Nodes.WALL_WIDTH / 2), position.z)
+        portal.position = SCNVector3(position.x, position.y /*- Float(Nodes.WALL_WIDTH / 2)*/, position.z)
         sceneView.scene.rootNode.addChildNode(portal)
         
 //        let wallNode = SCNNode()

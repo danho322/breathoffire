@@ -37,7 +37,9 @@ class Instructor: VirtualObject {
         for node in virtualObjectScene.rootNode.childNodes {
             addChildNode(node)
         }
-//        self.opacity = 0
+
+        
+        updateRenderOrder()
         
         modelLoaded = true
     }

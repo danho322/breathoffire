@@ -103,9 +103,15 @@ final class Nodes {
         let endWallMask = SCNBox(width: Nodes.WALL_WIDTH, height: height, length: sideLength, chamferRadius: 0)
         endWallMask.firstMaterial?.diffuse.contents = UIColor.white
         endWallMask.firstMaterial?.colorBufferWriteMask = SCNColorMask(rawValue: 0)
+
         let endWallMaskNode = SCNNode(geometry:endWallMask)
         endWallMaskNode.eulerAngles = eulerAngles
         endWallMaskNode.position = position
+        
+        endWallMask.firstMaterial?.writesToDepthBuffer = true
+        endWallMask.firstMaterial?.readsFromDepthBuffer = true
+        endWallMaskNode.renderingOrder = 100
+        
         return endWallMaskNode
     }
 }

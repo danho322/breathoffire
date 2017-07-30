@@ -64,6 +64,14 @@ class VirtualObject: SCNNode {
         modelLoaded = true
     }
     
+    func updateRenderOrder() {
+        renderingOrder = 1000
+        enumerateChildNodes({ node, stop in
+            node.renderingOrder = 1000  // this seemed to do the trick
+            node.geometry?.firstMaterial?.readsFromDepthBuffer = true
+        })
+    }
+    
     func unloadModel() {
         for child in self.childNodes {
             child.removeFromParentNode()

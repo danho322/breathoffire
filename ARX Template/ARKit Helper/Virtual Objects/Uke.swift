@@ -28,13 +28,11 @@ class Uke: VirtualObject {
         guard let virtualObjectScene = SCNScene(named: "\(modelName).\(fileExtension)", inDirectory: "Models.scnassets/jiujitsu") else {
             return
         }
-        
-        for child in virtualObjectScene.rootNode.childNodes {
-            child.movabilityHint = .movable
+        for node in virtualObjectScene.rootNode.childNodes {
+            addChildNode(node)
         }
         
-        self.opacity = 0
-        self.addChildNode(virtualObjectScene.rootNode)
+        updateRenderOrder()
         
         modelLoaded = true
     }
