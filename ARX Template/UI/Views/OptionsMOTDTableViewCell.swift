@@ -10,6 +10,7 @@ import UIKit
 import FontAwesomeKit
 
 class OptionsMOTDTableViewCell: UITableViewCell {
+    @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var moveTitleLabel: UILabel!
     @IBOutlet weak var moveDescriptionLabel: UILabel!
@@ -18,6 +19,7 @@ class OptionsMOTDTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        cardView.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         titleLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
         moveTitleLabel.textColor = ThemeManager.sharedInstance.textColor()

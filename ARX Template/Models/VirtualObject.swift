@@ -72,6 +72,12 @@ class VirtualObject: SCNNode {
         })
     }
     
+    func addPhysicsBody(nodeName: String) {
+        if let node = childNode(withName: nodeName, recursively: true) {
+            node.physicsBody = SCNPhysicsBody.kinematic()
+        }
+    }
+    
     func unloadModel() {
         for child in self.childNodes {
             child.removeFromParentNode()

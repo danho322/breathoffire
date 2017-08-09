@@ -67,18 +67,18 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         tableView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         tableView.separatorColor = ThemeManager.sharedInstance.backgroundColor()
         
+        loadButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
+        loadButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(14)
+        loadButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
+        
         
 //        animations = [.slide(.up, .slightly), .fadeIn]
 //        sortFunction = LinearSortFunction(direction: .topToBottom, interObjectDelay: 0.05)
 //        animationView = tableView
         
-        let loadIcon = FAKFoundationIcons.playIcon(withSize: 25)
-        loadIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
-        
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
         backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         
-        loadButton.setAttributedTitle(loadIcon?.attributedString(), for: .normal)
         backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
         
         view.alpha = 0
@@ -138,6 +138,9 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
 
     @IBAction func onBackTap(_ sender: Any) {
         hero_dismissViewController()
+    }
+    
+    @IBAction func onLoadTap(_ sender: Any) {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -209,6 +212,7 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
 extension CharacterAnimationPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let sequenceContainer = sequenceDataArray(indexPath: indexPath) {
+            loadButton.isEnabled = true
             sequenceToLoad = sequenceContainer.sequenceArray
             model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray)
         }

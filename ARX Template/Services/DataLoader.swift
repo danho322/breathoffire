@@ -111,7 +111,11 @@ struct DataLoader {
     // Content
     
     func moveOfTheDay() -> AnimationSequenceDataContainer? {
-        return sequenceData(sequenceName: "Alan Test Armbar")
+        let index = Int(arc4random_uniform(UInt32(FirebaseService.sharedInstance.sequenceDataDict.count)))
+        let randomMove = Array(FirebaseService.sharedInstance.sequenceDataDict.values)[index]
+        return randomMove
+        
+//        return sequenceData(sequenceName: "Alan Test Armbar")
     }
     
     func packages() -> [AnimationPackage] {

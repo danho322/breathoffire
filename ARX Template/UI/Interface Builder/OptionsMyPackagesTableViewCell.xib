@@ -13,36 +13,55 @@
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyPackagesCellIdentifier" rowHeight="172" id="9oq-6K-ZnN" customClass="OptionsMyPackagesTableViewCell" customModule="ARX_Template" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="172"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9oq-6K-ZnN" id="o17-Fn-uZ4">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="9oq-6K-ZnN" id="o17-Fn-uZ4">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="171.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Packages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2l-yk-fAG">
-                        <rect key="frame" x="8" y="8" width="101.5" height="25"/>
+                    <view contentMode="scaleToFill" ambiguous="YES" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bME-3f-coa">
+                        <rect key="frame" x="15" y="-12" width="345" height="193.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="My Packages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2l-yk-fAG">
+                                <rect key="frame" x="20" y="20" width="101.5" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="wwR-2r-aVJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MAr-qM-XP3">
+                                <rect key="frame" x="20" y="50" width="305" height="123.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="123.5" id="IrV-Lt-ztZ"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="25" id="wwR-2r-aVJ"/>
+                            <constraint firstAttribute="bottom" secondItem="MAr-qM-XP3" secondAttribute="bottom" constant="20" id="JVz-yV-ev2"/>
+                            <constraint firstAttribute="trailing" secondItem="MAr-qM-XP3" secondAttribute="trailing" constant="20" id="NBa-fx-P36"/>
+                            <constraint firstItem="MAr-qM-XP3" firstAttribute="top" secondItem="y2l-yk-fAG" secondAttribute="bottom" constant="5" id="eBN-Ii-LAB"/>
+                            <constraint firstItem="MAr-qM-XP3" firstAttribute="leading" secondItem="bME-3f-coa" secondAttribute="leading" constant="20" id="gEv-6H-FrG"/>
+                            <constraint firstItem="y2l-yk-fAG" firstAttribute="top" secondItem="bME-3f-coa" secondAttribute="top" constant="20" id="o0O-gm-DLy"/>
+                            <constraint firstItem="y2l-yk-fAG" firstAttribute="leading" secondItem="bME-3f-coa" secondAttribute="leading" constant="20" id="tgY-wX-t0e"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MAr-qM-XP3">
-                        <rect key="frame" x="8" y="38" width="359" height="123.5"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="123.5" id="IrV-Lt-ztZ"/>
-                        </constraints>
-                    </scrollView>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="y2l-yk-fAG" firstAttribute="top" secondItem="o17-Fn-uZ4" secondAttribute="top" constant="8" id="1cg-X7-ALb"/>
-                    <constraint firstItem="MAr-qM-XP3" firstAttribute="top" secondItem="y2l-yk-fAG" secondAttribute="bottom" constant="5" id="B2i-IZ-Q5a"/>
-                    <constraint firstItem="y2l-yk-fAG" firstAttribute="leading" secondItem="o17-Fn-uZ4" secondAttribute="leading" constant="8" id="FvT-pn-Jd4"/>
-                    <constraint firstAttribute="bottom" secondItem="MAr-qM-XP3" secondAttribute="bottom" constant="10" id="W2k-g3-Gk5"/>
-                    <constraint firstItem="MAr-qM-XP3" firstAttribute="leading" secondItem="o17-Fn-uZ4" secondAttribute="leading" constant="8" id="fxc-p2-1Wt"/>
-                    <constraint firstAttribute="trailing" secondItem="MAr-qM-XP3" secondAttribute="trailing" constant="8" id="lYz-bO-fOP"/>
+                    <constraint firstAttribute="bottom" secondItem="bME-3f-coa" secondAttribute="bottom" constant="20" id="6xw-H7-rdo"/>
+                    <constraint firstItem="bME-3f-coa" firstAttribute="leading" secondItem="o17-Fn-uZ4" secondAttribute="leading" constant="15" id="YYK-TE-8An"/>
+                    <constraint firstAttribute="trailing" secondItem="bME-3f-coa" secondAttribute="trailing" constant="15" id="cu5-bw-aq3"/>
+                    <constraint firstItem="bME-3f-coa" firstAttribute="top" secondItem="o17-Fn-uZ4" secondAttribute="top" constant="20" id="pg7-QT-AHt"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="cardView" destination="bME-3f-coa" id="gRa-zA-DiQ"/>
                 <outlet property="scrollView" destination="MAr-qM-XP3" id="sqG-Lu-tXF"/>
                 <outlet property="titleLabel" destination="y2l-yk-fAG" id="4y3-L7-shp"/>
             </connections>

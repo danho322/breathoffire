@@ -10,6 +10,7 @@ import UIKit
 
 class OptionsMyPackagesTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -18,6 +19,7 @@ class OptionsMyPackagesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        cardView.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         titleLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
         titleLabel.font = ThemeManager.sharedInstance.heavyFont(16)

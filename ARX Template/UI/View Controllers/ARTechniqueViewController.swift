@@ -27,7 +27,11 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var virtualObjects: [VirtualObject] = []
     internal var currentPlacementState: ARObjectPlacementState = .ScanningEmpty
     internal weak var relatedAnimationsView: RelatedAnimationsView?
+
     internal var hasSetupLights = false
+    internal var physicsPlane: SCNNode?
+    
+    internal var portal: PortalRoomObject?
     
     // touch
     internal var initialTouchPosition: CGPoint?
@@ -73,32 +77,71 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     // MARK: - Ball
     
-    internal func setupBall(position: SCNVector3, velocity: SCNVector3 = SCNVector3Zero) {
+    internal func calculateBallTrajectoryAndThrow(_ touchDiff: CGPoint) {
+        if let cameraPos = sceneView.pointOfView?.position, let virtualObjectPos = virtualObjects.first?.position {
+            let velocity = SCNVector3(virtualObjectPos.x - cameraPos.x, 3, virtualObjectPos.z - cameraPos.z)
+            
+            //                        TODO: this has to do with the angle?
+            let (direction, position) = getUserVector()
+            
+            let scale = max(1.0, -0.00667 * Double(touchDiff.y))
+            
+            throwBall(position: SCNVector3(position.x, position.y, position.z),
+                      velocity: SCNVector3(direction.x * Float(scale), velocity.y, direction.z * Float(scale)))
+            
+        }
+    }
+    
+    internal func throwBall(position: SCNVector3, velocity: SCNVector3 = SCNVector3Zero) {
         removeBall()
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(removeBall), object: nil)
         
-        let ballGeom = SCNSphere(radius:0.2)
+        
+        guard let pineappleScene = SCNScene(named: "pineapple.dae", inDirectory: "Models.scnassets") else {
+            return
+        }
+        
+        let ballGeom = SCNSphere(radius:0.02)
         let ballMaterial = SCNMaterial()
-        ballMaterial.diffuse.contents = UIColor(red: 0.1, green: 0.5, blue: 0.1, alpha: 1.0)
-        ballMaterial.specular.contents = UIColor.black
+        ballMaterial.diffuse.contents = UIColor(red: 0.1, green: 0.5, blue: 0.1, alpha: 0)
+        ballMaterial.specular.contents = UIColor.clear
         ballGeom.firstMaterial = ballMaterial
         ball = SCNNode(geometry:ballGeom)
         
         ball!.physicsBody = SCNPhysicsBody.dynamic()
         ball!.physicsBody?.mass = 0.5
         ball!.physicsBody?.restitution = 0.4
-        
+//        ball!.physicsBody?.angularVelocity = SCNVector4(random)
         ball!.physicsBody?.velocity = velocity
         ball!.position = position
+        
+        let wrapperNode = SCNNode()
+        
+        for child in pineappleScene.rootNode.childNodes {
+            child.geometry?.firstMaterial?.lightingModel = .physicallyBased
+            child.movabilityHint = .movable
+            wrapperNode.addChildNode(child)
+        }
+        ball!.addChildNode(wrapperNode)
 
         sceneView.scene.rootNode.addChildNode(ball!)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
-            self.removeBall()
-        })
+        
+        perform(#selector(removeBall), with: nil, afterDelay: 5)
     }
     
-    internal func removeBall() {
+    @objc internal func removeBall() {
         ball?.removeFromParentNode()
+    }
+    
+    func getUserVector() -> (SCNVector3, SCNVector3) { // (direction, position)
+        if let frame = self.sceneView.session.currentFrame {
+            let mat = SCNMatrix4(frame.camera.transform) // 4x4 transform matrix describing camera in world space
+            let dir = SCNVector3(-1 * mat.m31, -1 * mat.m32, -1 * mat.m33) // orientation of camera in world space
+            let pos = SCNVector3(mat.m41, mat.m42, mat.m43) // location of camera in world space
+            
+            return (dir, pos)
+        }
+        return (SCNVector3(0, 0, -1), SCNVector3(0, 0, -0.2))
     }
     
     // MARK: - Placing Object
@@ -419,18 +462,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 if diff.y < 0 {
                     
                     // refactor this into own method
-                    if let cameraPos = sceneView.pointOfView?.position, let virtualObjectPos = virtualObjects.first?.position {
-                        let velocity = SCNVector3(virtualObjectPos.x - cameraPos.x, 3, virtualObjectPos.z - cameraPos.z)
-                        
-                        TODO: this has to do with the angle?
-                        if let currentFrame = self.session.currentFrame {
-                            let angle = currentFrame.camera.eulerAngles
-                        }
-                        
-                        setupBall(position: SCNVector3(cameraPos.x - velocity.x / 2, cameraPos.y, cameraPos.z - velocity.z / 2),
-                                  velocity: SCNVector3(velocity.x * 2, velocity.y, velocity.z * 2))
-                        
-                    }
+                    calculateBallTrajectoryAndThrow(diff)
                 }
             }
         }
@@ -585,6 +617,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     func setupShadowLightsIfNeeded(target: SCNNode) {
         if hasSetupLights {
+            physicsPlane?.position = target.position
             return
         }
         hasSetupLights = true
@@ -617,18 +650,19 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         sceneView.scene.rootNode.addChildNode(ambientLightNode)
         
         let planeGeo = SCNPlane(width: 15, height: 15)
-        let planeNode = SCNNode(geometry: planeGeo)
-        planeNode.rotation = SCNVector4Make(1, 0, 0, -Float(Double.pi / 2));
         let planeMaterial = SCNMaterial()
         planeMaterial.diffuse.contents = UIColor.white
-//        planeMaterial.colorBufferWriteMask = SCNColorMask(rawValue: 0)
+        planeMaterial.colorBufferWriteMask = SCNColorMask(rawValue: 0)
         planeGeo.materials = [planeMaterial]
-        planeNode.position = SCNVector3(target.position.x, target.position.y, target.position.z)
+        
+        physicsPlane = SCNNode(geometry: planeGeo)
+        physicsPlane!.rotation = SCNVector4Make(1, 0, 0, -Float(Double.pi / 2));
+        physicsPlane!.position = SCNVector3(target.position.x, target.position.y, target.position.z)
         
         // this should provide collision
-        planeNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.static,
+        physicsPlane!.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.static,
                                                shape: SCNPhysicsShape(geometry: planeGeo, options: nil))
-        sceneView.scene.rootNode.addChildNode(planeNode)
+        sceneView.scene.rootNode.addChildNode(physicsPlane!)
     }
     
     func setVirtualObject(object: VirtualObject, at pos: SCNVector3) {
@@ -906,173 +940,26 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     // MARK: - Portal
     
+    @IBAction func onShowPortalTap(_ sender: Any) {
+        if let virtualObject = virtualObjects.first {
+            addPortal(position: virtualObject.position)
+        }
+    }
+    
+    @IBAction func onHidePortalTap(_ sender: Any) {
+        removePortal()
+    }
+    
+    func removePortal() {
+        portal?.removeFromParentNode()
+    }
+    
     func addPortal(position: SCNVector3) {
-        let portal = PortalRoomObject()
-        portal.position = SCNVector3(position.x, position.y /*- Float(Nodes.WALL_WIDTH / 2)*/, position.z)
-        sceneView.scene.rootNode.addChildNode(portal)
+        removePortal()
         
-//        let wallNode = SCNNode()
-//        wallNode.position = position
-//
-//        let sideLength = Nodes.WALL_LENGTH * 3
-//        let halfSideLength = sideLength * 0.5
-//
-//        let endWallSegmentNode = Nodes.wallSegmentNode(length: sideLength,
-//                                                       maskXUpperSide: true)
-//        endWallSegmentNode.eulerAngles = SCNVector3(0, 90.0.degreesToRadians, 0)
-//        endWallSegmentNode.position = SCNVector3(0, Float(Nodes.WALL_HEIGHT * 0.5), Float(Nodes.WALL_LENGTH) * -1.5)
-//        wallNode.addChildNode(endWallSegmentNode)
-//
-//        let sideAWallSegmentNode = Nodes.wallSegmentNode(length: sideLength,
-//                                                         maskXUpperSide: true)
-//        sideAWallSegmentNode.eulerAngles = SCNVector3(0, 180.0.degreesToRadians, 0)
-//        sideAWallSegmentNode.position = SCNVector3(Float(Nodes.WALL_LENGTH) * -1.5, Float(Nodes.WALL_HEIGHT * 0.5), 0)
-//        wallNode.addChildNode(sideAWallSegmentNode)
-//
-//        let sideBWallSegmentNode = Nodes.wallSegmentNode(length: sideLength,
-//                                                         maskXUpperSide: true)
-//        sideBWallSegmentNode.position = SCNVector3(Float(Nodes.WALL_LENGTH) * 1.5, Float(Nodes.WALL_HEIGHT * 0.5), 0)
-//        wallNode.addChildNode(sideBWallSegmentNode)
-//
-//        let doorSideLength = (sideLength - Nodes.DOOR_WIDTH) * 0.5
-//
-//        let leftDoorSideNode = Nodes.wallSegmentNode(length: doorSideLength,
-//                                                     maskXUpperSide: true)
-//        leftDoorSideNode.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
-//        leftDoorSideNode.position = SCNVector3(Float(-halfSideLength + 0.5 * doorSideLength),
-//                                               Float(Nodes.WALL_HEIGHT) * Float(0.5),
-//                                               Float(Nodes.WALL_LENGTH) * 1.5)
-//        wallNode.addChildNode(leftDoorSideNode)
-//
-//        let rightDoorSideNode = Nodes.wallSegmentNode(length: doorSideLength,
-//                                                      maskXUpperSide: true)
-//        rightDoorSideNode.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
-//        rightDoorSideNode.position = SCNVector3(Float(halfSideLength - 0.5 * doorSideLength),
-//                                                Float(Nodes.WALL_HEIGHT) * Float(0.5),
-//                                                Float(Nodes.WALL_LENGTH) * 1.5)
-//        wallNode.addChildNode(rightDoorSideNode)
-//
-//        let aboveDoorNode = Nodes.wallSegmentNode(length: Nodes.DOOR_WIDTH,
-//                                                  height: Nodes.WALL_HEIGHT - Nodes.DOOR_HEIGHT)
-//        aboveDoorNode.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
-//        aboveDoorNode.position = SCNVector3(0,
-//                                            Float(Nodes.WALL_HEIGHT) - Float(Nodes.WALL_HEIGHT - Nodes.DOOR_HEIGHT) * 0.5,
-//                                            Float(Nodes.WALL_LENGTH) * 1.5)
-//        wallNode.addChildNode(aboveDoorNode)
-//
-//        let floorNode = Nodes.plane(pieces: 3,
-//                                    maskYUpperSide: false)
-//        floorNode.position = SCNVector3(0, 0, 0)
-//        wallNode.addChildNode(floorNode)
-//
-//        let roofNode = Nodes.plane(pieces: 3,
-//                                   maskYUpperSide: true)
-//        roofNode.position = SCNVector3(0, Float(Nodes.WALL_HEIGHT), 0)
-//        wallNode.addChildNode(roofNode)
-//
-//        sceneView.scene.rootNode.addChildNode(wallNode)
-//
-//
-//        // we would like shadows from inside the portal room to shine onto the floor of the camera image(!)
-//        let floor = SCNFloor()
-//        floor.reflectivity = 0
-//        floor.firstMaterial?.diffuse.contents = UIColor.white
-//        floor.firstMaterial?.colorBufferWriteMask = SCNColorMask(rawValue: 0)
-//        let floorShadowNode = SCNNode(geometry:floor)
-//        floorShadowNode.position = position
-//        sceneView.scene.rootNode.addChildNode(floorShadowNode)
-//
-//
-//        let light = SCNLight()
-//        // [SceneKit] Error: shadows are only supported by spot lights and directional lights
-//        light.type = .spot
-//        light.spotInnerAngle = 70
-//        light.spotOuterAngle = 120
-//        light.zNear = 0.00001
-//        light.zFar = 5
-//        light.castsShadow = true
-//        light.shadowRadius = 200
-//        light.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
-//        light.shadowMode = .deferred
-//        let constraint = SCNLookAtConstraint(target: floorShadowNode)
-//        constraint.isGimbalLockEnabled = true
-//        let lightNode = SCNNode()
-//        lightNode.light = light
-//        lightNode.position = SCNVector3(position.x,
-//                                        position.y + Float(Nodes.DOOR_HEIGHT),
-//                                        position.z - Float(Nodes.WALL_LENGTH))
-//        lightNode.constraints = [constraint]
-//        sceneView.scene.rootNode.addChildNode(lightNode)
-//
-//        let node = SCNNode()
-//        let object = VirtualObject.availableObjects[0]
-//        object.viewController = self
-//        object.delegate = self
-//        object.loadModel()
-//        object.renderingOrder = 200
-//        object.position = SCNVector3(0, 0,  Float(Nodes.WALL_LENGTH) * 1.5)
-//        node.addChildNode(object)
-//
-//
-//        let endWallSegmentNodeMask = Nodes.wallSegmentNodeMask(length: sideLength,
-//                                                       maskXUpperSide: true)
-//        endWallSegmentNodeMask.eulerAngles = SCNVector3(0, 90.0.degreesToRadians, 0)
-//        endWallSegmentNodeMask.position = SCNVector3(0, Float(Nodes.WALL_HEIGHT * 0.5), Float(Nodes.WALL_LENGTH) * -1.5)
-//        node.addChildNode(endWallSegmentNodeMask)
-//
-//        let sideAWallSegmentNodeMask = Nodes.wallSegmentNodeMask(length: sideLength,
-//                                                         maskXUpperSide: true)
-//        sideAWallSegmentNodeMask.eulerAngles = SCNVector3(0, 180.0.degreesToRadians, 0)
-//        sideAWallSegmentNodeMask.position = SCNVector3(Float(Nodes.WALL_LENGTH) * -1.5, Float(Nodes.WALL_HEIGHT * 0.5), 0)
-//        node.addChildNode(sideAWallSegmentNodeMask)
-//
-//        let sideBWallSegmentNodeMask = Nodes.wallSegmentNodeMask(length: sideLength,
-//                                                         maskXUpperSide: true)
-//        sideBWallSegmentNodeMask.position = SCNVector3(Float(Nodes.WALL_LENGTH) * 1.5, Float(Nodes.WALL_HEIGHT * 0.5), 0)
-//        node.addChildNode(sideBWallSegmentNodeMask)
-//
-//        let leftDoorSideNodeMask = Nodes.wallSegmentNodeMask(length: doorSideLength,
-//                                                     maskXUpperSide: true)
-//        leftDoorSideNodeMask.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
-//        leftDoorSideNodeMask.position = SCNVector3(Float(-halfSideLength + 0.5 * doorSideLength),
-//                                               Float(Nodes.WALL_HEIGHT) * Float(0.5),
-//                                               Float(Nodes.WALL_LENGTH) * 1.5)
-//        node.addChildNode(leftDoorSideNodeMask)
-//
-//        let rightDoorSideNodeMask = Nodes.wallSegmentNodeMask(length: doorSideLength,
-//                                                      maskXUpperSide: true)
-//        rightDoorSideNodeMask.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
-//        rightDoorSideNodeMask.position = SCNVector3(Float(halfSideLength - 0.5 * doorSideLength),
-//                                                Float(Nodes.WALL_HEIGHT) * Float(0.5),
-//                                                Float(Nodes.WALL_LENGTH) * 1.5)
-//        node.addChildNode(rightDoorSideNodeMask)
-//
-//        let aboveDoorNodeMask = Nodes.wallSegmentNodeMask(length: Nodes.DOOR_WIDTH,
-//                                                  height: Nodes.WALL_HEIGHT - Nodes.DOOR_HEIGHT)
-//        aboveDoorNodeMask.eulerAngles = SCNVector3(0, 270.0.degreesToRadians, 0)
-//        aboveDoorNodeMask.position = SCNVector3(0,
-//                                            Float(Nodes.WALL_HEIGHT) - Float(Nodes.WALL_HEIGHT - Nodes.DOOR_HEIGHT) * 0.5,
-//                                            Float(Nodes.WALL_LENGTH) * 1.5)
-//        node.addChildNode(aboveDoorNodeMask)
-//
-//        let floorNodeMask = Nodes.planeMask(pieces: 3,
-//                                    maskYUpperSide: false)
-//        floorNodeMask.position = SCNVector3(0, 0, 0)
-//        node.addChildNode(floorNodeMask)
-//
-//        let roofNodeMask = Nodes.planeMask(pieces: 3,
-//                                   maskYUpperSide: true)
-//        roofNodeMask.position = SCNVector3(0, Float(Nodes.WALL_HEIGHT), 0)
-//        node.addChildNode(roofNodeMask)
-//
-//        node.position = SCNVector3(0, 0, 0)
-//        sceneView.scene.rootNode.addChildNode(node)
-    
-//    will it work now that we changed the render order and position?
-    
-    
-    
-    
+        portal = PortalRoomObject()
+        portal!.position = SCNVector3(position.x, position.y /*- Float(Nodes.WALL_WIDTH / 2)*/, position.z)
+        sceneView.scene.rootNode.addChildNode(portal!)
     }
 	
 	// MARK: - Hit Test Visualization

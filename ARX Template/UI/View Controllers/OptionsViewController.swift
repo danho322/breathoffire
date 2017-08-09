@@ -132,6 +132,15 @@ extension OptionsViewController: UITableViewDelegate {
                 packageDetailsVC.packageName = DataLoader.sharedInstance.packages()[indexPath.row].packageName
                 self.present(packageDetailsVC, animated: true, completion: nil)
             }
+        } else if section == .moveOfDay {
+//            if let sceneVC = segue.destination as? ARTechniqueViewController, let identifier = segue.identifier, identifier == "ARSegue" {
+//                sceneVC.sequenceToLoad = sequenceToLoad
+//            }
+            if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
+                let motdSequenceContainer = DataLoader.sharedInstance.moveOfTheDay() {
+                arVC.sequenceToLoad = motdSequenceContainer.sequenceArray
+                present(arVC, animated: true, completion: nil)
+            }
         } else {
             handlePackageTap(packageName: "Jiujitsu Basics")
         }

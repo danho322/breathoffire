@@ -74,7 +74,6 @@ class ARXCharacterSceneView: SCNView {
         self.scene?.rootNode.addChildNode(lightNode)
         self.scene?.rootNode.addChildNode(ambientLightNode)
     
-    
         // allows the user to manipulate the camera
         self.pointOfView = cameraNode
     

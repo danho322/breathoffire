@@ -11,6 +11,7 @@ import SDWebImage
 import FontAwesomeKit
 
 class OptionsPackageTableViewCell: UITableViewCell {
+    @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var bgImageView: UIImageView!
     @IBOutlet weak var packageNameLabel: UILabel!
     @IBOutlet weak var packageDescriptionLabel: UILabel!
@@ -21,6 +22,8 @@ class OptionsPackageTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        cardView.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
 //        bgImageView.sd_setImage(with: URL(string: "http://graciescottsdale.com/wp-scottsdale/uploads/2014/01/Helio-Flying-680x307.jpg"))
         
         packageNameLabel.textColor = ThemeManager.sharedInstance.textColor()

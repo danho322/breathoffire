@@ -33,6 +33,7 @@ class Uke: VirtualObject {
         }
         
         updateRenderOrder()
+        addPhysicsBody(nodeName: "Danny_Prokopo_002")
         
         modelLoaded = true
     }
@@ -47,7 +48,7 @@ class Uke: VirtualObject {
         if currentAnimationIndex < animationSequence.count {
             let currentAnimation = animationSequence[currentAnimationIndex]
             if let animationName = currentAnimation.ukeAnimation, let animationData = DataLoader.sharedInstance.characterAnimation(name: animationName), animationName.characters.count > 0 {
-                loadAnimationData(animationData: animationData, speed: currentAnimation.speed, repeatCount: currentAnimation.repeatCount)
+                loadAnimationData(animationData: animationData, speed: currentAnimation.ukeSpeed, repeatCount: currentAnimation.repeatCount)
                 shouldHide = false
             }
             

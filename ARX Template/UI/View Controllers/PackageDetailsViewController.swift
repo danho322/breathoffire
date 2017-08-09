@@ -98,7 +98,7 @@ class PackageDetailsViewController: UIViewController {
         tableView.dataSource = self
         tableView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         
-        backgroundImageView.sd_setImage(with: URL(string: "http://graciescottsdale.com/wp-scottsdale/uploads/2014/01/Helio-Flying-680x307.jpg"))
+//        backgroundImageView.sd_setImage(with: URL(string: "http://graciescottsdale.com/wp-scottsdale/uploads/2014/01/Helio-Flying-680x307.jpg"))
         
         packageNameLabel.textColor = ThemeManager.sharedInstance.textColor()
         packageNameLabel.font = ThemeManager.sharedInstance.heavyFont(20)

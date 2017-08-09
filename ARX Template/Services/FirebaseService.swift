@@ -373,6 +373,7 @@ struct AnimationSequenceData {
     let ukeAnimation: String?
     var delay: TimeInterval = 0
     var speed: Double = 1
+    var ukeSpeed: Double = 1
     var repeatCount: Float = 0
     
     init(instructorAnimation: String, ukeAnimation: String? = nil, delay: TimeInterval = 0, speed: Double = 1, repeatCount: Float = 0) {
@@ -388,6 +389,7 @@ struct AnimationSequenceData {
         ukeAnimation = snapshotDict["ukeAnimation"] as? String ?? ""
         delay = snapshotDict["delay"] as? TimeInterval ?? 0
         speed = snapshotDict["speed"] as? Double ?? 1
+        ukeSpeed = snapshotDict["ukeSpeed"] as? Double ?? 1
         repeatCount = snapshotDict["repeat"] as? Float ?? 0
     }
 }

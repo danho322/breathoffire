@@ -40,6 +40,7 @@ class Instructor: VirtualObject {
 
         
         updateRenderOrder()
+        addPhysicsBody(nodeName: "Danny_Prokopo_002")
         
         modelLoaded = true
     }
