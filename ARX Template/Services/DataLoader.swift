@@ -25,7 +25,7 @@ struct DataLoader {
         var text = ""
         switch state {
         case .ScanningEmpty:
-            text = "Scan your surroundings for your virtual space"
+            text = "Scan the floor slowly to map out your virtual gym"
         case .ScanningProgress:
             text = "Surface detected! Continue scanning to increase floor space"
         case .ScanningReady:
@@ -33,7 +33,7 @@ struct DataLoader {
         case .PlacedScaling:
             text = "Use two fingers to scale and rotate"
         case .PlacedRotating:
-            text = "Use two fingers to rotate your model"
+            text = "Use two fingers to rotate"
         case .PlacedMoving:
             text = "Use one finger to move"
         default:
@@ -111,9 +111,13 @@ struct DataLoader {
     // Content
     
     func moveOfTheDay() -> AnimationSequenceDataContainer? {
-        let index = Int(arc4random_uniform(UInt32(FirebaseService.sharedInstance.sequenceDataDict.count)))
-        let randomMove = Array(FirebaseService.sharedInstance.sequenceDataDict.values)[index]
-        return randomMove
+        if FirebaseService.sharedInstance.sequenceDataDict.count > 0 {
+            let index = Int(arc4random_uniform(UInt32(FirebaseService.sharedInstance.sequenceDataDict.count)))
+            let randomMove = Array(FirebaseService.sharedInstance.sequenceDataDict.values)[index]
+            return randomMove
+        }
+        
+        return nil
         
 //        return sequenceData(sequenceName: "Alan Test Armbar")
     }

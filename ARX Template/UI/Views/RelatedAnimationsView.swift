@@ -10,7 +10,7 @@ import UIKit
 import FontAwesomeKit
 
 protocol RelatedAnimationsViewDelegate {
-    func didTapRelatedAnimation(relatedView: RelatedAnimationsView, animation: String)
+    func didTapRelatedAnimation(relatedView: RelatedAnimationsView, sequenceName: String)
     func didTapReplay(relatedView: RelatedAnimationsView)
     func didTapShare(relatedView: RelatedAnimationsView)
     func didTapDismiss(relatedView: RelatedAnimationsView)
@@ -126,6 +126,12 @@ extension RelatedAnimationsView: UITableViewDelegate {
             fatalError("view is not of type RelatedAnimationsView")
         }
         
-        view.delegate?.didTapRelatedAnimation(relatedView: self, animation: relatedAnimations[indexPath.row])
+        if let animation = DataLoader.sharedInstance.characterAnimation(name: relatedAnimations[indexPath.row]) {
+            // return the sequences I belong to?
+        }
+        
+        
+        // TODO: return the sequence name
+//        view.delegate?.didTapRelatedAnimation(relatedView: self, animation: relatedAnimations[indexPath.row])
     }
 }

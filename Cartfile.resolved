@@ -1,5 +1,5 @@
 github "PrideChung/FontAwesomeKit" "2.2.1"
 github "lkzhao/Hero" "0.3.6"
-github "rs/SDWebImage" "4.0.0"
-github "bizz84/SwiftyStoreKit" "0.10.3"
+github "rs/SDWebImage" "4.1.0"
+github "bizz84/SwiftyStoreKit" "0.10.5"
 github "willowtreeapps/spruce-ios" "1.0.0"

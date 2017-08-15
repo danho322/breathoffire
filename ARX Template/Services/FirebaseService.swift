@@ -8,7 +8,9 @@
 
 import FirebaseDatabase
 import FirebaseStorage
+import FirebaseAuth
 import UIKit
+import MapKit
 
 struct Constants {
     static let AppKey = "jiujitsu"
@@ -17,11 +19,17 @@ struct Constants {
 // This class stores the remote app data
 
 struct UserData {
+    let userId: String
+    let userName: String
     let tokenCount: Int
+    let playCount: Int
     let purchasedPackages: [String: Any]
     
-    init(snapshotDict: NSDictionary) {
+    init(userId: String, snapshotDict: NSDictionary) {
+        self.userId = userId
+        userName = snapshotDict["userName"] as? String ?? "Anonymous"
         tokenCount = snapshotDict["tokenCount"] as? Int ?? 0
+        playCount = snapshotDict["playCount"] as? Int ?? 0
         if let packagesDict = snapshotDict["purchasedPackages"] as? [String: Any] {
             purchasedPackages = packagesDict
         } else {
@@ -51,7 +59,7 @@ class FirebaseService {
         let userRef = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         userRef.observe(.value, with: { snapshot in
             if let userDict = snapshot.value as? NSDictionary {
-                handler(UserData(snapshotDict: userDict))
+                handler(UserData(userId: userId, snapshotDict: userDict))
             }
         })
     }
@@ -60,9 +68,6 @@ class FirebaseService {
         let userRef = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         
         userRef.child("userName").setValue(userName)
-        userRef.child("lastLoggedIn").setValue(Date().description)
-        
-        incrementAttributeCount(userId: userId, attributeName: "playCount")
     }
     
     func setUserAttribute(userId: String, attributeName: String, value: Any) {
@@ -98,12 +103,12 @@ class FirebaseService {
         }
     }
     
-    func incrementAttributeCount(userId: String, attributeName: String) {
+    func incrementAttributeCount(userId: String, attributeName: String, count: Int = 1) {
         let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
             if var post = currentData.value as? [String : AnyObject] {
                 var starCount = post[attributeName] as? Int ?? 0
-                starCount += 1
+                starCount += count
                 post[attributeName] = starCount as AnyObject?
                 
                 // Set value and report transaction success
@@ -139,6 +144,40 @@ class FirebaseService {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    // MARK: - Feed
+    
+    func saveBreathFeedItem(_ feedItem: BreathFeedItem) {
+        let ref = Database.database().reference().child("feed/\(Constants.AppKey)/\(UUID().uuidString)")
+        ref.setValue(feedItem.valueDict())
+    }
+    
+    func retrieveBreathFeed(completionHandler: @escaping (([BreathFeedItem])->Void)) {
+        let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
+        ref.queryOrdered(byChild: "timestamp")
+            .queryLimited(toFirst: 50)
+            .observe(.value, with: { [unowned self] snapshot in
+                var items: [BreathFeedItem] = []
+                if let feedDict = snapshot.value as? NSDictionary {
+                    for (_, feedItemDict) in feedDict {
+                        if let feedItemDict = feedItemDict as? NSDictionary {
+                            let feedItem = BreathFeedItem(snapshotDict: feedItemDict)
+                            items.append(feedItem)
+                        }
+                    }
+                }
+                completionHandler(items.reversed())
+//            if let sectionSequenceArray = snapshot.value as? NSArray {
+//                for sectionSequence in sectionSequenceArray {
+//                    if let sectionString = sectionSequence as? String {
+//                        self.retrieveSection(sectionSequence: sectionString)
+//                        self.sequenceSections.append(sectionString)
+//                    }
+//                }
+//            }
+        })
+        
     }
     
     // MARK: - Image loading
@@ -288,6 +327,31 @@ class FirebaseService {
         }
     }
     
+    func uploadImage(image: UIImage, completion: @escaping ((String?)->Void)) {
+        if let data = UIImagePNGRepresentation(image) {
+            
+            // Create a root reference
+            let storageRef = Storage.storage().reference()
+            
+            // Create a reference to the file you want to upload
+            let path = "images/\(Constants.AppKey)/uploads/\(UUID().uuidString).jpg"
+            let riversRef = storageRef.child(path)
+            
+            // Upload the file to the path "images/rivers.jpg"
+            let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
+                print(metadata)
+                print(error)
+                guard let metadata = metadata else {
+                    // Uh-oh, an error occurred!
+                    return
+                }
+                // Metadata contains file metadata such as size, content-type, and download URL.
+                let downloadURL = metadata.downloadURL
+                completion(path)
+            }
+        }
+    }
+    
     func downloadFile(path: String, completion: (() -> Void)? = nil) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
@@ -320,6 +384,42 @@ class FirebaseService {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDirectory = paths[0]
         return documentsDirectory
+    }
+}
+
+// MARK: - Structs
+
+struct BreathFeedItem {
+    let timestamp: TimeInterval
+    let imagePath: String
+    let userId: String
+    let userName: String
+    let coordinate: CLLocationCoordinate2D
+    
+    init(timestamp: TimeInterval, imagePath: String, userId: String, userName: String, coordinate: CLLocationCoordinate2D) {
+        self.timestamp = timestamp
+        self.imagePath = imagePath
+        self.userId = userId
+        self.userName = userName
+        self.coordinate = coordinate
+    }
+    
+    init(snapshotDict: NSDictionary) {
+        timestamp = snapshotDict["timestamp"] as? TimeInterval ?? 0
+        imagePath = snapshotDict["imagePath"] as? String ?? ""
+        userId = snapshotDict["userId"] as? String ?? ""
+        userName = snapshotDict["userName"] as? String ?? ""
+        let lat = snapshotDict["latitude"] as? CLLocationDegrees ?? 0
+        let lng = snapshotDict["longitude"] as? CLLocationDegrees ?? 0
+        coordinate = CLLocationCoordinate2DMake(lat, lng)
+    }
+	
+    func valueDict() -> [String: Any] {
+        return ["timestamp": timestamp,
+                "imagePath": imagePath,
+                "userId": userId,
+                "latitude": coordinate.latitude,
+                "longitude": coordinate.longitude]
     }
 }
 

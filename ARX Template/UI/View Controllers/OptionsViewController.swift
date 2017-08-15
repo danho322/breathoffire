@@ -138,11 +138,14 @@ extension OptionsViewController: UITableViewDelegate {
 //            }
             if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
                 let motdSequenceContainer = DataLoader.sharedInstance.moveOfTheDay() {
-                arVC.sequenceToLoad = motdSequenceContainer.sequenceArray
+                arVC.sequenceToLoad = motdSequenceContainer
                 present(arVC, animated: true, completion: nil)
             }
         } else {
             handlePackageTap(packageName: "Jiujitsu Basics")
+//            if let breatheVC = storyboard?.instantiateViewController(withIdentifier: "BreatheViewControllerIdentifier") as? BreatheViewController {
+//                present(breatheVC, animated: true, completion: nil)
+//            }
         }
     }
 }

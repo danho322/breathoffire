@@ -13,17 +13,21 @@ import Photos
 import FontAwesomeKit
 
 
-class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate, VirtualObjectSelectionViewControllerDelegate {
+class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate {
     
+    @IBOutlet weak var breathTimerView: BreathTimerView!
     @IBOutlet weak var instructionView: InstructionView!
     @IBOutlet weak var hudView: CharacterHUDView!
     @IBOutlet weak var statusLabel: UILabel!
     
     @IBOutlet weak var hudBottomConstraint: NSLayoutConstraint!
-    var sequenceToLoad: [AnimationSequenceData] = []
+    var sequenceToLoad: AnimationSequenceDataContainer?
     internal var currentAnimationIndex = 0
     internal var sliderValue: Float = 0.5
+    
     internal var instructionService: InstructionService?
+    internal var breathTimerService: BreathTimerService?
+    
     internal var virtualObjects: [VirtualObject] = []
     internal var currentPlacementState: ARObjectPlacementState = .ScanningEmpty
     internal weak var relatedAnimationsView: RelatedAnimationsView?
@@ -32,6 +36,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var physicsPlane: SCNNode?
     
     internal var portal: PortalRoomObject?
+    
+    // feed
+    internal var locationManager: CLLocationManager = CLLocationManager()
+    internal var screenShot: UIImage?
     
     // touch
     internal var initialTouchPosition: CGPoint?
@@ -51,11 +59,14 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		updateSettings()
 		resetVirtualObject()
         updatePlacementUI()
+        setupGestureRecognizers()
         hudDidTapShowToggle(shouldShow: false)
         
         if let hudView = hudView.view as? CharacterHUDView {
             hudView.delegate = self
         }
+        
+        breathTimerView.alpha = 0
         
         instructionService = InstructionService(delegate: self)
     }
@@ -73,7 +84,42 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		session.pause()
+        cancelScreenshotSelector()
 	}
+
+    // MARK: - Location
+    
+    internal func setupLocation() {
+//        locationManager = CLLocationManager
+    }
+    
+    // MARK: - Breathe
+    
+    internal func setupBreathing() {
+        let parameter0 = BreathParameter(startTime: 5, breathTimeUp: 0.1, breathTimeDown: 0.4)
+        let parameter1 = BreathParameter(startTime: 15, breathTimeUp: 2, breathTimeDown: 2)
+        let parameter2 = BreathParameter(startTime: 23, breathTimeUp: 0.1, breathTimeDown: 0.4)
+        breathTimerService = BreathTimerService(sessionTime: 33, parameterQueue: [parameter0, parameter1, parameter2], delegate: self)
+        breathTimerView.alpha = 1
+    }
+    
+    @IBAction func onToggleBreathTap(_ sender: Any) {
+        breathTimerView.alpha = breathTimerView.alpha == 1 ? 0 : 1
+    }
+    // MARK: - Feed
+    
+    func saveToBreathFeed() {
+        if let image = screenShot {
+            FirebaseService.sharedInstance.uploadImage(image: image) { path in
+                if let path = path,
+                    let currentUserData = SessionManager.sharedInstance.currentUserData {
+                    // add to feed path
+                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970, imagePath: path, userId: currentUserData.userId, userName: currentUserData.userName, coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+                    FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
+                }
+            }
+        }
+    }
     
     // MARK: - Ball
     
@@ -144,6 +190,34 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         return (SCNVector3(0, 0, -1), SCNVector3(0, 0, -0.2))
     }
     
+    // MARK: - Gestures
+    
+    func setupGestureRecognizers() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ARTechniqueViewController.handleTap))
+        tap.numberOfTapsRequired = 2
+        sceneView.addGestureRecognizer(tap)
+    }
+    
+    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        print("handleTap")
+        let tapPoint = recognizer.location(in: sceneView)
+        let result = sceneView.hitTest(tapPoint, types: .estimatedHorizontalPlane)
+        if let hitResult = result.first {
+            print("hit result")
+            if currentPlacementState == .PlacedReady {
+                throwBall(position: SCNVector3(x: hitResult.worldTransform.columns.3.x,
+                                               y: hitResult.worldTransform.columns.3.y + 3,
+                                               z: hitResult.worldTransform.columns.3.z))
+            } else if virtualObjects.count == 0 && currentPlacementState.isPlacingAllowed() {
+                loadVirtualObject(at: SCNVector3(x: hitResult.worldTransform.columns.3.x,
+                                                 y: hitResult.worldTransform.columns.3.y,
+                                                 z: hitResult.worldTransform.columns.3.z))
+                currentPlacementState = .PlacedScaling
+                updatePlacementUI()
+            }
+        }
+    }
+    
     // MARK: - Placing Object
     
     internal func updatePlacementUI() {
@@ -170,6 +244,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             return
         }
         
+        guard let sequenceToLoad = sequenceToLoad else {
+            return
+        }
+        
         DispatchQueue.global().async {
             var uke: Uke?
             if object is Instructor && !self.virtualObjects.contains(where: { ($0 is Uke) }) {
@@ -181,7 +259,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             
             DispatchQueue.main.async {
                 object.instructionService = self.instructionService
-                object.loadAnimationSequence(animationSequence: self.sequenceToLoad)
+                object.loadAnimationSequence(animationSequence: sequenceToLoad.sequenceArray)
                 if let uke = uke {
                     self.setVirtualObject(object: uke, at: object.position)
                     uke.scale = object.scale
@@ -189,7 +267,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 }
                 
                 self.virtualObjects.filter({ $0 is Uke }).forEach({ object in
-                    object.loadAnimationSequence(animationSequence: self.sequenceToLoad)
+                    object.loadAnimationSequence(animationSequence: sequenceToLoad.sequenceArray)
                 })
             }
         }
@@ -227,11 +305,11 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	
     // MARK: - ARKit / ARSCNView
     let session = ARSession()
-	var sessionConfig: ARSessionConfiguration = ARWorldTrackingSessionConfiguration()
+	var sessionConfig: ARWorldTrackingConfiguration = ARWorldTrackingSessionConfiguration()
 	var use3DOFTracking = false {
 		didSet {
 			if use3DOFTracking {
-				sessionConfig = ARSessionConfiguration()
+				sessionConfig = ARWorldTrackingConfiguration()
 			}
 			sessionConfig.isLightEstimationEnabled = UserDefaults.standard.bool(for: .ambientLightEstimation)
 			session.run(sessionConfig)
@@ -382,12 +460,13 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		} else {
 			sessionErrorMsg += "\nThis is an unrecoverable error that requires to quit the application."
 		}
-		
+		cancelScreenshotSelector()
 		displayErrorMessage(title: "We're sorry!", message: sessionErrorMsg, allowRestart: isRecoverable)
 	}
 	
 	func sessionWasInterrupted(_ session: ARSession) {
         instructionService?.stop()
+        cancelScreenshotSelector()
 		textManager.blurBackground()
 		textManager.showAlert(title: "Session Interrupted", message: "The session will be reset after the interruption has ended.")
 	}
@@ -423,23 +502,23 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	var currentGesture: Gesture?
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touches began")
+        super.touchesBegan(touches, with: event)
+        
         for object in virtualObjects {
             if currentGesture == nil {
-                print("start gesture")
                 currentGesture = Gesture.startGestureFromTouches(touches, self.sceneView, object, currentPlacementState)
             } else {
-                print("update gesture")
                 currentGesture = currentGesture!.updateGestureFromTouches(touches, .touchBegan)
             }
         }
         
 		displayVirtualObjectTransform()
-        
         initialTouchPosition = touches.first?.location(in: sceneView)
 	}
 	
 	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        
 		if virtualObjects.count == 0 {
 			return
 		}
@@ -448,27 +527,34 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	}
 	
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        
 		if virtualObjects.count == 0 && currentPlacementState.isPlacingAllowed() {
 			chooseObject(addObjectButton)
 			return
 		}
 		
 		currentGesture = currentGesture?.updateGestureFromTouches(touches, .touchEnded)
-        
-        if currentPlacementState == .PlacedReady {
-            if let initialTouchPosition = initialTouchPosition, let latestTouchPosition = touches.first?.location(in: sceneView) {
-                let diff = CGPoint(x: latestTouchPosition.x - initialTouchPosition.x, y: latestTouchPosition.y - initialTouchPosition.y)
-                print("diff: \(diff)")
-                if diff.y < 0 {
-                    
-                    // refactor this into own method
-                    calculateBallTrajectoryAndThrow(diff)
+        if let latestTouchPosition = touches.first?.location(in: sceneView) {
+            if currentPlacementState == .PlacedReady {
+                if let initialTouchPosition = initialTouchPosition {
+                    let diff = CGPoint(x: latestTouchPosition.x - initialTouchPosition.x, y: latestTouchPosition.y - initialTouchPosition.y)
+                    print("diff: \(diff)")
+                    if diff.y < 0 {
+                        
+                        // refactor this into own method
+                        calculateBallTrajectoryAndThrow(diff)
+                    }
                 }
+            } else {
+                
             }
         }
 	}
 	
 	override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        
 		if virtualObjects.count == 0 {
 			return
 		}
@@ -778,7 +864,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	
 	@IBOutlet weak var addObjectButton: UIButton!
 	
-	func loadVirtualObject(at index: Int) {
+	func loadVirtualObject(at pos: SCNVector3) {
 		resetVirtualObject()
 		
 		// Show progress indicator
@@ -792,7 +878,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		// Load the content asynchronously.
 		DispatchQueue.global().async {
 			self.isLoadingObject = true
-			let object = VirtualObject.availableObjects[index]
+			let object = Instructor()
 			object.viewController = self
             object.delegate = self
             
@@ -801,11 +887,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             
             DispatchQueue.main.async {
                 // Immediately place the object in 3D space.
-				if let lastFocusSquarePos = self.focusSquare?.lastPosition {
-					self.setNewVirtualObjectPosition(lastFocusSquarePos)
-				} else {
-					self.setNewVirtualObjectPosition(SCNVector3Zero)
-				}
+				self.setNewVirtualObjectPosition(pos)
 				
 				// Remove progress indicator
 				spinner.removeFromSuperview()
@@ -821,25 +903,33 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 			}
 		}
         
-        StatManager.sharedIntance.onPlay()
+        SessionManager.sharedInstance.onPlay()
     }
 	
-	@IBAction func chooseObject(_ button: UIButton) {
+	@IBAction func chooseObject(_ sender: Any?) {
 		// Abort if we are about to load another object to avoid concurrent modifications of the scene.
 		if isLoadingObject { return }
 		
 		textManager.cancelScheduledMessage(forType: .contentPlacement)
 		
         if !currentPlacementState.isPlaced() {
-            loadVirtualObject(at: 0)
+            var pos = SCNVector3Zero
+            if let lastFocusSquarePos = self.focusSquare?.lastPosition {
+                pos = lastFocusSquarePos
+            }
+            
+            loadVirtualObject(at: pos)
             currentPlacementState = .PlacedScaling
         } else if currentPlacementState == .PlacedMoving {
             startCharacterAnimations()
             currentPlacementState = .PlacedReady
-            if let virtualObject = virtualObjects.first {
-                // testing portal
-                //addPortal(position: virtualObject.position)
-            }
+
+            stopPlaneDetection()
+
+            // hardcode setup for now
+            setupBreathing()
+            
+            scheduleScreenshot()
         } else if currentPlacementState == .PlacedRotating {
             currentPlacementState = .PlacedMoving
         } else if currentPlacementState == .PlacedScaling {
@@ -847,16 +937,21 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
         updatePlacementUI()
     }
-	
-	// MARK: - VirtualObjectSelectionViewControllerDelegate
-	
-	func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didSelectObjectAt index: Int) {
-		loadVirtualObject(at: index)
-	}
-	
-	func virtualObjectSelectionViewControllerDidDeselectObject(_: VirtualObjectSelectionViewController) {
-		resetVirtualObject()
-	}
+    
+    // MARK: - Screenshot
+    
+    func scheduleScreenshot() {
+        let randSec = TimeInterval(arc4random_uniform(10))
+        perform(#selector(ARTechniqueViewController.captureScreenshot), with: nil, afterDelay: 5 + randSec)
+    }
+    
+    func cancelScreenshotSelector() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(ARTechniqueViewController.captureScreenshot), object: nil)
+    }
+    
+    @objc func captureScreenshot() {
+        screenShot = sceneView.snapshot()
+    }
 	
     // MARK: - Planes
 	
@@ -910,6 +1005,13 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		                            inSeconds: 7.5,
 		                            messageType: .planeEstimation)
 	}
+    
+    func stopPlaneDetection() {
+        if let worldSessionConfig = sessionConfig as? ARWorldTrackingSessionConfiguration {
+            worldSessionConfig.planeDetection = .init(rawValue: 0)
+            session.run(worldSessionConfig, options: [.resetTracking, .removeExistingAnchors])
+        }
+    }
 
     // MARK: - Focus Square
     var focusSquare: FocusSquare?
@@ -992,7 +1094,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		}
 		
 		DispatchQueue.main.async {
-			self.featurePointCountLabel.text = "Features: \(cloud.count)".uppercased()
+			self.featurePointCountLabel.text = "Features: \(cloud.__count)".uppercased()
 		}
 	}
 	
@@ -1069,6 +1171,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             self.updatePlacementUI()
 			
 			self.restartExperienceButton.setImage(#imageLiteral(resourceName: "restart"), for: [])
+
+            self.cancelScreenshotSelector()
 			
 			// Disable Restart button for five seconds in order to give the session enough time to restart.
 			DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
@@ -1243,29 +1347,38 @@ extension ARTechniqueViewController: VirtualObjectDelegate {
     func virtualObjectDidFinishAnimation(_ object: VirtualObject) {
         print("finished with sequence \(object.animationSequence)")
         instructionService?.stop()
+        cancelScreenshotSelector()
         if let last = object.animationSequence.last {
             if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
                 let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-                let relatedView = RelatedAnimationsView(frame: frame)
-                relatedView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-                relatedView.relatedAnimations = data.relatedAnimations ?? []
-                relatedView.set(delegate: self)
-                view.addSubview(relatedView)
-                relatedView.animateIn()
-                relatedAnimationsView = relatedView
+                
+                // TODO: sequence container should have a state on what completion view to show
+            
+//                let relatedView = RelatedAnimationsView(frame: frame)
+//                relatedView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
+//                relatedView.relatedAnimations = data.relatedAnimations ?? []
+//                relatedView.set(delegate: self)
+//                view.addSubview(relatedView)
+//                relatedView.animateIn()
+//                relatedAnimationsView = relatedView
+                let breathCompletionView = BreatheCompleteView(frame: frame, parentVC: self) { [unowned self] in
+                    self.saveToBreathFeed()
+                }
+                breathCompletionView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
+                breathCompletionView.update(screenshot: screenShot, sequenceContainer: nil)
+                view.addSubview(breathCompletionView)
+                breathCompletionView.animateIn()
             }
         }
     }
 }
 
 extension ARTechniqueViewController: RelatedAnimationsViewDelegate {
-    func didTapRelatedAnimation(relatedView: RelatedAnimationsView, animation: String) {
+    func didTapRelatedAnimation(relatedView: RelatedAnimationsView, sequenceName: String) {
         relatedAnimationsView?.animateOut()
-        if let data = DataLoader.sharedInstance.characterAnimation(name: animation) {
-            let animation0 = AnimationSequenceData(instructorAnimation: data.instructorAnimation, ukeAnimation: data.ukeAnimation, delay: 0, speed: 1, repeatCount: 0)
-            sequenceToLoad = [animation0]
-            startCharacterAnimations()
-        }
+
+        sequenceToLoad = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName)
+        startCharacterAnimations()
     }
     
     func didTapShare(relatedView: RelatedAnimationsView) {
@@ -1281,5 +1394,22 @@ extension ARTechniqueViewController: RelatedAnimationsViewDelegate {
         self.relatedAnimationsView?.animateOut()
         self.relatedAnimationsView = nil
         startCharacterAnimations()
+        setupBreathing()
+    }
+}
+
+extension ARTechniqueViewController: BreathTimerServiceDelegate {
+    func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathParameter?) {
+        breathTimerView.update(timestamp: timestamp, nextParameterTimestamp: nextParameterTimestamp, breathParameter: currentParameter)
+    }
+    
+    func breathTimeDidFinish() {
+        breathTimerView.finishTimer()
+    }
+}
+
+extension ARTechniqueViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

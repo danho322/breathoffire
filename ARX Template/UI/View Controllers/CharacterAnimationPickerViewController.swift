@@ -30,7 +30,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     internal var sectionNames: [String] = []
     
     internal var model: VirtualObject?
-    internal var sequenceToLoad: [AnimationSequenceData] = []
+    internal var sequenceToLoad: AnimationSequenceDataContainer?
     internal var sliderValue: Float = 0
     
     override func viewDidLoad() {
@@ -152,7 +152,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     }
     
 //    refactor this to return container and then for everything to use this correctly
-    internal func sequenceDataArray(indexPath: IndexPath) -> AnimationSequenceDataContainer? {
+    func sequenceDataContainer(indexPath: IndexPath) -> AnimationSequenceDataContainer? {
         let sectionName = sectionNames[indexPath.section]
         if let sequenceArray = sectionSequenceDict[sectionName], let sequenceName = sequenceArray[safe: indexPath.row] {
             if let sequenceData = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName) {
@@ -177,7 +177,7 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:  CellIdentifiers.Technique, for: indexPath)
         if let cell = cell as? TechniqueTableCell {
-            if let sequenceContainer = sequenceDataArray(indexPath: indexPath) {
+            if let sequenceContainer = sequenceDataContainer(indexPath: indexPath) {
                 cell.update(with: sequenceContainer.sequenceName)
             }
         }
@@ -211,9 +211,9 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CharacterAnimationPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let sequenceContainer = sequenceDataArray(indexPath: indexPath) {
+        if let sequenceContainer = sequenceDataContainer(indexPath: indexPath) {
             loadButton.isEnabled = true
-            sequenceToLoad = sequenceContainer.sequenceArray
+            sequenceToLoad = sequenceContainer
             model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray)
         }
     }

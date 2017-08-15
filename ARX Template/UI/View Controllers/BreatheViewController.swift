@@ -9,27 +9,27 @@
 import UIKit
 
 class BreatheViewController: UIViewController {
-
+    @IBOutlet weak var breathTimeView: BreathTimerView!
+    
+    internal var breathTimerService: BreathTimerService?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let parameter0 = BreathParameter(startTime: 0, breathTimeUp: 0.1, breathTimeDown: 0.4)
+        let parameter1 = BreathParameter(startTime: 5, breathTimeUp: 2, breathTimeDown: 2)
+        let parameter2 = BreathParameter(startTime: 13, breathTimeUp: 0.1, breathTimeDown: 0.4)
+        breathTimerService = BreathTimerService(sessionTime: 15, parameterQueue: [parameter0, parameter1, parameter2], delegate: self)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+}
+
+extension BreatheViewController: BreathTimerServiceDelegate {
+    func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathParameter?) {
+        breathTimeView.update(timestamp: timestamp, nextParameterTimestamp: nextParameterTimestamp, breathParameter: currentParameter)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func breathTimeDidFinish() {
+        breathTimeView.isRunning = false
     }
-    */
-
 }
