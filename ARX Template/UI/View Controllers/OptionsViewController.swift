@@ -56,8 +56,6 @@ enum OptionCellSectionType {
 
 class OptionsViewController: UIViewController {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -84,33 +82,20 @@ class OptionsViewController: UIViewController {
         tableView.register(techniquesNib , forCellReuseIdentifier: CellIdentifiers.ViewAllTechniques)
         
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        titleLabel.textColor = ThemeManager.sharedInstance.textColor()
-        titleLabel.font = ThemeManager.sharedInstance.heavyFont(20)
         
         ThemeManager.sharedInstance.formatSearchBar(searchBar)
         
         isHeroEnabled = true
-        
-        let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
-        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
-        backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
     }
     
     @IBAction func onBackTap(_ sender: Any) {
         hero_dismissViewController()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let workoutVC = segue.destination as? TechniqueSceneKitViewController, let identifier = segue.identifier, identifier == "WorkoutIdentifier" {
-            workoutVC.loadWorkout = true
-            workoutVC.animationToLoad = DataLoader.sharedInstance.characterAnimation(name: "Salsa")
-        }
-    }
-    
     func handlePackageTap(packageName: String?) {
         if let techniqueVC = storyboard?.instantiateViewController(withIdentifier: "CharacterAnimationPickerIdentifier") as? CharacterAnimationPickerViewController {
             techniqueVC.packageName = packageName
-            self.present(techniqueVC, animated: true, completion: nil)
+            navigationController?.pushViewController(techniqueVC, animated: true)
         }
     }
 }
@@ -118,7 +103,7 @@ class OptionsViewController: UIViewController {
 extension OptionsViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if let searchVC = storyboard?.instantiateViewController(withIdentifier: "TechniqueSearchIdentifier") {
-            self.present(searchVC, animated: true, completion: nil)
+            navigationController?.pushViewController(searchVC, animated: true)
         }
     }
 }
@@ -130,7 +115,7 @@ extension OptionsViewController: UITableViewDelegate {
         if section == .packages {
             if let packageDetailsVC = storyboard?.instantiateViewController(withIdentifier: "PackageDetailsIdentifier") as? PackageDetailsViewController {
                 packageDetailsVC.packageName = DataLoader.sharedInstance.packages()[indexPath.row].packageName
-                self.present(packageDetailsVC, animated: true, completion: nil)
+                navigationController?.pushViewController(packageDetailsVC, animated: true)
             }
         } else if section == .moveOfDay {
 //            if let sceneVC = segue.destination as? ARTechniqueViewController, let identifier = segue.identifier, identifier == "ARSegue" {
@@ -139,7 +124,7 @@ extension OptionsViewController: UITableViewDelegate {
             if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
                 let motdSequenceContainer = DataLoader.sharedInstance.moveOfTheDay() {
                 arVC.sequenceToLoad = motdSequenceContainer
-                present(arVC, animated: true, completion: nil)
+                navigationController?.pushViewController(arVC, animated: true)
             }
         } else {
             handlePackageTap(packageName: "Jiujitsu Basics")

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftySound
 
 class BreathTimerView: XibView {
     @IBOutlet weak var timeLabel: UILabel!
@@ -16,8 +17,9 @@ class BreathTimerView: XibView {
     
     internal let circlePathLayer = CAShapeLayer()
     internal let circleRadius: CGFloat = 110
-    var isRunning = false
     internal var currentBreathParameter: BreathParameter?
+    var isRunning = false
+    internal var breathCount = 0
     
     var progress: CGFloat {
         get {
@@ -72,12 +74,20 @@ class BreathTimerView: XibView {
     func circlePath() -> UIBezierPath {
         return UIBezierPath(ovalIn: circleFrame())
     }
+    
+    func onStart() {
+        breathCount = 0
+    }
+    
+    func currentBreathCount() -> Int {
+        return breathCount
+    }
 
     func update(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, breathParameter: BreathParameter?) {
         guard let view = view as? BreathTimerView else {
             fatalError("view is not of type BreathTimerView")
         }
-        print("update \(timestamp) \(nextParameterTimestamp) \(breathParameter?.startTime)")
+       
         view.timeLabel.text = BreathTimerService.timeString(time: timestamp)
        
         if let currentBreathParameter = currentBreathParameter,
@@ -126,8 +136,10 @@ class BreathTimerView: XibView {
             fatalError("view is not of type BreathTimerView")
         }
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(BreathTimerView.doBreathAnimation), object: nil)
-        print("do breath")
         if let currentBreatheParameter = currentBreathParameter, isRunning {
+            
+            currentBreatheParameter.playSound.play()
+            breathCount += 1
             let fireView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.fireContainerImageView.frame.size.width, height: view.fireContainerImageView.frame.size.height))
             fireView.center = view.fireContainerImageView.center
             fireView.image = UIImage(named: "FireEmoji")

@@ -21,13 +21,15 @@ class BreatheCompleteView: XibView {
     
     weak var parentVC: UIViewController?
     var shareCommunityHandler: (()->Void)?
+    var dismissHandler: (()->Void)?
     
     internal var didShareFeed = false
     
-    convenience init(frame: CGRect, parentVC: UIViewController, shareCommunityHandler: (()->Void)?) {
+    convenience init(frame: CGRect, parentVC: UIViewController, shareCommunityHandler: (()->Void)?, dismissHandler: (()->Void)?) {
         self.init(frame: frame)
         self.parentVC = parentVC
         self.shareCommunityHandler = shareCommunityHandler
+        self.dismissHandler = dismissHandler
     }
     
     override func setupUI() {
@@ -60,11 +62,11 @@ class BreatheCompleteView: XibView {
     }
     
     // artechniqueviewcontroller needs to be refactored to hold the container
-    func update(screenshot: UIImage?, sequenceContainer: AnimationSequenceDataContainer?) {
+    func update(breathCount: Int, screenshot: UIImage?, sequenceContainer: AnimationSequenceDataContainer?) {
         guard let view = view as? BreatheCompleteView else {
             fatalError("view is not of type BreatheCompleteView")
         }
-        
+        view.detailsLabel.text = "You did \(breathCount) Breaths of Fire!"
         view.screenshotImageView.image = screenshot
         view.screenshotImageView.layer.masksToBounds = true
         view.screenshotImageView.layer.cornerRadius = view.screenshotImageView.frame.size.width / 2
@@ -115,7 +117,9 @@ class BreatheCompleteView: XibView {
             viewToDismiss = superview
         }
         
-        viewToDismiss.animateOut()
+        viewToDismiss.animateOut() { [unowned self] in
+            viewToDismiss.dismissHandler?()
+        }
     }
     
     // MARK: - Aniamtions
@@ -135,7 +139,7 @@ class BreatheCompleteView: XibView {
         alphaAnimator.startAnimation()
     }
     
-    func animateOut() {
+    func animateOut(completion: @escaping (()->Void)) {
         guard let view = view as? BreatheCompleteView else {
             fatalError("view is not of type BreatheCompleteView")
         }
@@ -147,6 +151,7 @@ class BreatheCompleteView: XibView {
         })
         alphaAnimator.addCompletion({ position in
             self.removeFromSuperview()
+            completion()
         })
         alphaAnimator.startAnimation()
     }

@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D41332361F44A11500851996 /* TimeFormatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41332351F44A11500851996 /* TimeFormatType.swift */; };
 		D422C2AE1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */; };
 		D422C2B01F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */; };
 		D427C9451F0770D30096C2A1 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D427C9441F0770C20096C2A1 /* InstructionView.swift */; };
 		D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42A6C501F1422AE00A3F2F0 /* TechniqueSearchable.swift */; };
+		D42DE7681F46A4FE00264AF1 /* Breathe.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D42DE7651F469DC400264AF1 /* Breathe.m4a */; };
 		D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B971F048282002F369F /* FocusSquare.swift */; };
 		D43D4BAA1F048282002F369F /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B981F048282002F369F /* Gesture.swift */; };
 		D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B991F048282002F369F /* HitTestVisualization.swift */; };
@@ -115,6 +117,7 @@
 		D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */; };
 		D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */; };
 		D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */; };
+		D4C9383E1F440585002A2F4C /* BreathFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C9383D1F440585002A2F4C /* BreathFactory.swift */; };
 		D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */; };
 		D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49103121EFB068E008A528E /* SceneKitExtensions.swift */; };
 		D4D7318B1EFB8B8400C65E99 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49103141EFB068E008A528E /* DataLoader.swift */; };
@@ -140,10 +143,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D41332351F44A11500851996 /* TimeFormatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatType.swift; sourceTree = "<group>"; };
 		D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailsDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageDetailsDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		D427C9441F0770C20096C2A1 /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		D42A6C501F1422AE00A3F2F0 /* TechniqueSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueSearchable.swift; sourceTree = "<group>"; };
+		D42DE7631F46980D00264AF1 /* SwiftySound.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftySound.framework; path = Carthage/Build/iOS/SwiftySound.framework; sourceTree = "<group>"; };
+		D42DE7651F469DC400264AF1 /* Breathe.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Breathe.m4a; sourceTree = "<group>"; };
+		D42DE7661F46A43D00264AF1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		D43D4B951F048282002F369F /* ARSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARSettingsViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/ARSettingsViewController.swift; sourceTree = "<group>"; };
 		D43D4B971F048282002F369F /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
 		D43D4B981F048282002F369F /* Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
@@ -256,6 +263,7 @@
 		D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsPackageTableViewCell.xib; sourceTree = "<group>"; };
 		D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPackageTableViewCell.swift; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
+		D4C9383D1F440585002A2F4C /* BreathFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathFactory.swift; sourceTree = "<group>"; };
 		D4DF08101F4147FF00E8F0EE /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		D4DF08121F41485A00E8F0EE /* FeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedTableViewCell.xib; sourceTree = "<group>"; };
 		D4DF08141F414FAE00E8F0EE /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
@@ -355,6 +363,14 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		D42DE7641F469DB700264AF1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D42DE7651F469DC400264AF1 /* Breathe.m4a */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		D43D4B961F048282002F369F /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,6 +428,8 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D42DE7661F46A43D00264AF1 /* CoreAudio.framework */,
+				D42DE7631F46980D00264AF1 /* SwiftySound.framework */,
 				D45AAC001F250DC000BE41E0 /* SDWebImage.framework */,
 				D4612E311F231D66007D13C3 /* Resources */,
 				D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */,
@@ -486,6 +504,7 @@
 		D49102F91EFB05CE008A528E /* ARX Template */ = {
 			isa = PBXGroup;
 			children = (
+				D42DE7641F469DB700264AF1 /* Resources */,
 				D4612E301F231C08007D13C3 /* GoogleService-Info.plist */,
 				D4ECE16A1F22C7CB00E8B788 /* Particles */,
 				D44B24E21F182E6300459032 /* Models */,
@@ -514,6 +533,7 @@
 				D45621451F0BEDC40052E218 /* UIViewProtocols.swift */,
 				D4A091BF1F2070AE00C03805 /* ARXUtilities.swift */,
 				D4A091C11F2071C900C03805 /* ARXConstants.swift */,
+				D41332351F44A11500851996 /* TimeFormatType.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -529,6 +549,7 @@
 				D4A43C051F1C858400978F69 /* StoreKitService.swift */,
 				D470B8D01F1F19CC00920CAB /* ThemeManager.swift */,
 				D4A72D291F3AC92300553086 /* BreathTimerService.swift */,
+				D4C9383D1F440585002A2F4C /* BreathFactory.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -626,6 +647,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D42DE7681F46A4FE00264AF1 /* Breathe.m4a in Resources */,
 				D49418891F231E0200CA83E2 /* GoogleService-Info.plist in Resources */,
 				D4DF08131F41485A00E8F0EE /* FeedTableViewCell.xib in Resources */,
 				D4A04B001F0A09A400BEA822 /* Models.scnassets in Resources */,
@@ -662,6 +684,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/FontAwesomeKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Spruce.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyStoreKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftySound.framework",
 			);
 			outputPaths = (
 			);
@@ -685,6 +708,7 @@
 				D4A04AFB1F09FF2100BEA822 /* Cup.swift in Sources */,
 				D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */,
 				D4A04AFC1F09FF2100BEA822 /* Instructor.swift in Sources */,
+				D41332361F44A11500851996 /* TimeFormatType.swift in Sources */,
 				D494188F1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift in Sources */,
 				D4A04AFD1F09FF2100BEA822 /* Lamp.swift in Sources */,
 				D4DF08151F414FAE00E8F0EE /* FeedTableViewCell.swift in Sources */,
@@ -735,6 +759,7 @@
 				D46F91771F0F04AA003B7F8A /* SessionManager.swift in Sources */,
 				D4A72D301F3B79F300553086 /* BreatheViewController.swift in Sources */,
 				D470B8D11F1F19CC00920CAB /* ThemeManager.swift in Sources */,
+				D4C9383E1F440585002A2F4C /* BreathFactory.swift in Sources */,
 				D4A72D2A1F3AC92300553086 /* BreathTimerService.swift in Sources */,
 				D46B68D41F40053D00DAB0AD /* BreatheCompleteView.swift in Sources */,
 				D45AAC051F2563CC00BE41E0 /* PackageDetailsViewController.swift in Sources */,

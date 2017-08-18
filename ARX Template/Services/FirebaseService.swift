@@ -23,6 +23,9 @@ struct UserData {
     let userName: String
     let tokenCount: Int
     let playCount: Int
+    let streakCount: Int
+    let breathStreakCount: Int
+    let lastStreakTimestamp: TimeInterval
     let purchasedPackages: [String: Any]
     
     init(userId: String, snapshotDict: NSDictionary) {
@@ -30,6 +33,9 @@ struct UserData {
         userName = snapshotDict["userName"] as? String ?? "Anonymous"
         tokenCount = snapshotDict["tokenCount"] as? Int ?? 0
         playCount = snapshotDict["playCount"] as? Int ?? 0
+        streakCount = snapshotDict["streakCount"] as? Int ?? 0
+        breathStreakCount = snapshotDict["breathStreakCount"] as? Int ?? 0
+        lastStreakTimestamp = snapshotDict["lastStreakTimestamp"] as? TimeInterval ?? 0
         if let packagesDict = snapshotDict["purchasedPackages"] as? [String: Any] {
             purchasedPackages = packagesDict
         } else {
@@ -103,11 +109,11 @@ class FirebaseService {
         }
     }
     
-    func incrementAttributeCount(userId: String, attributeName: String, count: Int = 1) {
+    func incrementAttributeCount(userId: String, attributeName: String, count: Int = 1, defaultValue: Int = 0) {
         let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
             if var post = currentData.value as? [String : AnyObject] {
-                var starCount = post[attributeName] as? Int ?? 0
+                var starCount = post[attributeName] as? Int ?? defaultValue
                 starCount += count
                 post[attributeName] = starCount as AnyObject?
                 
@@ -160,14 +166,14 @@ class FirebaseService {
             .observe(.value, with: { [unowned self] snapshot in
                 var items: [BreathFeedItem] = []
                 if let feedDict = snapshot.value as? NSDictionary {
-                    for (_, feedItemDict) in feedDict {
+                    for (key, feedItemDict) in feedDict {
                         if let feedItemDict = feedItemDict as? NSDictionary {
-                            let feedItem = BreathFeedItem(snapshotDict: feedItemDict)
+                            let feedItem = BreathFeedItem(key: key as? String, snapshotDict: feedItemDict)
                             items.append(feedItem)
                         }
                     }
                 }
-                completionHandler(items.reversed())
+                completionHandler(items.sorted(by: { $0.timestamp > $1.timestamp }))
 //            if let sectionSequenceArray = snapshot.value as? NSArray {
 //                for sectionSequence in sectionSequenceArray {
 //                    if let sectionString = sectionSequence as? String {
@@ -177,7 +183,18 @@ class FirebaseService {
 //                }
 //            }
         })
-        
+    }
+    
+    func deleteFeedItem(feedItem: BreathFeedItem) {
+        if let key = feedItem.key {
+            let ref = Database.database().reference().child("feed/\(Constants.AppKey)/\(key)")
+            ref.removeValue()
+            
+            let imageRef = Storage.storage().reference().child(feedItem.imagePath)
+            imageRef.delete(completion: { error in
+                print("Error deleting file: \(error)")
+            })
+        }
     }
     
     // MARK: - Image loading
@@ -262,7 +279,6 @@ class FirebaseService {
                     let sequence = AnimationSequenceDataContainer(sequenceName: sequenceName, snapshotDict: sequenceDataDict)
                     self.retrieveAnimationDataFromSequenceData(sequenceDataContainer: sequence)
                     self.sequenceDataDict[sequenceName] = sequence
-                    print("stored \(sequenceName)")
                 }
             })
             sequenceRefs[sequenceName] = sequenceDataRef
@@ -321,8 +337,10 @@ class FirebaseService {
     
     func downloadFileIfNecessary(path: String, completion: (() -> Void)? = nil) {
         if !fileExist(path: path) {
+            print("downloading file...")
             downloadFile(path: path, completion: completion)
         } else {
+            print("file already exists")
             completion?()
         }
     }
@@ -390,25 +408,31 @@ class FirebaseService {
 // MARK: - Structs
 
 struct BreathFeedItem {
+    let key: String?
     let timestamp: TimeInterval
+    let breathCount: Int
     let imagePath: String
     let userId: String
     let userName: String
     let coordinate: CLLocationCoordinate2D
     
-    init(timestamp: TimeInterval, imagePath: String, userId: String, userName: String, coordinate: CLLocationCoordinate2D) {
+    init(key: String? = nil, timestamp: TimeInterval, imagePath: String, userId: String, userName: String, breathCount: Int, coordinate: CLLocationCoordinate2D) {
+        self.key = key
         self.timestamp = timestamp
         self.imagePath = imagePath
         self.userId = userId
         self.userName = userName
+        self.breathCount = breathCount
         self.coordinate = coordinate
     }
     
-    init(snapshotDict: NSDictionary) {
+    init(key: String?, snapshotDict: NSDictionary) {
+        self.key = key
         timestamp = snapshotDict["timestamp"] as? TimeInterval ?? 0
         imagePath = snapshotDict["imagePath"] as? String ?? ""
         userId = snapshotDict["userId"] as? String ?? ""
         userName = snapshotDict["userName"] as? String ?? ""
+        breathCount = snapshotDict["breathCount"] as? Int ?? 0
         let lat = snapshotDict["latitude"] as? CLLocationDegrees ?? 0
         let lng = snapshotDict["longitude"] as? CLLocationDegrees ?? 0
         coordinate = CLLocationCoordinate2DMake(lat, lng)
@@ -418,6 +442,8 @@ struct BreathFeedItem {
         return ["timestamp": timestamp,
                 "imagePath": imagePath,
                 "userId": userId,
+                "userName": userName,
+                "breathCount": breathCount,
                 "latitude": coordinate.latitude,
                 "longitude": coordinate.longitude]
     }
@@ -443,10 +469,18 @@ struct AnimationSequenceDataContainer: SearchableData {
     let sequenceArray: [AnimationSequenceData]
     let packageName: String
     
+    var breathProgram: BreathProgram?
+    var showHud = true
+    
     init(sequenceName: String, snapshotDict: NSDictionary) {
         self.sequenceName = sequenceName
         sequenceDescription = snapshotDict["sequenceDescription"] as? String ?? ""
         packageName = snapshotDict["packageName"] as? String ?? ""
+        if let breathProgramInt = snapshotDict["breathProgram"] as? Int {
+            breathProgram = BreathProgram(rawValue: breathProgramInt)
+        }
+        showHud = snapshotDict["showHud"] as? Bool ?? true
+        
         var sequenceArrayTemp: [AnimationSequenceData] = []
         if let sequenceDataArray = snapshotDict["sequenceArray"] as? NSArray {
             for sequenceData in sequenceDataArray {

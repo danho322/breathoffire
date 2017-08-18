@@ -34,6 +34,8 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        
         backgroundImageView.alpha = 0
         FirebaseService.sharedInstance.retrieveBackgroundImage() { image in
             self.backgroundImageView.image = image
@@ -122,32 +124,11 @@ class MenuViewController: UIViewController {
     }
     
     @IBAction func onLoginTap(_ sender: Any) {
-        let loginView = LoginView(frame: CGRect(x: 0, y: 0, width: Sizes.ScreenWidth * 0.8, height: Sizes.ScreenHeight * 0.8))
-        loginView.completionHandler = {
-            // refresh?
-        }
-        loginView.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.height / 2)
-        view.addSubview(loginView)
-        loginView.animateIn()
+        
     }
     
     @IBAction func onSettingsTap(_ sender: Any) {
-        FirebaseService.sharedInstance.retrieveBreathFeed() { items in
-            print(items)
-        }
-        return
         
-        if let image = captureScreen() {
-            FirebaseService.sharedInstance.uploadImage(image: image) { path in
-                if let path = path,
-                    let currentUserData = SessionManager.sharedInstance.currentUserData {
-                    // add to feed path
-                    
-                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970, imagePath: path, userId: currentUserData.userId, userName: currentUserData.userName, coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
-                    FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
-                }
-            }
-        }
     }
     
     @IBAction func onEnterTap(_ sender: Any) {
@@ -157,8 +138,8 @@ class MenuViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         } else {
             if let optionsVC = self.storyboard?.instantiateViewController(withIdentifier: "OptionsIdentifier") as? OptionsViewController {
-                self.show(optionsVC, sender: self)
-                optionsVC.titleLabel.text = selectLabel.text
+                navigationController?.pushViewController(optionsVC, animated: true)
+//                optionsVC.titleLabel.text = selectLabel.text
             }
         }
     }
@@ -175,5 +156,7 @@ class MenuViewController: UIViewController {
         sceneContainer1.backgroundColor = ThemeManager.sharedInstance.focusColor()
         selectedMode = .jiujitsu
         selectLabel.text = "JIUJITSU"
+        
+        BreathSound.quickExhale.play()
     }
 }

@@ -37,8 +37,11 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIo-Rr-Jl3">
-                        <rect key="frame" x="313" y="3" width="54" height="30"/>
-                        <state key="normal" title="Options"/>
+                        <rect key="frame" x="337" y="3" width="30" height="30"/>
+                        <state key="normal" title="..."/>
+                        <connections>
+                            <action selector="onRemoveTap:" destination="utU-Um-yTx" eventType="touchUpInside" id="RQm-gu-A3c"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>

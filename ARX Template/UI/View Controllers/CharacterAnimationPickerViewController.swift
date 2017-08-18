@@ -36,7 +36,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        isHeroEnabled = false
+//        isHeroEnabled = false
         
         sectionNames = DataLoader.sharedInstance.sequenceSections()
         for sectionName in sectionNames {
@@ -81,7 +81,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         
         backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
         
-        view.alpha = 0
+//        view.alpha = 0
         
         DispatchQueue.global().async {
             self.sceneView.scene = SCNScene()

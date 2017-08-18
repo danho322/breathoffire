@@ -3,3 +3,4 @@ github "PrideChung/FontAwesomeKit" == 2.2.1
 github "willowtreeapps/spruce-ios"
 github "rs/SDWebImage"
 github "bizz84/SwiftyStoreKit"
+github "adamcichy/SwiftySound"

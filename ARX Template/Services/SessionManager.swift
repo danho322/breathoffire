@@ -52,15 +52,25 @@ class SessionManager {
         }
     }
     
-    func onLogin() {
-        if let currentUser = Auth.auth().currentUser {
-            FirebaseService.sharedInstance.setUserAttribute(userId: currentUser.uid, attributeName: "lastLoggedIn", value: Date().description)
+    func onPlayFinish(breathCount: Int = 0) {
+        if let currentUserData = currentUserData {
+            let lastPlay = Date(timeIntervalSince1970: currentUserData.lastStreakTimestamp)
+            if Calendar.current.isDateInYesterday(lastPlay) {
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attributeName: "streakCount", defaultValue: 1)
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attributeName: "breathStreakCount", count: breathCount)
+            } else if Calendar.current.isDateInToday(lastPlay) {
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attributeName: "breathStreakCount", count: breathCount)
+            } else if !Calendar.current.isDateInToday(lastPlay) {
+                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attributeName: "streakCount", value: 1)
+                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attributeName: "breathStreakCount", value: 0)
+            }
+            FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attributeName: "lastStreakTimestamp", value: Date().timeIntervalSince1970)
         }
     }
     
-    func onBreathSessionFinished(breathes: Int) {
+    func onLogin() {
         if let currentUser = Auth.auth().currentUser {
-            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUser.uid, attributeName: "breathCount", count: breathes)
+            FirebaseService.sharedInstance.setUserAttribute(userId: currentUser.uid, attributeName: "lastLoggedIn", value: Date().description)
         }
     }
     

@@ -8,28 +8,6 @@
 
 import Foundation
 
-enum BreathState {
-    case start, pause
-}
-
-class BreathParameter {
-    let startTime: TimeInterval
-    let breathTimeUp: TimeInterval
-    let breathTimeDown: TimeInterval
-    
-    init(startTime: TimeInterval, breathTimeUp: TimeInterval, breathTimeDown: TimeInterval) {
-        self.startTime = startTime
-        self.breathTimeUp = breathTimeUp
-        self.breathTimeDown = breathTimeDown
-    }
-}
-
-func ==<T: BreathParameter>(lhs: T, rhs: T) -> Bool {
-    return lhs.startTime == rhs.startTime &&
-        rhs.breathTimeUp == lhs.breathTimeUp &&
-        rhs.breathTimeDown == lhs.breathTimeDown
-}
-
 protocol BreathTimerServiceDelegate {
     func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathParameter?)
     func breathTimeDidFinish()
@@ -51,6 +29,11 @@ class BreathTimerService: NSObject {
         super.init()
     
         timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self,   selector: (#selector(BreathTimerService.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    func stop() {
+        timer?.invalidate()
+        delegate.breathTimeDidFinish()
     }
     
     @objc func updateTimer() {

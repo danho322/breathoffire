@@ -62,13 +62,21 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         setupGestureRecognizers()
         hudDidTapShowToggle(shouldShow: false)
         
-        if let hudView = hudView.view as? CharacterHUDView {
-            hudView.delegate = self
+        if let sequenceToLoad = sequenceToLoad {
+            if sequenceToLoad.showHud {
+                if let hudView = hudView.view as? CharacterHUDView {
+                    hudView.delegate = self
+                }
+            } else {
+                hudView.isHidden = true
+            }
+            
+            breathTimerView.isHidden = sequenceToLoad.breathProgram == nil
+            breathTimerView.alpha = 0
+            
+            instructionService = InstructionService(delegate: self)
+
         }
-        
-        breathTimerView.alpha = 0
-        
-        instructionService = InstructionService(delegate: self)
     }
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -96,17 +104,20 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     // MARK: - Breathe
     
     internal func setupBreathing() {
-        let parameter0 = BreathParameter(startTime: 5, breathTimeUp: 0.1, breathTimeDown: 0.4)
-        let parameter1 = BreathParameter(startTime: 15, breathTimeUp: 2, breathTimeDown: 2)
-        let parameter2 = BreathParameter(startTime: 23, breathTimeUp: 0.1, breathTimeDown: 0.4)
-        breathTimerService = BreathTimerService(sessionTime: 33, parameterQueue: [parameter0, parameter1, parameter2], delegate: self)
-        breathTimerView.alpha = 1
+        if let breathProgram = sequenceToLoad?.breathProgram {
+            breathTimerService = BreathTimerService(sessionTime: breathProgram.sessionTime(), parameterQueue: breathProgram.parameterArray(), delegate: self)
+            breathTimerView.alpha = 0.5
+        }
     }
     
     @IBAction func onToggleBreathTap(_ sender: Any) {
-        breathTimerView.alpha = breathTimerView.alpha == 1 ? 0 : 1
+        breathTimerView.isHidden = !breathTimerView.isHidden
     }
     // MARK: - Feed
+    
+//    test bfreath count tracking
+//    test breath parameter property of breathing sequence
+//    test delete feed (with new items)
     
     func saveToBreathFeed() {
         if let image = screenShot {
@@ -114,7 +125,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 if let path = path,
                     let currentUserData = SessionManager.sharedInstance.currentUserData {
                     // add to feed path
-                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970, imagePath: path, userId: currentUserData.userId, userName: currentUserData.userName, coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970, imagePath: path, userId: currentUserData.userId, userName: currentUserData.userName, breathCount: self.breathTimerView.currentBreathCount(), coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
                     FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
                 }
             }
@@ -130,7 +141,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             //                        TODO: this has to do with the angle?
             let (direction, position) = getUserVector()
             
-            let scale = max(1.0, -0.00667 * Double(touchDiff.y))
+            let scale = max(1.0, -0.013 * Double(touchDiff.y))
             
             throwBall(position: SCNVector3(position.x, position.y, position.z),
                       velocity: SCNVector3(direction.x * Float(scale), velocity.y, direction.z * Float(scale)))
@@ -917,7 +928,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             if let lastFocusSquarePos = self.focusSquare?.lastPosition {
                 pos = lastFocusSquarePos
             }
-            
             loadVirtualObject(at: pos)
             currentPlacementState = .PlacedScaling
         } else if currentPlacementState == .PlacedMoving {
@@ -925,7 +935,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             currentPlacementState = .PlacedReady
 
             stopPlaneDetection()
-
+            showHitTestAPIVisualization = false
+            
             // hardcode setup for now
             setupBreathing()
             
@@ -1158,6 +1169,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 			self.textManager.showMessage("STARTING A NEW SESSION")
 			self.use3DOFTracking = false
 			
+            self.updateSettings()
 			self.setupFocusSquare()
 			self.resetVirtualObject()
 			
@@ -1218,6 +1230,45 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 			})
 		}
 	}
+    
+    func finishSequence(object: VirtualObject) {
+        print("finished with sequence \(object.animationSequence)")
+        instructionService?.stop()
+        cancelScreenshotSelector()
+        breathTimerService?.stop()
+        
+        let breathCount = breathTimerView.currentBreathCount()
+        if let last = object.animationSequence.last {
+            if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
+                SessionManager.sharedInstance.onPlayFinish(breathCount: breathCount)
+                
+                let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+                
+                
+                // TODO: sequence container should have a state on what completion view to show
+                
+                //                let relatedView = RelatedAnimationsView(frame: frame)
+                //                relatedView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
+                //                relatedView.relatedAnimations = data.relatedAnimations ?? []
+                //                relatedView.set(delegate: self)
+                //                view.addSubview(relatedView)
+                //                relatedView.animateIn()
+                //                relatedAnimationsView = relatedView
+                let breathCompletionView = BreatheCompleteView(frame: frame,
+                                                               parentVC: self,
+                                                               shareCommunityHandler: { [unowned self] in
+                                                                self.saveToBreathFeed()
+                    },
+                                                               dismissHandler: { [unowned self] in
+                                                                self.dismiss(animated: true, completion: nil)
+                })
+                breathCompletionView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
+                breathCompletionView.update(breathCount: breathCount, screenshot: screenShot, sequenceContainer: nil)
+                view.addSubview(breathCompletionView)
+                breathCompletionView.animateIn()
+            }
+        }
+    }
 		
 	// MARK: - Settings
 	
@@ -1344,32 +1395,9 @@ extension ARTechniqueViewController: InstructionServiceDelegate {
 }
 
 extension ARTechniqueViewController: VirtualObjectDelegate {
+    
     func virtualObjectDidFinishAnimation(_ object: VirtualObject) {
-        print("finished with sequence \(object.animationSequence)")
-        instructionService?.stop()
-        cancelScreenshotSelector()
-        if let last = object.animationSequence.last {
-            if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
-                let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-                
-                // TODO: sequence container should have a state on what completion view to show
-            
-//                let relatedView = RelatedAnimationsView(frame: frame)
-//                relatedView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-//                relatedView.relatedAnimations = data.relatedAnimations ?? []
-//                relatedView.set(delegate: self)
-//                view.addSubview(relatedView)
-//                relatedView.animateIn()
-//                relatedAnimationsView = relatedView
-                let breathCompletionView = BreatheCompleteView(frame: frame, parentVC: self) { [unowned self] in
-                    self.saveToBreathFeed()
-                }
-                breathCompletionView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-                breathCompletionView.update(screenshot: screenShot, sequenceContainer: nil)
-                view.addSubview(breathCompletionView)
-                breathCompletionView.animateIn()
-            }
-        }
+        finishSequence(object: object)
     }
 }
 
