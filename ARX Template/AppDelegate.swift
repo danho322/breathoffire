@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import FirebaseAnalytics
-import FirebaseDatabase
 import SwiftyStoreKit
+import SwiftySound
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,9 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = true
         SessionManager.sharedInstance.onStart()
+        
+        Sound.category = .playback
         
         SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
             for purchase in purchases {

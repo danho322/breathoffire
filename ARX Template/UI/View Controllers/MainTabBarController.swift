@@ -8,6 +8,7 @@
 
 import UIKit
 import TabPageViewController
+import FontAwesomeKit
 
 class MainTabBarController: UITabBarController {
     
@@ -45,14 +46,41 @@ class MainTabBarController: UITabBarController {
                     tabPageController.option.currentColor = ThemeManager.sharedInstance.focusForegroundColor()
 
                     
-                    newViewControllers.append(tabPageController)
+                    let navigationController = UINavigationController(rootViewController: tabPageController)
+
+                    UINavigationBar.appearance().titleTextAttributes = [
+                        NSAttributedStringKey.font: ThemeManager.sharedInstance.defaultFont(30),
+                        NSAttributedStringKey.foregroundColor: ThemeManager.sharedInstance.focusForegroundColor()
+                    ]
+                    
+                    tabPageController.title = "Breath of Fire"
+                    
+                    newViewControllers.append(navigationController)
                 } else {
                     newViewControllers.append(viewController)
                 }
             }
-
         }
         self.viewControllers = newViewControllers
+        
+        if let tabItems = tabBar.items {
+            for tabItem in tabItems {
+                print(tabItem)
+                if tabItem.title == "Breath of Fire" {
+                    tabItem.title = nil
+                    let icon = FAKIonIcons.iosWorldIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                    tabItem.image = icon
+                } else if tabItem.title == "Practice" {
+                    tabItem.title = nil
+                    let icon = FAKIonIcons.flameIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                    tabItem.image = icon
+                } else if tabItem.title == "Me" {
+                    tabItem.title = nil
+                    let icon = FAKIonIcons.iosPersonIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                    tabItem.image = icon
+                }
+            }
+        }
     }
 
     override func viewDidLoad() {

@@ -137,8 +137,12 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let sceneVC = segue.destination as? TechniqueSceneKitViewController, let identifier = segue.identifier, identifier == "TechniqueSegue" {
 //            sceneVC.animationToLoad = currentAnimationData
-        } else if let sceneVC = segue.destination as? ARTechniqueViewController, let identifier = segue.identifier, identifier == "ARSegue" {
-                sceneVC.sequenceToLoad = sequenceToLoad
+        } else if let arVC = segue.destination as? ARTechniqueViewController, let identifier = segue.identifier, identifier == "ARSegue" {
+                arVC.sequenceToLoad = sequenceToLoad
+                arVC.dismissCompletionHandler = { [unowned self] in
+                    self.navigationController?.popToRootViewController(animated: true)
+                    self.tabBarController?.selectedIndex = 0
+                }
         }
     }
     

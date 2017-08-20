@@ -19,9 +19,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     @IBOutlet weak var instructionView: InstructionView!
     @IBOutlet weak var hudView: CharacterHUDView!
     @IBOutlet weak var statusLabel: UILabel!
-    
     @IBOutlet weak var hudBottomConstraint: NSLayoutConstraint!
+
+    
     var sequenceToLoad: AnimationSequenceDataContainer?
+    var dismissCompletionHandler: (()->Void)?
+    
     internal var currentAnimationIndex = 0
     internal var sliderValue: Float = 0.5
     
@@ -112,7 +115,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 //    test breath parameter property of breathing sequence
 //    test delete feed (with new items)
     
-    func saveToBreathFeed(rating: Int?) {
+    func saveToBreathFeed(rating: Int?, comment: String?) {
         if let image = screenShot {
             FirebaseService.sharedInstance.uploadImage(image: image) { path in
                 if let path = path,
@@ -125,7 +128,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                                                   breathCount: self.breathTimerView.currentBreathCount(),
                                                   city: currentUserData.city,
                                                   coordinate: currentUserData.coordinate,
-                                                  rating: rating)
+                                                  rating: rating,
+                                                  comment: comment)
                     FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
                 }
             }
@@ -518,7 +522,9 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	var currentGesture: Gesture?
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesBegan")
         super.touchesBegan(touches, with: event)
+        
         
         for object in virtualObjects {
             if currentGesture == nil {
@@ -543,6 +549,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	}
 	
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesEnded")
         super.touchesEnded(touches, with: event)
         
 		if virtualObjects.count == 0 && currentPlacementState.isPlacingAllowed() {
@@ -923,6 +930,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
 	
 	@IBAction func chooseObject(_ sender: Any?) {
+        print("chooseObject")
 		// Abort if we are about to load another object to avoid concurrent modifications of the scene.
 		if isLoadingObject { return }
 		
@@ -1247,7 +1255,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
                 SessionManager.sharedInstance.onPlayFinish(breathCount: breathCount)
                 
-                let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+                let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: Sizes.ScreenHeight)
                 
                 
                 // TODO: sequence container should have a state on what completion view to show
@@ -1261,17 +1269,23 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 //                relatedAnimationsView = relatedView
                 let breathCompletionView = BreatheCompleteView(frame: frame,
                                                                parentVC: self,
-                                                               shareCommunityHandler: { [unowned self] rating in
-                                                                self.saveToBreathFeed(rating: rating)
+                                                               shareCommunityHandler: { [unowned self] rating, comment in
+                                                                self.saveToBreathFeed(rating: rating, comment: comment)
                     },
                                                                dismissHandler: { [unowned self] in
-                                                                self.dismiss(animated: true, completion: nil)
+                                                                self.dismiss()
                 })
                 breathCompletionView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
                 breathCompletionView.update(breathCount: breathCount, screenshot: screenShot, sequenceContainer: nil)
                 view.addSubview(breathCompletionView)
                 breathCompletionView.animateIn()
             }
+        }
+    }
+    
+    func dismiss() {
+        self.dismiss(animated: true) { [unowned self] in
+            self.dismissCompletionHandler?()
         }
     }
 		

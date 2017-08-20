@@ -35,6 +35,9 @@ class SessionManager {
     internal var cauliflowerCoins: Int = 0 // lara wrote this
     internal var purchasedPackages: [String: Any] = Dictionary<String, Any>()
     
+    init() {
+        _ = FirebaseService.sharedInstance
+    }
     
     func onStart() {
         if let currentUser = Auth.auth().currentUser {

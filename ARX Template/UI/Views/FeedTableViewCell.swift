@@ -12,6 +12,7 @@ import HCSStarRatingView
 class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var feedImageView: UIImageView!
+    @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var ratingsView: HCSStarRatingView!
     
@@ -24,8 +25,10 @@ class FeedTableViewCell: UITableViewCell {
         backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         nameLabel.textColor = ThemeManager.sharedInstance.textColor()
         nameLabel.font = ThemeManager.sharedInstance.heavyFont(16)
-        timeLabel.textColor = ThemeManager.sharedInstance.textColor()
-        timeLabel.font = ThemeManager.sharedInstance.defaultFont(16)
+        commentLabel.textColor = ThemeManager.sharedInstance.textColor()
+        commentLabel.font = ThemeManager.sharedInstance.defaultFont(16)
+        timeLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
+        timeLabel.font = ThemeManager.sharedInstance.defaultFont(14)
     }
 
     func update(feedItem: BreathFeedItem, optionsHandler: @escaping ((String?)->Void)) {
@@ -57,6 +60,8 @@ class FeedTableViewCell: UITableViewCell {
         FirebaseService.sharedInstance.retrieveImageAtPath(path: feedItem.imagePath, completion: { image in
             self.feedImageView.image = image
         })
+        
+        commentLabel.text = feedItem.comment
         
     }
 

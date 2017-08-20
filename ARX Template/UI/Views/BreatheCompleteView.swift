@@ -21,16 +21,24 @@ class BreatheCompleteView: XibView {
     @IBOutlet weak var communityCheckmarkImageView: UIImageView!
     @IBOutlet weak var ratingTitleLabel: UILabel!
     @IBOutlet weak var ratingView: HCSStarRatingView!
+    @IBOutlet weak var ratingHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak var commentHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var spacerHeightConstraint: NSLayoutConstraint!
     
     
     weak var parentVC: UIViewController?
-    var shareCommunityHandler: ((Int?)->Void)?
+    var shareCommunityHandler: ((Int?, String?)->Void)?
     var dismissHandler: (()->Void)?
     
     internal var ratingValue: Int?
     internal var didShareFeed = false
     
-    convenience init(frame: CGRect, parentVC: UIViewController, shareCommunityHandler: ((Int?)->Void)?, dismissHandler: (()->Void)?) {
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    convenience init(frame: CGRect, parentVC: UIViewController, shareCommunityHandler: ((Int?, String?)->Void)?, dismissHandler: (()->Void)?) {
         self.init(frame: frame)
         self.parentVC = parentVC
         self.shareCommunityHandler = shareCommunityHandler
@@ -45,9 +53,11 @@ class BreatheCompleteView: XibView {
         view.containerView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         view.titleLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         view.detailsLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+        view.ratingTitleLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         
         view.titleLabel.font = ThemeManager.sharedInstance.defaultFont(40)
         view.detailsLabel.font = ThemeManager.sharedInstance.defaultFont(20)
+        view.ratingTitleLabel.font = ThemeManager.sharedInstance.defaultFont(20)
         
         let shareIcon = FAKMaterialIcons.shareIcon(withSize: 25)
         shareIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
@@ -69,6 +79,37 @@ class BreatheCompleteView: XibView {
         view.ratingView.maximumValue = 5
         view.ratingView.value = 0
         view.ratingView.addTarget(self, action: #selector(onRatingValueChanged(ratingView:)), for: .valueChanged)
+    
+        view.commentTextView.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
+        view.commentTextView.textColor = ThemeManager.sharedInstance.textColor()
+        view.commentTextView.font = ThemeManager.sharedInstance.defaultFont(16)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(BreatheCompleteView.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(BreatheCompleteView.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let view = view as? BreatheCompleteView else {
+            fatalError("view is not of type LoginView")
+        }
+        
+        let userInfo = notification.userInfo
+        let keyboardFrame = userInfo?[UIKeyboardFrameEndUserInfoKey]
+        
+        if let keyboardFrame = keyboardFrame {
+            if let frame = (keyboardFrame as AnyObject).cgRectValue {
+                
+                view.spacerHeightConstraint.constant = frame.size.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard let view = view as? BreatheCompleteView else {
+            fatalError("view is not of type LoginView")
+        }
+        
+        view.spacerHeightConstraint.constant = 0
     }
     
     // artechniqueviewcontroller needs to be refactored to hold the container
@@ -122,7 +163,11 @@ class BreatheCompleteView: XibView {
         circleIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
         communityCheckmarkImageView.image = circleIcon?.image(with: CGSize(width: 25, height: 25))
         
-        viewToUse.shareCommunityHandler?(viewToUse.ratingValue)
+        viewToUse.shareCommunityHandler?(viewToUse.ratingValue, commentTextView.text)
+ 
+        ratingTitleLabel.isHidden = true
+        ratingHeightConstraint.constant = 0
+        commentHeightConstraint.constant = 0
     }
     
     @IBAction func onDismissTap(_ sender: Any) {

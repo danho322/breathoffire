@@ -103,7 +103,7 @@ enum TimeFormatType {
     internal func lessThanMinuteAgo() -> String {
         switch self {
         case .feed:
-            return NSLocalizedString("Less than 1 minute ago", comment: "Less than 1 minute ago").uppercased()
+            return NSLocalizedString("Less than 1 minute ago", comment: "Less than 1 minute ago")
         }
     }
 }

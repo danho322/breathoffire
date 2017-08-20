@@ -7,6 +7,7 @@
 //
 
 import FirebaseDatabase
+import FirebaseAnalytics
 import FirebaseStorage
 import FirebaseAuth
 import UIKit
@@ -22,13 +23,13 @@ struct UserData {
     let userId: String
     let userName: String
     let tokenCount: Int
+    let coordinate: CLLocationCoordinate2D?
+    let city: String?
     let playCount: Int
     let streakCount: Int
     let breathStreakCount: Int
     let lastStreakTimestamp: TimeInterval
     let purchasedPackages: [String: Any]
-    let coordinate: CLLocationCoordinate2D?
-    let city: String?
     
     init(userId: String, snapshotDict: NSDictionary) {
         self.userId = userId
@@ -71,6 +72,11 @@ class FirebaseService {
     var sequenceDataDict: [String: AnimationSequenceDataContainer] = Dictionary()
     var animationDataDict: [String: CharacterAnimationData] = Dictionary()
     var instructionDataDict: [String: [AnimationInstructionData]] = Dictionary()
+    
+    init() {
+        FirebaseApp.configure()
+        Database.database().isPersistenceEnabled = true
+    }
     
     // MARK: - Realtime DB
     
@@ -454,8 +460,9 @@ struct BreathFeedItem {
     let coordinate: CLLocationCoordinate2D?
     let city: String?
     let rating: Int?
+    let comment: String?
     
-    init(key: String? = nil, timestamp: TimeInterval, imagePath: String, userId: String, userName: String, breathCount: Int, city: String?, coordinate: CLLocationCoordinate2D?, rating: Int?) {
+    init(key: String? = nil, timestamp: TimeInterval, imagePath: String, userId: String, userName: String, breathCount: Int, city: String?, coordinate: CLLocationCoordinate2D?, rating: Int?, comment: String?) {
         self.key = key
         self.timestamp = timestamp
         self.imagePath = imagePath
@@ -465,6 +472,7 @@ struct BreathFeedItem {
         self.city = city
         self.coordinate = coordinate
         self.rating = rating
+        self.comment = comment
     }
     
     init(key: String?, snapshotDict: NSDictionary) {
@@ -490,6 +498,11 @@ struct BreathFeedItem {
         } else {
             rating = nil
         }
+        if let comment = snapshotDict["comment"] as? String {
+            self.comment = comment
+        } else {
+            comment = nil
+        }
     }
 	
     func valueDict() -> [String: Any] {
@@ -507,6 +520,9 @@ struct BreathFeedItem {
         }
         if let rating = rating {
             dict["rating"] = rating
+        }
+        if let comment = comment {
+            dict["comment"] = comment
         }
         return dict
     }
