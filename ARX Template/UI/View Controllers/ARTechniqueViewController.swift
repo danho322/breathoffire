@@ -38,7 +38,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var portal: PortalRoomObject?
     
     // feed
-    internal var locationManager: CLLocationManager = CLLocationManager()
     internal var screenShot: UIImage?
     
     // touch
@@ -95,12 +94,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         cancelScreenshotSelector()
 	}
 
-    // MARK: - Location
-    
-    internal func setupLocation() {
-//        locationManager = CLLocationManager
-    }
-    
     // MARK: - Breathe
     
     internal func setupBreathing() {
@@ -119,13 +112,20 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 //    test breath parameter property of breathing sequence
 //    test delete feed (with new items)
     
-    func saveToBreathFeed() {
+    func saveToBreathFeed(rating: Int?) {
         if let image = screenShot {
             FirebaseService.sharedInstance.uploadImage(image: image) { path in
                 if let path = path,
                     let currentUserData = SessionManager.sharedInstance.currentUserData {
                     // add to feed path
-                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970, imagePath: path, userId: currentUserData.userId, userName: currentUserData.userName, breathCount: self.breathTimerView.currentBreathCount(), coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970,
+                                                  imagePath: path,
+                                                  userId: currentUserData.userId,
+                                                  userName: currentUserData.userName,
+                                                  breathCount: self.breathTimerView.currentBreathCount(),
+                                                  city: currentUserData.city,
+                                                  coordinate: currentUserData.coordinate,
+                                                  rating: rating)
                     FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
                 }
             }
@@ -244,6 +244,11 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         statusLabel.isHidden = currentPlacementState.hideStatusLabel()
         addObjectButton.isHidden = currentPlacementState.hideAddButton()
         hudView.isHidden = !currentPlacementState.isPlaced()
+        
+        settingsButton.isHidden = !currentPlacementState.isPlaced()
+        screenshotButton.isHidden = !currentPlacementState.isPlaced()
+        
+        
         let shouldShowDebugVisuals = currentPlacementState.showDebugVisuals()
         if showDebugVisuals != shouldShowDebugVisuals {
             showDebugVisuals = shouldShowDebugVisuals
@@ -1256,8 +1261,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 //                relatedAnimationsView = relatedView
                 let breathCompletionView = BreatheCompleteView(frame: frame,
                                                                parentVC: self,
-                                                               shareCommunityHandler: { [unowned self] in
-                                                                self.saveToBreathFeed()
+                                                               shareCommunityHandler: { [unowned self] rating in
+                                                                self.saveToBreathFeed(rating: rating)
                     },
                                                                dismissHandler: { [unowned self] in
                                                                 self.dismiss(animated: true, completion: nil)

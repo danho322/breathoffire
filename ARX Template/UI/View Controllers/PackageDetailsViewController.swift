@@ -169,7 +169,7 @@ class PackageDetailsViewController: UIViewController {
     func navigateToTechnique(packageName: String) {
         if let techniqueVC = storyboard?.instantiateViewController(withIdentifier: "CharacterAnimationPickerIdentifier") as? CharacterAnimationPickerViewController {
             techniqueVC.packageName = packageName
-            self.present(techniqueVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(techniqueVC, animated: true)
         }
     }
 }

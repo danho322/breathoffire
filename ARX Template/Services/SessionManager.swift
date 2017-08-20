@@ -10,8 +10,21 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseAnalytics
+import CoreLocation
 
 // Stores the user specific data
+enum UserAttribute: String {
+    case streakCount = "streakCount"
+    case playCount = "playCount"
+    case breathStreakCount = "breathStreakCount"
+    case lastStreakTimestamp = "lastStreakTimestamp"
+    case lastLoggedIn = "lastLoggedIn"
+    case tokenCount = "tokenCount"
+    case city = "city"
+    case latitude = "latitude"
+    case longitude = "longitude"
+    case purchasedPackages = "purchasedPackages"
+}
 
 class SessionManager {
     static let sharedInstance = SessionManager()
@@ -48,7 +61,7 @@ class SessionManager {
     func onPlay() {
         StatManager.sharedIntance.onPlay()
         if let currentUser = Auth.auth().currentUser {
-            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUser.uid, attributeName: "playCount")
+            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUser.uid, attribute: .playCount)
         }
     }
     
@@ -56,21 +69,21 @@ class SessionManager {
         if let currentUserData = currentUserData {
             let lastPlay = Date(timeIntervalSince1970: currentUserData.lastStreakTimestamp)
             if Calendar.current.isDateInYesterday(lastPlay) {
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attributeName: "streakCount", defaultValue: 1)
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attributeName: "breathStreakCount", count: breathCount)
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .streakCount, defaultValue: 1)
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .breathStreakCount, count: breathCount)
             } else if Calendar.current.isDateInToday(lastPlay) {
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attributeName: "breathStreakCount", count: breathCount)
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .breathStreakCount, count: breathCount)
             } else if !Calendar.current.isDateInToday(lastPlay) {
-                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attributeName: "streakCount", value: 1)
-                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attributeName: "breathStreakCount", value: 0)
+                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .streakCount, value: 1)
+                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .breathStreakCount, value: 0)
             }
-            FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attributeName: "lastStreakTimestamp", value: Date().timeIntervalSince1970)
+            FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .lastStreakTimestamp, value: Date().timeIntervalSince1970)
         }
     }
     
     func onLogin() {
         if let currentUser = Auth.auth().currentUser {
-            FirebaseService.sharedInstance.setUserAttribute(userId: currentUser.uid, attributeName: "lastLoggedIn", value: Date().description)
+            FirebaseService.sharedInstance.setUserAttribute(userId: currentUser.uid, attribute: .lastLoggedIn, value: Date().description)
         }
     }
     
@@ -83,7 +96,7 @@ class SessionManager {
     
     // MARK: - Auth
     typealias SignInUserHandler = (_ success: Bool, _ errorMessage: String?) -> Void
-    func createUser(userName: String?, email: String?, password: String?, handler: @escaping SignInUserHandler) {
+    func createUser(userName: String?, email: String?, password: String?, city: String?, coordinate: CLLocationCoordinate2D? = nil, handler: @escaping SignInUserHandler) {
         guard let userName = userName else {
             handler(false, "Please pick a username for your account")
             return
@@ -125,6 +138,13 @@ class SessionManager {
                 handler(false, error.localizedDescription)
             } else if let user = user {
                 FirebaseService.sharedInstance.setUserName(userId: user.uid, userName: userName)
+                if let coordinate = coordinate {
+                    FirebaseService.sharedInstance.setUserAttribute(userId: user.uid, attribute: .latitude, value: coordinate.latitude)
+                    FirebaseService.sharedInstance.setUserAttribute(userId: user.uid, attribute: .longitude, value: coordinate.longitude)
+                }
+                if let city = city {
+                    FirebaseService.sharedInstance.setUserAttribute(userId: user.uid, attribute: .city, value: city)
+                }
                 handler(true, nil)
             }
         })
@@ -170,7 +190,7 @@ class SessionManager {
                 handler(false, error.localizedDescription)
             } else if let user = user {
                 self.retrieveCurrentUser(userId: user.uid)
-                FirebaseService.sharedInstance.setUserAttribute(userId: user.uid, attributeName: "lastLoggedIn", value: Date().description)
+                FirebaseService.sharedInstance.setUserAttribute(userId: user.uid, attribute: .lastLoggedIn, value: Date().description)
                 handler(true, nil)
             }
         }
@@ -198,7 +218,7 @@ class SessionManager {
                                           style: UIAlertActionStyle.default,
                                           handler: { alert in
                                             print("purchase tokens here")
-                                            FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId , attributeName: "tokenCount", value: 10)
+                                            FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId , attribute: .tokenCount, value: 10)
                                             purchasedHandler()
                                             
             }))

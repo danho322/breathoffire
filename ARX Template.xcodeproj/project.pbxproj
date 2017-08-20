@@ -44,6 +44,8 @@
 		D45AAC021F250E1F00BE41E0 /* SDWebImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D45AAC001F250DC000BE41E0 /* SDWebImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D45AAC051F2563CC00BE41E0 /* PackageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45AAC041F2563CC00BE41E0 /* PackageDetailsViewController.swift */; };
 		D4612E2F1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4612E2E1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib */; };
+		D468FE311F49130A00DEBAE6 /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468FE301F49130A00DEBAE6 /* CommunityViewController.swift */; };
+		D468FE341F49156B00DEBAE6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */; };
 		D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A6E171F0FEECF0096446C /* FirebaseService.swift */; };
 		D46B68D21F40028500DAB0AD /* BreatheCompleteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D46B68D11F40028500DAB0AD /* BreatheCompleteView.xib */; };
 		D46B68D41F40053D00DAB0AD /* BreatheCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46B68D31F40053D00DAB0AD /* BreatheCompleteView.swift */; };
@@ -126,6 +128,7 @@
 		D4DF08151F414FAE00E8F0EE /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF08141F414FAE00E8F0EE /* FeedTableViewCell.swift */; };
 		D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */ = {isa = PBXBuildFile; fileRef = D4ECE16B1F22C7F400E8B788 /* Fire.scnp */; };
 		D4ECE16E1F22C7F400E8B788 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = D4ECE16C1F22C7F400E8B788 /* spark.png */; };
+		D4EDCCF51F4943F100849037 /* RankingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EDCCF41F4943F100849037 /* RankingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -185,6 +188,10 @@
 		D4612E321F231D66007D13C3 /* GINInviteResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GINInviteResources.bundle; sourceTree = "<group>"; };
 		D4612E331F231D66007D13C3 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
 		D4612E341F231D66007D13C3 /* GPPACLPickerResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GPPACLPickerResources.bundle; sourceTree = "<group>"; };
+		D468FE2F1F48AADA00DEBAE6 /* HCSStarRatingView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HCSStarRatingView.framework; path = Carthage/Build/iOS/HCSStarRatingView.framework; sourceTree = "<group>"; };
+		D468FE301F49130A00DEBAE6 /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
+		D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TabPageViewController.framework; path = Carthage/Build/iOS/TabPageViewController.framework; sourceTree = "<group>"; };
+		D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		D46A6E171F0FEECF0096446C /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D46B68D11F40028500DAB0AD /* BreatheCompleteView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BreatheCompleteView.xib; sourceTree = "<group>"; };
 		D46B68D31F40053D00DAB0AD /* BreatheCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreatheCompleteView.swift; sourceTree = "<group>"; };
@@ -269,6 +276,7 @@
 		D4DF08141F414FAE00E8F0EE /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		D4ECE16B1F22C7F400E8B788 /* Fire.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Fire.scnp; sourceTree = "<group>"; };
 		D4ECE16C1F22C7F400E8B788 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		D4EDCCF41F4943F100849037 /* RankingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingsViewController.swift; sourceTree = "<group>"; };
 		D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -330,6 +338,9 @@
 				D4A72D2F1F3B79F300553086 /* BreatheViewController.swift */,
 				D4DF08101F4147FF00E8F0EE /* FeedViewController.swift */,
 				D46D950C1F4168C100098689 /* MeViewController.swift */,
+				D468FE301F49130A00DEBAE6 /* CommunityViewController.swift */,
+				D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */,
+				D4EDCCF41F4943F100849037 /* RankingsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -428,6 +439,8 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */,
+				D468FE2F1F48AADA00DEBAE6 /* HCSStarRatingView.framework */,
 				D42DE7661F46A43D00264AF1 /* CoreAudio.framework */,
 				D42DE7631F46980D00264AF1 /* SwiftySound.framework */,
 				D45AAC001F250DC000BE41E0 /* SDWebImage.framework */,
@@ -685,6 +698,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Spruce.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyStoreKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftySound.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/HCSStarRatingView.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/TabPageViewController.framework",
 			);
 			outputPaths = (
 			);
@@ -701,6 +716,7 @@
 			files = (
 				D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */,
 				D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */,
+				D468FE341F49156B00DEBAE6 /* MainTabBarController.swift in Sources */,
 				D4A72D2E1F3ACA2D00553086 /* BreathTimerView.swift in Sources */,
 				D4A091C01F2070AE00C03805 /* ARXUtilities.swift in Sources */,
 				D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */,
@@ -725,6 +741,7 @@
 				D45352C11EFDDDBC00C09259 /* UIViewExtensions.swift in Sources */,
 				D4A04B021F0B146200BEA822 /* RelatedAnimationsView.swift in Sources */,
 				D4DF08111F4147FF00E8F0EE /* FeedViewController.swift in Sources */,
+				D4EDCCF51F4943F100849037 /* RankingsViewController.swift in Sources */,
 				D44EE60F1EFCDFA0003A1A3E /* OptionsViewController.swift in Sources */,
 				D49418911F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift in Sources */,
 				D43D4BAD1F048282002F369F /* PlaneDebugVisualization.swift in Sources */,
@@ -747,6 +764,7 @@
 				D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */,
 				D43D4BAE1F048282002F369F /* ARCameraTrackingState.swift in Sources */,
 				D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */,
+				D468FE311F49130A00DEBAE6 /* CommunityViewController.swift in Sources */,
 				D44EE6111EFD388F003A1A3E /* TechniqueSceneKitViewController.swift in Sources */,
 				D44B24E41F182E7E00459032 /* VirtualObject.swift in Sources */,
 				D49102FB1EFB05CE008A528E /* AppDelegate.swift in Sources */,

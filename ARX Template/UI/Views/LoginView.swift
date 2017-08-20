@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class LoginView: XibView {
     @IBOutlet weak var userNameContainer: UIView!
@@ -15,6 +16,8 @@ class LoginView: XibView {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordContainer: UIView!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var zipContainer: UIView!
+    @IBOutlet weak var zipTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var signinButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -37,29 +40,35 @@ class LoginView: XibView {
         view.userNameTextField.delegate = self
         view.emailTextField.delegate = self
         view.passwordTextField.delegate = self
+        view.zipTextField.delegate = self
         
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         view.userNameContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         view.emailContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         view.passwordContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
-        
+        view.zipContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
+
         view.userNameTextField.backgroundColor = UIColor.clear
         view.emailTextField.backgroundColor = UIColor.clear
         view.passwordTextField.backgroundColor = UIColor.clear
+        view.zipTextField.backgroundColor = UIColor.clear
         
         view.userNameTextField.textColor = UIColor.white
         view.emailTextField.textColor = UIColor.white
         view.passwordTextField.textColor = UIColor.white
+        view.zipTextField.textColor = UIColor.white
         
         view.userNameTextField.textColor = UIColor.white
         view.emailTextField.textColor = UIColor.white
         view.passwordTextField.textColor = UIColor.white
+        view.zipTextField.textColor = UIColor.white
         
         view.titleLabel.textColor = UIColor.white
         view.titleLabel.font = ThemeManager.sharedInstance.defaultFont(16)
         view.userNameTextField.font = ThemeManager.sharedInstance.defaultFont(16)
         view.emailTextField.font = ThemeManager.sharedInstance.defaultFont(16)
         view.passwordTextField.font = ThemeManager.sharedInstance.defaultFont(16)
+        view.zipTextField.font = ThemeManager.sharedInstance.defaultFont(16)
         
         view.submitButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
         view.submitButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
@@ -87,7 +96,7 @@ class LoginView: XibView {
         if let keyboardFrame = keyboardFrame {
             if let frame = (keyboardFrame as AnyObject).cgRectValue {
                 
-                let offset = (Sizes.ScreenHeight - (view.signinButton.frame.origin.y + view.signinButton.frame.size.height)) - frame.size.height
+                let offset = view.userNameContainer.frame.origin.y
                 
                 
                 center = CGPoint(x: center.x, y: initialCenterY! - offset)
@@ -106,14 +115,21 @@ class LoginView: XibView {
     
     @IBAction func onSubmitTap(_ sender: Any) {
         if !isSignInState {
-            SessionManager.sharedInstance.createUser(userName: userNameTextField.text, email: emailTextField.text, password: passwordTextField.text, handler: { success, errorMessage in
-                if !success {
-                    self.titleLabel.text = errorMessage
-                } else {
-                    self.dismiss()
-                    self.completionHandler?()
+            
+            if let zip = zipTextField.text {
+                if zip.characters.count > 3 {
+                    CLGeocoder().geocodeAddressString(zip) { [unowned self] (placemarks, error) in
+                        if let placemarks = placemarks, placemarks.count > 0 {
+                            self.executeSignUp(placemark: placemarks[0])
+                        } else {
+                            self.titleLabel.text = error?.localizedDescription
+                        }
+                    }
+                    return
                 }
-            })
+            }
+            
+            executeSignUp()
         } else {
             SessionManager.sharedInstance.signIn(email: emailTextField.text, password: passwordTextField.text, handler: { success, errorMessage in
                 if !success {
@@ -126,10 +142,28 @@ class LoginView: XibView {
         }
     }
     
+    func executeSignUp(placemark: CLPlacemark? = nil) {
+        
+        SessionManager.sharedInstance.createUser(userName: userNameTextField.text,
+                                                 email: emailTextField.text,
+                                                 password: passwordTextField.text,
+                                                 city: placemark?.name,
+                                                 coordinate: placemark?.location?.coordinate,
+                                                 handler: { success, errorMessage in
+            if !success {
+                self.titleLabel.text = errorMessage
+            } else {
+                self.dismiss()
+                self.completionHandler?()
+            }
+        })
+    }
+    
     @IBAction func onSigninTap(_ sender: Any) {
-        isSignInState = true
-        userNameContainer.alpha = 0
-        titleLabel.text = "Sign In"
+        isSignInState = !isSignInState
+        userNameContainer.alpha = isSignInState ? 0 : 1
+        zipContainer.alpha = isSignInState ? 0 : 1
+        titleLabel.text = isSignInState ? "Sign In" : "Sign Up"
     }
     
     func animateIn() {

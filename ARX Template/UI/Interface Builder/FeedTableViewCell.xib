@@ -43,10 +43,20 @@
                             <action selector="onRemoveTap:" destination="utU-Um-yTx" eventType="touchUpInside" id="RQm-gu-A3c"/>
                         </connections>
                     </button>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0rv-0V-cbv" customClass="HCSStarRatingView">
+                        <rect key="frame" x="10" y="358" width="200" height="46"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="KNh-97-weL"/>
+                            <constraint firstAttribute="height" constant="40" id="TWC-vL-2te"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="kIo-Rr-Jl3" firstAttribute="top" secondItem="yzA-4v-zTn" secondAttribute="top" constant="3" id="0SH-b0-r1V"/>
+                    <constraint firstItem="0rv-0V-cbv" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="10" id="53v-oJ-xR8"/>
                     <constraint firstAttribute="trailing" secondItem="kIo-Rr-Jl3" secondAttribute="trailing" constant="8" id="5S4-rW-kbg"/>
+                    <constraint firstItem="f8G-MF-EQL" firstAttribute="top" secondItem="0rv-0V-cbv" secondAttribute="bottom" constant="16" id="5eb-bb-c3P"/>
                     <constraint firstAttribute="trailing" secondItem="7KD-vJ-V4t" secondAttribute="trailing" constant="8" id="9TW-gi-IjO"/>
                     <constraint firstItem="rOc-PC-1xH" firstAttribute="top" secondItem="7KD-vJ-V4t" secondAttribute="bottom" constant="8" id="WRW-jD-Dfp"/>
                     <constraint firstItem="f8G-MF-EQL" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="8" id="a8v-vo-ivr"/>
@@ -62,6 +72,7 @@
             <connections>
                 <outlet property="feedImageView" destination="rOc-PC-1xH" id="Nqk-HQ-FqB"/>
                 <outlet property="nameLabel" destination="7KD-vJ-V4t" id="EjR-2S-iBg"/>
+                <outlet property="ratingsView" destination="0rv-0V-cbv" id="axn-YY-bXV"/>
                 <outlet property="timeLabel" destination="f8G-MF-EQL" id="k6L-77-feH"/>
             </connections>
             <point key="canvasLocation" x="274.5" y="-90.5"/>

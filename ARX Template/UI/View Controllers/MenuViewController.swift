@@ -123,12 +123,20 @@ class MenuViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     @IBAction func onLoginTap(_ sender: Any) {
         
     }
     
     @IBAction func onSettingsTap(_ sender: Any) {
-        
+        FirebaseService.sharedInstance.retrieveTopBreathStreaks() { users in
+            
+        }
     }
     
     @IBAction func onEnterTap(_ sender: Any) {
@@ -156,7 +164,5 @@ class MenuViewController: UIViewController {
         sceneContainer1.backgroundColor = ThemeManager.sharedInstance.focusColor()
         selectedMode = .jiujitsu
         selectLabel.text = "JIUJITSU"
-        
-        BreathSound.quickExhale.play()
     }
 }

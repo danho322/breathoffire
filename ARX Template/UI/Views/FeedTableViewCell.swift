@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import HCSStarRatingView
 
 class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var feedImageView: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var ratingsView: HCSStarRatingView!
     
     internal var optionsHandler: ((String?)->Void)?
     internal var feedKey: String?
@@ -34,12 +36,24 @@ class FeedTableViewCell: UITableViewCell {
         if name.characters.count == 0 {
             name = "Anonymous"
         }
-        nameLabel.text = "\(name) did \(feedItem.breathCount) breaths"
+        
+        if let rating = feedItem.rating {
+            ratingsView.isHidden = false
+            ratingsView.value = CGFloat(rating)
+        } else {
+            ratingsView.isHidden = true
+        }
+        
+        let nameText = "\(name) did \(feedItem.breathCount) breaths"
+        nameLabel.text = nameText
         
         let now = Date().timeIntervalSince1970
         let diffTime = Int(now) - Int(feedItem.timestamp)
-        timeLabel.text = TimeFormatType.feed.timeString(diffTime)
-
+        var timeString = TimeFormatType.feed.timeString(diffTime)
+        if let city = feedItem.city {
+            timeString.append(" in \(city)")
+        }
+        timeLabel.text = timeString
         FirebaseService.sharedInstance.retrieveImageAtPath(path: feedItem.imagePath, completion: { image in
             self.feedImageView.image = image
         })

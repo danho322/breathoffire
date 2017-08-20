@@ -67,6 +67,9 @@ class CharacterHUDView: XibView {
         let buttonIcon = isShowing ? FAKIonIcons.iosArrowDownIcon(withSize: 25) : FAKIonIcons.iosArrowUpIcon(withSize: 25)
         buttonIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         view.showHudButton.setAttributedTitle(buttonIcon?.attributedString(), for: .normal)
+        
+        view.ukeSwitchLabel.isHidden = !isShowing
+        view.instructorSwitchLabel.isHidden = !isShowing
     }
     
     @IBAction func onSliderTouchUpInside(_ sender: Any) {

@@ -8,6 +8,7 @@
 
 import UIKit
 import FontAwesomeKit
+import HCSStarRatingView
 
 class BreatheCompleteView: XibView {
     @IBOutlet weak var containerView: UIView!
@@ -18,14 +19,18 @@ class BreatheCompleteView: XibView {
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var communityButton: UIButton!
     @IBOutlet weak var communityCheckmarkImageView: UIImageView!
+    @IBOutlet weak var ratingTitleLabel: UILabel!
+    @IBOutlet weak var ratingView: HCSStarRatingView!
+    
     
     weak var parentVC: UIViewController?
-    var shareCommunityHandler: (()->Void)?
+    var shareCommunityHandler: ((Int?)->Void)?
     var dismissHandler: (()->Void)?
     
+    internal var ratingValue: Int?
     internal var didShareFeed = false
     
-    convenience init(frame: CGRect, parentVC: UIViewController, shareCommunityHandler: (()->Void)?, dismissHandler: (()->Void)?) {
+    convenience init(frame: CGRect, parentVC: UIViewController, shareCommunityHandler: ((Int?)->Void)?, dismissHandler: (()->Void)?) {
         self.init(frame: frame)
         self.parentVC = parentVC
         self.shareCommunityHandler = shareCommunityHandler
@@ -59,6 +64,11 @@ class BreatheCompleteView: XibView {
         circleIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
         
         view.communityCheckmarkImageView.image = circleIcon?.image(with: CGSize(width: 25, height: 25))
+        
+        view.ratingView.minimumValue = 0
+        view.ratingView.maximumValue = 5
+        view.ratingView.value = 0
+        view.ratingView.addTarget(self, action: #selector(onRatingValueChanged(ratingView:)), for: .valueChanged)
     }
     
     // artechniqueviewcontroller needs to be refactored to hold the container
@@ -73,6 +83,10 @@ class BreatheCompleteView: XibView {
     }
     
     // MARK: - Button Handlers
+    
+    @objc func onRatingValueChanged(ratingView: HCSStarRatingView) {
+        ratingValue = Int(ratingView.value)
+    }
     
     @IBAction func onShareTap(_ sender: Any) {
         var viewToUse = self
@@ -105,10 +119,10 @@ class BreatheCompleteView: XibView {
         }
         
         let circleIcon = FAKIonIcons.iosCheckmarkOutlineIcon(withSize: 25)
-        circleIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        circleIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
         communityCheckmarkImageView.image = circleIcon?.image(with: CGSize(width: 25, height: 25))
         
-        viewToUse.shareCommunityHandler?()
+        viewToUse.shareCommunityHandler?(viewToUse.ratingValue)
     }
     
     @IBAction func onDismissTap(_ sender: Any) {

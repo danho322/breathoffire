@@ -21,7 +21,6 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
 
     @IBOutlet weak var sceneView: SCNView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var loadButton: UIButton!
     
     var packageName: String?
@@ -79,10 +78,6 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
         backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         
-        backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
-        
-//        view.alpha = 0
-        
         DispatchQueue.global().async {
             self.sceneView.scene = SCNScene()
             let male = Instructor()
@@ -134,10 +129,6 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
                 alphaAnimator.startAnimation()
             }
         }
-    }
-
-    @IBAction func onBackTap(_ sender: Any) {
-        hero_dismissViewController()
     }
     
     @IBAction func onLoadTap(_ sender: Any) {

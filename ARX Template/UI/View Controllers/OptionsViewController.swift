@@ -88,6 +88,12 @@ class OptionsViewController: UIViewController {
         isHeroEnabled = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
     @IBAction func onBackTap(_ sender: Any) {
         hero_dismissViewController()
     }
@@ -124,7 +130,8 @@ extension OptionsViewController: UITableViewDelegate {
             if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
                 let motdSequenceContainer = DataLoader.sharedInstance.moveOfTheDay() {
                 arVC.sequenceToLoad = motdSequenceContainer
-                navigationController?.pushViewController(arVC, animated: true)
+//                navigationController?.pushViewController(arVC, animated: true)
+                present(arVC, animated: true, completion: nil)
             }
         } else {
             handlePackageTap(packageName: "Jiujitsu Basics")

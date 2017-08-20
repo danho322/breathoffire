@@ -27,6 +27,8 @@ struct UserData {
     let breathStreakCount: Int
     let lastStreakTimestamp: TimeInterval
     let purchasedPackages: [String: Any]
+    let coordinate: CLLocationCoordinate2D?
+    let city: String?
     
     init(userId: String, snapshotDict: NSDictionary) {
         self.userId = userId
@@ -40,6 +42,17 @@ struct UserData {
             purchasedPackages = packagesDict
         } else {
             purchasedPackages = Dictionary<String, Any>()
+        }
+        if let latitude = snapshotDict["latitude"] as? CLLocationDegrees,
+            let longitude = snapshotDict["longitude"] as? CLLocationDegrees {
+            coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            coordinate = nil
+        }
+        if let city = snapshotDict["city"] as? String {
+            self.city = city
+        } else {
+            city = nil
         }
     }
 }
@@ -76,24 +89,24 @@ class FirebaseService {
         userRef.child("userName").setValue(userName)
     }
     
-    func setUserAttribute(userId: String, attributeName: String, value: Any) {
+    func setUserAttribute(userId: String, attribute: UserAttribute, value: Any) {
         let userRef = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         
-        userRef.child(attributeName).setValue(value)
+        userRef.child(attribute.rawValue).setValue(value)
     }
     
     func purchasePackageAndDecrementToken(userId: String, packageName: String, completed: @escaping ((Bool) -> Void)) {
         let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
             if var user = currentData.value as? [String : AnyObject] {
-                var packageDict = user["purchasedPackages"] as? [String: Any] ?? Dictionary<String, Any>()
+                var packageDict = user[UserAttribute.purchasedPackages.rawValue] as? [String: Any] ?? Dictionary<String, Any>()
                 packageDict[packageName] = 1
-                user["purchasedPackages"] = packageDict as AnyObject?
+                user[UserAttribute.purchasedPackages.rawValue] = packageDict as AnyObject?
                 
-                var tokenCount = user["tokenCount"] as? Int ?? 0
+                var tokenCount = user[UserAttribute.tokenCount.rawValue] as? Int ?? 0
                 tokenCount -= 1
                 tokenCount = tokenCount >= 0 ? tokenCount : 0
-                user["tokenCount"] = tokenCount as AnyObject?
+                user[UserAttribute.tokenCount.rawValue] = tokenCount as AnyObject?
                 
                 // Set value and report transaction success
                 currentData.value = user
@@ -109,13 +122,13 @@ class FirebaseService {
         }
     }
     
-    func incrementAttributeCount(userId: String, attributeName: String, count: Int = 1, defaultValue: Int = 0) {
+    func incrementAttributeCount(userId: String, attribute: UserAttribute, count: Int = 1, defaultValue: Int = 0) {
         let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
             if var post = currentData.value as? [String : AnyObject] {
-                var starCount = post[attributeName] as? Int ?? defaultValue
+                var starCount = post[attribute.rawValue] as? Int ?? defaultValue
                 starCount += count
-                post[attributeName] = starCount as AnyObject?
+                post[attribute.rawValue] = starCount as AnyObject?
                 
                 // Set value and report transaction success
                 currentData.value = post
@@ -130,14 +143,14 @@ class FirebaseService {
         }
     }
     
-    func decrementAttributeCount(userId: String, attributeName: String) {
+    func decrementAttributeCount(userId: String, attribute: UserAttribute) {
         let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
             if var post = currentData.value as? [String : AnyObject] {
-                var starCount = post[attributeName] as? Int ?? 0
+                var starCount = post[attribute.rawValue] as? Int ?? 0
                 starCount -= 1
                 starCount = starCount >= 0 ? starCount : 0
-                post[attributeName] = starCount as AnyObject?
+                post[attribute.rawValue] = starCount as AnyObject?
                 
                 // Set value and report transaction success
                 currentData.value = post
@@ -150,6 +163,30 @@ class FirebaseService {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    // MARK: - High Score
+    
+    func retrieveTopBreathStreaks(completionHandler: @escaping (([UserData])->Void)) {
+        let ref = Database.database().reference().child("users/\(Constants.AppKey)")
+        ref.queryOrdered(byChild: UserAttribute.breathStreakCount.rawValue)
+            .queryLimited(toLast: 10)
+            .observe(.value, with: { snapshot in
+                var items: [UserData] = []
+                if let userDict = snapshot.value as? NSDictionary {
+                    for (key, userDataDict) in userDict {
+                        if let userDataDict = userDataDict as? NSDictionary,
+                            let key = key as? String {
+                            let userData = UserData(userId: key, snapshotDict: userDataDict)
+                            if userData.breathStreakCount > 0 {
+                                items.append(userData)
+                            }
+                        }
+                    }
+                }
+                completionHandler(items)
+            })
+        
     }
     
     // MARK: - Feed
@@ -162,7 +199,7 @@ class FirebaseService {
     func retrieveBreathFeed(completionHandler: @escaping (([BreathFeedItem])->Void)) {
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
         ref.queryOrdered(byChild: "timestamp")
-            .queryLimited(toFirst: 50)
+            .queryLimited(toLast: 50)
             .observe(.value, with: { [unowned self] snapshot in
                 var items: [BreathFeedItem] = []
                 if let feedDict = snapshot.value as? NSDictionary {
@@ -414,16 +451,20 @@ struct BreathFeedItem {
     let imagePath: String
     let userId: String
     let userName: String
-    let coordinate: CLLocationCoordinate2D
+    let coordinate: CLLocationCoordinate2D?
+    let city: String?
+    let rating: Int?
     
-    init(key: String? = nil, timestamp: TimeInterval, imagePath: String, userId: String, userName: String, breathCount: Int, coordinate: CLLocationCoordinate2D) {
+    init(key: String? = nil, timestamp: TimeInterval, imagePath: String, userId: String, userName: String, breathCount: Int, city: String?, coordinate: CLLocationCoordinate2D?, rating: Int?) {
         self.key = key
         self.timestamp = timestamp
         self.imagePath = imagePath
         self.userId = userId
         self.userName = userName
         self.breathCount = breathCount
+        self.city = city
         self.coordinate = coordinate
+        self.rating = rating
     }
     
     init(key: String?, snapshotDict: NSDictionary) {
@@ -433,19 +474,41 @@ struct BreathFeedItem {
         userId = snapshotDict["userId"] as? String ?? ""
         userName = snapshotDict["userName"] as? String ?? ""
         breathCount = snapshotDict["breathCount"] as? Int ?? 0
-        let lat = snapshotDict["latitude"] as? CLLocationDegrees ?? 0
-        let lng = snapshotDict["longitude"] as? CLLocationDegrees ?? 0
-        coordinate = CLLocationCoordinate2DMake(lat, lng)
+        if let lat = snapshotDict["latitude"] as? CLLocationDegrees,
+            let lng = snapshotDict["longitude"] as? CLLocationDegrees {
+            coordinate = CLLocationCoordinate2DMake(lat, lng)
+        } else {
+            coordinate = nil
+        }
+        if let city = snapshotDict["city"] as? String {
+            self.city = city
+        } else {
+            city = nil
+        }
+        if let rating = snapshotDict["rating"] as? Int {
+            self.rating = rating
+        } else {
+            rating = nil
+        }
     }
 	
     func valueDict() -> [String: Any] {
-        return ["timestamp": timestamp,
+        var dict: [String: Any] = ["timestamp": timestamp,
                 "imagePath": imagePath,
                 "userId": userId,
                 "userName": userName,
-                "breathCount": breathCount,
-                "latitude": coordinate.latitude,
-                "longitude": coordinate.longitude]
+                "breathCount": breathCount]
+        if let coordinate = coordinate {
+            dict["latitude"] = coordinate.latitude
+            dict["longitude"] = coordinate.longitude
+        }
+        if let city = city {
+            dict["city"] = city
+        }
+        if let rating = rating {
+            dict["rating"] = rating
+        }
+        return dict
     }
 }
 
