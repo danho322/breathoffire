@@ -46,13 +46,7 @@ class MainTabBarController: UITabBarController {
                     tabPageController.option.currentColor = ThemeManager.sharedInstance.focusForegroundColor()
 
                     
-                    let navigationController = UINavigationController(rootViewController: tabPageController)
-
-                    UINavigationBar.appearance().titleTextAttributes = [
-                        NSAttributedStringKey.font: ThemeManager.sharedInstance.defaultFont(30),
-                        NSAttributedStringKey.foregroundColor: ThemeManager.sharedInstance.focusForegroundColor()
-                    ]
-                    
+                    let navigationController = ARXNavigationController(rootViewController: tabPageController)
                     tabPageController.title = "Breath of Fire"
                     
                     newViewControllers.append(navigationController)
@@ -67,15 +61,15 @@ class MainTabBarController: UITabBarController {
             for tabItem in tabItems {
                 print(tabItem)
                 if tabItem.title == "Breath of Fire" {
-                    tabItem.title = nil
+//                    tabItem.title = nil
                     let icon = FAKIonIcons.iosWorldIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     tabItem.image = icon
-                } else if tabItem.title == "Practice" {
-                    tabItem.title = nil
+                } else if tabItem.title == "Breathe" {
+//                    tabItem.title = nil
                     let icon = FAKIonIcons.flameIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     tabItem.image = icon
-                } else if tabItem.title == "Me" {
-                    tabItem.title = nil
+                } else if tabItem.title == "Profile" {
+//                    tabItem.title = nil
                     let icon = FAKIonIcons.iosPersonIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     tabItem.image = icon
                 }

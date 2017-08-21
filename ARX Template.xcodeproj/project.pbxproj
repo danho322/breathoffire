@@ -116,6 +116,7 @@
 		D4ADB2B31F1C3A3500D2D1A2 /* SwiftyStoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ADB2B21F1C3A1200D2D1A2 /* SwiftyStoreKit.framework */; };
 		D4B06A901F2AD87C004DFE50 /* Nodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B06A8F1F2AD87C004DFE50 /* Nodes.swift */; };
 		D4B06A941F2BA1F0004DFE50 /* PortalRoomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */; };
+		D4B93FC31F4A83F700BE092E /* ARXNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */; };
 		D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */; };
 		D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */; };
 		D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */; };
@@ -151,6 +152,7 @@
 		D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageDetailsDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		D427C9441F0770C20096C2A1 /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		D42A6C501F1422AE00A3F2F0 /* TechniqueSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueSearchable.swift; sourceTree = "<group>"; };
+		D42AC3301F4A3798006A53C5 /* iCarousel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iCarousel.framework; path = Carthage/Build/iOS/iCarousel.framework; sourceTree = "<group>"; };
 		D42DE7631F46980D00264AF1 /* SwiftySound.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftySound.framework; path = Carthage/Build/iOS/SwiftySound.framework; sourceTree = "<group>"; };
 		D42DE7651F469DC400264AF1 /* Breathe.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Breathe.m4a; sourceTree = "<group>"; };
 		D42DE7661F46A43D00264AF1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -267,6 +269,7 @@
 		D4B06A8F1F2AD87C004DFE50 /* Nodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nodes.swift; sourceTree = "<group>"; };
 		D4B06A921F2BA1C5004DFE50 /* Media.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Media.scnassets; sourceTree = "<group>"; };
 		D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalRoomObject.swift; sourceTree = "<group>"; };
+		D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXNavigationController.swift; sourceTree = "<group>"; };
 		D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsPackageTableViewCell.xib; sourceTree = "<group>"; };
 		D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPackageTableViewCell.swift; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
@@ -341,6 +344,7 @@
 				D468FE301F49130A00DEBAE6 /* CommunityViewController.swift */,
 				D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */,
 				D4EDCCF41F4943F100849037 /* RankingsViewController.swift */,
+				D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -439,6 +443,7 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D42AC3301F4A3798006A53C5 /* iCarousel.framework */,
 				D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */,
 				D468FE2F1F48AADA00DEBAE6 /* HCSStarRatingView.framework */,
 				D42DE7661F46A43D00264AF1 /* CoreAudio.framework */,
@@ -700,6 +705,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftySound.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/HCSStarRatingView.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TabPageViewController.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/iCarousel.framework",
 			);
 			outputPaths = (
 			);
@@ -757,6 +763,7 @@
 				D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */,
 				D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */,
 				D49102FF1EFB05CE008A528E /* TechniqueARViewController.swift in Sources */,
+				D4B93FC31F4A83F700BE092E /* ARXNavigationController.swift in Sources */,
 				D43D4BAC1F048282002F369F /* Plane.swift in Sources */,
 				D422C2AE1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift in Sources */,
 				D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */,

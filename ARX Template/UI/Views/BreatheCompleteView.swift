@@ -121,6 +121,8 @@ class BreatheCompleteView: XibView {
         view.screenshotImageView.image = screenshot
         view.screenshotImageView.layer.masksToBounds = true
         view.screenshotImageView.layer.cornerRadius = view.screenshotImageView.frame.size.width / 2
+        view.screenshotImageView.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
+        view.screenshotImageView.layer.borderWidth = 2
     }
     
     // MARK: - Button Handlers

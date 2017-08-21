@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bME-3f-coa">
-                        <rect key="frame" x="15" y="-12" width="345" height="193.5"/>
+                        <rect key="frame" x="15" y="20" width="345" height="131.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="My Packages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2l-yk-fAG">
                                 <rect key="frame" x="20" y="20" width="101.5" height="25"/>
@@ -29,19 +29,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MAr-qM-XP3">
-                                <rect key="frame" x="20" y="50" width="305" height="123.5"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="spT-71-UP8" customClass="iCarousel">
+                                <rect key="frame" x="0.0" y="53" width="345" height="79"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="123.5" id="IrV-Lt-ztZ"/>
+                                    <constraint firstAttribute="height" constant="200" id="VdX-bE-Wl9"/>
                                 </constraints>
-                            </scrollView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="MAr-qM-XP3" secondAttribute="bottom" constant="20" id="JVz-yV-ev2"/>
-                            <constraint firstAttribute="trailing" secondItem="MAr-qM-XP3" secondAttribute="trailing" constant="20" id="NBa-fx-P36"/>
-                            <constraint firstItem="MAr-qM-XP3" firstAttribute="top" secondItem="y2l-yk-fAG" secondAttribute="bottom" constant="5" id="eBN-Ii-LAB"/>
-                            <constraint firstItem="MAr-qM-XP3" firstAttribute="leading" secondItem="bME-3f-coa" secondAttribute="leading" constant="20" id="gEv-6H-FrG"/>
+                            <constraint firstItem="spT-71-UP8" firstAttribute="top" secondItem="y2l-yk-fAG" secondAttribute="bottom" constant="8" id="6UT-Fh-xlN"/>
+                            <constraint firstItem="spT-71-UP8" firstAttribute="width" secondItem="bME-3f-coa" secondAttribute="width" id="Qqk-Xm-ejD"/>
                             <constraint firstItem="y2l-yk-fAG" firstAttribute="top" secondItem="bME-3f-coa" secondAttribute="top" constant="20" id="o0O-gm-DLy"/>
                             <constraint firstItem="y2l-yk-fAG" firstAttribute="leading" secondItem="bME-3f-coa" secondAttribute="leading" constant="20" id="tgY-wX-t0e"/>
                         </constraints>
@@ -55,14 +54,16 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="bME-3f-coa" secondAttribute="bottom" constant="20" id="6xw-H7-rdo"/>
+                    <constraint firstItem="spT-71-UP8" firstAttribute="centerX" secondItem="o17-Fn-uZ4" secondAttribute="centerX" id="Dmo-bw-zIw"/>
                     <constraint firstItem="bME-3f-coa" firstAttribute="leading" secondItem="o17-Fn-uZ4" secondAttribute="leading" constant="15" id="YYK-TE-8An"/>
                     <constraint firstAttribute="trailing" secondItem="bME-3f-coa" secondAttribute="trailing" constant="15" id="cu5-bw-aq3"/>
+                    <constraint firstAttribute="bottom" secondItem="spT-71-UP8" secondAttribute="bottom" constant="30" id="myk-LC-BVv"/>
                     <constraint firstItem="bME-3f-coa" firstAttribute="top" secondItem="o17-Fn-uZ4" secondAttribute="top" constant="20" id="pg7-QT-AHt"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="cardView" destination="bME-3f-coa" id="gRa-zA-DiQ"/>
-                <outlet property="scrollView" destination="MAr-qM-XP3" id="sqG-Lu-tXF"/>
+                <outlet property="carousel" destination="spT-71-UP8" id="Z4t-Xc-ed0"/>
                 <outlet property="titleLabel" destination="y2l-yk-fAG" id="4y3-L7-shp"/>
             </connections>
             <point key="canvasLocation" x="-298.5" y="-222"/>

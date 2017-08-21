@@ -15,6 +15,14 @@ struct ThemeManager {
         return UIColor(red: 46 / 255.0, green: 42 / 255.0, blue: 70 / 255.0, alpha: 1)
     }
     
+    func feedBackgroundColor() -> UIColor {
+        return UIColor.white
+    }
+    
+    func feedTextColor() -> UIColor {
+        return UIColor.black
+    }
+    
     func foregroundColor() -> UIColor {
         return UIColor(red: 68 / 255.0, green: 61 / 255.0, blue: 101 / 255.0, alpha: 1)
     }

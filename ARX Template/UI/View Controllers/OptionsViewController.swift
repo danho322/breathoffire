@@ -63,6 +63,7 @@ class OptionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Breathe"
         
         sectionArray = [.moveOfDay, .myPackages, .packages, .techniqueList]
 
@@ -90,8 +91,6 @@ class OptionsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationController?.isNavigationBarHidden = false
     }
     
     @IBAction func onBackTap(_ sender: Any) {
