@@ -12,7 +12,6 @@ import UIKit
 import Photos
 import FontAwesomeKit
 
-
 class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet weak var breathTimerView: BreathTimerView!
@@ -20,7 +19,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     @IBOutlet weak var hudView: CharacterHUDView!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var hudBottomConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var endButton: UIButton!
+    
     
     var sequenceToLoad: AnimationSequenceDataContainer?
     var dismissCompletionHandler: (()->Void)?
@@ -63,7 +63,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         updatePlacementUI()
         setupGestureRecognizers()
         hudDidTapShowToggle(shouldShow: false)
-        
+    
         if let sequenceToLoad = sequenceToLoad {
             if sequenceToLoad.showHud {
                 if let hudView = hudView.view as? CharacterHUDView {
@@ -1155,7 +1155,13 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	var textManager: TextManager!
 	
     func setupUIControls() {
-		textManager = TextManager(viewController: self)
+        let closeIcon = FAKIonIcons.closeIcon(withSize: 25)
+        closeIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
+        
+        endButton.setAttributedTitle(closeIcon?.attributedString(), for: .normal)
+        
+        
+        textManager = TextManager(viewController: self)
 		
         // hide debug message view
 		debugMessageLabel.isHidden = true
@@ -1243,6 +1249,28 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 			})
 		}
 	}
+    
+    @IBAction func onEndTap(_ sender: Any) {
+        hudDidTapPause()
+        let alertMessage = UIAlertController(title: NSLocalizedString("End Session?", comment: "Action sheet title"),
+                                             message: nil,
+                                             preferredStyle: .actionSheet)
+        
+        
+        alertMessage.addAction(UIAlertAction(title: NSLocalizedString("End", comment: "Ok button title"), style: .default, handler: { [unowned self] _ in
+            self.dismiss()
+        }))
+        
+        alertMessage.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { [unowned self] _ in
+            self.hudDidTapPlay()
+        }))
+        
+            alertMessage.popoverPresentationController?.sourceView = endButton
+            alertMessage.popoverPresentationController?.sourceRect = endButton.frame
+            alertMessage.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+        
+        self.present(alertMessage, animated: true, completion: nil)
+    }
     
     func finishSequence(object: VirtualObject) {
         print("finished with sequence \(object.animationSequence)")
@@ -1379,11 +1407,13 @@ extension ARTechniqueViewController: CharacterHUDViewDelegate {
         pauseVirtualObjects()
         instructionView.removeAllLabels()
         instructionService?.pause()
+        breathTimerService?.pause()
     }
     
     func hudDidTapPlay() {
         resumeVirtualObjects()
         instructionService?.resume()
+        breathTimerService?.resume()
     }
     
     func hudDidUpdateInstructorSwitch(isOn: Bool) {

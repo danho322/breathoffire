@@ -71,6 +71,7 @@ class FeedTableViewCell: UITableViewCell {
             leftQuoteLabel.isHidden = false
             timeLabelTopConstraint.constant = 5
         } else {
+            commentLabel.text = comment
             commentLabel.isHidden = true
             leftQuoteLabel.isHidden = true
             timeLabelTopConstraint.constant = -5

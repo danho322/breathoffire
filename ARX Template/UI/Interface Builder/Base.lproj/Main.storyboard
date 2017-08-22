@@ -1062,6 +1062,17 @@
                                     <action selector="restartExperience:" destination="gQx-gU-hL3" eventType="touchUpInside" id="duX-uW-uSO"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIQ-GD-S9b">
+                                <rect key="frame" x="15" y="35" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="iag-Zq-m8w"/>
+                                    <constraint firstAttribute="width" constant="45" id="ynB-nc-9VR"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="onEndTap:" destination="gQx-gU-hL3" eventType="touchUpInside" id="Fjg-T3-JTW"/>
+                                </connections>
+                            </button>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="VQZ-1R-OLo" userLabel="Message Panel">
                                 <rect key="frame" x="15" y="15" width="310" height="88"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="eyd-9v-3Xf">
@@ -1197,10 +1208,12 @@
                             <constraint firstItem="VQZ-1R-OLo" firstAttribute="leading" secondItem="auA-Qr-nK7" secondAttribute="leading" constant="15" id="qBv-Qt-TqY"/>
                             <constraint firstItem="Z2Q-42-QYJ" firstAttribute="centerX" secondItem="OmM-QP-RfY" secondAttribute="centerX" id="qsC-MG-fRH"/>
                             <constraint firstItem="VQZ-1R-OLo" firstAttribute="top" secondItem="auA-Qr-nK7" secondAttribute="top" constant="15" id="sLM-oS-xn6"/>
+                            <constraint firstItem="JIQ-GD-S9b" firstAttribute="top" secondItem="OmM-QP-RfY" secondAttribute="top" constant="15" id="tmb-fn-hZA"/>
                             <constraint firstItem="OmM-QP-RfY" firstAttribute="bottom" secondItem="ba6-jE-09U" secondAttribute="bottom" constant="15" id="v1w-B4-kXi"/>
                             <constraint firstItem="MxR-A1-Q9e" firstAttribute="top" secondItem="auA-Qr-nK7" secondAttribute="top" id="vVu-ka-62x"/>
                             <constraint firstItem="Le1-2e-IV0" firstAttribute="leading" secondItem="OmM-QP-RfY" secondAttribute="leading" id="xi3-id-H7t"/>
                             <constraint firstItem="k1K-JZ-etP" firstAttribute="leading" secondItem="OmM-QP-RfY" secondAttribute="leading" id="yPi-UT-ClP"/>
+                            <constraint firstItem="JIQ-GD-S9b" firstAttribute="leading" secondItem="OmM-QP-RfY" secondAttribute="leading" constant="15" id="zLP-Ez-ee4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OmM-QP-RfY"/>
                     </view>
@@ -1208,6 +1221,7 @@
                         <outlet property="addObjectButton" destination="Z2Q-42-QYJ" id="6C1-Pc-xiz"/>
                         <outlet property="breathTimerView" destination="k1K-JZ-etP" id="GPS-RY-b9l"/>
                         <outlet property="debugMessageLabel" destination="eOG-9O-hbm" id="wP4-e0-cWY"/>
+                        <outlet property="endButton" destination="JIQ-GD-S9b" id="YF8-rj-mzi"/>
                         <outlet property="featurePointCountLabel" destination="8kF-pT-w2a" id="UmN-VA-Qap"/>
                         <outlet property="hudBottomConstraint" destination="ICK-CY-2zW" id="hW4-iW-gJb"/>
                         <outlet property="hudView" destination="Le1-2e-IV0" id="9E6-1f-9rz"/>

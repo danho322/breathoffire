@@ -11,6 +11,7 @@ import FontAwesomeKit
 import HCSStarRatingView
 
 class BreatheCompleteView: XibView {
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
@@ -83,6 +84,7 @@ class BreatheCompleteView: XibView {
         view.commentTextView.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         view.commentTextView.textColor = ThemeManager.sharedInstance.textColor()
         view.commentTextView.font = ThemeManager.sharedInstance.defaultFont(16)
+        view.commentTextView.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(BreatheCompleteView.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(BreatheCompleteView.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -170,6 +172,12 @@ class BreatheCompleteView: XibView {
         ratingTitleLabel.isHidden = true
         ratingHeightConstraint.constant = 0
         commentHeightConstraint.constant = 0
+        
+        commentTextView.resignFirstResponder()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+            self.onDismissTap(self)
+        })
     }
     
     @IBAction func onDismissTap(_ sender: Any) {
@@ -215,5 +223,16 @@ class BreatheCompleteView: XibView {
             completion()
         })
         alphaAnimator.startAnimation()
+    }
+}
+
+extension BreatheCompleteView: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        guard let view = view as? BreatheCompleteView else {
+            fatalError("view is not of type BreatheCompleteView")
+        }
+        
+        textView.text = ""
+        view.scrollView.scrollRectToVisible(textView.frame, animated: true)
     }
 }

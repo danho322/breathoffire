@@ -25,6 +25,8 @@ class FeedViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        let mapCellNib = UINib(nibName: String(describing: FeedMapTableViewCell.self), bundle: nil)
+        tableView.register(mapCellNib, forCellReuseIdentifier: CellIdentifiers.FeedMapCellIdentifier)
         let feedCellNib = UINib(nibName: String(describing: FeedTableViewCell.self), bundle: nil)
         tableView.register(feedCellNib , forCellReuseIdentifier: CellIdentifiers.FeedCellIdentifier)
         
@@ -77,21 +79,36 @@ extension FeedViewController: UITableViewDelegate {
 
 extension FeedViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return feedItems.count
+        if section == 0 {
+            return 1
+        } else {
+            return feedItems.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedCellIdentifier, for: indexPath)
-        if let cell = cell as? FeedTableViewCell {
-            let item = feedItems[indexPath.row]
-            cell.update(feedItem: item) { [unowned self] key in
-                self.displayFeedOptions(feedItem: item, indexPath: indexPath)
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMapCellIdentifier, for: indexPath)
+            if let cell = cell as? FeedMapTableViewCell {
+                let locations = feedItems.filter({ $0.coordinate != nil }).map({ CLLocation(latitude: $0.coordinate!.latitude, longitude: $0.coordinate!.longitude) })
+              
+                cell.update(locations: locations)
             }
+            return cell
+
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedCellIdentifier, for: indexPath)
+            if let cell = cell as? FeedTableViewCell {
+                let item = feedItems[indexPath.row]
+                cell.update(feedItem: item) { [unowned self] key in
+                    self.displayFeedOptions(feedItem: item, indexPath: indexPath)
+                }
+            }
+            return cell
         }
-        return cell
     }
 }

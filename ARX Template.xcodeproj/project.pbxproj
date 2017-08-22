@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4007AC11F4BE34400DD29D9 /* quake.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4B93FC91F4BDA8600BE092E /* quake.plist */; };
 		D41332361F44A11500851996 /* TimeFormatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41332351F44A11500851996 /* TimeFormatType.swift */; };
 		D422C2AE1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */; };
 		D422C2B01F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */; };
@@ -117,6 +118,9 @@
 		D4B06A901F2AD87C004DFE50 /* Nodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B06A8F1F2AD87C004DFE50 /* Nodes.swift */; };
 		D4B06A941F2BA1F0004DFE50 /* PortalRoomObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */; };
 		D4B93FC31F4A83F700BE092E /* ARXNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */; };
+		D4B93FCB1F4BDABE00BE092E /* FeedMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B93FCA1F4BDABE00BE092E /* FeedMapTableViewCell.swift */; };
+		D4B93FCD1F4BDF9100BE092E /* FeedMapTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4B93FCC1F4BDF9100BE092E /* FeedMapTableViewCell.xib */; };
+		D4B93FCE1F4BE1C500BE092E /* LFHeatMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B93FC81F4BDA3300BE092E /* LFHeatMap.m */; };
 		D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */; };
 		D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */; };
 		D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */; };
@@ -270,6 +274,13 @@
 		D4B06A921F2BA1C5004DFE50 /* Media.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Media.scnassets; sourceTree = "<group>"; };
 		D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalRoomObject.swift; sourceTree = "<group>"; };
 		D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXNavigationController.swift; sourceTree = "<group>"; };
+		D4B93FC41F4B43FE00BE092E /* BWWalkthrough.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWWalkthrough.framework; path = Carthage/Build/iOS/BWWalkthrough.framework; sourceTree = "<group>"; };
+		D4B93FC61F4BDA3100BE092E /* ARX Template-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ARX Template-Bridging-Header.h"; sourceTree = "<group>"; };
+		D4B93FC71F4BDA3200BE092E /* LFHeatMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LFHeatMap.h; path = Carthage/Checkouts/LFHeatMap/LFHeatMap/LFHeatMap.h; sourceTree = SOURCE_ROOT; };
+		D4B93FC81F4BDA3300BE092E /* LFHeatMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LFHeatMap.m; path = Carthage/Checkouts/LFHeatMap/LFHeatMap/LFHeatMap.m; sourceTree = SOURCE_ROOT; };
+		D4B93FC91F4BDA8600BE092E /* quake.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = quake.plist; path = Carthage/Checkouts/LFHeatMap/LFHeatMapDemo/LFHeatMapDemo/quake.plist; sourceTree = SOURCE_ROOT; };
+		D4B93FCA1F4BDABE00BE092E /* FeedMapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMapTableViewCell.swift; sourceTree = "<group>"; };
+		D4B93FCC1F4BDF9100BE092E /* FeedMapTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedMapTableViewCell.xib; sourceTree = "<group>"; };
 		D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsPackageTableViewCell.xib; sourceTree = "<group>"; };
 		D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPackageTableViewCell.swift; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
@@ -366,6 +377,7 @@
 				D453A4AC1F3E106E0045A1B9 /* LoginView.swift */,
 				D46B68D31F40053D00DAB0AD /* BreatheCompleteView.swift */,
 				D4DF08141F414FAE00E8F0EE /* FeedTableViewCell.swift */,
+				D4B93FCA1F4BDABE00BE092E /* FeedMapTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -425,6 +437,7 @@
 				D453A4AA1F3E0EB80045A1B9 /* LoginView.xib */,
 				D46B68D11F40028500DAB0AD /* BreatheCompleteView.xib */,
 				D4DF08121F41485A00E8F0EE /* FeedTableViewCell.xib */,
+				D4B93FCC1F4BDF9100BE092E /* FeedMapTableViewCell.xib */,
 			);
 			path = "Interface Builder";
 			sourceTree = "<group>";
@@ -443,6 +456,7 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4B93FC41F4B43FE00BE092E /* BWWalkthrough.framework */,
 				D42AC3301F4A3798006A53C5 /* iCarousel.framework */,
 				D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */,
 				D468FE2F1F48AADA00DEBAE6 /* HCSStarRatingView.framework */,
@@ -544,6 +558,7 @@
 		D49103111EFB068E008A528E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D4B93FC51F4BDA1F00BE092E /* LFHeatMap */,
 				D49103121EFB068E008A528E /* SceneKitExtensions.swift */,
 				D45352BE1EFDDD5600C09259 /* XibView.swift */,
 				D45352C01EFDDDBC00C09259 /* UIViewExtensions.swift */,
@@ -596,6 +611,17 @@
 			path = "Virtual Objects";
 			sourceTree = "<group>";
 		};
+		D4B93FC51F4BDA1F00BE092E /* LFHeatMap */ = {
+			isa = PBXGroup;
+			children = (
+				D4B93FC91F4BDA8600BE092E /* quake.plist */,
+				D4B93FC71F4BDA3200BE092E /* LFHeatMap.h */,
+				D4B93FC81F4BDA3300BE092E /* LFHeatMap.m */,
+				D4B93FC61F4BDA3100BE092E /* ARX Template-Bridging-Header.h */,
+			);
+			path = LFHeatMap;
+			sourceTree = "<group>";
+		};
 		D4ECE16A1F22C7CB00E8B788 /* Particles */ = {
 			isa = PBXGroup;
 			children = (
@@ -639,6 +665,7 @@
 				TargetAttributes = {
 					D49102F61EFB05CE008A528E = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -665,6 +692,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4007AC11F4BE34400DD29D9 /* quake.plist in Resources */,
 				D42DE7681F46A4FE00264AF1 /* Breathe.m4a in Resources */,
 				D49418891F231E0200CA83E2 /* GoogleService-Info.plist in Resources */,
 				D4DF08131F41485A00E8F0EE /* FeedTableViewCell.xib in Resources */,
@@ -683,6 +711,7 @@
 				D45352BB1EFDDC5100C09259 /* CharacterHUDView.xib in Resources */,
 				D45621401F0B58BB0052E218 /* TechniqueTableCell.xib in Resources */,
 				D46B68D21F40028500DAB0AD /* BreatheCompleteView.xib in Resources */,
+				D4B93FCD1F4BDF9100BE092E /* FeedMapTableViewCell.xib in Resources */,
 				D4A04B041F0B173000BEA822 /* RelatedAnimationsView.xib in Resources */,
 				D49103021EFB05CE008A528E /* Main.storyboard in Resources */,
 				D4612E2F1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib in Resources */,
@@ -706,6 +735,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/HCSStarRatingView.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TabPageViewController.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/iCarousel.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BWWalkthrough.framework",
 			);
 			outputPaths = (
 			);
@@ -720,6 +750,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4B93FCE1F4BE1C500BE092E /* LFHeatMap.m in Sources */,
 				D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */,
 				D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */,
 				D468FE341F49156B00DEBAE6 /* MainTabBarController.swift in Sources */,
@@ -760,6 +791,7 @@
 				D45621481F0CB3D00052E218 /* StatManager.swift in Sources */,
 				D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */,
 				D4A04AF81F09FD7900BEA822 /* Uke.swift in Sources */,
+				D4B93FCB1F4BDABE00BE092E /* FeedMapTableViewCell.swift in Sources */,
 				D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */,
 				D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */,
 				D49102FF1EFB05CE008A528E /* TechniqueARViewController.swift in Sources */,
@@ -921,6 +953,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 43WH255N2S;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -932,6 +965,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.iarxapps.ARX-Template";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ARX Template/Helpers/LFHeatMap/ARX Template-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -942,6 +977,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 43WH255N2S;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -954,6 +990,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.iarxapps.ARX-Template";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ARX Template/Helpers/LFHeatMap/ARX Template-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

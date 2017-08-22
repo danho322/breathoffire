@@ -31,6 +31,14 @@ class BreathTimerService: NSObject {
         timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self,   selector: (#selector(BreathTimerService.updateTimer)), userInfo: nil, repeats: true)
     }
     
+    func pause() {
+        timer?.invalidate()
+    }
+    
+    func resume() {
+        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self,   selector: (#selector(BreathTimerService.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
     func stop() {
         timer?.invalidate()
         delegate.breathTimeDidFinish()

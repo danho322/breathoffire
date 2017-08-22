@@ -39,7 +39,7 @@ enum OptionCellSectionType {
             if let tableView = tableView {
                 let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
                 headerView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-                let label = UILabel(frame: CGRect(x: 5, y: 0, width: tableView.frame.size.width - 5, height: 50))
+                let label = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.frame.size.width - 5, height: 50))
                 label.backgroundColor = UIColor.clear
                 label.textColor = ThemeManager.sharedInstance.labelTitleColor()
                 label.font = ThemeManager.sharedInstance.heavyFont(16)
@@ -64,9 +64,24 @@ class OptionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Breathe"
-        
-        sectionArray = [.moveOfDay, .myPackages, .packages, .techniqueList]
 
+        
+        var sections: [OptionCellSectionType] = []
+        sections.append(.moveOfDay)
+        let packages = DataLoader.sharedInstance.packages()
+        for package in packages {
+            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
+            if hasPackage {
+                sections.append(.myPackages)
+                break
+            }
+        }
+        sections.append(.packages)
+        sections.append(.techniqueList)
+        sectionArray = sections
+        
+
+        
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
