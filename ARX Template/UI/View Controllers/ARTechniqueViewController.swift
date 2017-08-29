@@ -21,7 +21,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     @IBOutlet weak var hudBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var endButton: UIButton!
     
-    
+    var isARModeEnabled = true
     var sequenceToLoad: AnimationSequenceDataContainer?
     var dismissCompletionHandler: (()->Void)?
     
@@ -53,16 +53,22 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        
         Setting.registerDefaults()
-        setupScene()
-        setupDebug()
-        setupUIControls()
-		setupFocusSquare()
-		updateSettings()
-		resetVirtualObject()
+        sceneView.isHidden = !isARModeEnabled
+        if isARModeEnabled {
+            setupScene()
+            setupDebug()
+            setupUIControls()
+            setupFocusSquare()
+            updateSettings()
+            resetVirtualObject()
+            setupGestureRecognizers()
+            hudDidTapShowToggle(shouldShow: false)
+        }
+        
         updatePlacementUI()
-        setupGestureRecognizers()
-        hudDidTapShowToggle(shouldShow: false)
     
         if let sequenceToLoad = sequenceToLoad {
             if sequenceToLoad.showHud {
@@ -77,7 +83,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             breathTimerView.alpha = 0
             
             instructionService = InstructionService(delegate: self)
-
+        }
+        
+        if !isARModeEnabled {
+            startTechnique()
         }
     }
 
@@ -88,7 +97,9 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		UIApplication.shared.isIdleTimerDisabled = true
 		
 		// Start the ARSession.
-		restartPlaneDetection()
+        if isARModeEnabled {
+            restartPlaneDetection()
+        }
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -117,7 +128,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     func saveToBreathFeed(rating: Int?, comment: String?) {
         if let image = screenShot {
-            FirebaseService.sharedInstance.uploadImage(image: image) { path in
+            FirebaseService.sharedInstance.uploadFeedImage(image: image) { path in
                 if let path = path,
                     let currentUserData = SessionManager.sharedInstance.currentUserData {
                     // add to feed path
@@ -236,26 +247,33 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     // MARK: - Placing Object
     
     internal func updatePlacementUI() {
-        if !currentPlacementState.isPlaced() {
-            planes.forEach({ anchor, plane in
-                if plane.anchor.extent.x > 0.3 && plane.anchor.extent.z > 0.3 {
-                    self.currentPlacementState = .ScanningReady
-                }
-            })
-        }
-        
-        statusLabel.text = DataLoader.sharedInstance.textForPlacementState(currentPlacementState)
-        statusLabel.isHidden = currentPlacementState.hideStatusLabel()
-        addObjectButton.isHidden = currentPlacementState.hideAddButton()
-        hudView.isHidden = !currentPlacementState.isPlaced()
-        
-        settingsButton.isHidden = !currentPlacementState.isPlaced()
-        screenshotButton.isHidden = !currentPlacementState.isPlaced()
-        
-        
-        let shouldShowDebugVisuals = currentPlacementState.showDebugVisuals()
-        if showDebugVisuals != shouldShowDebugVisuals {
-            showDebugVisuals = shouldShowDebugVisuals
+        if isARModeEnabled {
+            if !currentPlacementState.isPlaced() {
+                planes.forEach({ anchor, plane in
+                    if plane.anchor.extent.x > 0.3 && plane.anchor.extent.z > 0.3 {
+                        self.currentPlacementState = .ScanningReady
+                    }
+                })
+            }
+            
+            statusLabel.text = DataLoader.sharedInstance.textForPlacementState(currentPlacementState)
+            statusLabel.isHidden = currentPlacementState.hideStatusLabel()
+            addObjectButton.isHidden = currentPlacementState.hideAddButton()
+            hudView.isHidden = !currentPlacementState.isPlaced()
+            
+            settingsButton.isHidden = !currentPlacementState.isPlaced()
+            screenshotButton.isHidden = !currentPlacementState.isPlaced()
+            
+            let shouldShowDebugVisuals = currentPlacementState.showDebugVisuals()
+            if showDebugVisuals != shouldShowDebugVisuals {
+                showDebugVisuals = shouldShowDebugVisuals
+            }
+        } else {
+            statusLabel.text = nil
+            statusLabel.isHidden = true
+            addObjectButton.isHidden = true
+            hudView.isHidden = true
+            
         }
     }
     
@@ -944,22 +962,26 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             loadVirtualObject(at: pos)
             currentPlacementState = .PlacedScaling
         } else if currentPlacementState == .PlacedMoving {
-            startCharacterAnimations()
             currentPlacementState = .PlacedReady
 
             stopPlaneDetection()
             showHitTestAPIVisualization = false
             
-            // hardcode setup for now
-            setupBreathing()
-            
             scheduleScreenshot()
+            
+            startTechnique()
         } else if currentPlacementState == .PlacedRotating {
             currentPlacementState = .PlacedMoving
         } else if currentPlacementState == .PlacedScaling {
             currentPlacementState = .PlacedMoving   // scaling is rotating as well now
         }
         updatePlacementUI()
+    }
+    
+    func startTechnique() {
+        // hardcode setup for now
+        setupBreathing()
+        startCharacterAnimations()
     }
     
     // MARK: - Screenshot

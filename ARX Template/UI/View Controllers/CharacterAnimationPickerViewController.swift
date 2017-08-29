@@ -22,6 +22,11 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     @IBOutlet weak var sceneView: SCNView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadButton: UIButton!
+    @IBOutlet weak var packageTitleLabel: UILabel!
+    @IBOutlet weak var packageDescriptionLabel: UILabel!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var modeLabel: UILabel!
+    @IBOutlet weak var modeSwitch: UISwitch!
     
     var packageName: String?
     
@@ -37,15 +42,31 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         
 //        isHeroEnabled = false
         
+        var sectionIndex = 0
+        var rowIndex = 0
+        var index: IndexPath?
+        
         sectionNames = DataLoader.sharedInstance.sequenceSections()
         for sectionName in sectionNames {
             if let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName) {
                 if let packageName = packageName {
+
+                    packageTitleLabel.text = packageName
+                    
+                    if let packageDetails = DataLoader.sharedInstance.package(packageName: packageName) {
+                        packageDescriptionLabel.text = packageDetails.packageDescription
+                    }
+                    
                     var filteredArray: [String] = []
                     for sequenceName in sequenceRowArray {
                         if let sequenceData = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName) {
                             if sequenceData.packageName == packageName {
                                 filteredArray.append(sequenceName)
+                                
+                                if index == nil {
+                                    index = IndexPath(row: rowIndex, section: sectionIndex)
+                                }
+                                rowIndex += 1
                             }
                         }
                     }
@@ -54,6 +75,8 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
                     sectionSequenceDict[sectionName] = sequenceRowArray
                 }
             }
+            sectionIndex += 1
+            rowIndex = 0
         }
         
         let techniquesNib = UINib(nibName: String(describing: TechniqueTableCell.self), bundle: nil)
@@ -61,7 +84,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-
+        
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         tableView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         tableView.separatorColor = ThemeManager.sharedInstance.backgroundColor()
@@ -70,6 +93,16 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         loadButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(14)
         loadButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
         
+        packageTitleLabel.textColor = ThemeManager.sharedInstance.textColor()
+        packageDescriptionLabel.textColor = ThemeManager.sharedInstance.textColor()
+        modeLabel.textColor = ThemeManager.sharedInstance.textColor()
+
+        packageTitleLabel.font = ThemeManager.sharedInstance.defaultFont(20)
+        packageDescriptionLabel.font = ThemeManager.sharedInstance.defaultFont(16)
+        modeLabel.font = ThemeManager.sharedInstance.defaultFont(12)
+        
+        modeSwitch.onTintColor = ThemeManager.sharedInstance.focusColor()
+
         
 //        animations = [.slide(.up, .slightly), .fadeIn]
 //        sortFunction = LinearSortFunction(direction: .topToBottom, interObjectDelay: 0.05)
@@ -92,7 +125,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
             cameraNode.camera = SCNCamera()
             
             // place the camera
-            cameraNode.position = SCNVector3(x: 0, y: 1, z: 2)
+            cameraNode.position = SCNVector3(x: 0, y: 0.5, z: 2.25)
             let constraint = SCNLookAtConstraint(target: target?.childNode(withName: "Pelvis", recursively: true))
             cameraNode.constraints = [constraint]
             
@@ -127,22 +160,35 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
                     self.view.alpha = 1
                 })
                 alphaAnimator.startAnimation()
+                
+                if let index = index {
+                    self.tableView.selectRow(at: index, animated: true, scrollPosition: .top)
+                    self.handleSelectRow(indexPath: index)
+                }
             }
         }
     }
     
-    @IBAction func onLoadTap(_ sender: Any) {
+    @IBAction func onSwitchChange(_ sender: Any) {
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let sceneVC = segue.destination as? TechniqueSceneKitViewController, let identifier = segue.identifier, identifier == "TechniqueSegue" {
-//            sceneVC.animationToLoad = currentAnimationData
-        } else if let arVC = segue.destination as? ARTechniqueViewController, let identifier = segue.identifier, identifier == "ARSegue" {
-                arVC.sequenceToLoad = sequenceToLoad
-                arVC.dismissCompletionHandler = { [unowned self] in
-                    self.navigationController?.popToRootViewController(animated: true)
-                    self.tabBarController?.selectedIndex = 0
-                }
+    @IBAction func onLoadTap(_ sender: Any) {
+        if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController {
+            arVC.isARModeEnabled = modeSwitch.isOn
+            arVC.sequenceToLoad = sequenceToLoad
+            arVC.dismissCompletionHandler = { [unowned self] in
+                self.navigationController?.popToRootViewController(animated: true)
+                self.tabBarController?.selectedIndex = 0
+            }
+            self.present(arVC, animated: true, completion: nil)
+        }
+    }
+    
+    func handleSelectRow(indexPath: IndexPath) {
+        if let sequenceContainer = sequenceDataContainer(indexPath: indexPath) {
+            loadButton.isEnabled = true
+            sequenceToLoad = sequenceContainer
+            model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray)
         }
     }
     
@@ -206,10 +252,6 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CharacterAnimationPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let sequenceContainer = sequenceDataContainer(indexPath: indexPath) {
-            loadButton.isEnabled = true
-            sequenceToLoad = sequenceContainer
-            model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray)
-        }
+        handleSelectRow(indexPath: indexPath)
     }
 }

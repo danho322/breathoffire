@@ -388,14 +388,21 @@ class FirebaseService {
         }
     }
     
-    func uploadImage(image: UIImage, completion: @escaping ((String?)->Void)) {
+    func uploadFeedImage(image: UIImage, completion: @escaping ((String?)->Void)) {
         if let data = UIImagePNGRepresentation(image) {
             
             // Create a root reference
             let storageRef = Storage.storage().reference()
             
             // Create a reference to the file you want to upload
-            let path = "images/\(Constants.AppKey)/uploads/\(UUID().uuidString).jpg"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-yyyy"
+            dateFormatter.locale = Locale.init(identifier: "en_GB")
+            let date = Date()
+            let dateString = dateFormatter.string(from: date)
+            
+            
+            let path = "images/\(Constants.AppKey)/uploads/\(dateString)/\(UUID().uuidString).jpg"
             let riversRef = storageRef.child(path)
             
             // Upload the file to the path "images/rivers.jpg"

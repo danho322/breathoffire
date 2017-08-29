@@ -49,6 +49,9 @@ class MainTabBarController: UITabBarController {
                     let navigationController = ARXNavigationController(rootViewController: tabPageController)
                     tabPageController.title = "Breath of Fire"
                     
+                    let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                    tabPageController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
+                    
                     newViewControllers.append(navigationController)
                 } else {
                     newViewControllers.append(viewController)
@@ -83,20 +86,10 @@ class MainTabBarController: UITabBarController {
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @objc func onHelpTap() {
+        if let helpVC = self.storyboard?.instantiateViewController(withIdentifier: "HelpViewControllerIdentifier") {
+            navigationController?.pushViewController(helpVC, animated: true)
+            //                optionsVC.titleLabel.text = selectLabel.text
+        }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

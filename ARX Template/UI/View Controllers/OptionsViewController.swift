@@ -43,7 +43,7 @@ enum OptionCellSectionType {
                 label.backgroundColor = UIColor.clear
                 label.textColor = ThemeManager.sharedInstance.labelTitleColor()
                 label.font = ThemeManager.sharedInstance.heavyFont(16)
-                label.text = "Available Packages"
+                label.text = "Lessons"
                 headerView.addSubview(label)
                 return headerView
             }
@@ -68,14 +68,14 @@ class OptionsViewController: UIViewController {
         
         var sections: [OptionCellSectionType] = []
         sections.append(.moveOfDay)
-        let packages = DataLoader.sharedInstance.packages()
-        for package in packages {
-            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
-            if hasPackage {
-                sections.append(.myPackages)
-                break
-            }
-        }
+//        let packages = DataLoader.sharedInstance.packages()
+//        for package in packages {
+//            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
+//            if hasPackage {
+//                sections.append(.myPackages)
+//                break
+//            }
+//        }
         sections.append(.packages)
         sections.append(.techniqueList)
         sectionArray = sections
@@ -90,8 +90,8 @@ class OptionsViewController: UIViewController {
 
         let motdNib = UINib(nibName: String(describing: OptionsMOTDTableViewCell.self), bundle: nil)
         tableView.register(motdNib , forCellReuseIdentifier: CellIdentifiers.MOTD)
-        let packagesNib = UINib(nibName: String(describing: OptionsMyPackagesTableViewCell.self), bundle: nil)
-        tableView.register(packagesNib , forCellReuseIdentifier: CellIdentifiers.MyPackages)
+//        let packagesNib = UINib(nibName: String(describing: OptionsMyPackagesTableViewCell.self), bundle: nil)
+//        tableView.register(packagesNib , forCellReuseIdentifier: CellIdentifiers.MyPackages)
         let packageNib = UINib(nibName: String(describing: OptionsPackageTableViewCell.self), bundle: nil)
         tableView.register(packageNib , forCellReuseIdentifier: CellIdentifiers.Package)
         let techniquesNib = UINib(nibName: String(describing: OptionsTechniquesTableViewCell.self), bundle: nil)
@@ -133,9 +133,15 @@ extension OptionsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = sectionArray[indexPath.section]
         if section == .packages {
-            if let packageDetailsVC = storyboard?.instantiateViewController(withIdentifier: "PackageDetailsIdentifier") as? PackageDetailsViewController {
-                packageDetailsVC.packageName = DataLoader.sharedInstance.packages()[indexPath.row].packageName
-                navigationController?.pushViewController(packageDetailsVC, animated: true)
+            let packageName = DataLoader.sharedInstance.packages()[indexPath.row].packageName
+            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: packageName)
+            if hasPackage {
+                handlePackageTap(packageName: packageName)
+            } else {
+                if let packageDetailsVC = storyboard?.instantiateViewController(withIdentifier: "PackageDetailsIdentifier") as? PackageDetailsViewController {
+                    packageDetailsVC.packageName = packageName
+                    navigationController?.pushViewController(packageDetailsVC, animated: true)
+                }
             }
         } else if section == .moveOfDay {
 //            if let sceneVC = segue.destination as? ARTechniqueViewController, let identifier = segue.identifier, identifier == "ARSegue" {
@@ -176,7 +182,7 @@ extension OptionsViewController: UITableViewDataSource {
                 cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.MOTD, for: indexPath)
                 if let cell = cell as? OptionsMOTDTableViewCell {
                     if let motd = DataLoader.sharedInstance.moveOfTheDay() {
-                        cell.titleLabel.text = "Move of the day"
+                        cell.titleLabel.text = "Daily Exercise"
                         cell.moveTitleLabel.text = motd.sequenceName
                         cell.moveDescriptionLabel.text = motd.sequenceDescription
                     }
@@ -212,14 +218,7 @@ extension OptionsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.Package, for: indexPath)
         if let cell = cell as? OptionsPackageTableViewCell {
             let package = DataLoader.sharedInstance.packages()[indexPath.row]
-            cell.packageNameLabel.text = package.packageName
-            cell.packageDescriptionLabel.text = package.packageDescription
-            FirebaseService.sharedInstance.retrieveImageAtPath(path: package.imageBGPath) { image in
-                cell.bgImageView.image = image
-            }
-            
-            let techniques = DataLoader.sharedInstance.sequencesInPackage(packageName: package.packageName)
-            cell.techniqueCountTagLabel.text = "\(techniques.count) TECHNIQUES"
+            cell.update(package: package)
 
         }
         return cell

@@ -61,6 +61,7 @@ class FeedTableViewCell: UITableViewCell {
             timeString.append(" in \(city)")
         }
         timeLabel.text = timeString
+        feedImageView.image = nil
         FirebaseService.sharedInstance.retrieveImageAtPath(path: feedItem.imagePath, completion: { image in
             self.feedImageView.image = image
         })
@@ -71,7 +72,7 @@ class FeedTableViewCell: UITableViewCell {
             leftQuoteLabel.isHidden = false
             timeLabelTopConstraint.constant = 5
         } else {
-            commentLabel.text = comment
+            commentLabel.text = nil
             commentLabel.isHidden = true
             leftQuoteLabel.isHidden = true
             timeLabelTopConstraint.constant = -5

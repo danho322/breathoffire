@@ -38,4 +38,10 @@ class TechniqueTableCell: UITableViewCell {
         }
         return height
     }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        backgroundColor = selected ?
+            ThemeManager.sharedInstance.foregroundColor() :
+            ThemeManager.sharedInstance.backgroundColor()
+    }
 }

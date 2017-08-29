@@ -13,18 +13,19 @@ import FontAwesomeKit
 class OptionsPackageTableViewCell: UITableViewCell {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var bgImageView: UIImageView!
+    @IBOutlet weak var bgDimView: UIView!
     @IBOutlet weak var packageNameLabel: UILabel!
     @IBOutlet weak var packageDescriptionLabel: UILabel!
     @IBOutlet weak var chevronButton: UIButton!
     @IBOutlet weak var techniqueCountTagLabel: UILabel!
     @IBOutlet weak var difficultyTagLabel: UILabel!
+    @IBOutlet weak var lockIcon: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         cardView.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
-//        bgImageView.sd_setImage(with: URL(string: "http://graciescottsdale.com/wp-scottsdale/uploads/2014/01/Helio-Flying-680x307.jpg"))
         
         packageNameLabel.textColor = ThemeManager.sharedInstance.textColor()
         packageNameLabel.font = ThemeManager.sharedInstance.heavyFont(16)
@@ -48,6 +49,29 @@ class OptionsPackageTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func update(package: AnimationPackage) {
+        packageNameLabel.text = package.packageName
+        packageDescriptionLabel.text = package.packageDescription
+        FirebaseService.sharedInstance.retrieveImageAtPath(path: package.imageBGPath) { image in
+            self.bgImageView.image = image
+        }
+        
+        let techniques = DataLoader.sharedInstance.sequencesInPackage(packageName: package.packageName)
+        techniqueCountTagLabel.text = "\(techniques.count) TECHNIQUES"
+        
+        var alpha: CGFloat = 0.8
+        let hasPackage =
+        SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
+        var icon = FAKIonIcons.lockedIcon(withSize: 20)
+        if hasPackage {
+            alpha = 0.4
+            icon = FAKIonIcons.unlockedIcon(withSize: 20)
+        }
+        icon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        lockIcon.image = icon?.image(with: CGSize(width: 20, height: 20))
+        bgDimView.alpha = alpha
     }
 
 }
