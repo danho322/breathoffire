@@ -12,6 +12,7 @@ import SceneKit
 import Hero
 import FontAwesomeKit
 import Spruce
+import SwiftySound
 
 struct CharacterAnimationPickerConstants {
     
@@ -27,6 +28,8 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var modeLabel: UILabel!
     @IBOutlet weak var modeSwitch: UISwitch!
+    @IBOutlet weak var audioLabel: UILabel!
+    @IBOutlet weak var audioSwitch: UISwitch!
     
     var packageName: String?
     
@@ -96,13 +99,16 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         packageTitleLabel.textColor = ThemeManager.sharedInstance.textColor()
         packageDescriptionLabel.textColor = ThemeManager.sharedInstance.textColor()
         modeLabel.textColor = ThemeManager.sharedInstance.textColor()
+        audioLabel.textColor = ThemeManager.sharedInstance.textColor()
 
         packageTitleLabel.font = ThemeManager.sharedInstance.defaultFont(20)
         packageDescriptionLabel.font = ThemeManager.sharedInstance.defaultFont(16)
         modeLabel.font = ThemeManager.sharedInstance.defaultFont(12)
         
         modeSwitch.onTintColor = ThemeManager.sharedInstance.focusColor()
+        audioSwitch.onTintColor = ThemeManager.sharedInstance.focusColor()
 
+        audioSwitch.isOn = Sound.enabled
         
 //        animations = [.slide(.up, .slightly), .fadeIn]
 //        sortFunction = LinearSortFunction(direction: .topToBottom, interObjectDelay: 0.05)
@@ -173,7 +179,11 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     }
     
     @IBAction func onLoadTap(_ sender: Any) {
+        
+        Sound.enabled = audioSwitch.isOn
+        
         if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController {
+            // TODO: disable these buttons on first run
             arVC.isARModeEnabled = modeSwitch.isOn
             arVC.sequenceToLoad = sequenceToLoad
             arVC.dismissCompletionHandler = { [unowned self] in

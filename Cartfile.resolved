@@ -1,7 +1,7 @@
-github "ariok/BWWalkthrough" "2.1.1"
 github "PrideChung/FontAwesomeKit" "2.2.1"
 github "hsousa/HCSStarRatingView" "1.5"
 github "lkzhao/Hero" "0.3.6"
+github "ephread/Instructions" "1.1.0"
 github "gpolak/LFHeatMap" "1.0.2"
 github "rs/SDWebImage" "4.1.0"
 github "adamcichy/SwiftySound" "0.7.0"

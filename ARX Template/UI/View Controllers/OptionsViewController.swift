@@ -8,6 +8,7 @@
 
 import UIKit
 import FontAwesomeKit
+import Instructions
 
 struct OptionsConstants {
 }
@@ -60,11 +61,14 @@ class OptionsViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     internal var sectionArray: [OptionCellSectionType] = []
+    let coachMarksController = CoachMarksController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Breathe"
 
+        coachMarksController.dataSource = self
+        coachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
         
         var sections: [OptionCellSectionType] = []
         sections.append(.moveOfDay)
@@ -79,8 +83,6 @@ class OptionsViewController: UIViewController {
         sections.append(.packages)
         sections.append(.techniqueList)
         sectionArray = sections
-        
-
         
         searchBar.delegate = self
         tableView.delegate = self
@@ -104,9 +106,21 @@ class OptionsViewController: UIViewController {
         isHeroEnabled = true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if SessionManager.sharedInstance.shouldShowTutorial(type: .Options) {
+            coachMarksController.start(on: self)
+        }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.coachMarksController.stop(immediately: true)
+        SessionManager.sharedInstance.onTutorialShow(type: .Options)
+    }
+
     
     @IBAction func onBackTap(_ sender: Any) {
         hero_dismissViewController()
@@ -222,5 +236,26 @@ extension OptionsViewController: UITableViewDataSource {
 
         }
         return cell
+    }
+}
+
+extension OptionsViewController: CoachMarksControllerDataSource, CoachMarksControllerDelegate {
+    func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
+        return 2
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              coachMarkAt index: Int) -> CoachMark {
+        return coachMarksController.helper.makeCoachMark(for: tableView.cellForRow(at: IndexPath(row: 0, section: index)))
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?) {
+        let coachViews = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, arrowOrientation: coachMark.arrowOrientation)
+        
+        let hintText = index == 0 ? "Here is the daily exercise" : "Here are the pacakges"
+        coachViews.bodyView.hintLabel.text = hintText
+        coachViews.bodyView.nextLabel.text = "Ok"
+        
+        return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }
 }

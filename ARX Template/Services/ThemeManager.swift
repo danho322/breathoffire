@@ -11,8 +11,8 @@ import UIKit
 struct ThemeManager {
     static let sharedInstance = ThemeManager()
     
-    func backgroundColor() -> UIColor {
-        return UIColor(red: 46 / 255.0, green: 42 / 255.0, blue: 70 / 255.0, alpha: 1)
+    func backgroundColor(alpha: CGFloat = 1) -> UIColor {
+        return UIColor(red: 46 / 255.0, green: 42 / 255.0, blue: 70 / 255.0, alpha: alpha)
     }
     
     func feedBackgroundColor() -> UIColor {

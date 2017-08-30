@@ -48,4 +48,10 @@ class Instructor: VirtualObject {
     override func armatureNode() -> SCNNode? {
         return childNode(withName: armatureName, recursively: true)
     }
+    
+    func loadIdleAnimation() {
+        if let idleAnimation = DataLoader.sharedInstance.characterAnimation(name: "Movement Test 1") {
+            loadAnimationData(animationData: idleAnimation, speed: 1, repeatCount: Float.greatestFiniteMagnitude)
+        }
+    }
 }

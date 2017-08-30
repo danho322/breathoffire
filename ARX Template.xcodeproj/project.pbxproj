@@ -274,7 +274,6 @@
 		D4B06A921F2BA1C5004DFE50 /* Media.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Media.scnassets; sourceTree = "<group>"; };
 		D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalRoomObject.swift; sourceTree = "<group>"; };
 		D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXNavigationController.swift; sourceTree = "<group>"; };
-		D4B93FC41F4B43FE00BE092E /* BWWalkthrough.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWWalkthrough.framework; path = Carthage/Build/iOS/BWWalkthrough.framework; sourceTree = "<group>"; };
 		D4B93FC61F4BDA3100BE092E /* ARX Template-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ARX Template-Bridging-Header.h"; sourceTree = "<group>"; };
 		D4B93FC71F4BDA3200BE092E /* LFHeatMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LFHeatMap.h; path = Carthage/Checkouts/LFHeatMap/LFHeatMap/LFHeatMap.h; sourceTree = SOURCE_ROOT; };
 		D4B93FC81F4BDA3300BE092E /* LFHeatMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LFHeatMap.m; path = Carthage/Checkouts/LFHeatMap/LFHeatMap/LFHeatMap.m; sourceTree = SOURCE_ROOT; };
@@ -285,6 +284,7 @@
 		D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPackageTableViewCell.swift; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
 		D4C9383D1F440585002A2F4C /* BreathFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathFactory.swift; sourceTree = "<group>"; };
+		D4DA792D1F55297400D7ED00 /* Instructions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instructions.framework; path = Carthage/Build/iOS/Instructions.framework; sourceTree = "<group>"; };
 		D4DF08101F4147FF00E8F0EE /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		D4DF08121F41485A00E8F0EE /* FeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedTableViewCell.xib; sourceTree = "<group>"; };
 		D4DF08141F414FAE00E8F0EE /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
@@ -456,7 +456,7 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D4B93FC41F4B43FE00BE092E /* BWWalkthrough.framework */,
+				D4DA792D1F55297400D7ED00 /* Instructions.framework */,
 				D42AC3301F4A3798006A53C5 /* iCarousel.framework */,
 				D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */,
 				D468FE2F1F48AADA00DEBAE6 /* HCSStarRatingView.framework */,
@@ -735,7 +735,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/HCSStarRatingView.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TabPageViewController.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/iCarousel.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/BWWalkthrough.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Instructions.framework",
 			);
 			outputPaths = (
 			);

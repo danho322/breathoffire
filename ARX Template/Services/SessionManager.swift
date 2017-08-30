@@ -26,6 +26,11 @@ enum UserAttribute: String {
     case purchasedPackages = "purchasedPackages"
 }
 
+enum TutorialInstructionType {
+    case Options
+    case ARTechnique
+}
+
 class SessionManager {
     static let sharedInstance = SessionManager()
     
@@ -257,6 +262,32 @@ class SessionManager {
         }
         FirebaseService.sharedInstance.purchasePackageAndDecrementToken(userId: currentUserData.userId, packageName: packageName) { success in
             completion(success)
+        }
+    }
+    
+    // MARK: - Tutorials
+    var tempOptionsFlag = false
+    var tempARTechniqueFlag = false
+    
+    func shouldShowTutorial(type: TutorialInstructionType) -> Bool {
+        // TODO: retrieve from user data
+        if type == .Options {
+            return !tempOptionsFlag
+        }
+        
+        if type == .ARTechnique {
+            return !tempARTechniqueFlag
+        }
+        
+        return false
+    }
+    
+    func onTutorialShow(type: TutorialInstructionType) {
+        // TODO: persist
+        if type == .Options {
+            tempOptionsFlag = true
+        } else if type == .ARTechnique {
+            tempARTechniqueFlag = true
         }
     }
 }

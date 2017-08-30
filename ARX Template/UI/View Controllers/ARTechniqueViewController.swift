@@ -11,6 +11,7 @@ import SceneKit
 import UIKit
 import Photos
 import FontAwesomeKit
+import Instructions
 
 class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate {
     
@@ -28,6 +29,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var currentAnimationIndex = 0
     internal var sliderValue: Float = 0.5
     
+    internal let placingCoachMarksController = CoachMarksController()
+    internal let techniqueCoachMarksController = CoachMarksController()
     internal var instructionService: InstructionService?
     internal var breathTimerService: BreathTimerService?
     
@@ -37,7 +40,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 
     internal var hasSetupLights = false
     internal var physicsPlane: SCNNode?
-    
+    internal var hasSetupViewController = false
     internal var portal: PortalRoomObject?
     
     // feed
@@ -50,11 +53,28 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var ball: SCNNode?
     
     // MARK: - Main Setup & View Controller methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         
+        placingCoachMarksController.dataSource = self
+        placingCoachMarksController.delegate = self
+        placingCoachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
+        placingCoachMarksController.overlay.allowTap = true
+        
+        techniqueCoachMarksController.dataSource = self
+        techniqueCoachMarksController.delegate = self
+        techniqueCoachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
+        techniqueCoachMarksController.overlay.allowTap = true
+        
+        if let hudView = hudView.view as? CharacterHUDView {
+            hudView.delegate = self
+        }
+    }
+    
+    func setupViewControllerTechnique() {
         Setting.registerDefaults()
         sceneView.isHidden = !isARModeEnabled
         if isARModeEnabled {
@@ -66,28 +86,23 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             resetVirtualObject()
             setupGestureRecognizers()
             hudDidTapShowToggle(shouldShow: false)
+            restartPlaneDetection()
         }
         
         updatePlacementUI()
-    
+        
         if let sequenceToLoad = sequenceToLoad {
-            if sequenceToLoad.showHud {
-                if let hudView = hudView.view as? CharacterHUDView {
-                    hudView.delegate = self
-                }
-            } else {
-                hudView.isHidden = true
-            }
-            
             breathTimerView.isHidden = sequenceToLoad.breathProgram == nil
             breathTimerView.alpha = 0
             
             instructionService = InstructionService(delegate: self)
         }
         
-        if !isARModeEnabled {
+        if !SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) && !isARModeEnabled {
             startTechnique()
         }
+        
+        hasSetupViewController = true
     }
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -97,8 +112,22 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		UIApplication.shared.isIdleTimerDisabled = true
 		
 		// Start the ARSession.
-        if isARModeEnabled {
+        
+        if isARModeEnabled && hasSetupViewController {
             restartPlaneDetection()
+        }
+        
+        if !hasSetupViewController {
+            let alert = UIAlertController(title: "Get Ready", message: "Point your camera toward your gym surface.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(
+                UIAlertAction(title: "Ok",
+                              style: UIAlertActionStyle.default,
+                              handler: { [unowned self] _ in
+                                self.setupViewControllerTechnique()
+                    }
+                )
+            )
+            self.present(alert, animated: true, completion: nil)
         }
 	}
 	
@@ -106,6 +135,9 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		super.viewWillDisappear(animated)
 		session.pause()
         cancelScreenshotSelector()
+        
+        placingCoachMarksController.stop(immediately: true)
+        techniqueCoachMarksController.stop(immediately: true)
 	}
 
     // MARK: - Breathe
@@ -248,18 +280,26 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     internal func updatePlacementUI() {
         if isARModeEnabled {
-            if !currentPlacementState.isPlaced() {
+            if !currentPlacementState.isPlaced() && currentPlacementState != .ScanningReady {
                 planes.forEach({ anchor, plane in
                     if plane.anchor.extent.x > 0.3 && plane.anchor.extent.z > 0.3 {
                         self.currentPlacementState = .ScanningReady
                     }
                 })
+                
+                if currentPlacementState == .ScanningReady {
+                    if SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) {
+                        placingCoachMarksController.start(on: self)
+                    }
+                }
             }
             
             statusLabel.text = DataLoader.sharedInstance.textForPlacementState(currentPlacementState)
             statusLabel.isHidden = currentPlacementState.hideStatusLabel()
             addObjectButton.isHidden = currentPlacementState.hideAddButton()
-            hudView.isHidden = !currentPlacementState.isPlaced()
+            
+            let showHud = sequenceToLoad?.showHud ?? false
+            hudView.isHidden = !currentPlacementState.isPlaced() || !showHud
             
             settingsButton.isHidden = !currentPlacementState.isPlaced()
             screenshotButton.isHidden = !currentPlacementState.isPlaced()
@@ -309,7 +349,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 })
             }
         }
-        
     }
     
     // MARK: - Instruction Service
@@ -570,10 +609,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         print("touchesEnded")
         super.touchesEnded(touches, with: event)
         
-		if virtualObjects.count == 0 && currentPlacementState.isPlacingAllowed() {
-			chooseObject(addObjectButton)
-			return
-		}
+//        if virtualObjects.count == 0 && currentPlacementState.isPlacingAllowed() {
+//            chooseObject(addObjectButton)
+//            return
+//        }
 		
 		currentGesture = currentGesture?.updateGestureFromTouches(touches, .touchEnded)
         if let latestTouchPosition = touches.first?.location(in: sceneView) {
@@ -793,6 +832,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     
     func setVirtualObject(object: VirtualObject, at pos: SCNVector3) {
+        print("setVirtualObject \(object) at \(pos)")
         object.position = pos
         
         setupShadowLightsIfNeeded(target: object)
@@ -844,8 +884,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 cameraToPosition.setLength(Float(averageDistance))
                 let averagedDistancePos = cameraWorldPos + cameraToPosition
                 
+                print("updateVirtualObjectPosition \(object) at  averagedDistancePos \(pos)")
                 object.position = averagedDistancePos
             } else {
+                print("updateVirtualObjectPosition \(object) at  cameraWorldPos + cameraToPosition \(pos)")
                 object.position = cameraWorldPos + cameraToPosition
             }
         }
@@ -924,6 +966,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             object.delegate = self
             
 			object.loadModel()
+            object.loadIdleAnimation()
             self.virtualObjects.append(object)
             
             DispatchQueue.main.async {
@@ -982,6 +1025,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         // hardcode setup for now
         setupBreathing()
         startCharacterAnimations()
+        
+        if SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) {
+            techniqueCoachMarksController.start(on: self)
+        }
     }
     
     // MARK: - Screenshot
@@ -1280,6 +1327,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         
         
         alertMessage.addAction(UIAlertAction(title: NSLocalizedString("End", comment: "Ok button title"), style: .default, handler: { [unowned self] _ in
+            self.stopTechniqueServices()
             self.dismiss()
         }))
         
@@ -1294,11 +1342,15 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         self.present(alertMessage, animated: true, completion: nil)
     }
     
-    func finishSequence(object: VirtualObject) {
-        print("finished with sequence \(object.animationSequence)")
+    func stopTechniqueServices() {
         instructionService?.stop()
         cancelScreenshotSelector()
         breathTimerService?.stop()
+    }
+    
+    func finishSequence(object: VirtualObject) {
+        print("finished with sequence \(object.animationSequence)")
+        stopTechniqueServices()
         
         let breathCount = breathTimerView.currentBreathCount()
         if let last = object.animationSequence.last {
@@ -1460,7 +1512,6 @@ extension ARTechniqueViewController: CharacterHUDViewDelegate {
 
 extension ARTechniqueViewController: InstructionServiceDelegate {
     func didUpdateInstruction(instruction: AnimationInstructionData) {
-        print("instruction: \(instruction.text)")
         instructionView.addInstruction(text: instruction.text)
     }
 }
@@ -1509,6 +1560,153 @@ extension ARTechniqueViewController: BreathTimerServiceDelegate {
 
 extension ARTechniqueViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+// MARK: - Tutorial
+
+enum PlacingInstructionType: Int {
+    case placeButton = 0
+    case count = 1
+    
+    func view(vc: ARTechniqueViewController) -> UIView? {
+        switch self {
+        case .placeButton:
+            return vc.addObjectButton
+        default:
+            return nil
+        }
+    }
+    
+    func hintText() -> String {
+        switch self {
+        case .placeButton:
+            return "When reay, tap here to place your instructor"
+        default:
+            return ""
+        }
+    }
+}
+
+enum TechniqueInstructionType: Int {
+    case hudButton = 0
+    case cameraButton = 1
+    case count = 2
+    
+    func view(vc: ARTechniqueViewController) -> UIView? {
+        switch self {
+        case .hudButton:
+            return vc.hudView
+        case .cameraButton:
+            return vc.screenshotButton
+        default:
+            return nil
+        }
+    }
+    
+    func hintText() -> String {
+        switch self {
+        case .hudButton:
+            return "Access controls to play/pause/edit your technique animation"
+        case .cameraButton:
+            return "Snap a picture of your session"
+        default:
+            return ""
+        }
+    }
+    
+    func shouldShow(vc: ARTechniqueViewController) -> Bool {
+        switch self {
+        case .hudButton:
+            return !vc.hudView.isHidden
+        default:
+            return true
+        }
+    }
+}
+
+extension ARTechniqueViewController: CoachMarksControllerDataSource {
+    func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
+        if coachMarksController === placingCoachMarksController {
+            return PlacingInstructionType.count.rawValue
+        } else {
+            return TechniqueInstructionType.count.rawValue
+        }
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              coachMarkAt index: Int) -> CoachMark {
+        var view = TechniqueInstructionType(rawValue: index)?.view(vc: self)
+        if coachMarksController === placingCoachMarksController {
+            view = PlacingInstructionType(rawValue: index)?.view(vc: self)
+        }
+        print("make coach mark for \(view)")
+        return coachMarksController.helper.makeCoachMark(for: view)
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?) {
+        let coachViews = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, arrowOrientation: coachMark.arrowOrientation)
+        
+        var hintText = TechniqueInstructionType(rawValue: index)?.hintText()
+        if coachMarksController === placingCoachMarksController {
+            hintText = PlacingInstructionType(rawValue: index)?.hintText()
+        }
+        
+        coachViews.bodyView.hintLabel.text = hintText ?? ""
+        coachViews.bodyView.nextLabel.text = "Ok"
+        
+        return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
+    }
+}
+
+extension ARTechniqueViewController: CoachMarksControllerDelegate {
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              willLoadCoachMarkAt index: Int) -> Bool {
+        if coachMarksController === techniqueCoachMarksController {
+            return TechniqueInstructionType(rawValue: index)?.shouldShow(vc: self) ?? true
+        }
+        return true
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              willShow coachMark: inout CoachMark,
+                              afterSizeTransition: Bool,
+                              at index: Int) {
+        print("willShow at: \(index), afterSizeTransition: \(afterSizeTransition)")
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              didShow coachMark: CoachMark,
+                              afterSizeTransition: Bool,
+                              at index: Int) {
+        print("didShow at: \(index), afterSizeTransition: \(afterSizeTransition)")
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              willHide coachMark: CoachMark,
+                              at index: Int) {
+        print("willHide at: \(index)")
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              didHide coachMark: CoachMark,
+                              at index: Int) {
+        print("didHide at: \(index)")
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              didEndShowingBySkipping skipped: Bool) {
+        print("didEndShowingBySkipping: \(skipped)")
+        if !skipped {
+            if coachMarksController === techniqueCoachMarksController {
+                SessionManager.sharedInstance.onTutorialShow(type: .ARTechnique)
+            }
+        }
+    }
+    
+    func shouldHandleOverlayTap(in coachMarksController: CoachMarksController, at index: Int) -> Bool {
+        print("shoudlHandleOverlay")
         return true
     }
 }

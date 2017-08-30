@@ -23,13 +23,18 @@ class FeedMapTableViewCell: UITableViewCell {
         titleLabel.textColor = ThemeManager.sharedInstance.feedTextColor()
         titleLabel.font = ThemeManager.sharedInstance.heavyFont(16)
         titleLabel.text = "Breath of Fire Community"
-        
-        let span = MKCoordinateSpanMake(25.502001722875953, 67.978134479121621)
-        let center = CLLocationCoordinate2DMake(38.836910245556396, -95.823448005444746)
-        mapView.region = MKCoordinateRegionMake(center, span)
-        }
+    }
 
     func update(locations: [CLLocation]) {
+        let span = MKCoordinateSpanMake(25.502001722875953, 67.978134479121621)
+        var center = CLLocationCoordinate2DMake(38.836910245556396, -95.823448005444746)
+        if let user = SessionManager.sharedInstance.currentUserData,
+            let userCoordinate = user.coordinate {
+            center = userCoordinate
+        }
+        mapView.region = MKCoordinateRegionMake(center, span)
+        
+        
         let weights = locations.map({ _ in
             return Double(1)
         })

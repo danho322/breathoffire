@@ -96,7 +96,6 @@ class BreathTimerView: XibView {
             var length = nextParameterTimestamp
             length -= breathParameter.startTime
             
-            print("\(timestamp) - \(currentBreathParameter.startTime) / \(length)")
             progress = CGFloat(timestamp - currentBreathParameter.startTime) / CGFloat(length)
             if breathParameter == currentBreathParameter {
                 return
