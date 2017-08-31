@@ -12,12 +12,14 @@ import FontAwesomeKit
 
 class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var feedImageView: UIImageView!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var ratingsView: HCSStarRatingView!
     @IBOutlet weak var leftQuoteLabel: UILabel!
     @IBOutlet weak var timeLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     internal var optionsHandler: ((String?)->Void)?
     internal var feedKey: String?
@@ -31,11 +33,14 @@ class FeedTableViewCell: UITableViewCell {
         commentLabel.textColor = ThemeManager.sharedInstance.feedTextColor()
         commentLabel.font = ThemeManager.sharedInstance.defaultFont(16)
         timeLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
-        timeLabel.font = ThemeManager.sharedInstance.defaultFont(14)
+        timeLabel.font = ThemeManager.sharedInstance.defaultFont(12)
         
-        let leftQuote = FAKIonIcons.quoteIcon(withSize: 25)
+        let leftQuote = FAKIonIcons.quoteIcon(withSize: 12)
         leftQuote?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.labelTitleColor())
         leftQuoteLabel.attributedText = leftQuote?.attributedString()
+        
+        moreButton.setTitleColor(ThemeManager.sharedInstance.labelTitleColor(), for: .normal)
+        moreButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(16)
     }
 
     func update(feedItem: BreathFeedItem, optionsHandler: @escaping ((String?)->Void)) {
@@ -62,7 +67,9 @@ class FeedTableViewCell: UITableViewCell {
         }
         timeLabel.text = timeString
         feedImageView.image = nil
+        activityIndicator.startAnimating()
         FirebaseService.sharedInstance.retrieveImageAtPath(path: feedItem.imagePath, completion: { image in
+            self.activityIndicator.stopAnimating()
             self.feedImageView.image = image
         })
         

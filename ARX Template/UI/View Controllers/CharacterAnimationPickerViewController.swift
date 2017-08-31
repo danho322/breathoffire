@@ -117,6 +117,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
         backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         
+        self.sceneView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         DispatchQueue.global().async {
             self.sceneView.scene = SCNScene()
             let male = Instructor()
@@ -160,7 +161,6 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
                 self.sceneView.showsStatistics = true
                 
                 // configure the view
-                self.sceneView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
                 
                 let alphaAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut, animations: {
                     self.view.alpha = 1

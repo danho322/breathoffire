@@ -26,12 +26,13 @@
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="rOc-PC-1xH">
                         <rect key="frame" x="0.0" y="44" width="375" height="375"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="rOc-PC-1xH" secondAttribute="height" multiplier="1:1" id="p33-uH-LKf"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8G-MF-EQL">
-                        <rect key="frame" x="8" y="453" width="359" height="96.5"/>
+                        <rect key="frame" x="30" y="453" width="337" height="96.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -53,7 +54,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGu-9N-mUW">
-                        <rect key="frame" x="50" y="427" width="275" height="21"/>
+                        <rect key="frame" x="30" y="427" width="295" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -64,6 +65,9 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="wyb-I4-WaA">
+                        <rect key="frame" x="177" y="221" width="20" height="20"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="kIo-Rr-Jl3" firstAttribute="top" secondItem="yzA-4v-zTn" secondAttribute="top" constant="3" id="0SH-b0-r1V"/>
@@ -71,10 +75,11 @@
                     <constraint firstAttribute="trailing" secondItem="kIo-Rr-Jl3" secondAttribute="trailing" constant="8" id="5S4-rW-kbg"/>
                     <constraint firstAttribute="trailing" secondItem="7KD-vJ-V4t" secondAttribute="trailing" constant="8" id="9TW-gi-IjO"/>
                     <constraint firstItem="XGu-9N-mUW" firstAttribute="top" secondItem="rOc-PC-1xH" secondAttribute="bottom" constant="8" id="OIc-3r-CTX"/>
+                    <constraint firstItem="wyb-I4-WaA" firstAttribute="centerX" secondItem="rOc-PC-1xH" secondAttribute="centerX" id="Ofv-N4-YNc"/>
                     <constraint firstItem="KfA-jt-Kfa" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="8" id="UJJ-Gb-dfl"/>
                     <constraint firstItem="rOc-PC-1xH" firstAttribute="top" secondItem="7KD-vJ-V4t" secondAttribute="bottom" constant="8" id="WRW-jD-Dfp"/>
-                    <constraint firstItem="f8G-MF-EQL" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="8" id="a8v-vo-ivr"/>
-                    <constraint firstItem="XGu-9N-mUW" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="50" id="b7U-cv-YxE"/>
+                    <constraint firstItem="wyb-I4-WaA" firstAttribute="centerY" secondItem="rOc-PC-1xH" secondAttribute="centerY" id="WS9-MK-qAg"/>
+                    <constraint firstItem="XGu-9N-mUW" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="30" id="b7U-cv-YxE"/>
                     <constraint firstItem="0rv-0V-cbv" firstAttribute="bottom" secondItem="rOc-PC-1xH" secondAttribute="bottom" constant="-10" id="dzC-wM-55r"/>
                     <constraint firstAttribute="trailing" secondItem="f8G-MF-EQL" secondAttribute="trailing" constant="8" id="fx6-lZ-aJf"/>
                     <constraint firstAttribute="trailing" secondItem="rOc-PC-1xH" secondAttribute="trailing" id="liK-WO-gyL"/>
@@ -84,13 +89,16 @@
                     <constraint firstItem="7KD-vJ-V4t" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="8" id="sLt-6B-Xzr"/>
                     <constraint firstItem="f8G-MF-EQL" firstAttribute="top" secondItem="XGu-9N-mUW" secondAttribute="bottom" constant="5" id="sn8-Le-aie"/>
                     <constraint firstItem="rOc-PC-1xH" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" id="st0-zV-vFT"/>
+                    <constraint firstItem="f8G-MF-EQL" firstAttribute="leading" secondItem="XGu-9N-mUW" secondAttribute="leading" id="uy9-bY-rTN"/>
                     <constraint firstAttribute="trailing" secondItem="XGu-9N-mUW" secondAttribute="trailing" constant="50" id="yaf-6d-v6A"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="activityIndicator" destination="wyb-I4-WaA" id="8FV-XK-EaD"/>
                 <outlet property="commentLabel" destination="XGu-9N-mUW" id="uCK-tR-nyP"/>
                 <outlet property="feedImageView" destination="rOc-PC-1xH" id="Nqk-HQ-FqB"/>
                 <outlet property="leftQuoteLabel" destination="KfA-jt-Kfa" id="rog-Bc-LM6"/>
+                <outlet property="moreButton" destination="kIo-Rr-Jl3" id="Veb-Ey-a6i"/>
                 <outlet property="nameLabel" destination="7KD-vJ-V4t" id="EjR-2S-iBg"/>
                 <outlet property="ratingsView" destination="0rv-0V-cbv" id="axn-YY-bXV"/>
                 <outlet property="timeLabel" destination="f8G-MF-EQL" id="k6L-77-feH"/>

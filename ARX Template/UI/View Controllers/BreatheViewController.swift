@@ -16,10 +16,10 @@ class BreatheViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let parameter0 = BreathParameter(startTime: 0, breathTimeUp: 0.1, breathTimeDown: 0.4, playSound: .none)
-        let parameter1 = BreathParameter(startTime: 5, breathTimeUp: 2, breathTimeDown: 2, playSound: .none)
-        let parameter2 = BreathParameter(startTime: 13, breathTimeUp: 0.1, breathTimeDown: 0.4, playSound: .none)
-        breathTimerService = BreathTimerService(sessionTime: 15, parameterQueue: [parameter0, parameter1, parameter2], delegate: self)
+//        let parameter0 = BreathParameter(startTime: 0, breathTimeUp: 0.1, breathTimeDown: 0.4, playSound: .none)
+//        let parameter1 = BreathParameter(startTime: 5, breathTimeUp: 2, breathTimeDown: 2, playSound: .none)
+//        let parameter2 = BreathParameter(startTime: 13, breathTimeUp: 0.1, breathTimeDown: 0.4, playSound: .none)
+//        breathTimerService = BreathTimerService(sessionTime: 15, parameterQueue: [parameter0, parameter1, parameter2], delegate: self)
     }
 
 }

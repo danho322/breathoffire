@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftySound
 
 protocol BreathTimerServiceDelegate {
     func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathParameter?)
@@ -14,41 +15,56 @@ protocol BreathTimerServiceDelegate {
 }
 
 class BreathTimerService: NSObject {
-    let sessionTime: TimeInterval!
     let delegate: BreathTimerServiceDelegate!
-    let parameterQueue: [BreathParameter]!
-
+    let breathProgram: BreathProgram!
+    
     internal var timer: Timer?
     internal var currentTime: TimeInterval = 0
     internal var timeInterval: TimeInterval = 1
 
-    init(sessionTime: TimeInterval, parameterQueue: [BreathParameter], delegate: BreathTimerServiceDelegate) {
-        self.sessionTime = sessionTime
-        self.parameterQueue = parameterQueue
+    init(breathProgram: BreathProgram, delegate: BreathTimerServiceDelegate) {
+        self.breathProgram = breathProgram
         self.delegate = delegate
         super.init()
     
         timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self,   selector: (#selector(BreathTimerService.updateTimer)), userInfo: nil, repeats: true)
+        scheduleSounds()
+    }
+    
+    func scheduleSounds() {
+        for soundContainer in breathProgram.soundArray() {
+            self.perform(#selector(BreathTimerService.fireSound(soundName:)), with: soundContainer.sound.rawValue, afterDelay: soundContainer.timestamp - currentTime)
+        }
+    }
+    
+    @objc func fireSound(soundName: String) {
+        Sound.play(file: soundName)
     }
     
     func pause() {
         timer?.invalidate()
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
     
     func resume() {
         timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self,   selector: (#selector(BreathTimerService.updateTimer)), userInfo: nil, repeats: true)
+        scheduleSounds()
     }
     
     func stop() {
         timer?.invalidate()
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
         delegate.breathTimeDidFinish()
     }
     
     @objc func updateTimer() {
         currentTime += timeInterval
         
+        let sessionTime = breathProgram.sessionTime()
+        let parameterQueue = breathProgram.parameterArray()
         if currentTime >= sessionTime {
             timer?.invalidate()
+            Sound.play(file: "gong.m4a")
             delegate.breathTimeDidFinish()
         }
         
@@ -74,7 +90,6 @@ class BreathTimerService: NSObject {
         if let nextParameter = nextParameter {
             nextTimestamp = nextParameter.startTime
         }
-//        print("\(currentParameter?.timestamp) / \(nextTimestamp)")
 
         delegate.breathTimerDidTick(timestamp: currentTime, nextParameterTimestamp: nextTimestamp, currentParameter: currentParameter)
     }

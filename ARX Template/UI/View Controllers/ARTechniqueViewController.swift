@@ -144,7 +144,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     internal func setupBreathing() {
         if let breathProgram = sequenceToLoad?.breathProgram {
-            breathTimerService = BreathTimerService(sessionTime: breathProgram.sessionTime(), parameterQueue: breathProgram.parameterArray(), delegate: self)
+            breathTimerService = BreathTimerService(breathProgram: breathProgram, delegate: self)
             breathTimerView.alpha = 0.5
         }
     }

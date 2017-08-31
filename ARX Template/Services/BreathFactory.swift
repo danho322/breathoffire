@@ -9,13 +9,19 @@
 import Foundation
 import SwiftySound
 
-enum BreathSound {
-    case quickExhale, none
+struct BreathSoundContainer {
+    let sound: BreathSound
+    let timestamp: TimeInterval
+}
+
+enum BreathSound: String {
+    case quickExhale = "Breathe.m4a"
+    case none = ""
     
     func play() {
         switch self {
         case .quickExhale:
-            Sound.play(file: "Breathe.m4a")
+            Sound.play(file: self.rawValue)
         default:
             break
         }
@@ -51,12 +57,23 @@ enum BreathProgram: Int {
     case twentyFive = 5
     
     // fake times
+    func soundArray() -> [BreathSoundContainer] {
+        switch self {
+        case .oneOne:
+            let sound0 = BreathSoundContainer(sound: .quickExhale, timestamp: 12)
+            return [sound0]
+        default:
+            return []
+        }
+    }
+    
     func parameterArray() -> [BreathParameter] {
         switch self {
         case .oneOne:
-            let parameter0 = BreathParameter(startTime: 0, breathTimeUp: 0.1, breathTimeDown: 0.4, playSound: .quickExhale)
-            let parameter1 = BreathParameter(startTime: 15, breathTimeUp: 2, breathTimeDown: 2, playSound: .none)
-            return [parameter0, parameter1]
+            let parameter0 = BreathParameter(startTime: 5, breathTimeUp: 0.4, breathTimeDown: 0.4, playSound: .quickExhale)
+            let parameter1 = BreathParameter(startTime: 11, breathTimeUp: 2, breathTimeDown: 2, playSound: .none)
+            let parameter2 = BreathParameter(startTime: 23, breathTimeUp: 0.4, breathTimeDown: 0.4, playSound: .quickExhale)
+            return [parameter0, parameter1, parameter2]
         case .threeOne:
             let parameter0 = BreathParameter(startTime: 0, breathTimeUp: 0.1, breathTimeDown: 0.4, playSound: .quickExhale)
             let parameter1 = BreathParameter(startTime: 60, breathTimeUp: 2, breathTimeDown: 2, playSound: .none)

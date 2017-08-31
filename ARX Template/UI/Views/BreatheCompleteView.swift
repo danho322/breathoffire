@@ -33,7 +33,9 @@ class BreatheCompleteView: XibView {
     var dismissHandler: (()->Void)?
     
     internal var ratingValue: Int?
+    internal var didEditText = false
     internal var didShareFeed = false
+    internal var shareText = ""
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -102,6 +104,11 @@ class BreatheCompleteView: XibView {
             if let frame = (keyboardFrame as AnyObject).cgRectValue {
                 
                 view.spacerHeightConstraint.constant = frame.size.height
+                
+                
+                var offset = view.scrollView.contentOffset
+                offset.y = view.scrollView.contentSize.height + view.scrollView.contentInset.bottom - view.scrollView.bounds.size.height
+                view.scrollView.setContentOffset(offset, animated: true)
             }
         }
     }
@@ -119,6 +126,7 @@ class BreatheCompleteView: XibView {
         guard let view = view as? BreatheCompleteView else {
             fatalError("view is not of type BreatheCompleteView")
         }
+        view.shareText = "I did \(breathCount) breaths using the Breath of Fire app!"
         view.detailsLabel.text = "You did \(breathCount) Breaths of Fire!"
         view.screenshotImageView.image = screenshot
         view.screenshotImageView.layer.masksToBounds = true
@@ -143,7 +151,7 @@ class BreatheCompleteView: XibView {
 //        pasteBoard.string = link
         
         if let imageToShare = screenshotImageView.image {
-            let objectsToShare = [imageToShare]
+            let objectsToShare: [Any] = [imageToShare, shareText]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             
             activityVC.popoverPresentationController?.sourceView = view
@@ -167,7 +175,8 @@ class BreatheCompleteView: XibView {
         circleIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
         communityCheckmarkImageView.image = circleIcon?.image(with: CGSize(width: 25, height: 25))
         
-        viewToUse.shareCommunityHandler?(viewToUse.ratingValue, commentTextView.text)
+        let textToShare = didEditText ? commentTextView.text : ""
+        viewToUse.shareCommunityHandler?(viewToUse.ratingValue, textToShare)
  
         ratingTitleLabel.isHidden = true
         ratingHeightConstraint.constant = 0
@@ -231,8 +240,7 @@ extension BreatheCompleteView: UITextViewDelegate {
         guard let view = view as? BreatheCompleteView else {
             fatalError("view is not of type BreatheCompleteView")
         }
-        
+        view.didEditText = true
         textView.text = ""
-        view.scrollView.scrollRectToVisible(textView.frame, animated: true)
     }
 }
