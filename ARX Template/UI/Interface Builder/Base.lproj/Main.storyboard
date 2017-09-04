@@ -804,72 +804,51 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qta-Mr-Yba">
-                                <rect key="frame" x="28" y="118" width="80" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tokens" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwb-lD-G8c">
-                                <rect key="frame" x="28" y="172" width="54.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWo-Tt-Jmc">
-                                <rect key="frame" x="129.5" y="394" width="116" height="30"/>
+                                <rect key="frame" x="249" y="72" width="116" height="30"/>
                                 <state key="normal" title="Sign in / Sign out"/>
                                 <connections>
                                     <action selector="onLoginTap:" destination="Oz7-Js-7At" eventType="touchUpInside" id="V6A-0Z-c93"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWp-Av-vsw">
-                                <rect key="frame" x="115" y="72" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W34-Bf-GLl">
-                                <rect key="frame" x="28" y="147" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SlH-gh-tsi" customClass="iCarousel">
-                                <rect key="frame" x="0.0" y="223" width="375" height="128"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="wd8-ZZ-UxV"/>
-                                </constraints>
-                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Oap-4O-4yD">
+                                <rect key="frame" x="0.0" y="101" width="375" height="517"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="EAK-lR-zEd">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="DcL-jA-zOK">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SlH-gh-tsi" firstAttribute="centerX" secondItem="Ot7-4w-EUf" secondAttribute="centerX" id="1OA-5h-s5m"/>
-                            <constraint firstItem="eWp-Av-vsw" firstAttribute="leading" secondItem="0PA-gB-zD8" secondAttribute="trailing" constant="8" id="2ae-lo-qEk"/>
-                            <constraint firstItem="W34-Bf-GLl" firstAttribute="leading" secondItem="Qta-Mr-Yba" secondAttribute="leading" id="Btq-17-gWL"/>
-                            <constraint firstItem="Qta-Mr-Yba" firstAttribute="top" secondItem="zE5-7S-b4N" secondAttribute="bottom" constant="54" id="Dwm-RM-5yk"/>
-                            <constraint firstItem="Qta-Mr-Yba" firstAttribute="leading" secondItem="Ot7-4w-EUf" secondAttribute="leading" constant="28" id="HPa-b5-veg"/>
-                            <constraint firstItem="SlH-gh-tsi" firstAttribute="width" secondItem="Ot7-4w-EUf" secondAttribute="width" id="HrX-sK-SsR"/>
-                            <constraint firstItem="eWp-Av-vsw" firstAttribute="centerY" secondItem="0PA-gB-zD8" secondAttribute="centerY" id="KAI-Q5-3j2"/>
-                            <constraint firstItem="Gwb-lD-G8c" firstAttribute="top" secondItem="zE5-7S-b4N" secondAttribute="bottom" constant="108" id="MIB-Ze-Ytp"/>
+                            <constraint firstItem="AWo-Tt-Jmc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0PA-gB-zD8" secondAttribute="trailing" constant="10" id="INO-Cc-qb8"/>
                             <constraint firstItem="0PA-gB-zD8" firstAttribute="top" secondItem="zE5-7S-b4N" secondAttribute="bottom" constant="8" id="Nib-df-VXg"/>
-                            <constraint firstItem="Gwb-lD-G8c" firstAttribute="leading" secondItem="Ot7-4w-EUf" secondAttribute="leading" constant="28" id="bh1-eP-H8W"/>
-                            <constraint firstItem="W34-Bf-GLl" firstAttribute="top" secondItem="Qta-Mr-Yba" secondAttribute="bottom" constant="8" id="eXG-1S-SLu"/>
+                            <constraint firstItem="AWo-Tt-Jmc" firstAttribute="top" secondItem="0PA-gB-zD8" secondAttribute="top" id="Qll-AD-afe"/>
+                            <constraint firstAttribute="trailing" secondItem="AWo-Tt-Jmc" secondAttribute="trailing" constant="10" id="beX-gk-AbR"/>
+                            <constraint firstAttribute="trailing" secondItem="Oap-4O-4yD" secondAttribute="trailing" id="dxY-Ik-aM9"/>
                             <constraint firstItem="0PA-gB-zD8" firstAttribute="leading" secondItem="Ot7-4w-EUf" secondAttribute="leading" constant="28" id="mDz-Cf-xFn"/>
-                            <constraint firstItem="AWo-Tt-Jmc" firstAttribute="top" secondItem="SlH-gh-tsi" secondAttribute="bottom" constant="43" id="o76-lr-MG4"/>
-                            <constraint firstItem="AWo-Tt-Jmc" firstAttribute="centerX" secondItem="Ot7-4w-EUf" secondAttribute="centerX" id="tji-OZ-bak"/>
-                            <constraint firstItem="SlH-gh-tsi" firstAttribute="top" secondItem="Gwb-lD-G8c" secondAttribute="bottom" constant="30" id="zZt-d5-T1E"/>
+                            <constraint firstItem="Oap-4O-4yD" firstAttribute="leading" secondItem="Ot7-4w-EUf" secondAttribute="leading" id="mYe-Tw-Xgg"/>
+                            <constraint firstItem="Oap-4O-4yD" firstAttribute="top" secondItem="zE5-7S-b4N" secondAttribute="bottom" constant="37" id="rNY-P7-h06"/>
+                            <constraint firstItem="J2M-Ui-NRm" firstAttribute="top" secondItem="Oap-4O-4yD" secondAttribute="bottom" id="zi7-NN-uqN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="keC-h7-Tao"/>
                     <connections>
-                        <outlet property="breathStreakLabel" destination="W34-Bf-GLl" id="FX2-DX-X8J"/>
-                        <outlet property="carousel" destination="SlH-gh-tsi" id="pxd-j4-8Sq"/>
+                        <outlet property="collectionView" destination="Oap-4O-4yD" id="1Xy-ic-LYZ"/>
                         <outlet property="loginButton" destination="AWo-Tt-Jmc" id="q0d-h5-OqS"/>
-                        <outlet property="playCountLabel" destination="Qta-Mr-Yba" id="Xck-Dh-2jI"/>
-                        <outlet property="streakLabel" destination="eWp-Av-vsw" id="YyN-b0-RVS"/>
-                        <outlet property="tokenCountLabel" destination="Gwb-lD-G8c" id="fuK-KM-vd9"/>
                         <outlet property="userNameLabel" destination="0PA-gB-zD8" id="FmZ-b9-PCm"/>
                     </connections>
                 </viewController>

@@ -12,6 +12,8 @@ import FontAwesomeKit
 
 class MainTabBarController: UITabBarController {
     
+    var walkthroughVC: BWWalkthroughViewController?
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -87,9 +89,37 @@ class MainTabBarController: UITabBarController {
     }
 
     @objc func onHelpTap() {
-        if let helpVC = self.storyboard?.instantiateViewController(withIdentifier: "HelpViewControllerIdentifier") {
-            navigationController?.pushViewController(helpVC, animated: true)
-            //                optionsVC.titleLabel.text = selectLabel.text
-        }
+//        if let helpVC = self.storyboard?.instantiateViewController(withIdentifier: "HelpViewControllerIdentifier") {
+//            navigationController?.pushViewController(helpVC, animated: true)
+//            //                optionsVC.titleLabel.text = selectLabel.text
+//        }
+        
+        // Get view controllers and build the walkthrough
+        let stb = UIStoryboard(name: "Walkthrough", bundle: nil)
+        let walkthrough = stb.instantiateViewController(withIdentifier: "walk") as! BWWalkthroughViewController
+        let page_zero = stb.instantiateViewController(withIdentifier: "walk0")
+        let page_one = stb.instantiateViewController(withIdentifier: "walk1")
+        let page_two = stb.instantiateViewController(withIdentifier: "walk2")
+        let page_three = stb.instantiateViewController(withIdentifier: "walk3")
+
+        // Attach the pages to the master
+        walkthrough.delegate = self
+        walkthrough.add(viewController:page_zero)
+        walkthrough.add(viewController:page_one)
+        walkthrough.add(viewController:page_two)
+        walkthrough.add(viewController:page_three)
+        walkthroughVC = walkthrough
+        self.present(walkthrough, animated: true, completion: nil)
+    }
+}
+
+extension MainTabBarController: BWWalkthroughViewControllerDelegate {
+    func walkthroughCloseButtonPressed() {
+        walkthroughVC?.dismiss(animated: true, completion: nil)
+    }
+    
+    func walkthroughPageDidChange(_ pageNumber: Int) {
+        print("now at \(pageNumber)")
+        walkthroughVC?.closeButton?.isHidden = pageNumber != 3
     }
 }

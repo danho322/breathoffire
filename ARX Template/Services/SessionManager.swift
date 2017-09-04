@@ -14,9 +14,13 @@ import CoreLocation
 
 // Stores the user specific data
 enum UserAttribute: String {
+    case userName = "userName"
     case streakCount = "streakCount"
     case playCount = "playCount"
+    case maxDayStreak = "maxDayStreak"
+    case maxBreathStreak = "maxBreathStreak"
     case breathStreakCount = "breathStreakCount"
+    case totalBreathCount = "totalBreathCount"
     case lastStreakTimestamp = "lastStreakTimestamp"
     case lastLoggedIn = "lastLoggedIn"
     case tokenCount = "tokenCount"
@@ -42,6 +46,13 @@ class SessionManager {
     
     init() {
         _ = FirebaseService.sharedInstance
+    }
+    
+    func isCurrentUser(userId: String) -> Bool {
+        if let currentUserData = currentUserData {
+            return currentUserData.userId == userId
+        }
+        return false
     }
     
     func onStart() {
@@ -85,7 +96,10 @@ class SessionManager {
                 FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .streakCount, value: 1)
                 FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .breathStreakCount, value: 0)
             }
+            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .maxBreathStreak, count: breathCount, defaultValue: 0)
             FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .lastStreakTimestamp, value: Date().timeIntervalSince1970)
+            
+            updateLongestStreaks(userId: currentUserData.userId)
         }
     }
     
@@ -95,10 +109,22 @@ class SessionManager {
         }
     }
     
-    func retrieveCurrentUser(userId: String) {
+    func retrieveCurrentUser(userId: String, completion: ((UserData)->Void)? = nil) {
         FirebaseService.sharedInstance.retrieveUser(userId: userId) { [unowned self] user in
             print(user)
             self.currentUserData = user
+            completion?(user)
+        }
+    }
+    
+    func updateLongestStreaks(userId: String) {
+        retrieveCurrentUser(userId: userId) { userData in
+            if userData.breathStreakCount > userData.maxBreathStreak {
+                FirebaseService.sharedInstance.setUserAttribute(userId: userId, attribute: UserAttribute.maxBreathStreak, value: userData.breathStreakCount)
+            }
+            if userData.streakCount > userData.maxDayStreak {
+                FirebaseService.sharedInstance.setUserAttribute(userId: userId, attribute: UserAttribute.maxDayStreak, value: userData.streakCount)
+            }
         }
     }
     

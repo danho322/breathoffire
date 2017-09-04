@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Not really used
 struct StatManager {
     static let sharedIntance = StatManager()
     

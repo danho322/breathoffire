@@ -28,9 +28,17 @@ class RankingsViewController: UIViewController {
 //        let RankingsCellNib = UINib(nibName: String(describing: RankingsTableViewCell.self), bundle: nil)
 //        tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingsCellIdentifier)
         
-        FirebaseService.sharedInstance.retrieveTopBreathStreaks() { topUsers in
+        FirebaseService.sharedInstance.retrieveCurrentBreathStreaks() { topUsers in
             self.userRankings = topUsers
             self.tableView.reloadData()
+        }
+        
+        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxDayStreak) { topDayUsers in
+            print("TODO: DISPLAY IN DAY TABLE HERE")
+        }
+        
+        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxBreathStreak) { topDayUsers in
+            print("TODO: DISPLAY IN BREATHING TABLE HERE")
         }
     }
 }

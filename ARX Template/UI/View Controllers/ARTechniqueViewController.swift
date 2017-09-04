@@ -118,7 +118,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
         
         if !hasSetupViewController {
-            let alert = UIAlertController(title: "Get Ready", message: "Point your camera toward your gym surface.", preferredStyle: UIAlertControllerStyle.alert)
+            let message = isARModeEnabled ?
+                    "Point your camera toward your gym surface." :
+                    "Find a comfortable place for your practice."
+            let alert = UIAlertController(title: "Get Ready", message: message, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(
                 UIAlertAction(title: "Ok",
                               style: UIAlertActionStyle.default,

@@ -9,6 +9,7 @@
 import UIKit
 import FontAwesomeKit
 import HCSStarRatingView
+import SwiftySound
 
 class BreatheCompleteView: XibView {
     @IBOutlet weak var scrollView: UIScrollView!
@@ -133,6 +134,8 @@ class BreatheCompleteView: XibView {
         view.screenshotImageView.layer.cornerRadius = view.screenshotImageView.frame.size.width / 2
         view.screenshotImageView.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
         view.screenshotImageView.layer.borderWidth = 2
+        
+        Sound.play(file: "gong.m4a")
     }
     
     // MARK: - Button Handlers
@@ -213,6 +216,8 @@ class BreatheCompleteView: XibView {
         let alphaAnimator = UIViewPropertyAnimator(duration: 0.4, curve: .easeInOut, animations: {
             view.alpha = 1
             view.frame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y - offset, width: view.frame.size.width, height: view.frame.size.height)
+        })
+        alphaAnimator.addCompletion({ pos in
         })
         alphaAnimator.startAnimation()
     }

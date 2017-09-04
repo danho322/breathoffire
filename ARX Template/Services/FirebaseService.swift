@@ -22,43 +22,67 @@ struct Constants {
 struct UserData {
     let userId: String
     let userName: String
-    let tokenCount: Int
     let coordinate: CLLocationCoordinate2D?
     let city: String?
+    let tokenCount: Int
+
+    // all time
     let playCount: Int
+    let maxDayStreak: Int
+    let maxBreathStreak: Int
+    let totalBreathCount: Int
+    
+    // current streak
     let streakCount: Int
     let breathStreakCount: Int
     let lastStreakTimestamp: TimeInterval
+
     let purchasedPackages: [String: Any]
     
     init(userId: String, snapshotDict: NSDictionary) {
         self.userId = userId
-        userName = snapshotDict["userName"] as? String ?? "Anonymous"
-        tokenCount = snapshotDict["tokenCount"] as? Int ?? 0
-        playCount = snapshotDict["playCount"] as? Int ?? 0
-        streakCount = snapshotDict["streakCount"] as? Int ?? 0
-        breathStreakCount = snapshotDict["breathStreakCount"] as? Int ?? 0
-        lastStreakTimestamp = snapshotDict["lastStreakTimestamp"] as? TimeInterval ?? 0
-        if let packagesDict = snapshotDict["purchasedPackages"] as? [String: Any] {
+        userName = snapshotDict[UserAttribute.userName.rawValue] as? String ?? "Anonymous"
+        tokenCount = snapshotDict[UserAttribute.tokenCount.rawValue] as? Int ?? 0
+        playCount = snapshotDict[UserAttribute.playCount.rawValue] as? Int ?? 0
+        maxDayStreak = snapshotDict[UserAttribute.maxDayStreak.rawValue] as? Int ?? 0
+        maxBreathStreak = snapshotDict[UserAttribute.maxBreathStreak.rawValue] as? Int ?? 0
+        streakCount = snapshotDict[UserAttribute.streakCount.rawValue] as? Int ?? 0
+        breathStreakCount = snapshotDict[UserAttribute.breathStreakCount.rawValue] as? Int ?? 0
+        totalBreathCount = snapshotDict[UserAttribute.totalBreathCount.rawValue] as? Int ?? 0
+        lastStreakTimestamp = snapshotDict[UserAttribute.lastStreakTimestamp.rawValue] as? TimeInterval ?? 0
+        if let packagesDict = snapshotDict[UserAttribute.purchasedPackages.rawValue] as? [String: Any] {
             purchasedPackages = packagesDict
         } else {
             purchasedPackages = Dictionary<String, Any>()
         }
-        if let latitude = snapshotDict["latitude"] as? CLLocationDegrees,
-            let longitude = snapshotDict["longitude"] as? CLLocationDegrees {
+        if let latitude = snapshotDict[UserAttribute.latitude.rawValue] as? CLLocationDegrees,
+            let longitude = snapshotDict[UserAttribute.longitude.rawValue] as? CLLocationDegrees {
             coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         } else {
             coordinate = nil
         }
-        if let city = snapshotDict["city"] as? String {
+        if let city = snapshotDict[UserAttribute.city.rawValue] as? String {
             self.city = city
         } else {
             city = nil
         }
     }
+    
+    func hasMinimumAttribute(_ attribute: UserAttribute) -> Bool {
+        switch attribute {
+        case .maxBreathStreak:
+            return maxBreathStreak > 0
+        case .maxDayStreak:
+            return maxDayStreak > 0
+        case .totalBreathCount:
+            return totalBreathCount > 0
+        default:
+            return false
+        }
+    }
 }
 
-class FirebaseService {
+class FirebaseService: NSObject {
     static let sharedInstance = FirebaseService()
     
     var sectionRefs: [String: DatabaseReference] = Dictionary()
@@ -73,9 +97,16 @@ class FirebaseService {
     var animationDataDict: [String: CharacterAnimationData] = Dictionary()
     var instructionDataDict: [String: [AnimationInstructionData]] = Dictionary()
     
-    init() {
+    var motivationQuotes: [String] = []
+    
+    override init() {
+        super.init()
+        
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
+        
+        retrieveDB()
+        retrieveMotivation()
     }
     
     // MARK: - Realtime DB
@@ -171,13 +202,47 @@ class FirebaseService {
         }
     }
     
+    // MARK: - Motivation
+    
+    func retrieveMotivationOfTheDay(completionHandler: @escaping ((String)->Void)) {
+        let dayCount = Date().timeIntervalSince1970 / (60 * 60 * 24)
+        let count = motivationQuotes.count
+        if count > 0 {
+            let quote = motivationQuotes[Int(dayCount + 1) % Int(count)]
+            completionHandler(quote)
+        } else {
+            retrieveMotivation() { [unowned self] in
+                self.retrieveMotivationOfTheDay(completionHandler: completionHandler)
+            }
+        }
+    }
+    
+    func retrieveMotivation(completion: (()->Void)? = nil) {
+        let ref = Database.database().reference().child("motivationQuotes")
+        ref.observe(.value, with: { [unowned self] snapshot in
+            var quotes: [String] = []
+            if let motivationArray = snapshot.value as? NSArray {
+                for motivation in motivationArray {
+                    if let motivation = motivation as? String {
+                        print(motivation)
+                        quotes.append(motivation)
+                    }
+                }
+            }
+            self.motivationQuotes = quotes
+            completion?()
+        })
+    }
+    
     // MARK: - High Score
     
-    func retrieveTopBreathStreaks(completionHandler: @escaping (([UserData])->Void)) {
+    func retrieveCurrentBreathStreaks(completionHandler: @escaping (([UserData])->Void)) {
+        let startTime = Date().timeIntervalSince1970 - 60 * 60 * 24 // past 24 hours
         let ref = Database.database().reference().child("users/\(Constants.AppKey)")
-        ref.queryOrdered(byChild: UserAttribute.breathStreakCount.rawValue)
+        ref.queryStarting(atValue: startTime, childKey: UserAttribute.lastStreakTimestamp.rawValue)
+            .queryOrdered(byChild: UserAttribute.breathStreakCount.rawValue)
             .queryLimited(toLast: 10)
-            .observe(.value, with: { snapshot in
+            .observeSingleEvent(of: .value, with: { snapshot in
                 var items: [UserData] = []
                 if let userDict = snapshot.value as? NSDictionary {
                     for (key, userDataDict) in userDict {
@@ -195,6 +260,27 @@ class FirebaseService {
         
     }
     
+    func retrieveMaxAttributes(attribute: UserAttribute, completionHandler: @escaping (([UserData])->Void)) {
+        let ref = Database.database().reference().child("users/\(Constants.AppKey)")
+        ref.queryOrdered(byChild: attribute.rawValue)
+            .queryLimited(toLast: 10)
+            .observeSingleEvent(of: .value, with: { snapshot in
+                var items: [UserData] = []
+                if let userDict = snapshot.value as? NSDictionary {
+                    for (key, userDataDict) in userDict {
+                        if let userDataDict = userDataDict as? NSDictionary,
+                            let key = key as? String {
+                            let userData = UserData(userId: key, snapshotDict: userDataDict)
+                            if userData.hasMinimumAttribute(attribute) {
+                                items.append(userData)
+                            }
+                        }
+                    }
+                }
+                completionHandler(items)
+            })
+    }
+    
     // MARK: - Feed
     
     func saveBreathFeedItem(_ feedItem: BreathFeedItem) {
@@ -206,25 +292,19 @@ class FirebaseService {
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
         ref.queryOrdered(byChild: "timestamp")
             .queryLimited(toLast: 50)
-            .observe(.value, with: { [unowned self] snapshot in
+            .observeSingleEvent(of: .value, with: { [unowned self] snapshot in
                 var items: [BreathFeedItem] = []
                 if let feedDict = snapshot.value as? NSDictionary {
                     for (key, feedItemDict) in feedDict {
                         if let feedItemDict = feedItemDict as? NSDictionary {
                             let feedItem = BreathFeedItem(key: key as? String, snapshotDict: feedItemDict)
-                            items.append(feedItem)
+                            if feedItem.isInappropriate == 0 {
+                                items.append(feedItem)
+                            }
                         }
                     }
                 }
                 completionHandler(items.sorted(by: { $0.timestamp > $1.timestamp }))
-//            if let sectionSequenceArray = snapshot.value as? NSArray {
-//                for sectionSequence in sectionSequenceArray {
-//                    if let sectionString = sectionSequence as? String {
-//                        self.retrieveSection(sectionSequence: sectionString)
-//                        self.sequenceSections.append(sectionString)
-//                    }
-//                }
-//            }
         })
     }
     
@@ -240,6 +320,13 @@ class FirebaseService {
         }
     }
     
+    func markInappropriate(feedItem: BreathFeedItem) {
+        if let key = feedItem.key {
+            let ref = Database.database().reference().child("feed/\(Constants.AppKey)/\(key)")
+            ref.child("inappropriate").setValue(1)
+        }
+    }
+    
     // MARK: - Image loading
     
     func retrieveImageAtPath(path: String, completion: @escaping (UIImage) -> Void) {
@@ -252,7 +339,7 @@ class FirebaseService {
     
     func retrieveBackgroundImage(completion: @escaping (UIImage) -> Void) {
         let sectionNamesRef = Database.database().reference().child("config/\(Constants.AppKey)/menuBackgroundImage")
-        sectionNamesRef.observe(.value, with: { [unowned self] snapshot in
+        sectionNamesRef.observeSingleEvent(of: .value, with: { [unowned self] snapshot in
             if let path = snapshot.value as? String {
                 self.downloadFileIfNecessary(path: path) {
                     if let image = UIImage(contentsOfFile: "\(self.getDocumentsDirectory())/\(path)") {
@@ -468,8 +555,9 @@ struct BreathFeedItem {
     let city: String?
     let rating: Int?
     let comment: String?
+    let isInappropriate: Int
     
-    init(key: String? = nil, timestamp: TimeInterval, imagePath: String, userId: String, userName: String, breathCount: Int, city: String?, coordinate: CLLocationCoordinate2D?, rating: Int?, comment: String?) {
+    init(key: String? = nil, timestamp: TimeInterval, imagePath: String, userId: String, userName: String, breathCount: Int, city: String?, coordinate: CLLocationCoordinate2D?, rating: Int?, comment: String?, isInappropriate: Int = 0) {
         self.key = key
         self.timestamp = timestamp
         self.imagePath = imagePath
@@ -480,6 +568,7 @@ struct BreathFeedItem {
         self.coordinate = coordinate
         self.rating = rating
         self.comment = comment
+        self.isInappropriate = isInappropriate
     }
     
     init(key: String?, snapshotDict: NSDictionary) {
@@ -510,6 +599,8 @@ struct BreathFeedItem {
         } else {
             comment = nil
         }
+        isInappropriate = snapshotDict["inappropriate"] as? Int ?? 0
+
     }
 	
     func valueDict() -> [String: Any] {
@@ -531,6 +622,7 @@ struct BreathFeedItem {
         if let comment = comment {
             dict["comment"] = comment
         }
+        dict["inappropriate"] = isInappropriate
         return dict
     }
 }

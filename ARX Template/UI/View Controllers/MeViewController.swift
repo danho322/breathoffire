@@ -11,14 +11,12 @@ import iCarousel
 
 class MeViewController: UIViewController {
     @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var streakLabel: UILabel!
-    @IBOutlet weak var playCountLabel: UILabel!
-    @IBOutlet weak var breathStreakLabel: UILabel!
-    @IBOutlet weak var tokenCountLabel: UILabel!
-    @IBOutlet weak var carousel: iCarousel!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     internal var purchasedPackages: [AnimationPackage] = []
+    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    fileprivate let itemsPerRow: CGFloat = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,46 +24,40 @@ class MeViewController: UIViewController {
         
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         userNameLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-        streakLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-        breathStreakLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-        playCountLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-        tokenCountLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+//        streakLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+//        breathStreakLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+//        playCountLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+//        tokenCountLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
 
         // Do any additional setup after loading the view.
         if let currentUserData = SessionManager.sharedInstance.currentUserData {
             userNameLabel.text = "Username: \(currentUserData.userName)"
-            streakLabel.text = "\(currentUserData.streakCount) day streak!"
-            breathStreakLabel.text = "\(currentUserData.breathStreakCount) breaths in current streak"
-            playCountLabel.text = "Play Count: \(currentUserData.playCount)"
-            tokenCountLabel.text = "Token Count: \(currentUserData.tokenCount)"
+//            streakLabel.text = "\(currentUserData.streakCount) day streak!"
+//            breathStreakLabel.text = "\(currentUserData.breathStreakCount) breaths in current streak"
+//            playCountLabel.text = "Play Count: \(currentUserData.playCount)"
+//            tokenCountLabel.text = "Token Count: \(currentUserData.tokenCount)"
             
         }
         
-        var myPackages: [AnimationPackage] = []
-        let packages = DataLoader.sharedInstance.packages()
-        for package in packages {
-            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
-            if hasPackage {
-                myPackages.append(package)
-//                let sequencesInPackage = DataLoader.sharedInstance.sequencesInPackage(packageName: package.packageName)
-            }
-        }
+        collectionView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        collectionView.register(UINib(nibName: "UserStatCollectionCell", bundle: nil), forCellWithReuseIdentifier: UserStatConstants.CellIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
-        purchasedPackages = myPackages
-        carousel.dataSource = self
-        carousel.delegate = self
-        carousel.type = .rotary
-//        iCarouselTypeLinear = 0,
-//        iCarouselTypeRotary,
-//        iCarouselTypeInvertedRotary,
-//        iCarouselTypeCylinder,
-//        iCarouselTypeInvertedCylinder,
-//        iCarouselTypeWheel,
-//        iCarouselTypeInvertedWheel,
-//        iCarouselTypeCoverFlow,
-//        iCarouselTypeCoverFlow2,
-//        iCarouselTypeTimeMachine,
-//        iCarouselTypeInvertedTimeMachine,
+//        var myPackages: [AnimationPackage] = []
+//        let packages = DataLoader.sharedInstance.packages()
+//        for package in packages {
+//            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
+//            if hasPackage {
+//                myPackages.append(package)
+//                let sequencesInPackage = DataLoader.sharedInstance.sequencesInPackage(packageName: package.packageName)
+//            }
+//        }
+        
+//        purchasedPackages = myPackages
+//        carousel.dataSource = self
+//        carousel.delegate = self
+//        carousel.type = .rotary
     }
     
     @IBAction func onLoginTap(_ sender: Any) {
@@ -143,5 +135,76 @@ extension MeViewController: iCarouselDataSource {
             return value * 1.1
         }
         return value
+    }
+}
+
+extension MeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+}
+
+extension MeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserStatConstants.CellIdentifier, for: indexPath)
+        if let cell = cell as? UserStatCollectionCell {
+            
+            var title = ""
+            var stat = ""
+            if let userData = SessionManager.sharedInstance.currentUserData {
+                if indexPath.row == 0 {
+                    title = "Total"
+                    stat = "\(userData.totalBreathCount)"
+                } else if indexPath.row == 1 {
+                    title = "Current streak"
+                    stat = "\(userData.streakCount)"
+                } else if indexPath.row == 2 {
+                    title = "Current breath streak"
+                    stat = "\(userData.breathStreakCount)"
+                } else if indexPath.row == 3 {
+                    title = "Max day streak"
+                    stat = "\(userData.maxDayStreak)"
+                } else if indexPath.row == 4 {
+                    title = "Max breath streak"
+                    stat = "\(userData.maxBreathStreak)"
+                }
+            }
+            
+            cell.titleLabel.text = title
+            cell.statLabel.text = stat
+        }
+        return cell
+    }
+}
+
+// refactor
+extension MeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        //2
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = indexPath.row == 0 ? availableWidth : availableWidth / itemsPerRow
+        
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+
+    //3
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+
+    // 4
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInsets.left
     }
 }

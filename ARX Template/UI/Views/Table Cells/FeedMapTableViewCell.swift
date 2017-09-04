@@ -14,6 +14,8 @@ class FeedMapTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var heatImageView: UIImageView!
+    @IBOutlet weak var dimView: UIView!
+    @IBOutlet weak var motivationLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,6 +25,13 @@ class FeedMapTableViewCell: UITableViewCell {
         titleLabel.textColor = ThemeManager.sharedInstance.feedTextColor()
         titleLabel.font = ThemeManager.sharedInstance.heavyFont(16)
         titleLabel.text = "Breath of Fire Community"
+        motivationLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+        motivationLabel.font = ThemeManager.sharedInstance.heavyFont(16)
+        
+        FirebaseService.sharedInstance.retrieveMotivationOfTheDay() { [unowned self] quote in
+            // was the bird quote 9/3
+            self.motivationLabel.text = quote
+        }
     }
 
     func update(locations: [CLLocation]) {

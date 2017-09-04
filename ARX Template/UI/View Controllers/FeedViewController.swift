@@ -41,12 +41,19 @@ class FeedViewController: UIViewController {
         let alertMessage = UIAlertController(title: NSLocalizedString("Options", comment: "Action sheet title"),
                                              message: nil,
                                              preferredStyle: .actionSheet)
-        
-        alertMessage.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Ok button title"), style: .destructive, handler: { [unowned self] _ in
-            FirebaseService.sharedInstance.deleteFeedItem(feedItem: feedItem)
-            self.feedItems.remove(at: indexPath.row)
-            self.tableView.reloadData()
-        }))
+
+        if SessionManager.sharedInstance.isCurrentUser(userId: feedItem.userId) {
+            alertMessage.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Ok button title"), style: .destructive, handler: { [unowned self] _ in
+                FirebaseService.sharedInstance.deleteFeedItem(feedItem: feedItem)
+                self.feedItems.remove(at: indexPath.row)
+                self.tableView.reloadData()
+            }))
+        } else {
+            alertMessage.addAction(UIAlertAction(title: NSLocalizedString("Report Inappropriate", comment: "Ok button title"), style: .destructive, handler: { [unowned self] _ in
+                self.handleMarkInappropriate(feedItem: feedItem, row: indexPath.row)
+            }))
+
+        }
         
         alertMessage.addAction(UIAlertAction(title: NSLocalizedString("Share", comment: "Ok button title"), style: .default, handler: { [unowned self] _ in
             if let cell = self.tableView.cellForRow(at: indexPath) {
@@ -67,6 +74,21 @@ class FeedViewController: UIViewController {
             alertMessage.popoverPresentationController?.sourceRect = cell.frame
             alertMessage.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
         }
+        self.present(alertMessage, animated: true, completion: nil)
+    }
+    
+    func handleMarkInappropriate(feedItem: BreathFeedItem, row: Int) {
+        let alertMessage = UIAlertController(title: NSLocalizedString("Are you sure?", comment: "Action sheet title"),
+                                             message: "Marking this item as inappropriate will remove it from the feed until further review.",
+                                             preferredStyle: .alert)
+
+        alertMessage.addAction(UIAlertAction(title: NSLocalizedString("Yes, I understand", comment: "Ok button title"), style: .destructive, handler: { [unowned self] _ in
+            FirebaseService.sharedInstance.markInappropriate(feedItem: feedItem)
+            self.feedItems.remove(at: row)
+            self.tableView.reloadData()
+        }))
+        alertMessage.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
         self.present(alertMessage, animated: true, completion: nil)
     }
 }

@@ -134,9 +134,7 @@ class MenuViewController: UIViewController {
     }
     
     @IBAction func onSettingsTap(_ sender: Any) {
-        FirebaseService.sharedInstance.retrieveTopBreathStreaks() { users in
-            
-        }
+        
     }
     
     @IBAction func onEnterTap(_ sender: Any) {

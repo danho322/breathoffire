@@ -64,7 +64,6 @@ class BreathTimerService: NSObject {
         let parameterQueue = breathProgram.parameterArray()
         if currentTime >= sessionTime {
             timer?.invalidate()
-            Sound.play(file: "gong.m4a")
             delegate.breathTimeDidFinish()
         }
         
