@@ -89,11 +89,12 @@ class MainTabBarController: UITabBarController {
     }
 
     @objc func onHelpTap() {
-//        if let helpVC = self.storyboard?.instantiateViewController(withIdentifier: "HelpViewControllerIdentifier") {
-//            navigationController?.pushViewController(helpVC, animated: true)
-//            //                optionsVC.titleLabel.text = selectLabel.text
-//        }
+        if let helpVC = self.storyboard?.instantiateViewController(withIdentifier: "InfoViewIdentifier") {
+            present(helpVC, animated: true, completion: nil)
+            //                optionsVC.titleLabel.text = selectLabel.text
+        }
         
+        return
         // Get view controllers and build the walkthrough
         let stb = UIStoryboard(name: "Walkthrough", bundle: nil)
         let walkthrough = stb.instantiateViewController(withIdentifier: "walk") as! BWWalkthroughViewController

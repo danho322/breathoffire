@@ -19,6 +19,7 @@
 		D42DE7681F46A4FE00264AF1 /* Breathe.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D42DE7651F469DC400264AF1 /* Breathe.m4a */; };
 		D43751511F5D1141004B6B9E /* UserStatCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */; };
 		D43751531F5D1196004B6B9E /* UserStatCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43751521F5D1196004B6B9E /* UserStatCollectionCell.swift */; };
+		D43751551F5DB967004B6B9E /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43751541F5DB967004B6B9E /* InfoViewController.swift */; };
 		D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B971F048282002F369F /* FocusSquare.swift */; };
 		D43D4BAA1F048282002F369F /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B981F048282002F369F /* Gesture.swift */; };
 		D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B991F048282002F369F /* HitTestVisualization.swift */; };
@@ -171,6 +172,7 @@
 		D42DE7661F46A43D00264AF1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserStatCollectionCell.xib; sourceTree = "<group>"; };
 		D43751521F5D1196004B6B9E /* UserStatCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatCollectionCell.swift; sourceTree = "<group>"; };
+		D43751541F5DB967004B6B9E /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		D43D4B951F048282002F369F /* ARSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARSettingsViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/ARSettingsViewController.swift; sourceTree = "<group>"; };
 		D43D4B971F048282002F369F /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
 		D43D4B981F048282002F369F /* Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 				D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */,
 				D4EDCCF41F4943F100849037 /* RankingsViewController.swift */,
 				D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */,
+				D43751541F5DB967004B6B9E /* InfoViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -825,6 +828,7 @@
 				D427C9451F0770D30096C2A1 /* InstructionView.swift in Sources */,
 				D43D4BB91F048476002F369F /* ARSettingsViewController.swift in Sources */,
 				D43D4BB81F0483C1002F369F /* ARTechniqueViewController.swift in Sources */,
+				D43751551F5DB967004B6B9E /* InfoViewController.swift in Sources */,
 				D494188B1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift in Sources */,
 				D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */,
 				D4D7318B1EFB8B8400C65E99 /* DataLoader.swift in Sources */,
