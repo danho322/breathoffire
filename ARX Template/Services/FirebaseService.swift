@@ -291,7 +291,7 @@ class FirebaseService: NSObject {
     func retrieveBreathFeed(completionHandler: @escaping (([BreathFeedItem])->Void)) {
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
         ref.queryOrdered(byChild: "timestamp")
-            .queryLimited(toLast: 50)
+            .queryLimited(toFirst: 50)
             .observeSingleEvent(of: .value, with: { [unowned self] snapshot in
                 var items: [BreathFeedItem] = []
                 if let feedDict = snapshot.value as? NSDictionary {

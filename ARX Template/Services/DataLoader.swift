@@ -28,14 +28,8 @@ struct DataLoader {
             text = "Scan the floor slowly to map out your virtual gym"
         case .ScanningProgress:
             text = "Surface detected! Continue scanning to increase floor space"
-        case .ScanningReady:
-            text = "Virtual space ready. Ready to load?"
-        case .PlacedScaling:
-            text = "Use two fingers to scale and rotate"
-        case .PlacedRotating:
-            text = "Use two fingers to rotate"
-        case .PlacedMoving:
-            text = "Use one finger to move"
+        case .PlacedEditing:
+            text = "Use two fingers to scale/rotate, tap when ready"
         default:
             break
         }
@@ -144,14 +138,11 @@ enum ARObjectPlacementState {
     case
     ScanningEmpty,
     ScanningProgress,
-    ScanningReady,
-    PlacedScaling,
-    PlacedMoving,
-    PlacedRotating,
+    PlacedEditing,
     PlacedReady
     
     func hideAddButton() -> Bool {
-        return (self != .ScanningReady && !isPlaced()) || self == .PlacedReady
+        return !isPlaced() || self == .PlacedReady
     }
     
     func hideStatusLabel() -> Bool {
@@ -159,7 +150,7 @@ enum ARObjectPlacementState {
     }
     
     func showDebugVisuals() -> Bool {
-        return self == .ScanningEmpty || self == .ScanningProgress || self == .ScanningReady
+        return self == .ScanningEmpty || self == .ScanningProgress
     }
     
     func isPlacingAllowed() -> Bool {
@@ -167,11 +158,7 @@ enum ARObjectPlacementState {
     }
     
     func isPlaced() -> Bool {
-        return self == .PlacedReady || self == .PlacedRotating || self == .PlacedScaling || self == .PlacedMoving
-    }
-    
-    func isSingleGestureAllowed() -> Bool {
-        return self == .PlacedMoving
+        return self == .PlacedReady || self == .PlacedEditing
     }
     
     func isDoubleGestureAllowed() -> Bool {
@@ -179,11 +166,11 @@ enum ARObjectPlacementState {
     }
     
     func isRotationAllowed() -> Bool {
-        return self == .PlacedRotating || self == .PlacedScaling
+        return self == .PlacedEditing
     }
     
     func isScalingAllowed() -> Bool {
-        return self == .PlacedScaling || self == .PlacedRotating
+        return self == .PlacedEditing
     }
     
     func isUpdatePlanesAllowed() -> Bool {
@@ -191,6 +178,6 @@ enum ARObjectPlacementState {
     }
     
     func isMovingAllowed() -> Bool {
-        return self == .PlacedMoving
+        return self != .PlacedReady
     }
 }

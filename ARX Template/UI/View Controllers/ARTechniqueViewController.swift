@@ -260,41 +260,41 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
-        print("handleTap")
-        let tapPoint = recognizer.location(in: sceneView)
-        let result = sceneView.hitTest(tapPoint, types: .estimatedHorizontalPlane)
-        if let hitResult = result.first {
-            print("hit result")
-            if currentPlacementState == .PlacedReady {
-                throwBall(position: SCNVector3(x: hitResult.worldTransform.columns.3.x,
-                                               y: hitResult.worldTransform.columns.3.y + 3,
-                                               z: hitResult.worldTransform.columns.3.z))
-            } else if virtualObjects.count == 0 && currentPlacementState.isPlacingAllowed() {
-                loadVirtualObject(at: SCNVector3(x: hitResult.worldTransform.columns.3.x,
-                                                 y: hitResult.worldTransform.columns.3.y,
-                                                 z: hitResult.worldTransform.columns.3.z))
-                currentPlacementState = .PlacedScaling
-                updatePlacementUI()
-            }
-        }
+//        print("handleTap")
+//        let tapPoint = recognizer.location(in: sceneView)
+//        let result = sceneView.hitTest(tapPoint, types: .estimatedHorizontalPlane)
+//        if let hitResult = result.first {
+//            print("hit result")
+//            if currentPlacementState == .PlacedReady {
+//                throwBall(position: SCNVector3(x: hitResult.worldTransform.columns.3.x,
+//                                               y: hitResult.worldTransform.columns.3.y + 3,
+//                                               z: hitResult.worldTransform.columns.3.z))
+//            } else if virtualObjects.count == 0 && currentPlacementState.isPlacingAllowed() {
+//                loadVirtualObject(at: SCNVector3(x: hitResult.worldTransform.columns.3.x,
+//                                                 y: hitResult.worldTransform.columns.3.y,
+//                                                 z: hitResult.worldTransform.columns.3.z))
+//                currentPlacementState = .PlacedScaling
+//                updatePlacementUI()
+//            }
+//        }
     }
     
     // MARK: - Placing Object
     
     internal func updatePlacementUI() {
         if isARModeEnabled {
-            if !currentPlacementState.isPlaced() && currentPlacementState != .ScanningReady {
+            if !currentPlacementState.isPlaced() {
                 planes.forEach({ anchor, plane in
-                    if plane.anchor.extent.x > 0.3 && plane.anchor.extent.z > 0.3 {
-                        self.currentPlacementState = .ScanningReady
+                    if plane.anchor.extent.x > 0.3 && plane.anchor.extent.z > 0.3 && focusSquare?.lastPosition != nil {
+                        chooseObject(nil)   // automatically place!
                     }
                 })
                 
-                if currentPlacementState == .ScanningReady {
-                    if SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) {
-                        placingCoachMarksController.start(on: self)
-                    }
-                }
+//                if currentPlacementState == .ScanningReady {
+//                    if SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) {
+//                        placingCoachMarksController.start(on: self)
+//                    }
+//                }
             }
             
             statusLabel.text = DataLoader.sharedInstance.textForPlacementState(currentPlacementState)
@@ -437,7 +437,9 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     // MARK: - ARSCNViewDelegate
 	
 	func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-		refreshFeaturePoints()
+        if !currentPlacementState.isPlaced() {
+            refreshFeaturePoints()
+        }
 		
 		DispatchQueue.main.async {
 			self.updateFocusSquare()
@@ -674,7 +676,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	}
 	
 	func moveVirtualObjectToPosition(_ pos: SCNVector3?, _ instantly: Bool, _ filterPosition: Bool) {
-		
 		guard let newPosition = pos else {
 			textManager.showMessage("CANNOT PLACE OBJECT\nTry moving left or right.")
 			// Reset the content selection in the menu only if the content has not yet been initially placed.
@@ -1006,8 +1007,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 pos = lastFocusSquarePos
             }
             loadVirtualObject(at: pos)
-            currentPlacementState = .PlacedScaling
-        } else if currentPlacementState == .PlacedMoving {
+            currentPlacementState = .PlacedEditing
+        } else if currentPlacementState == .PlacedEditing {
             currentPlacementState = .PlacedReady
 
             stopPlaneDetection()
@@ -1016,10 +1017,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             scheduleScreenshot()
             
             startTechnique()
-        } else if currentPlacementState == .PlacedRotating {
-            currentPlacementState = .PlacedMoving
-        } else if currentPlacementState == .PlacedScaling {
-            currentPlacementState = .PlacedMoving   // scaling is rotating as well now
         }
         updatePlacementUI()
     }
@@ -1103,11 +1100,11 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	}
     
     func stopPlaneDetection() {
-        if let worldSessionConfig = sessionConfig as? ARWorldTrackingSessionConfiguration {
-            worldSessionConfig.planeDetection = .init(rawValue: 0)
-            session.run(worldSessionConfig, options: [.resetTracking, .removeExistingAnchors])
-        }
+        // pause() freezes the camera
+        sessionConfig.planeDetection = .init(rawValue: 0)
+        session.run(sessionConfig, options: [.resetTracking, .removeExistingAnchors])
     }
+    
 
     // MARK: - Focus Square
     var focusSquare: FocusSquare?
@@ -1123,15 +1120,20 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	
 	func updateFocusSquare() {
 		guard let screenCenter = screenCenter else { return }
-		
-		if virtualObjects.count > 0 && sceneView.isNode(virtualObjects.first!, insideFrustumOf: sceneView.pointOfView!) {
-			focusSquare?.hide()
-		} else {
-			focusSquare?.unhide()
-		}
-		let (worldPos, planeAnchor, _) = worldPositionFromScreenPosition(screenCenter, objectPos: focusSquare?.position)
+
+        let hideSquare = currentPlacementState.isPlaced()
+        let moveObject = currentPlacementState.isMovingAllowed()
+		if hideSquare {
+            focusSquare?.hide()
+        } else {
+            focusSquare?.unhide()
+        }
+		let (worldPos, planeAnchor, hitAPlane) = worldPositionFromScreenPosition(screenCenter, objectPos: focusSquare?.position)
 		if let worldPos = worldPos {
 			focusSquare?.update(for: worldPos, planeAnchor: planeAnchor, camera: self.session.currentFrame?.camera)
+            if moveObject {
+                moveVirtualObjectToPosition(worldPos, true, hitAPlane)
+            }
 			textManager.cancelScheduledMessage(forType: .focusSquare)
 		}
 	}
