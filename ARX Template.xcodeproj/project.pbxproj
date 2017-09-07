@@ -141,6 +141,9 @@
 		D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */ = {isa = PBXBuildFile; fileRef = D4ECE16B1F22C7F400E8B788 /* Fire.scnp */; };
 		D4ECE16E1F22C7F400E8B788 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = D4ECE16C1F22C7F400E8B788 /* spark.png */; };
 		D4EDCCF51F4943F100849037 /* RankingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EDCCF41F4943F100849037 /* RankingsViewController.swift */; };
+		D4EE12D91F60F0CE00A55E9F /* How.m4v in Resources */ = {isa = PBXBuildFile; fileRef = D4EE12D81F60F0BB00A55E9F /* How.m4v */; };
+		D4EE12DA1F60F0CE00A55E9F /* What.m4v in Resources */ = {isa = PBXBuildFile; fileRef = D4EE12D71F60F0B900A55E9F /* What.m4v */; };
+		D4EE12DB1F60F0CE00A55E9F /* Why.m4v in Resources */ = {isa = PBXBuildFile; fileRef = D4EE12D61F60F0B600A55E9F /* Why.m4v */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -305,6 +308,9 @@
 		D4ECE16B1F22C7F400E8B788 /* Fire.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Fire.scnp; sourceTree = "<group>"; };
 		D4ECE16C1F22C7F400E8B788 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		D4EDCCF41F4943F100849037 /* RankingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingsViewController.swift; sourceTree = "<group>"; };
+		D4EE12D61F60F0B600A55E9F /* Why.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Why.m4v; sourceTree = "<group>"; };
+		D4EE12D71F60F0B900A55E9F /* What.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = What.m4v; sourceTree = "<group>"; };
+		D4EE12D81F60F0BB00A55E9F /* How.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = How.m4v; sourceTree = "<group>"; };
 		D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -419,6 +425,9 @@
 		D42DE7641F469DB700264AF1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D4EE12D81F60F0BB00A55E9F /* How.m4v */,
+				D4EE12D71F60F0B900A55E9F /* What.m4v */,
+				D4EE12D61F60F0B600A55E9F /* Why.m4v */,
 				D447EFCB1F58340C0047DEF0 /* gong.m4a */,
 				D42DE7651F469DC400264AF1 /* Breathe.m4a */,
 			);
@@ -745,6 +754,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4EE12D91F60F0CE00A55E9F /* How.m4v in Resources */,
+				D4EE12DA1F60F0CE00A55E9F /* What.m4v in Resources */,
+				D4EE12DB1F60F0CE00A55E9F /* Why.m4v in Resources */,
 				D447EFCC1F5835DE0047DEF0 /* gong.m4a in Resources */,
 				D4007AC11F4BE34400DD29D9 /* quake.plist in Resources */,
 				D43751511F5D1141004B6B9E /* UserStatCollectionCell.xib in Resources */,

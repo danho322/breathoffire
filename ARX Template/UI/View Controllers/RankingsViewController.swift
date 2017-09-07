@@ -15,6 +15,9 @@ class RankingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     internal var userRankings: [UserData] = []
+    internal var dayRankings: [UserData] = []
+    internal var breathRankings: [UserData] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,22 +31,35 @@ class RankingsViewController: UIViewController {
 //        let RankingsCellNib = UINib(nibName: String(describing: RankingsTableViewCell.self), bundle: nil)
 //        tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingsCellIdentifier)
         
-        FirebaseService.sharedInstance.retrieveCurrentBreathStreaks() { topUsers in
+        FirebaseService.sharedInstance.retrieveCurrentBreathStreaks() { [unowned self] topUsers in
             self.userRankings = topUsers
             self.tableView.reloadData()
         }
         
-        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxDayStreak) { topDayUsers in
-            print("TODO: DISPLAY IN DAY TABLE HERE")
+        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxDayStreak) { [unowned self] topDayUsers in
+            self.dayRankings = topDayUsers
+            self.tableView.reloadData()
         }
         
-        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxBreathStreak) { topDayUsers in
-            print("TODO: DISPLAY IN BREATHING TABLE HERE")
+        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxBreathStreak) { [unowned self] topBreathUsers in
+            self.breathRankings = topBreathUsers
+            self.tableView.reloadData()
         }
     }
 }
 
 extension RankingsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Top breath streaks"
+        } else if section == 1 {
+            return "Max day streaks"
+        } else if section == 2 {
+            return "Max breath streaks"
+        }
+        return ""
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
@@ -51,11 +67,18 @@ extension RankingsViewController: UITableViewDelegate {
 
 extension RankingsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userRankings.count
+        if section == 0 {
+            return userRankings.count
+        } else if section == 1 {
+            return dayRankings.count
+        } else if section == 2 {
+            return breathRankings.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -66,10 +89,28 @@ extension RankingsViewController: UITableViewDataSource {
 //                self.displayRankingsOptions(RankingsItem: item, indexPath: indexPath)
 //            }
 //        }
+        var textLabel = ""
+        var detailLabel = ""
+        if indexPath.section == 0 {
+            if let user = userRankings[safe: indexPath.row] {
+                textLabel = user.userName
+                detailLabel = "\(user.breathStreakCount) breath streak"
+            }
+        } else if indexPath.section == 1 {
+            if let user = dayRankings[safe: indexPath.row] {
+                textLabel = user.userName
+                detailLabel = "\(user.maxDayStreak) days"
+            }
+        } else if indexPath.section == 2 {
+            if let user = breathRankings[safe: indexPath.row] {
+                textLabel = user.userName
+                detailLabel = "\(user.maxBreathStreak) breaths"
+            }
+        }
+        
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        let user = userRankings[indexPath.row]
-        cell.textLabel?.text = user.userName
-        cell.detailTextLabel?.text = "\(user.breathStreakCount)"
+        cell.textLabel?.text = textLabel
+        cell.detailTextLabel?.text = detailLabel
         return cell
     }
 }

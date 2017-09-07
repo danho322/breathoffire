@@ -8,6 +8,8 @@
 
 import UIKit
 import FontAwesomeKit
+import AVKit
+import AVFoundation
 
 enum SegmentIndexType: Int {
     case what = 0
@@ -28,25 +30,24 @@ enum SegmentIndexType: Int {
         }
     }
     
-    func image() -> UIImage? {
+    func videoUrl() -> URL? {
         switch self {
         case .what:
-            let icon = FAKFontAwesome.whatsappIcon(withSize: 50)
-            icon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
-            return icon?.image(with: CGSize(width: 50, height: 50))
+            return Bundle.main.url(forResource: "What", withExtension: "m4v")
         case .who:
-            let icon = FAKFontAwesome.userIcon(withSize: 50)
-            icon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
-            return icon?.image(with: CGSize(width: 50, height: 50))
+            return nil
         case .how:
-            let icon = FAKFontAwesome.shirtsinbulkIcon(withSize: 50)
-            icon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
-            return icon?.image(with: CGSize(width: 50, height: 50))
+            return Bundle.main.url(forResource: "How", withExtension: "m4v")
         case .why:
-            let icon = FAKFontAwesome.questionCircleIcon(withSize: 50)
-            icon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
-            return icon?.image(with: CGSize(width: 50, height: 50))
+            return Bundle.main.url(forResource: "Why", withExtension: "m4v")
         }
+    }
+    
+    func image() -> UIImage? {
+        if let videoUrl = videoUrl() {
+            return ARXUtilities.createThumbnailOfVideoFromFileURL(videoUrl)
+        }
+        return nil
     }
     
     func description() -> String {
@@ -75,7 +76,7 @@ class InfoViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let playIcon = FAKMaterialIcons.playCircleIcon(withSize: 25)
+        let playIcon = FAKMaterialIcons.playCircleIcon(withSize: 50)
         playIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         playButton.setAttributedTitle(playIcon?.attributedString(), for: .normal)
         
@@ -96,6 +97,15 @@ class InfoViewController: UIViewController {
     }
 
     @IBAction func onPlayTap(_ sender: Any) {
+        if let segmentIndexType = SegmentIndexType(rawValue: segmentedControl.selectedSegmentIndex),
+            let url = segmentIndexType.videoUrl() {
+            let player = AVPlayer(url: url)
+            let playerController = AVPlayerViewController()
+            playerController.player = player
+            present(playerController, animated: true) {
+                player.play()
+            }
+        }
     }
     
     @IBAction func onCloseTap(_ sender: Any) {
@@ -113,5 +123,6 @@ class InfoViewController: UIViewController {
         titleLabel.text = segmentIndexType.title()
         imageView.image = segmentIndexType.image()
         descriptionLabel.text = segmentIndexType.description()
+        playButton.isHidden = segmentIndexType.videoUrl() == nil
     }
 }

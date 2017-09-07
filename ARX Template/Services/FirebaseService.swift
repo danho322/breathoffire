@@ -239,8 +239,8 @@ class FirebaseService: NSObject {
     func retrieveCurrentBreathStreaks(completionHandler: @escaping (([UserData])->Void)) {
         let startTime = Date().timeIntervalSince1970 - 60 * 60 * 24 // past 24 hours
         let ref = Database.database().reference().child("users/\(Constants.AppKey)")
-        ref.queryStarting(atValue: startTime, childKey: UserAttribute.lastStreakTimestamp.rawValue)
-            .queryOrdered(byChild: UserAttribute.breathStreakCount.rawValue)
+        ref.queryOrdered(byChild: UserAttribute.lastStreakTimestamp.rawValue)
+            .queryStarting(atValue: startTime)
             .queryLimited(toLast: 10)
             .observeSingleEvent(of: .value, with: { snapshot in
                 var items: [UserData] = []
@@ -255,9 +255,8 @@ class FirebaseService: NSObject {
                         }
                     }
                 }
-                completionHandler(items)
+                completionHandler(items.sorted(by: { $0.breathStreakCount > $1.breathStreakCount }))
             })
-        
     }
     
     func retrieveMaxAttributes(attribute: UserAttribute, completionHandler: @escaping (([UserData])->Void)) {
