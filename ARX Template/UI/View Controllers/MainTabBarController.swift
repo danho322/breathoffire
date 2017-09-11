@@ -9,11 +9,65 @@
 import UIKit
 import TabPageViewController
 import FontAwesomeKit
+import Instructions
+
+enum WalthroughInstructionType: Int {
+    case infoButton = 0
+    case feedTab = 1
+    case breathTab = 2
+    case userTab = 3
+    case count = 4
+    
+    func view(vc: MainTabBarController) -> UIView? {
+        if let navVC = vc.viewControllers?[0] as? ARXNavigationController {
+            let tabVC = navVC.viewControllers[0]
+            switch self {
+            case .infoButton:
+                var infoButton: UIView?
+                for subview in navVC.navigationBar.subviews {
+                    print("subview: \(subview)")
+                    for subsubview in subview.subviews {
+                        if subsubview.isUserInteractionEnabled {
+                            infoButton = subsubview
+                        }
+                        print("subsubview: \(subsubview), \(subsubview.isUserInteractionEnabled)")
+                    }
+                }
+                return infoButton
+            case .feedTab:
+                return vc.viewForTabAtIndex(tabBar: tabVC.tabBarController?.tabBar, index: 0)
+            case .breathTab:
+                return vc.viewForTabAtIndex(tabBar: tabVC.tabBarController?.tabBar, index: 1)
+            case .userTab:
+                return vc.viewForTabAtIndex(tabBar: tabVC.tabBarController?.tabBar, index: 2)
+            default:
+                return nil
+            }
+        }
+        return nil
+    }
+    
+    func hintText() -> String {
+        switch self {
+        case .infoButton:
+            return "Learn more about this app here"
+        case .feedTab:
+            return "See how people are breathing around the world"
+        case .breathTab:
+            return "Start your exercise here"
+        case .userTab:
+            return "Track your statistics"
+        default:
+            return ""
+        }
+    }
+}
 
 class MainTabBarController: UITabBarController {
     
     var walkthroughVC: BWWalkthroughViewController?
-    
+    let coachMarksController = CoachMarksController()
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -27,6 +81,13 @@ class MainTabBarController: UITabBarController {
     }
     
     func setup() {
+        
+        hidesBottomBarWhenPushed = true
+        
+        coachMarksController.dataSource = self
+        coachMarksController.delegate = self
+        coachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
+
         // Replace viewcontrollers set up in storyboard
         var newViewControllers: [UIViewController] = []
         if let viewControllers = viewControllers {
@@ -50,12 +111,16 @@ class MainTabBarController: UITabBarController {
                     
                     let navigationController = ARXNavigationController(rootViewController: tabPageController)
                     tabPageController.title = "Breath of Fire"
+                    navigationController.delegate = self
                     
                     let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     tabPageController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
                     
                     newViewControllers.append(navigationController)
                 } else {
+                    if let viewController = viewController as? UINavigationController {
+                        viewController.delegate = self
+                    }
                     newViewControllers.append(viewController)
                 }
             }
@@ -64,20 +129,31 @@ class MainTabBarController: UITabBarController {
         
         if let tabItems = tabBar.items {
             for tabItem in tabItems {
-                print(tabItem)
                 if tabItem.title == "Breath of Fire" {
-//                    tabItem.title = nil
                     let icon = FAKIonIcons.iosWorldIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     tabItem.image = icon
                 } else if tabItem.title == "Breathe" {
-//                    tabItem.title = nil
-                    let icon = FAKIonIcons.flameIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
-                    tabItem.image = icon
+                    let icon = FAKIonIcons.flameIcon(withSize: 25)
+//                    icon?.addAttribute(NSAttributedStringKey.backgroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
+//                    icon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
+                    let flameImage = icon?.image(with: CGSize(width: 25, height: 25))
+                    tabItem.image = flameImage
+                    tabItem.badgeColor = ThemeManager.sharedInstance.focusColor()
                 } else if tabItem.title == "Profile" {
-//                    tabItem.title = nil
                     let icon = FAKIonIcons.iosPersonIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     tabItem.image = icon
                 }
+            }
+        }
+        
+        if let breathView = viewForTabAtIndex(tabBar: tabBar, index: 1) {
+            breathView.backgroundColor = ThemeManager.sharedInstance.focusColor()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            [weak self] in
+            if SessionManager.sharedInstance.shouldShowTutorial(type: .Walkthrough) {
+                self?.displayWalkthrough()
             }
         }
     }
@@ -86,15 +162,17 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        // note: viewDidLoad is called twice for some reason, not sure if there are two instances of it
     }
-
-    @objc func onHelpTap() {
-        if let helpVC = self.storyboard?.instantiateViewController(withIdentifier: "InfoViewIdentifier") {
-            present(helpVC, animated: true, completion: nil)
-            //                optionsVC.titleLabel.text = selectLabel.text
-        }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        return
+        self.coachMarksController.stop(immediately: true)
+        SessionManager.sharedInstance.onTutorialShow(type: .Walkthrough)
+    }
+    
+    func displayWalkthrough() {
         // Get view controllers and build the walkthrough
         let stb = UIStoryboard(name: "Walkthrough", bundle: nil)
         let walkthrough = stb.instantiateViewController(withIdentifier: "walk") as! BWWalkthroughViewController
@@ -102,7 +180,7 @@ class MainTabBarController: UITabBarController {
         let page_one = stb.instantiateViewController(withIdentifier: "walk1")
         let page_two = stb.instantiateViewController(withIdentifier: "walk2")
         let page_three = stb.instantiateViewController(withIdentifier: "walk3")
-
+        
         // Attach the pages to the master
         walkthrough.delegate = self
         walkthrough.add(viewController:page_zero)
@@ -110,17 +188,71 @@ class MainTabBarController: UITabBarController {
         walkthrough.add(viewController:page_two)
         walkthrough.add(viewController:page_three)
         walkthroughVC = walkthrough
-        self.present(walkthrough, animated: true, completion: nil)
+        present(walkthrough, animated: true, completion: nil)
+    }
+
+    @objc func onHelpTap() {
+        if let helpVC = storyboard?.instantiateViewController(withIdentifier: "InfoViewIdentifier") {
+            present(helpVC, animated: true, completion: nil)
+            //                optionsVC.titleLabel.text = selectLabel.text
+        }
+    }
+    
+    func viewForTabAtIndex(tabBar: UIView?, index: Int) -> UIView? {
+        var i = 0
+        if let tabBar = tabBar {
+            for view in tabBar.subviews {
+                if view.isUserInteractionEnabled {
+                    if i == index {
+                        return view
+                    }
+                    i += 1
+                }
+            }
+        }
+        return nil
+    }
+}
+
+extension MainTabBarController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        let isFirst =  navigationController.viewControllers.index(of: viewController) == 0
+        tabBar.isHidden = !isFirst
     }
 }
 
 extension MainTabBarController: BWWalkthroughViewControllerDelegate {
     func walkthroughCloseButtonPressed() {
         walkthroughVC?.dismiss(animated: true, completion: nil)
+        
+        coachMarksController.start(on: self)
     }
     
     func walkthroughPageDidChange(_ pageNumber: Int) {
         print("now at \(pageNumber)")
         walkthroughVC?.closeButton?.isHidden = pageNumber != 3
+    }
+}
+
+
+
+extension MainTabBarController: CoachMarksControllerDataSource, CoachMarksControllerDelegate {
+    func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
+        return WalthroughInstructionType.count.rawValue
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController,
+                              coachMarkAt index: Int) -> CoachMark {
+        return coachMarksController.helper.makeCoachMark(for: WalthroughInstructionType(rawValue: index)?.view(vc: self))
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?) {
+        let coachViews = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, arrowOrientation: coachMark.arrowOrientation)
+        
+        let hintText = WalthroughInstructionType(rawValue: index)?.hintText()
+        coachViews.bodyView.hintLabel.text = hintText
+        coachViews.bodyView.nextLabel.text = "Ok"
+        
+        return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }
 }

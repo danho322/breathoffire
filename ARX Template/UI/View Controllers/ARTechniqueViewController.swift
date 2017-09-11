@@ -1011,7 +1011,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         } else if currentPlacementState == .PlacedEditing {
             currentPlacementState = .PlacedReady
 
-            stopPlaneDetection()
+            //DH: do we want to stop plane detection?
+//            stopPlaneDetection()
             showHitTestAPIVisualization = false
             
             scheduleScreenshot()
@@ -1083,10 +1084,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	func restartPlaneDetection() {
 		
 		// configure session
-		if let worldSessionConfig = sessionConfig as? ARWorldTrackingSessionConfiguration {
-			worldSessionConfig.planeDetection = .horizontal
-			session.run(worldSessionConfig, options: [.resetTracking, .removeExistingAnchors])
-		}
+        sessionConfig.planeDetection = .horizontal
+        session.run(sessionConfig, options: [.resetTracking, .removeExistingAnchors])
 		
 		// reset timer
 		if trackingFallbackTimer != nil {
@@ -1132,7 +1131,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		if let worldPos = worldPos {
 			focusSquare?.update(for: worldPos, planeAnchor: planeAnchor, camera: self.session.currentFrame?.camera)
             if moveObject {
-                moveVirtualObjectToPosition(worldPos, true, hitAPlane)
+                moveVirtualObjectToPosition(worldPos, false, hitAPlane)
             }
 			textManager.cancelScheduledMessage(forType: .focusSquare)
 		}

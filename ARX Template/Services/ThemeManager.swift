@@ -35,6 +35,10 @@ struct ThemeManager {
         return UIColor.white
     }
     
+    func errorTextColor() -> UIColor {
+        return UIColor.red
+    }
+    
     func labelTitleColor() -> UIColor {
         return UIColor(red: 152 / 255.0, green: 138 / 255.0, blue: 178 / 255.0, alpha: 1)
     }

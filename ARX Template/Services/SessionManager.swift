@@ -31,6 +31,7 @@ enum UserAttribute: String {
 }
 
 enum TutorialInstructionType {
+    case Walkthrough
     case Options
     case ARTechnique
 }
@@ -292,11 +293,17 @@ class SessionManager {
     }
     
     // MARK: - Tutorials
+    var tempWalkthroughFlag = false
     var tempOptionsFlag = false
     var tempARTechniqueFlag = false
     
     func shouldShowTutorial(type: TutorialInstructionType) -> Bool {
+        return false
         // TODO: retrieve from user data
+        if type == .Walkthrough {
+            return !tempWalkthroughFlag
+        }
+        
         if type == .Options {
             return !tempOptionsFlag
         }
@@ -310,7 +317,9 @@ class SessionManager {
     
     func onTutorialShow(type: TutorialInstructionType) {
         // TODO: persist
-        if type == .Options {
+        if type == .Walkthrough {
+            tempWalkthroughFlag = true
+        } else if type == .Options {
             tempOptionsFlag = true
         } else if type == .ARTechnique {
             tempARTechniqueFlag = true

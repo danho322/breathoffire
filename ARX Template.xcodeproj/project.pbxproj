@@ -41,8 +41,6 @@
 		D45352C11EFDDDBC00C09259 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45352C01EFDDDBC00C09259 /* UIViewExtensions.swift */; };
 		D45352C31EFF6EEC00C09259 /* FontAwesomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D45352C21EFF6EC900C09259 /* FontAwesomeKit.framework */; };
 		D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45352C41F00CCEC00C09259 /* InstructionService.swift */; };
-		D453A4AB1F3E0EB80045A1B9 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D453A4AA1F3E0EB80045A1B9 /* LoginView.xib */; };
-		D453A4AD1F3E106E0045A1B9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D453A4AC1F3E106E0045A1B9 /* LoginView.swift */; };
 		D45621401F0B58BB0052E218 /* TechniqueTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */; };
 		D45621421F0B59730052E218 /* TechniqueTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621411F0B59730052E218 /* TechniqueTableCell.swift */; };
 		D45621441F0B5B420052E218 /* SpruceAnimatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */; };
@@ -144,6 +142,9 @@
 		D4EE12D91F60F0CE00A55E9F /* How.m4v in Resources */ = {isa = PBXBuildFile; fileRef = D4EE12D81F60F0BB00A55E9F /* How.m4v */; };
 		D4EE12DA1F60F0CE00A55E9F /* What.m4v in Resources */ = {isa = PBXBuildFile; fileRef = D4EE12D71F60F0B900A55E9F /* What.m4v */; };
 		D4EE12DB1F60F0CE00A55E9F /* Why.m4v in Resources */ = {isa = PBXBuildFile; fileRef = D4EE12D61F60F0B600A55E9F /* Why.m4v */; };
+		D4EE12E01F61066600A55E9F /* ARXViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE12DF1F61066600A55E9F /* ARXViewModel.swift */; };
+		D4EE12E51F61071B00A55E9F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE12E41F61071B00A55E9F /* LoginViewModel.swift */; };
+		D4EE12E71F6107B100A55E9F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE12E61F6107B100A55E9F /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -197,8 +198,6 @@
 		D45352C01EFDDDBC00C09259 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		D45352C21EFF6EC900C09259 /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = Carthage/Build/iOS/FontAwesomeKit.framework; sourceTree = "<group>"; };
 		D45352C41F00CCEC00C09259 /* InstructionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionService.swift; sourceTree = "<group>"; };
-		D453A4AA1F3E0EB80045A1B9 /* LoginView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
-		D453A4AC1F3E106E0045A1B9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TechniqueTableCell.xib; sourceTree = "<group>"; };
 		D45621411F0B59730052E218 /* TechniqueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueTableCell.swift; sourceTree = "<group>"; };
 		D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpruceAnimatingViewController.swift; sourceTree = "<group>"; };
@@ -311,6 +310,13 @@
 		D4EE12D61F60F0B600A55E9F /* Why.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = Why.m4v; sourceTree = "<group>"; };
 		D4EE12D71F60F0B900A55E9F /* What.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = What.m4v; sourceTree = "<group>"; };
 		D4EE12D81F60F0BB00A55E9F /* How.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = How.m4v; sourceTree = "<group>"; };
+		D4EE12DF1F61066600A55E9F /* ARXViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXViewModel.swift; sourceTree = "<group>"; };
+		D4EE12E11F6106C400A55E9F /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		D4EE12E21F6106C400A55E9F /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		D4EE12E31F6106D500A55E9F /* SwiftLCS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLCS.framework; path = Carthage/Build/iOS/SwiftLCS.framework; sourceTree = "<group>"; };
+		D4EE12E41F61071B00A55E9F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D4EE12E61F6107B100A55E9F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D4EE12E81F61A3E800A55E9F /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -394,6 +400,7 @@
 				D4EDCCF41F4943F100849037 /* RankingsViewController.swift */,
 				D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */,
 				D43751541F5DB967004B6B9E /* InfoViewController.swift */,
+				D4EE12E61F6107B100A55E9F /* LoginViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -408,7 +415,6 @@
 				D4A04B011F0B146200BEA822 /* RelatedAnimationsView.swift */,
 				D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */,
 				D4A72D2D1F3ACA2D00553086 /* BreathTimerView.swift */,
-				D453A4AC1F3E106E0045A1B9 /* LoginView.swift */,
 				D46B68D31F40053D00DAB0AD /* BreatheCompleteView.swift */,
 			);
 			path = Views;
@@ -493,7 +499,6 @@
 				D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */,
 				D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */,
 				D4A72D2B1F3ACA0300553086 /* BreathTimerView.xib */,
-				D453A4AA1F3E0EB80045A1B9 /* LoginView.xib */,
 				D46B68D11F40028500DAB0AD /* BreatheCompleteView.xib */,
 				D4DF08121F41485A00E8F0EE /* FeedTableViewCell.xib */,
 				D4B93FCC1F4BDF9100BE092E /* FeedMapTableViewCell.xib */,
@@ -517,6 +522,10 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4EE12E81F61A3E800A55E9F /* Result.framework */,
+				D4EE12E31F6106D500A55E9F /* SwiftLCS.framework */,
+				D4EE12E11F6106C400A55E9F /* ReactiveCocoa.framework */,
+				D4EE12E21F6106C400A55E9F /* ReactiveSwift.framework */,
 				D4DA792D1F55297400D7ED00 /* Instructions.framework */,
 				D42AC3301F4A3798006A53C5 /* iCarousel.framework */,
 				D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */,
@@ -597,6 +606,7 @@
 		D49102F91EFB05CE008A528E /* ARX Template */ = {
 			isa = PBXGroup;
 			children = (
+				D4EE12DE1F61063200A55E9F /* ViewModels */,
 				D40347291F5C6902008AF23D /* Libraries */,
 				D42DE7641F469DB700264AF1 /* Resources */,
 				D4612E301F231C08007D13C3 /* GoogleService-Info.plist */,
@@ -693,6 +703,15 @@
 			path = Particles;
 			sourceTree = "<group>";
 		};
+		D4EE12DE1F61063200A55E9F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D4EE12DF1F61066600A55E9F /* ARXViewModel.swift */,
+				D4EE12E41F61071B00A55E9F /* LoginViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -764,7 +783,6 @@
 				D49418891F231E0200CA83E2 /* GoogleService-Info.plist in Resources */,
 				D4DF08131F41485A00E8F0EE /* FeedTableViewCell.xib in Resources */,
 				D4A04B001F0A09A400BEA822 /* Models.scnassets in Resources */,
-				D453A4AB1F3E0EB80045A1B9 /* LoginView.xib in Resources */,
 				D403472E1F5C6968008AF23D /* Walkthrough.storyboard in Resources */,
 				D4ECE16E1F22C7F400E8B788 /* spark.png in Resources */,
 				D49102FD1EFB05CE008A528E /* art.scnassets in Resources */,
@@ -804,6 +822,10 @@
 				"$(SRCROOT)/Carthage/Build/iOS/TabPageViewController.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/iCarousel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Instructions.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftLCS.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 			);
 			outputPaths = (
 			);
@@ -831,12 +853,15 @@
 				D4A04AFB1F09FF2100BEA822 /* Cup.swift in Sources */,
 				D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */,
 				D4A04AFC1F09FF2100BEA822 /* Instructor.swift in Sources */,
+				D4EE12E51F61071B00A55E9F /* LoginViewModel.swift in Sources */,
 				D41332361F44A11500851996 /* TimeFormatType.swift in Sources */,
 				D494188F1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift in Sources */,
 				D4A04AFD1F09FF2100BEA822 /* Lamp.swift in Sources */,
+				D4EE12E01F61066600A55E9F /* ARXViewModel.swift in Sources */,
 				D4DF08151F414FAE00E8F0EE /* FeedTableViewCell.swift in Sources */,
 				D46D950D1F4168C100098689 /* MeViewController.swift in Sources */,
 				D4A04AFE1F09FF2100BEA822 /* Vase.swift in Sources */,
+				D4EE12E71F6107B100A55E9F /* LoginViewController.swift in Sources */,
 				D427C9451F0770D30096C2A1 /* InstructionView.swift in Sources */,
 				D43D4BB91F048476002F369F /* ARSettingsViewController.swift in Sources */,
 				D43D4BB81F0483C1002F369F /* ARTechniqueViewController.swift in Sources */,
@@ -858,7 +883,6 @@
 				D45621441F0B5B420052E218 /* SpruceAnimatingViewController.swift in Sources */,
 				D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */,
 				D43D4BAA1F048282002F369F /* Gesture.swift in Sources */,
-				D453A4AD1F3E106E0045A1B9 /* LoginView.swift in Sources */,
 				D45621481F0CB3D00052E218 /* StatManager.swift in Sources */,
 				D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */,
 				D4A04AF81F09FD7900BEA822 /* Uke.swift in Sources */,

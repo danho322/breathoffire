@@ -61,13 +61,10 @@ class MeViewController: UIViewController {
     }
     
     @IBAction func onLoginTap(_ sender: Any) {
-        let loginView = LoginView(frame: CGRect(x: 0, y: 0, width: Sizes.ScreenWidth, height: Sizes.ScreenHeight))
-        loginView.completionHandler = {
-            // refresh?
+        if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+            loginVC.viewModel = LoginViewModel()
+            present(loginVC, animated: true, completion: nil)
         }
-        loginView.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.height / 2)
-        view.addSubview(loginView)
-        loginView.animateIn()
     }
     
     func handlePackageTap(packageName: String?) {

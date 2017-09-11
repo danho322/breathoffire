@@ -28,7 +28,8 @@ class TechniqueSearchViewController: UIViewController, TechniqueSearchable {
         ThemeManager.sharedInstance.formatSearchBar(searchBar)
         
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "TechniqueTableCell", bundle: nil), forCellReuseIdentifier: "TechniqueCell")
+        let techniqueNib = UINib(nibName: String(describing: TechniqueTableCell.self), bundle: nil)
+        tableView.register(techniqueNib, forCellReuseIdentifier: CellIdentifiers.Technique)
         
         searchBar.delegate = self
         searchBar.becomeFirstResponder()
@@ -62,10 +63,12 @@ extension TechniqueSearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TechniqueCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.Technique, for: indexPath)
         if let cell = cell as? TechniqueTableCell {
             if let data = filteredSearchableArray[safe: indexPath.row] {
-                cell.titleLabel?.text = data.searchableString()
+                let searchableString = data.searchableString()
+                cell.titleLabel?.text = nil
+                cell.descriptionLabel?.text = searchableString
             }
         }
         return cell

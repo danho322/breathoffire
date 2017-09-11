@@ -379,6 +379,8 @@ class FirebaseService: NSObject {
                 }
             }
         })
+        
+//        retrieveAllSequenceData()
     }
     
     internal func retrieveSection(sectionSequence: String) {
@@ -399,6 +401,23 @@ class FirebaseService: NSObject {
             sectionRefs[sectionSequence] = sectionSequenceRef
         }
     }
+    
+    // all sequences must be in sequence list data to be organized correctly
+//    internal func retrieveAllSequenceData() {
+//        let sequenceDataRef = Database.database().reference().child("sequenceData")
+//        sequenceDataRef.observe(.value, with: { [unowned self] snapshot in
+//            if let dict = snapshot.value as? NSDictionary {
+//                for (sequenceName, sequenceDataDict) in dict {
+//                    if let sequenceName = sequenceName as? String,
+//                        let sequenceDataDict = sequenceDataDict as? NSDictionary {
+//                        let sequence = AnimationSequenceDataContainer(sequenceName: sequenceName, snapshotDict: sequenceDataDict)
+//                        self.retrieveAnimationDataFromSequenceData(sequenceDataContainer: sequence)
+//                        self.sequenceDataDict[sequenceName] = sequence
+//                    }
+//                }
+//            }
+//        })
+//    }
     
     internal func retrieveSequenceData(sequenceName: String) {
         if sequenceRefs[sequenceName] == nil {
