@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserPackagesCellIdentifier" id="02o-7T-iqd" customClass="UserPackagesCollectionCell" customModule="ARX_Template" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="204" height="183"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="204" height="183"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ys5-qp-gJk" customClass="iCarousel">
+                        <rect key="frame" x="0.0" y="50" width="204" height="133"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Packages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shi-gh-nS0">
+                        <rect key="frame" x="0.0" y="0.0" width="204" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="ys5-qp-gJk" firstAttribute="bottom" secondItem="x1r-4O-09m" secondAttribute="bottom" id="3AL-NA-DwH"/>
+                <constraint firstItem="x1r-4O-09m" firstAttribute="leading" secondItem="ys5-qp-gJk" secondAttribute="leading" id="4hQ-bK-PZy"/>
+                <constraint firstItem="Shi-gh-nS0" firstAttribute="top" secondItem="x1r-4O-09m" secondAttribute="top" id="ig9-mk-FIM"/>
+                <constraint firstItem="x1r-4O-09m" firstAttribute="top" secondItem="ys5-qp-gJk" secondAttribute="top" constant="-50" id="kr7-qd-q88"/>
+                <constraint firstItem="Shi-gh-nS0" firstAttribute="width" secondItem="02o-7T-iqd" secondAttribute="width" id="pNx-K0-5DF"/>
+                <constraint firstItem="Shi-gh-nS0" firstAttribute="centerX" secondItem="x1r-4O-09m" secondAttribute="centerX" id="tRH-TD-BeK"/>
+                <constraint firstItem="ys5-qp-gJk" firstAttribute="trailing" secondItem="x1r-4O-09m" secondAttribute="trailing" id="yN4-b6-uA0"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="x1r-4O-09m"/>
+            <size key="customSize" width="204" height="183"/>
+            <connections>
+                <outlet property="carousel" destination="ys5-qp-gJk" id="EO5-uk-QlU"/>
+                <outlet property="titleLabel" destination="Shi-gh-nS0" id="uc4-uh-oiE"/>
+            </connections>
+            <point key="canvasLocation" x="51" y="-76.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

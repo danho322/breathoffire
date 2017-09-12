@@ -29,8 +29,12 @@ class FeedViewController: UIViewController {
         tableView.register(mapCellNib, forCellReuseIdentifier: CellIdentifiers.FeedMapCellIdentifier)
         let feedCellNib = UINib(nibName: String(describing: FeedTableViewCell.self), bundle: nil)
         tableView.register(feedCellNib , forCellReuseIdentifier: CellIdentifiers.FeedCellIdentifier)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        FirebaseService.sharedInstance.retrieveBreathFeed() { items in
+        FirebaseService.sharedInstance.retrieveBreathFeed(allowedUpdates: 2) { items in
             self.feedItems = items
             self.tableView.reloadData()
         }

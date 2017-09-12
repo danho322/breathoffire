@@ -199,6 +199,7 @@ class LoginViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
 
     var viewModel: LoginViewModel?
+    var completion: (()->Void)?
     
     internal var currentState: AuthViewState = .login
     internal var disposables = CompositeDisposable()

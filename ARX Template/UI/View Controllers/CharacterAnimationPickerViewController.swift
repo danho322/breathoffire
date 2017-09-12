@@ -226,6 +226,7 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        description row
         let cell = tableView.dequeueReusableCell(withIdentifier:  CellIdentifiers.Technique, for: indexPath)
         if let cell = cell as? TechniqueTableCell {
             if let sequenceContainer = sequenceDataContainer(indexPath: indexPath) {

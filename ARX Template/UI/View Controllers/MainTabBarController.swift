@@ -7,9 +7,56 @@
 //
 
 import UIKit
+import ESTabBarController
 import TabPageViewController
 import FontAwesomeKit
 import Instructions
+
+class ExampleIrregularityContentView: ESTabBarItemContentView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.imageView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        self.imageView.layer.borderWidth = 3.0
+        self.imageView.layer.borderColor = UIColor.init(white: 235 / 255.0, alpha: 1.0).cgColor
+        self.imageView.layer.cornerRadius = 35
+        self.insets = UIEdgeInsetsMake(-20, 0, 0, 0)
+        let transform = CGAffineTransform.identity
+        self.imageView.transform = transform
+        self.superview?.bringSubview(toFront: self)
+        
+        textColor = UIColor.clear
+        highlightTextColor = UIColor.clear
+        iconColor = ThemeManager.sharedInstance.focusForegroundColor()
+        highlightIconColor = ThemeManager.sharedInstance.focusColor()
+
+        backdropColor = UIColor.clear
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+class ExampleBasicContentView: ESTabBarItemContentView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        textColor = ThemeManager.sharedInstance.backgroundColor()
+        highlightTextColor = ThemeManager.sharedInstance.focusColor()
+        iconColor = ThemeManager.sharedInstance.backgroundColor()
+        highlightIconColor = ThemeManager.sharedInstance.focusColor()
+        backdropColor = UIColor.clear
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+}
 
 enum WalthroughInstructionType: Int {
     case infoButton = 0
@@ -63,7 +110,7 @@ enum WalthroughInstructionType: Int {
     }
 }
 
-class MainTabBarController: UITabBarController {
+class MainTabBarController: ESTabBarController {
     
     var walkthroughVC: BWWalkthroughViewController?
     let coachMarksController = CoachMarksController()
@@ -83,6 +130,12 @@ class MainTabBarController: UITabBarController {
     func setup() {
         
         hidesBottomBarWhenPushed = true
+        
+//        tabBar.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        let transparentImage = UIImage(named: "transparent")
+        tabBar.shadowImage = transparentImage
+        let darkImage = UIImage(named: "background_dark")
+        tabBar.backgroundImage = darkImage
         
         coachMarksController.dataSource = self
         coachMarksController.delegate = self
@@ -116,40 +169,36 @@ class MainTabBarController: UITabBarController {
                     let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     tabPageController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
                     
+                    
+                    let tabIcon = FAKIonIcons.iosWorldIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                    navigationController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Breath of Fire", image: tabIcon, selectedImage: tabIcon)
+                    
                     newViewControllers.append(navigationController)
                 } else {
                     if let viewController = viewController as? UINavigationController {
                         viewController.delegate = self
                     }
+                    
+                    if let tabTitle = viewController.tabBarItem.title {
+                        if tabTitle == "Breathe" {
+                            let icon = FAKIonIcons.flameIcon(withSize: 70)
+                            let flameImage = icon?.image(with: CGSize(width: 70, height: 70))
+                            viewController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(), title: "", image: flameImage, selectedImage: flameImage)
+                        } else if tabTitle == "Profile" {
+                            let icon = FAKIonIcons.iosPersonIcon(withSize: 25)
+                            let userImage = icon?.image(with: CGSize(width: 25, height: 25))
+                            viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Profile", image: userImage, selectedImage: userImage)
+                            
+                        }
+                    }
+                    
+                    
                     newViewControllers.append(viewController)
                 }
             }
         }
+        
         self.viewControllers = newViewControllers
-        
-        if let tabItems = tabBar.items {
-            for tabItem in tabItems {
-                if tabItem.title == "Breath of Fire" {
-                    let icon = FAKIonIcons.iosWorldIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
-                    tabItem.image = icon
-                } else if tabItem.title == "Breathe" {
-                    let icon = FAKIonIcons.flameIcon(withSize: 25)
-//                    icon?.addAttribute(NSAttributedStringKey.backgroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
-//                    icon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
-                    let flameImage = icon?.image(with: CGSize(width: 25, height: 25))
-                    tabItem.image = flameImage
-                    tabItem.badgeColor = ThemeManager.sharedInstance.focusColor()
-                } else if tabItem.title == "Profile" {
-                    let icon = FAKIonIcons.iosPersonIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
-                    tabItem.image = icon
-                }
-            }
-        }
-        
-        if let breathView = viewForTabAtIndex(tabBar: tabBar, index: 1) {
-            breathView.backgroundColor = ThemeManager.sharedInstance.focusColor()
-        }
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             [weak self] in
             if SessionManager.sharedInstance.shouldShowTutorial(type: .Walkthrough) {

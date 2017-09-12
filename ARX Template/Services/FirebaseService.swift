@@ -287,11 +287,13 @@ class FirebaseService: NSObject {
         ref.setValue(feedItem.valueDict())
     }
     
-    func retrieveBreathFeed(completionHandler: @escaping (([BreathFeedItem])->Void)) {
+    func retrieveBreathFeed(allowedUpdates: Int, completionHandler: @escaping (([BreathFeedItem])->Void)) {
+        var count = 0
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
-        ref.queryOrdered(byChild: "timestamp")
+        var handle: UInt?
+        handle = ref.queryOrdered(byChild: "timestamp")
             .queryLimited(toFirst: 50)
-            .observeSingleEvent(of: .value, with: { [unowned self] snapshot in
+            .observe(.value, with: { [unowned self] snapshot in
                 var items: [BreathFeedItem] = []
                 if let feedDict = snapshot.value as? NSDictionary {
                     for (key, feedItemDict) in feedDict {
@@ -300,6 +302,12 @@ class FirebaseService: NSObject {
                             if feedItem.isInappropriate == 0 {
                                 items.append(feedItem)
                             }
+                        }
+                    }
+                    count += 1
+                    if count == allowedUpdates {
+                        if let handle = handle {
+                            ref.removeObserver(withHandle: handle)
                         }
                     }
                 }

@@ -24,46 +24,44 @@ class MeViewController: UIViewController {
         
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         userNameLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-//        streakLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-//        breathStreakLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-//        playCountLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-//        tokenCountLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
 
         // Do any additional setup after loading the view.
         if let currentUserData = SessionManager.sharedInstance.currentUserData {
             userNameLabel.text = "Username: \(currentUserData.userName)"
-//            streakLabel.text = "\(currentUserData.streakCount) day streak!"
-//            breathStreakLabel.text = "\(currentUserData.breathStreakCount) breaths in current streak"
-//            playCountLabel.text = "Play Count: \(currentUserData.playCount)"
-//            tokenCountLabel.text = "Token Count: \(currentUserData.tokenCount)"
-            
         }
         
+        let isAnonymous = SessionManager.sharedInstance.isAnonymous ?? true
+        loginButton.setTitle("Sign into your account", for: .normal)
+        loginButton.isHidden = !isAnonymous
+        
         collectionView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        collectionView.register(UINib(nibName: "UserStatCollectionCell", bundle: nil), forCellWithReuseIdentifier: UserStatConstants.CellIdentifier)
+        collectionView.register(UINib(nibName: String(describing: UserStatCollectionCell.self), bundle: nil), forCellWithReuseIdentifier: UserStatConstants.CellIdentifier)
+        collectionView.register(UINib(nibName: String(describing: UserPackagesCollectionCell.self), bundle: nil), forCellWithReuseIdentifier: UserPackageCellConstants.CellIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         
-//        var myPackages: [AnimationPackage] = []
-//        let packages = DataLoader.sharedInstance.packages()
-//        for package in packages {
-//            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
-//            if hasPackage {
-//                myPackages.append(package)
-//                let sequencesInPackage = DataLoader.sharedInstance.sequencesInPackage(packageName: package.packageName)
-//            }
-//        }
-        
-//        purchasedPackages = myPackages
-//        carousel.dataSource = self
-//        carousel.delegate = self
-//        carousel.type = .rotary
+        var myPackages: [AnimationPackage] = []
+        let packages = DataLoader.sharedInstance.packages()
+        for package in packages {
+            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
+            if hasPackage {
+                myPackages.append(package)
+                let sequencesInPackage = DataLoader.sharedInstance.sequencesInPackage(packageName: package.packageName)
+            }
+        }
+
+        purchasedPackages = myPackages
     }
     
     @IBAction func onLoginTap(_ sender: Any) {
-        if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            loginVC.viewModel = LoginViewModel()
-            present(loginVC, animated: true, completion: nil)
+        if SessionManager.sharedInstance.isAnonymous ?? true {
+            if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                loginVC.viewModel = LoginViewModel()
+                loginVC.completion = { [unowned self] in
+                    self.collectionView.reloadData()
+                }
+                present(loginVC, animated: true, completion: nil)
+            }
         }
     }
     
@@ -141,40 +139,85 @@ extension MeViewController: UICollectionViewDelegate {
     }
 }
 
+enum StatType: Int {
+    case totalBreath = 0
+    case currentDayStreak = 1
+    case currentBreathStreak = 2
+    case maxDayStreak = 3
+    case maxBreathStreak = 4
+    case packages = 5
+    case count = 6
+    
+    func title() -> String {
+        switch self {
+        case .totalBreath:
+            return "Total Breaths"
+        case .currentDayStreak:
+            return "Current Days"
+        case .currentBreathStreak:
+            return "Current Breaths"
+        case .maxDayStreak:
+            return "Max Days"
+        case .maxBreathStreak:
+            return "Max Breaths"
+        default:
+            return ""
+        }
+    }
+    
+    func statString(userData: UserData) -> String {
+        switch self {
+        case .totalBreath:
+            return "\(userData.totalBreathCount)"
+        case .currentDayStreak:
+            return "\(userData.streakCount)"
+        case .currentBreathStreak:
+            return "\(userData.breathStreakCount)"
+        case .maxDayStreak:
+            return "\(userData.maxDayStreak)"
+        case .maxBreathStreak:
+            return "\(userData.maxBreathStreak)"
+        default:
+            return ""
+        }
+    }
+    
+    func cellIdentifier() -> String {
+        if self == .packages {
+            return UserPackageCellConstants.CellIdentifier
+        }
+        return UserStatConstants.CellIdentifier
+    }
+}
+
 extension MeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return StatType.count.rawValue
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserStatConstants.CellIdentifier, for: indexPath)
-        if let cell = cell as? UserStatCollectionCell {
-            
-            var title = ""
-            var stat = ""
-            if let userData = SessionManager.sharedInstance.currentUserData {
-                if indexPath.row == 0 {
-                    title = "Total"
-                    stat = "\(userData.totalBreathCount)"
-                } else if indexPath.row == 1 {
-                    title = "Current streak"
-                    stat = "\(userData.streakCount)"
-                } else if indexPath.row == 2 {
-                    title = "Current breath streak"
-                    stat = "\(userData.breathStreakCount)"
-                } else if indexPath.row == 3 {
-                    title = "Max day streak"
-                    stat = "\(userData.maxDayStreak)"
-                } else if indexPath.row == 4 {
-                    title = "Max breath streak"
-                    stat = "\(userData.maxBreathStreak)"
+        if let statType = StatType(rawValue: indexPath.row) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: statType.cellIdentifier(), for: indexPath)
+            if let cell = cell as? UserStatCollectionCell {
+                
+                var title = ""
+                var stat = ""
+                if let userData = SessionManager.sharedInstance.currentUserData {
+                    title = statType.title()
+                    stat = statType.statString(userData: userData)
                 }
+                
+                cell.titleLabel.text = title
+                cell.statLabel.text = stat
+            } else if let cell = cell as? UserPackagesCollectionCell {
+                cell.carousel.dataSource = self
+                cell.carousel.delegate = self
+                cell.carousel.type = .rotary
+
             }
-            
-            cell.titleLabel.text = title
-            cell.statLabel.text = stat
+            return cell
         }
-        return cell
+        return UICollectionViewCell()
     }
 }
 
@@ -184,11 +227,15 @@ extension MeViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         //2
-        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let availableWidth = view.frame.width - paddingSpace
-        let widthPerItem = indexPath.row == 0 ? availableWidth : availableWidth / itemsPerRow
-        
-        return CGSize(width: widthPerItem, height: widthPerItem)
+        if indexPath.row != StatType.packages.rawValue {
+            let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+            let availableWidth = view.frame.width - paddingSpace
+            let widthPerItem = indexPath.row == 0 ? availableWidth : availableWidth / itemsPerRow
+            let heightPerItem = availableWidth / itemsPerRow
+            
+            return CGSize(width: widthPerItem, height: heightPerItem)
+        }
+        return CGSize(width: view.frame.width, height: 200)
     }
 
     //3

@@ -18,14 +18,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Air-cz-mGo">
-                        <rect key="frame" x="64" y="20" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Air-cz-mGo">
+                        <rect key="frame" x="5" y="20" width="160" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwa-MS-s65">
-                        <rect key="frame" x="64" y="75" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwa-MS-s65">
+                        <rect key="frame" x="5" y="50.5" width="160" height="109.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -33,10 +33,15 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="hwa-MS-s65" firstAttribute="centerY" secondItem="wTc-pC-QeX" secondAttribute="centerY" id="4rq-Gq-MXJ"/>
+                <constraint firstItem="wTc-pC-QeX" firstAttribute="trailing" secondItem="Air-cz-mGo" secondAttribute="trailing" constant="5" id="0yd-Qe-TW6"/>
                 <constraint firstItem="hwa-MS-s65" firstAttribute="centerX" secondItem="wTc-pC-QeX" secondAttribute="centerX" id="cRh-7s-2CI"/>
+                <constraint firstItem="Air-cz-mGo" firstAttribute="leading" secondItem="wTc-pC-QeX" secondAttribute="leading" constant="5" id="gIQ-mh-mJB"/>
+                <constraint firstItem="hwa-MS-s65" firstAttribute="top" secondItem="Air-cz-mGo" secondAttribute="bottom" constant="10" id="hOn-Lz-6yo"/>
+                <constraint firstItem="wTc-pC-QeX" firstAttribute="bottom" secondItem="hwa-MS-s65" secondAttribute="bottom" constant="10" id="jwQ-cL-sO8"/>
                 <constraint firstItem="Air-cz-mGo" firstAttribute="centerX" secondItem="wTc-pC-QeX" secondAttribute="centerX" id="pIu-xu-5x8"/>
                 <constraint firstItem="Air-cz-mGo" firstAttribute="top" secondItem="wTc-pC-QeX" secondAttribute="top" constant="20" id="puL-m6-rog"/>
+                <constraint firstItem="wTc-pC-QeX" firstAttribute="trailing" secondItem="hwa-MS-s65" secondAttribute="trailing" constant="5" id="qPW-eJ-7UW"/>
+                <constraint firstItem="hwa-MS-s65" firstAttribute="leading" secondItem="wTc-pC-QeX" secondAttribute="leading" constant="5" id="yEV-eH-9gF"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="wTc-pC-QeX"/>
             <connections>

@@ -20,6 +20,8 @@
 		D43751511F5D1141004B6B9E /* UserStatCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */; };
 		D43751531F5D1196004B6B9E /* UserStatCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43751521F5D1196004B6B9E /* UserStatCollectionCell.swift */; };
 		D43751551F5DB967004B6B9E /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43751541F5DB967004B6B9E /* InfoViewController.swift */; };
+		D43988F81F6798A300AE367C /* UserPackagesCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */; };
+		D43988FA1F67994500AE367C /* UserPackagesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */; };
 		D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B971F048282002F369F /* FocusSquare.swift */; };
 		D43D4BAA1F048282002F369F /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B981F048282002F369F /* Gesture.swift */; };
 		D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B991F048282002F369F /* HitTestVisualization.swift */; };
@@ -177,6 +179,8 @@
 		D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserStatCollectionCell.xib; sourceTree = "<group>"; };
 		D43751521F5D1196004B6B9E /* UserStatCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatCollectionCell.swift; sourceTree = "<group>"; };
 		D43751541F5DB967004B6B9E /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserPackagesCollectionCell.xib; sourceTree = "<group>"; };
+		D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPackagesCollectionCell.swift; sourceTree = "<group>"; };
 		D43D4B951F048282002F369F /* ARSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARSettingsViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/ARSettingsViewController.swift; sourceTree = "<group>"; };
 		D43D4B971F048282002F369F /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
 		D43D4B981F048282002F369F /* Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 		D4612E321F231D66007D13C3 /* GINInviteResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GINInviteResources.bundle; sourceTree = "<group>"; };
 		D4612E331F231D66007D13C3 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
 		D4612E341F231D66007D13C3 /* GPPACLPickerResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GPPACLPickerResources.bundle; sourceTree = "<group>"; };
+		D4626DCA1F663407009C8C6A /* ESTabBarController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ESTabBarController.framework; path = Carthage/Build/iOS/ESTabBarController.framework; sourceTree = "<group>"; };
 		D468FE2F1F48AADA00DEBAE6 /* HCSStarRatingView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HCSStarRatingView.framework; path = Carthage/Build/iOS/HCSStarRatingView.framework; sourceTree = "<group>"; };
 		D468FE301F49130A00DEBAE6 /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
 		D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TabPageViewController.framework; path = Carthage/Build/iOS/TabPageViewController.framework; sourceTree = "<group>"; };
@@ -459,6 +464,7 @@
 			isa = PBXGroup;
 			children = (
 				D43751521F5D1196004B6B9E /* UserStatCollectionCell.swift */,
+				D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */,
 			);
 			path = "Collection Cells";
 			sourceTree = "<group>";
@@ -504,6 +510,7 @@
 				D4B93FCC1F4BDF9100BE092E /* FeedMapTableViewCell.xib */,
 				D403472D1F5C6968008AF23D /* Walkthrough.storyboard */,
 				D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */,
+				D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */,
 			);
 			path = "Interface Builder";
 			sourceTree = "<group>";
@@ -522,6 +529,7 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4626DCA1F663407009C8C6A /* ESTabBarController.framework */,
 				D4EE12E81F61A3E800A55E9F /* Result.framework */,
 				D4EE12E31F6106D500A55E9F /* SwiftLCS.framework */,
 				D4EE12E11F6106C400A55E9F /* ReactiveCocoa.framework */,
@@ -788,6 +796,7 @@
 				D49102FD1EFB05CE008A528E /* art.scnassets in Resources */,
 				D422C2B01F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib in Resources */,
 				D49103071EFB05CE008A528E /* LaunchScreen.storyboard in Resources */,
+				D43988F81F6798A300AE367C /* UserPackagesCollectionCell.xib in Resources */,
 				D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */,
 				D49418931F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib in Resources */,
 				D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */,
@@ -826,6 +835,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ESTabBarController.framework",
 			);
 			outputPaths = (
 			);
@@ -885,6 +895,7 @@
 				D43D4BAA1F048282002F369F /* Gesture.swift in Sources */,
 				D45621481F0CB3D00052E218 /* StatManager.swift in Sources */,
 				D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */,
+				D43988FA1F67994500AE367C /* UserPackagesCollectionCell.swift in Sources */,
 				D4A04AF81F09FD7900BEA822 /* Uke.swift in Sources */,
 				D4B93FCB1F4BDABE00BE092E /* FeedMapTableViewCell.swift in Sources */,
 				D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */,
@@ -1050,7 +1061,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 43WH255N2S;
+				DEVELOPMENT_TEAM = 8UJ4JPPBN2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1059,7 +1070,7 @@
 				INFOPLIST_FILE = "ARX Template/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.iarxapps.ARX-Template";
+				PRODUCT_BUNDLE_IDENTIFIER = com.arxapps.breathe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ARX Template/Helpers/LFHeatMap/ARX Template-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1074,7 +1085,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 43WH255N2S;
+				DEVELOPMENT_TEAM = 8UJ4JPPBN2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Firebase/**",
@@ -1084,7 +1095,7 @@
 				INFOPLIST_FILE = "ARX Template/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.iarxapps.ARX-Template";
+				PRODUCT_BUNDLE_IDENTIFIER = com.arxapps.breathe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ARX Template/Helpers/LFHeatMap/ARX Template-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
