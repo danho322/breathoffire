@@ -22,6 +22,8 @@
 		D43751551F5DB967004B6B9E /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43751541F5DB967004B6B9E /* InfoViewController.swift */; };
 		D43988F81F6798A300AE367C /* UserPackagesCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */; };
 		D43988FA1F67994500AE367C /* UserPackagesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */; };
+		D43988FC1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */; };
+		D43988FE1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43988FD1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift */; };
 		D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B971F048282002F369F /* FocusSquare.swift */; };
 		D43D4BAA1F048282002F369F /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B981F048282002F369F /* Gesture.swift */; };
 		D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B991F048282002F369F /* HitTestVisualization.swift */; };
@@ -181,6 +183,8 @@
 		D43751541F5DB967004B6B9E /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserPackagesCollectionCell.xib; sourceTree = "<group>"; };
 		D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPackagesCollectionCell.swift; sourceTree = "<group>"; };
+		D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterAnimationPickerDescriptionTableCell.xib; sourceTree = "<group>"; };
+		D43988FD1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerDescriptionTableCell.swift; sourceTree = "<group>"; };
 		D43D4B951F048282002F369F /* ARSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARSettingsViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/ARSettingsViewController.swift; sourceTree = "<group>"; };
 		D43D4B971F048282002F369F /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
 		D43D4B981F048282002F369F /* Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
@@ -456,6 +460,7 @@
 				D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */,
 				D4DF08141F414FAE00E8F0EE /* FeedTableViewCell.swift */,
 				D4B93FCA1F4BDABE00BE092E /* FeedMapTableViewCell.swift */,
+				D43988FD1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift */,
 			);
 			path = "Table Cells";
 			sourceTree = "<group>";
@@ -511,6 +516,7 @@
 				D403472D1F5C6968008AF23D /* Walkthrough.storyboard */,
 				D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */,
 				D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */,
+				D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */,
 			);
 			path = "Interface Builder";
 			sourceTree = "<group>";
@@ -805,6 +811,7 @@
 				D494188D1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib in Resources */,
 				D45352BB1EFDDC5100C09259 /* CharacterHUDView.xib in Resources */,
 				D45621401F0B58BB0052E218 /* TechniqueTableCell.xib in Resources */,
+				D43988FC1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib in Resources */,
 				D46B68D21F40028500DAB0AD /* BreatheCompleteView.xib in Resources */,
 				D4B93FCD1F4BDF9100BE092E /* FeedMapTableViewCell.xib in Resources */,
 				D4A04B041F0B173000BEA822 /* RelatedAnimationsView.xib in Resources */,
@@ -880,6 +887,7 @@
 				D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */,
 				D4D7318B1EFB8B8400C65E99 /* DataLoader.swift in Sources */,
 				D45621421F0B59730052E218 /* TechniqueTableCell.swift in Sources */,
+				D43988FE1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift in Sources */,
 				D4730ED91F14444D003097BE /* TechniqueSearchViewController.swift in Sources */,
 				D45352C11EFDDDBC00C09259 /* UIViewExtensions.swift in Sources */,
 				D4A04B021F0B146200BEA822 /* RelatedAnimationsView.swift in Sources */,

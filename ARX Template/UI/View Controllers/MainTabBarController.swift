@@ -253,6 +253,9 @@ class MainTabBarController: ESTabBarController {
             for view in tabBar.subviews {
                 if view.isUserInteractionEnabled {
                     if i == index {
+                        if let imageView = view.subviews.filter({$0 is UIImageView}).first {
+                            return imageView
+                        }
                         return view
                     }
                     i += 1

@@ -298,7 +298,7 @@ class SessionManager {
     var tempARTechniqueFlag = false
     
     func shouldShowTutorial(type: TutorialInstructionType) -> Bool {
-        return false
+//        return false
         // TODO: retrieve from user data
         if type == .Walkthrough {
             return !tempWalkthroughFlag

@@ -23,15 +23,13 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     @IBOutlet weak var sceneView: SCNView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadButton: UIButton!
-    @IBOutlet weak var packageTitleLabel: UILabel!
-    @IBOutlet weak var packageDescriptionLabel: UILabel!
-    @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var modeLabel: UILabel!
     @IBOutlet weak var modeSwitch: UISwitch!
     @IBOutlet weak var audioLabel: UILabel!
     @IBOutlet weak var audioSwitch: UISwitch!
     
     var packageName: String?
+    var packageDescription: String?
     
     internal var sectionSequenceDict = Dictionary<String, [String]>()
     internal var sectionNames: [String] = []
@@ -39,6 +37,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     internal var model: VirtualObject?
     internal var sequenceToLoad: AnimationSequenceDataContainer?
     internal var sliderValue: Float = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,15 +48,14 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         var rowIndex = 0
         var index: IndexPath?
         
-        sectionNames = DataLoader.sharedInstance.sequenceSections()
+        sectionNames = ["description"]
+        sectionNames += DataLoader.sharedInstance.sequenceSections()
         for sectionName in sectionNames {
             if let sequenceRowArray = DataLoader.sharedInstance.sequenceRows(sectionName: sectionName) {
                 if let packageName = packageName {
 
-                    packageTitleLabel.text = packageName
-                    
                     if let packageDetails = DataLoader.sharedInstance.package(packageName: packageName) {
-                        packageDescriptionLabel.text = packageDetails.packageDescription
+                        packageDescription = packageDetails.packageDescription
                     }
                     
                     var filteredArray: [String] = []
@@ -84,7 +82,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         
         let techniquesNib = UINib(nibName: String(describing: TechniqueTableCell.self), bundle: nil)
         tableView.register(techniquesNib , forCellReuseIdentifier: CellIdentifiers.Technique)
-        
+        tableView.register(UINib(nibName: String(describing: CharacterAnimationPickerDescriptionTableCell.self), bundle: nil), forCellReuseIdentifier: CharacterAnimationPickerDescriptionConstants.CellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -96,13 +94,9 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         loadButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(14)
         loadButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
         
-        packageTitleLabel.textColor = ThemeManager.sharedInstance.textColor()
-        packageDescriptionLabel.textColor = ThemeManager.sharedInstance.textColor()
         modeLabel.textColor = ThemeManager.sharedInstance.textColor()
         audioLabel.textColor = ThemeManager.sharedInstance.textColor()
 
-        packageTitleLabel.font = ThemeManager.sharedInstance.defaultFont(20)
-        packageDescriptionLabel.font = ThemeManager.sharedInstance.defaultFont(16)
         modeLabel.font = ThemeManager.sharedInstance.defaultFont(12)
         
         modeSwitch.onTintColor = ThemeManager.sharedInstance.focusColor()
@@ -168,7 +162,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
                 alphaAnimator.startAnimation()
                 
                 if let index = index {
-                    self.tableView.selectRow(at: index, animated: true, scrollPosition: .top)
+                    self.tableView.selectRow(at: index, animated: true, scrollPosition: .none)
                     self.handleSelectRow(indexPath: index)
                 }
             }
@@ -217,6 +211,10 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
 // MARK: - UITableViewDataSource
 extension CharacterAnimationPickerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
+        
         let sequenceDict = sectionSequenceDict[sectionNames[section]]
         return sequenceDict?.count ?? 0
     }
@@ -227,6 +225,14 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        description row
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CharacterAnimationPickerDescriptionConstants.CellIdentifier, for: indexPath)
+            if let cell = cell as? CharacterAnimationPickerDescriptionTableCell {
+                cell.packageNameLabel.text = packageName
+                cell.packageDescriptionLabel.text = packageDescription
+            }
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier:  CellIdentifiers.Technique, for: indexPath)
         if let cell = cell as? TechniqueTableCell {
             if let sequenceContainer = sequenceDataContainer(indexPath: indexPath) {
@@ -238,6 +244,10 @@ extension CharacterAnimationPickerViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return CGFloat.leastNonzeroMagnitude
+        }
+        
         let rowCount = sectionSequenceDict[sectionNames[section]]?.count ?? 0
         return rowCount > 0 ? 30 : CGFloat.leastNonzeroMagnitude
     }
