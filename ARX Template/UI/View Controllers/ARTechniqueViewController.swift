@@ -1356,10 +1356,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         print("finished with sequence \(object.animationSequence)")
         stopTechniqueServices()
         
-        let breathCount = breathTimerView.currentBreathCount()
+        let breathTime = breathTimerService?.breathProgram.sessionTime() ?? 0
         if let last = object.animationSequence.last {
             if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
-                SessionManager.sharedInstance.onPlayFinish(breathCount: breathCount)
+                SessionManager.sharedInstance.onPlayFinish(breathTimeInterval: breathTime)
                 
                 let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: Sizes.ScreenHeight)
                 
@@ -1382,7 +1382,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                                                                 self.dismiss()
                 })
                 breathCompletionView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-                breathCompletionView.update(breathCount: breathCount, screenshot: screenShot, sequenceContainer: nil)
+                breathCompletionView.update(breathCount: breathTimerView.currentBreathCount(), screenshot: screenShot, sequenceContainer: nil)
                 view.addSubview(breathCompletionView)
                 breathCompletionView.animateIn()
             }

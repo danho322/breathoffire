@@ -29,12 +29,12 @@ struct UserData {
     // all time
     let playCount: Int
     let maxDayStreak: Int
-    let maxBreathStreak: Int
-    let totalBreathCount: Int
+    let maxTimeStreak: Int
+    let totalTimeCount: Int
     
     // current streak
-    let streakCount: Int
-    let breathStreakCount: Int
+    let dayStreakCount: Int
+    let timeStreakCount: Int
     let lastStreakTimestamp: TimeInterval
 
     let purchasedPackages: [String: Any]
@@ -45,10 +45,10 @@ struct UserData {
         tokenCount = snapshotDict[UserAttribute.tokenCount.rawValue] as? Int ?? 0
         playCount = snapshotDict[UserAttribute.playCount.rawValue] as? Int ?? 0
         maxDayStreak = snapshotDict[UserAttribute.maxDayStreak.rawValue] as? Int ?? 0
-        maxBreathStreak = snapshotDict[UserAttribute.maxBreathStreak.rawValue] as? Int ?? 0
-        streakCount = snapshotDict[UserAttribute.streakCount.rawValue] as? Int ?? 0
-        breathStreakCount = snapshotDict[UserAttribute.breathStreakCount.rawValue] as? Int ?? 0
-        totalBreathCount = snapshotDict[UserAttribute.totalBreathCount.rawValue] as? Int ?? 0
+        maxTimeStreak = snapshotDict[UserAttribute.maxTimeStreak.rawValue] as? Int ?? 0
+        dayStreakCount = snapshotDict[UserAttribute.dayStreakCount.rawValue] as? Int ?? 0
+        timeStreakCount = snapshotDict[UserAttribute.timeStreakCount.rawValue] as? Int ?? 0
+        totalTimeCount = snapshotDict[UserAttribute.totalTimeCount.rawValue] as? Int ?? 0
         lastStreakTimestamp = snapshotDict[UserAttribute.lastStreakTimestamp.rawValue] as? TimeInterval ?? 0
         if let packagesDict = snapshotDict[UserAttribute.purchasedPackages.rawValue] as? [String: Any] {
             purchasedPackages = packagesDict
@@ -70,12 +70,12 @@ struct UserData {
     
     func hasMinimumAttribute(_ attribute: UserAttribute) -> Bool {
         switch attribute {
-        case .maxBreathStreak:
-            return maxBreathStreak > 0
+        case .maxTimeStreak:
+            return maxTimeStreak > 0
         case .maxDayStreak:
             return maxDayStreak > 0
-        case .totalBreathCount:
-            return totalBreathCount > 0
+        case .totalTimeCount:
+            return totalTimeCount > 0
         default:
             return false
         }
@@ -236,7 +236,7 @@ class FirebaseService: NSObject {
     
     // MARK: - High Score
     
-    func retrieveCurrentBreathStreaks(completionHandler: @escaping (([UserData])->Void)) {
+    func retrieveCurrentTimeStreaks(completionHandler: @escaping (([UserData])->Void)) {
         let startTime = Date().timeIntervalSince1970 - 60 * 60 * 24 // past 24 hours
         let ref = Database.database().reference().child("users/\(Constants.AppKey)")
         ref.queryOrdered(byChild: UserAttribute.lastStreakTimestamp.rawValue)
@@ -249,13 +249,13 @@ class FirebaseService: NSObject {
                         if let userDataDict = userDataDict as? NSDictionary,
                             let key = key as? String {
                             let userData = UserData(userId: key, snapshotDict: userDataDict)
-                            if userData.breathStreakCount > 0 {
+                            if userData.timeStreakCount > 0 {
                                 items.append(userData)
                             }
                         }
                     }
                 }
-                completionHandler(items.sorted(by: { $0.breathStreakCount > $1.breathStreakCount }))
+                completionHandler(items.sorted(by: { $0.timeStreakCount > $1.timeStreakCount }))
             })
     }
     

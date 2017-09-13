@@ -39,6 +39,7 @@
 		D44B24E41F182E7E00459032 /* VirtualObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44B24E31F182E7E00459032 /* VirtualObject.swift */; };
 		D44EE60F1EFCDFA0003A1A3E /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44EE60E1EFCDFA0003A1A3E /* OptionsViewController.swift */; };
 		D44EE6111EFD388F003A1A3E /* TechniqueSceneKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44EE6101EFD388F003A1A3E /* TechniqueSceneKitViewController.swift */; };
+		D45118D61F68FBF400610F08 /* WalkthroughFinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45118D51F68FBF400610F08 /* WalkthroughFinalViewController.swift */; };
 		D45352BB1EFDDC5100C09259 /* CharacterHUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45352BA1EFDDC5100C09259 /* CharacterHUDView.xib */; };
 		D45352BD1EFDDCA600C09259 /* CharacterHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45352BC1EFDDCA600C09259 /* CharacterHUDView.swift */; };
 		D45352BF1EFDDD5600C09259 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45352BE1EFDDD5600C09259 /* XibView.swift */; };
@@ -200,6 +201,7 @@
 		D44B737C1F1A661E00115C64 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		D44EE60E1EFCDFA0003A1A3E /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		D44EE6101EFD388F003A1A3E /* TechniqueSceneKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueSceneKitViewController.swift; sourceTree = "<group>"; };
+		D45118D51F68FBF400610F08 /* WalkthroughFinalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughFinalViewController.swift; sourceTree = "<group>"; };
 		D45352BA1EFDDC5100C09259 /* CharacterHUDView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterHUDView.xib; sourceTree = "<group>"; };
 		D45352BC1EFDDCA600C09259 /* CharacterHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterHUDView.swift; sourceTree = "<group>"; };
 		D45352BE1EFDDD5600C09259 /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */,
 				D43751541F5DB967004B6B9E /* InfoViewController.swift */,
 				D4EE12E61F6107B100A55E9F /* LoginViewController.swift */,
+				D45118D51F68FBF400610F08 /* WalkthroughFinalViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -924,6 +927,7 @@
 				D4B06A901F2AD87C004DFE50 /* Nodes.swift in Sources */,
 				D45352BF1EFDDD5600C09259 /* XibView.swift in Sources */,
 				D4B06A941F2BA1F0004DFE50 /* PortalRoomObject.swift in Sources */,
+				D45118D61F68FBF400610F08 /* WalkthroughFinalViewController.swift in Sources */,
 				D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */,
 				D43D4BB51F048282002F369F /* TextManager.swift in Sources */,
 				D43D4BAF1F048282002F369F /* Utilities.swift in Sources */,

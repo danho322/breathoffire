@@ -15,12 +15,12 @@ import CoreLocation
 // Stores the user specific data
 enum UserAttribute: String {
     case userName = "userName"
-    case streakCount = "streakCount"
+    case dayStreakCount = "dayStreakCount"
     case playCount = "playCount"
     case maxDayStreak = "maxDayStreak"
-    case maxBreathStreak = "maxBreathStreak"
-    case breathStreakCount = "breathStreakCount"
-    case totalBreathCount = "totalBreathCount"
+    case maxTimeStreak = "maxTimeStreak"
+    case timeStreakCount = "timeStreakCount"
+    case totalTimeCount = "totalTimeCount"
     case lastStreakTimestamp = "lastStreakTimestamp"
     case lastLoggedIn = "lastLoggedIn"
     case tokenCount = "tokenCount"
@@ -85,19 +85,20 @@ class SessionManager {
         }
     }
     
-    func onPlayFinish(breathCount: Int = 0) {
+    func onPlayFinish(breathTimeInterval: TimeInterval = 0) {
+        let breathTime = Int(breathTimeInterval)
         if let currentUserData = currentUserData {
             let lastPlay = Date(timeIntervalSince1970: currentUserData.lastStreakTimestamp)
             if Calendar.current.isDateInYesterday(lastPlay) {
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .streakCount, defaultValue: 1)
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .breathStreakCount, count: breathCount)
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .dayStreakCount, defaultValue: 1)
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .timeStreakCount, count: breathTime)
             } else if Calendar.current.isDateInToday(lastPlay) {
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .breathStreakCount, count: breathCount)
+                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .timeStreakCount, count: breathTime)
             } else if !Calendar.current.isDateInToday(lastPlay) {
-                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .streakCount, value: 1)
-                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .breathStreakCount, value: 0)
+                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .dayStreakCount, value: 1)
+                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .timeStreakCount, value: 0)
             }
-            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .maxBreathStreak, count: breathCount, defaultValue: 0)
+            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .maxTimeStreak, count: breathTime, defaultValue: 0)
             FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .lastStreakTimestamp, value: Date().timeIntervalSince1970)
             
             updateLongestStreaks(userId: currentUserData.userId)
@@ -120,11 +121,11 @@ class SessionManager {
     
     func updateLongestStreaks(userId: String) {
         retrieveCurrentUser(userId: userId) { userData in
-            if userData.breathStreakCount > userData.maxBreathStreak {
-                FirebaseService.sharedInstance.setUserAttribute(userId: userId, attribute: UserAttribute.maxBreathStreak, value: userData.breathStreakCount)
+            if userData.timeStreakCount > userData.maxTimeStreak {
+                FirebaseService.sharedInstance.setUserAttribute(userId: userId, attribute: UserAttribute.maxTimeStreak, value: userData.timeStreakCount)
             }
-            if userData.streakCount > userData.maxDayStreak {
-                FirebaseService.sharedInstance.setUserAttribute(userId: userId, attribute: UserAttribute.maxDayStreak, value: userData.streakCount)
+            if userData.dayStreakCount > userData.maxDayStreak {
+                FirebaseService.sharedInstance.setUserAttribute(userId: userId, attribute: UserAttribute.maxDayStreak, value: userData.dayStreakCount)
             }
         }
     }

@@ -140,26 +140,26 @@ extension MeViewController: UICollectionViewDelegate {
 }
 
 enum StatType: Int {
-    case totalBreath = 0
+    case totalTime = 0
     case currentDayStreak = 1
-    case currentBreathStreak = 2
+    case currentTimeStreak = 2
     case maxDayStreak = 3
-    case maxBreathStreak = 4
+    case maxTimeStreak = 4
     case packages = 5
     case count = 6
     
     func title() -> String {
         switch self {
-        case .totalBreath:
-            return "Total Breaths"
+        case .totalTime:
+            return "Total Time Breathed"
         case .currentDayStreak:
-            return "Current Days"
-        case .currentBreathStreak:
-            return "Current Breaths"
+            return "Current Day Streak"
+        case .currentTimeStreak:
+            return "Current Time Streak"
         case .maxDayStreak:
-            return "Max Days"
-        case .maxBreathStreak:
-            return "Max Breaths"
+            return "Max Day Streak"
+        case .maxTimeStreak:
+            return "Max Time Streak"
         default:
             return ""
         }
@@ -167,16 +167,16 @@ enum StatType: Int {
     
     func statString(userData: UserData) -> String {
         switch self {
-        case .totalBreath:
-            return "\(userData.totalBreathCount)"
+        case .totalTime:
+            return "\(userData.totalTimeCount)"
         case .currentDayStreak:
-            return "\(userData.streakCount)"
-        case .currentBreathStreak:
-            return "\(userData.breathStreakCount)"
+            return "\(userData.dayStreakCount)"
+        case .currentTimeStreak:
+            return "\(userData.timeStreakCount)"
         case .maxDayStreak:
             return "\(userData.maxDayStreak)"
-        case .maxBreathStreak:
-            return "\(userData.maxBreathStreak)"
+        case .maxTimeStreak:
+            return "\(userData.maxTimeStreak)"
         default:
             return ""
         }

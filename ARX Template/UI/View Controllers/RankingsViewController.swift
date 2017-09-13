@@ -31,7 +31,7 @@ class RankingsViewController: UIViewController {
 //        let RankingsCellNib = UINib(nibName: String(describing: RankingsTableViewCell.self), bundle: nil)
 //        tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingsCellIdentifier)
         
-        FirebaseService.sharedInstance.retrieveCurrentBreathStreaks() { [unowned self] topUsers in
+        FirebaseService.sharedInstance.retrieveCurrentTimeStreaks() { [unowned self] topUsers in
             self.userRankings = topUsers
             self.tableView.reloadData()
         }
@@ -41,7 +41,7 @@ class RankingsViewController: UIViewController {
             self.tableView.reloadData()
         }
         
-        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxBreathStreak) { [unowned self] topBreathUsers in
+        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxTimeStreak) { [unowned self] topBreathUsers in
             self.breathRankings = topBreathUsers
             self.tableView.reloadData()
         }
@@ -94,17 +94,17 @@ extension RankingsViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             if let user = userRankings[safe: indexPath.row] {
                 textLabel = user.userName
-                detailLabel = "\(user.breathStreakCount) breath streak"
+                detailLabel = "\(user.timeStreakCount) time streak"
             }
         } else if indexPath.section == 1 {
             if let user = dayRankings[safe: indexPath.row] {
                 textLabel = user.userName
-                detailLabel = "\(user.maxDayStreak) days"
+                detailLabel = "\(user.maxDayStreak) days max"
             }
         } else if indexPath.section == 2 {
             if let user = breathRankings[safe: indexPath.row] {
                 textLabel = user.userName
-                detailLabel = "\(user.maxBreathStreak) breaths"
+                detailLabel = "\(user.maxTimeStreak) time max"
             }
         }
         
