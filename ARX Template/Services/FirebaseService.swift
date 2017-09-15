@@ -12,6 +12,7 @@ import FirebaseStorage
 import FirebaseAuth
 import UIKit
 import MapKit
+import Gzip
 
 struct Constants {
     static let AppKey = "jiujitsu"
@@ -320,10 +321,12 @@ class FirebaseService: NSObject {
             let ref = Database.database().reference().child("feed/\(Constants.AppKey)/\(key)")
             ref.removeValue()
             
-            let imageRef = Storage.storage().reference().child(feedItem.imagePath)
-            imageRef.delete(completion: { error in
-                print("Error deleting file: \(error)")
-            })
+            for imagePath in feedItem.imagePathArray {
+                let imageRef = Storage.storage().reference().child(imagePath)
+                imageRef.delete(completion: { error in
+                    print("Error deleting file: \(error)")
+                })
+            }
         }
     }
     
@@ -340,6 +343,21 @@ class FirebaseService: NSObject {
         self.downloadFileIfNecessary(path: path) {
             if let image = UIImage(contentsOfFile: "\(self.getDocumentsDirectory())/\(path)") {
                 completion(image)
+            }
+        }
+    }
+    
+    func retrieveDataAtPath(path: String, completion: @escaping (Data) -> Void) {
+        self.downloadFileIfNecessary(path: path) {
+            if let data = try? NSData(contentsOfFile: "\(self.getDocumentsDirectory())/\(path)") as Data {
+                // gunzip
+                let decompressedData: Data
+                if data.isGzipped {
+                    decompressedData = try! data.gunzipped()
+                } else {
+                    decompressedData = data
+                }
+                completion(decompressedData)
             }
         }
     }
@@ -501,6 +519,42 @@ class FirebaseService: NSObject {
         }
     }
     
+    func uploadFeedData(data: Data?, completion: @escaping ((String?)->Void)) {
+        if let data = data {
+            let compressedData = try! data.gzipped(level: .bestCompression)
+            
+            // Create a root reference
+            let storageRef = Storage.storage().reference()
+            
+            // Create a reference to the file you want to upload
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-yyyy"
+            dateFormatter.locale = Locale.init(identifier: "en_GB")
+            let date = Date()
+            let dateString = dateFormatter.string(from: date)
+            
+            
+            let path = "images/\(Constants.AppKey)/uploads/\(dateString)/\(UUID().uuidString).gif"
+            let riversRef = storageRef.child(path)
+            
+            // Upload the file to the path "images/rivers.jpg"
+            let uploadTask = riversRef.putData(compressedData, metadata: nil) { (metadata, error) in
+                print(metadata)
+                print(error)
+                guard let metadata = metadata else {
+                    // Uh-oh, an error occurred!
+                    completion(nil)
+                    return
+                }
+                // Metadata contains file metadata such as size, content-type, and download URL.
+                let downloadURL = metadata.downloadURL
+                completion(path)
+            }
+        } else {
+            completion(nil)
+        }
+    }
+    
     func uploadFeedImage(image: UIImage, completion: @escaping ((String?)->Void)) {
         if let data = UIImagePNGRepresentation(image) {
             
@@ -574,7 +628,7 @@ struct BreathFeedItem {
     let key: String?
     let timestamp: TimeInterval
     let breathCount: Int
-    let imagePath: String
+    let imagePathArray: [String]
     let userId: String
     let userName: String
     let coordinate: CLLocationCoordinate2D?
@@ -583,10 +637,10 @@ struct BreathFeedItem {
     let comment: String?
     let isInappropriate: Int
     
-    init(key: String? = nil, timestamp: TimeInterval, imagePath: String, userId: String, userName: String, breathCount: Int, city: String?, coordinate: CLLocationCoordinate2D?, rating: Int?, comment: String?, isInappropriate: Int = 0) {
+    init(key: String? = nil, timestamp: TimeInterval, imagePathArray: [String], userId: String, userName: String, breathCount: Int, city: String?, coordinate: CLLocationCoordinate2D?, rating: Int?, comment: String?, isInappropriate: Int = 0) {
         self.key = key
         self.timestamp = timestamp
-        self.imagePath = imagePath
+        self.imagePathArray = imagePathArray
         self.userId = userId
         self.userName = userName
         self.breathCount = breathCount
@@ -600,7 +654,7 @@ struct BreathFeedItem {
     init(key: String?, snapshotDict: NSDictionary) {
         self.key = key
         timestamp = snapshotDict["timestamp"] as? TimeInterval ?? 0
-        imagePath = snapshotDict["imagePath"] as? String ?? ""
+        imagePathArray = snapshotDict["imagePathArray"] as? [String] ?? []
         userId = snapshotDict["userId"] as? String ?? ""
         userName = snapshotDict["userName"] as? String ?? ""
         breathCount = snapshotDict["breathCount"] as? Int ?? 0
@@ -631,7 +685,7 @@ struct BreathFeedItem {
 	
     func valueDict() -> [String: Any] {
         var dict: [String: Any] = ["timestamp": timestamp,
-                "imagePath": imagePath,
+                "imagePathArray": imagePathArray,
                 "userId": userId,
                 "userName": userName,
                 "breathCount": breathCount]

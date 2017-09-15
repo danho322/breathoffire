@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Sound.category = .playback
         
+        StoreKitService().retrieveProductData()
         SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
             for purchase in purchases {
                 if purchase.transaction.transactionState == .purchased || purchase.transaction.transactionState == .restored {

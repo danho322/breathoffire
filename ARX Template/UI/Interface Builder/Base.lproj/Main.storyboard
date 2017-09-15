@@ -597,12 +597,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="I6S-Lx-qjD">
-                                <rect key="frame" x="94" y="28" width="187" height="29"/>
+                                <rect key="frame" x="70.5" y="28" width="234" height="29"/>
                                 <segments>
                                     <segment title="What"/>
                                     <segment title="Who"/>
                                     <segment title="How"/>
                                     <segment title="Why"/>
+                                    <segment title="More"/>
                                 </segments>
                                 <connections>
                                     <action selector="onSegmentChanged:" destination="HiZ-AO-84A" eventType="valueChanged" id="cyL-eG-NqH"/>
@@ -620,11 +621,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zjs-MA-nho">
-                                <rect key="frame" x="0.0" y="255" width="375" height="412"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjs-MA-nho">
+                                <rect key="frame" x="0.0" y="267" width="375" height="400"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3CA-kC-u70">
-                                        <rect key="frame" x="0.0" y="-10" width="375" height="60.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3CA-kC-u70">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v0T-Qe-bCR">
                                                 <rect key="frame" x="20" y="20" width="335" height="20.5"/>
@@ -632,13 +633,22 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3w-jF-uTQ">
+                                                <rect key="frame" x="164" y="53" width="46" height="30"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="onButtonTap:" destination="HiZ-AO-84A" eventType="touchUpInside" id="ODD-b9-y0w"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="f3w-jF-uTQ" firstAttribute="top" secondItem="v0T-Qe-bCR" secondAttribute="bottom" constant="12.5" id="00N-u8-5dw"/>
                                             <constraint firstAttribute="trailing" secondItem="v0T-Qe-bCR" secondAttribute="trailing" constant="20" id="2Ep-bE-PMQ"/>
                                             <constraint firstItem="v0T-Qe-bCR" firstAttribute="leading" secondItem="3CA-kC-u70" secondAttribute="leading" constant="20" id="Hcv-vb-xoM"/>
+                                            <constraint firstItem="f3w-jF-uTQ" firstAttribute="centerX" secondItem="3CA-kC-u70" secondAttribute="centerX" id="QcM-C3-18T"/>
                                             <constraint firstItem="v0T-Qe-bCR" firstAttribute="top" secondItem="3CA-kC-u70" secondAttribute="top" constant="20" id="YEI-Lx-g0y"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="v0T-Qe-bCR" secondAttribute="bottom" constant="20" id="lZ4-2L-Fbp"/>
+                                            <constraint firstAttribute="bottom" secondItem="f3w-jF-uTQ" secondAttribute="bottom" constant="10" id="tfH-bf-Ovq"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -686,6 +696,7 @@
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="WlS-VW-ShU" id="PgE-7V-d61"/>
+                        <outlet property="ctaButton" destination="f3w-jF-uTQ" id="qyQ-pl-D1f"/>
                         <outlet property="descriptionLabel" destination="v0T-Qe-bCR" id="7KX-bo-2Uu"/>
                         <outlet property="imageView" destination="1w8-zF-t5E" id="olx-t3-8UJ"/>
                         <outlet property="playButton" destination="MOo-pK-baW" id="MaP-PE-4ZU"/>

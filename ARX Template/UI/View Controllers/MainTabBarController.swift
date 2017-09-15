@@ -72,12 +72,10 @@ enum WalthroughInstructionType: Int {
             case .infoButton:
                 var infoButton: UIView?
                 for subview in navVC.navigationBar.subviews {
-                    print("subview: \(subview)")
                     for subsubview in subview.subviews {
                         if subsubview.isUserInteractionEnabled {
                             infoButton = subsubview
                         }
-                        print("subsubview: \(subsubview), \(subsubview.isUserInteractionEnabled)")
                     }
                 }
                 return infoButton

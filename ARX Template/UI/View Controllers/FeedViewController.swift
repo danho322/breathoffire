@@ -40,6 +40,31 @@ class FeedViewController: UIViewController {
         }
     }
     
+    class func createGifDataFrom(imagePathArray: [String], completion: @escaping (Data)->Void) {
+        var index = 0
+        var imageCount = 0
+        let imageTotal = imagePathArray.count
+        var imageDict: [Int: UIImage] = Dictionary<Int, UIImage>()
+        for imagePath in imagePathArray {
+            let thisIndex = index
+            FirebaseService.sharedInstance.retrieveDataAtPath(path: imagePath, completion: { imageData in
+                if let image = UIImage(data: imageData) {
+                    imageDict[thisIndex] = image
+                    imageCount += 1
+                    if imageCount == imageTotal {
+                        let imageArray = imageDict.sorted(by: { $0.key < $1.key}).map({ $0.value })
+                        ARXUtilities.createGIF(with: imageArray, frameDelay: GifConstants.FrameDelay, callback: { data, error in
+                            if let data = data {
+                                completion(data)
+                            }
+                        })
+                    }
+                }
+            })
+            index += 1
+        }
+    }
+    
     func displayFeedOptions(feedItem: BreathFeedItem, indexPath: IndexPath) {
 
         let alertMessage = UIAlertController(title: NSLocalizedString("Options", comment: "Action sheet title"),
@@ -61,8 +86,8 @@ class FeedViewController: UIViewController {
         
         alertMessage.addAction(UIAlertAction(title: NSLocalizedString("Share", comment: "Ok button title"), style: .default, handler: { [unowned self] _ in
             if let cell = self.tableView.cellForRow(at: indexPath) {
-                FirebaseService.sharedInstance.retrieveImageAtPath(path: feedItem.imagePath, completion: { image in
-                    let objectsToShare = [image]
+                FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { data in
+                    let objectsToShare = [data]
                     let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
                     
                     activityVC.popoverPresentationController?.sourceView = cell

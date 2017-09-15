@@ -1,5 +1,6 @@
 github "eggswift/ESTabBarController" "2.5"
 github "PrideChung/FontAwesomeKit" "2.2.1"
+github "1024jp/GzipSwift" "4.0.0-beta.2"
 github "hsousa/HCSStarRatingView" "1.5"
 github "lkzhao/Hero" "0.3.6"
 github "ephread/Instructions" "1.1.0"

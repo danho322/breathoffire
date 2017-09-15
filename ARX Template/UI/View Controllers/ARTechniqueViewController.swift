@@ -44,7 +44,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var portal: PortalRoomObject?
     
     // feed
-    internal var screenShot: UIImage?
+    internal var screenShot: [UIImage] = []
     
     // touch
     internal var initialTouchPosition: CGPoint?
@@ -162,22 +162,39 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 //    test delete feed (with new items)
     
     func saveToBreathFeed(rating: Int?, comment: String?) {
-        if let image = screenShot {
-            FirebaseService.sharedInstance.uploadFeedImage(image: image) { path in
-                if let path = path,
-                    let currentUserData = SessionManager.sharedInstance.currentUserData {
-                    // add to feed path
-                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970,
-                                                  imagePath: path,
-                                                  userId: currentUserData.userId,
-                                                  userName: currentUserData.userName,
-                                                  breathCount: self.breathTimerView.currentBreathCount(),
-                                                  city: currentUserData.city,
-                                                  coordinate: currentUserData.coordinate,
-                                                  rating: rating,
-                                                  comment: comment)
-                    FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
+        var index = 0
+        var uploadCount = 0
+        let uploadTotal = screenShot.count
+        var pathDict: [Int: String] = Dictionary<Int, String>()
+        if screenShot.count > 0 {
+            for image in screenShot {
+                let data = UIImageJPEGRepresentation(image, 0.0)
+                let thisIndex = index
+                FirebaseService.sharedInstance.uploadFeedData(data: data) { path in
+                    if let path = path {
+                        pathDict[thisIndex] = path
+                        let pathArray = pathDict.sorted(by: { $0.key < $1.key}).map({ $0.value })
+                        uploadCount += 1
+                        if uploadCount == uploadTotal {
+                            if let currentUserData = SessionManager.sharedInstance.currentUserData {
+                                // add to feed path
+                                let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970,
+                                                              imagePathArray: pathArray,
+                                                              userId: currentUserData.userId,
+                                                              userName: currentUserData.userName,
+                                                              breathCount: self.breathTimerView.currentBreathCount(),
+                                                              city: currentUserData.city,
+                                                              coordinate: currentUserData.coordinate,
+                                                              rating: rating,
+                                                              comment: comment)
+                                FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
+                            }
+                        }
+                    } else {
+                        print("an upload error ocurred")
+                    }
                 }
+                index += 1
             }
         }
     }
@@ -1036,7 +1053,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     func scheduleScreenshot() {
         let randSec = TimeInterval(arc4random_uniform(10))
-        perform(#selector(ARTechniqueViewController.captureScreenshot), with: nil, afterDelay: 5 + randSec)
+        
+        let frames = GifConstants.FrameCount
+        let interval: TimeInterval = GifConstants.FrameDelay
+        for index in 1...frames {
+            perform(#selector(ARTechniqueViewController.captureScreenshot), with: nil, afterDelay: 5 + randSec + TimeInterval(index) * interval)
+        }
     }
     
     func cancelScreenshotSelector() {
@@ -1044,7 +1066,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     
     @objc func captureScreenshot() {
-        screenShot = sceneView.snapshot()
+        let image = sceneView.snapshot()
+        screenShot.append(image)
     }
 	
     // MARK: - Planes
@@ -1382,6 +1405,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                                                                 self.dismiss()
                 })
                 breathCompletionView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
+                
                 breathCompletionView.update(breathCount: breathTimerView.currentBreathCount(), screenshot: screenShot, sequenceContainer: nil)
                 view.addSubview(breathCompletionView)
                 breathCompletionView.animateIn()

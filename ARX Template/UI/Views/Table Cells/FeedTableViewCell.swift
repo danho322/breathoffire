@@ -9,14 +9,14 @@
 import UIKit
 import HCSStarRatingView
 import FontAwesomeKit
+import SDWebImage
 
 class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var moreButton: UIButton!
-    @IBOutlet weak var feedImageView: UIImageView!
+    @IBOutlet weak var feedImageView: FLAnimatedImageView!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var ratingsView: HCSStarRatingView!
     @IBOutlet weak var leftQuoteLabel: UILabel!
     @IBOutlet weak var timeLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -28,18 +28,18 @@ class FeedTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         backgroundColor = ThemeManager.sharedInstance.feedBackgroundColor()
-        nameLabel.textColor = ThemeManager.sharedInstance.feedTextColor()
+        nameLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         nameLabel.font = ThemeManager.sharedInstance.heavyFont(16)
-        commentLabel.textColor = ThemeManager.sharedInstance.feedTextColor()
+        commentLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         commentLabel.font = ThemeManager.sharedInstance.defaultFont(16)
-        timeLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
+        timeLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         timeLabel.font = ThemeManager.sharedInstance.defaultFont(12)
         
         let leftQuote = FAKIonIcons.quoteIcon(withSize: 12)
-        leftQuote?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.labelTitleColor())
+        leftQuote?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
         leftQuoteLabel.attributedText = leftQuote?.attributedString()
         
-        moreButton.setTitleColor(ThemeManager.sharedInstance.labelTitleColor(), for: .normal)
+        moreButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
         moreButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(16)
     }
 
@@ -52,13 +52,6 @@ class FeedTableViewCell: UITableViewCell {
             name = "Anonymous"
         }
         
-        if let rating = feedItem.rating {
-            ratingsView.isHidden = false
-            ratingsView.value = CGFloat(rating)
-        } else {
-            ratingsView.isHidden = true
-        }
-        
         let now = Date().timeIntervalSince1970
         let diffTime = Int(now) - Int(feedItem.timestamp)
         var timeString = TimeFormatType.feed.timeString(diffTime)
@@ -68,9 +61,9 @@ class FeedTableViewCell: UITableViewCell {
         timeLabel.text = timeString
         feedImageView.image = nil
         activityIndicator.startAnimating()
-        FirebaseService.sharedInstance.retrieveImageAtPath(path: feedItem.imagePath, completion: { image in
+        FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { data in
             self.activityIndicator.stopAnimating()
-            self.feedImageView.image = image
+            self.feedImageView.animatedImage = FLAnimatedImage(animatedGIFData: data)
         })
         
         if let comment = feedItem.comment, comment.characters.count > 0 {
@@ -89,7 +82,7 @@ class FeedTableViewCell: UITableViewCell {
         let boldRange = rangeOfString(name, inString: nameText)
         let attrString = NSMutableAttributedString(string: nameText)
         let stringRange = NSRange(location: 0, length: nameText.characters.count)
-        attrString.addAttribute(NSAttributedStringKey.foregroundColor, value: ThemeManager.sharedInstance.feedTextColor(), range: stringRange)
+        attrString.addAttribute(NSAttributedStringKey.foregroundColor, value: ThemeManager.sharedInstance.focusForegroundColor(), range: stringRange)
         attrString.addAttribute(NSAttributedStringKey.font, value: ThemeManager.sharedInstance.defaultFont(16), range: stringRange)
          if let boldRange = boldRange {
             attrString.addAttribute(NSAttributedStringKey.font, value: ThemeManager.sharedInstance.heavyFont(16), range: boldRange)

@@ -10,6 +10,12 @@ import UIKit
 import FontAwesomeKit
 import HCSStarRatingView
 import SwiftySound
+import SDWebImage
+
+struct GifConstants {
+    static let FrameDelay: TimeInterval = 0.25
+    static let FrameCount = 8
+}
 
 class BreatheCompleteView: XibView {
     @IBOutlet weak var scrollView: UIScrollView!
@@ -123,19 +129,34 @@ class BreatheCompleteView: XibView {
     }
     
     // artechniqueviewcontroller needs to be refactored to hold the container
-    func update(breathCount: Int, screenshot: UIImage?, sequenceContainer: AnimationSequenceDataContainer?) {
+    func update(breathCount: Int, screenshot: [UIImage]?, sequenceContainer: AnimationSequenceDataContainer?) {
         guard let view = view as? BreatheCompleteView else {
             fatalError("view is not of type BreatheCompleteView")
         }
         view.shareText = "I did \(breathCount) breaths using the Breath of Fire app!"
         view.detailsLabel.text = "You did \(breathCount) Breaths of Fire!"
-        view.screenshotImageView.image = screenshot
+        view.screenshotImageView.image = screenshot?.first
         view.screenshotImageView.layer.masksToBounds = true
         view.screenshotImageView.layer.cornerRadius = view.screenshotImageView.frame.size.width / 2
         view.screenshotImageView.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
         view.screenshotImageView.layer.borderWidth = 2
         
+        for subview in view.screenshotImageView.subviews {
+            subview.removeFromSuperview()
+        }
+        
         Sound.play(file: "gong.m4a")
+        
+        if let screenshot = screenshot {
+            ARXUtilities.createGIF(with: screenshot, frameDelay: GifConstants.FrameDelay, callback: { data, error in
+                print("gif")
+                let animatedImage = FLAnimatedImage(animatedGIFData: data)
+                let animatedImageView = FLAnimatedImageView(frame: CGRect(x: 0, y: 0, width: view.screenshotImageView.frame.size.width, height: view.screenshotImageView.frame.size.height))
+                animatedImageView.contentMode = .scaleAspectFill
+                animatedImageView.animatedImage = animatedImage
+                view.screenshotImageView.addSubview(animatedImageView)
+            })
+        }
     }
     
     // MARK: - Button Handlers

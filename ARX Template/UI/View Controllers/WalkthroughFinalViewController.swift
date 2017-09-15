@@ -21,7 +21,7 @@ class WalkthroughFinalViewController: BWWalkthroughPageViewController {
         
         if let arVC = mainStoryboard.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController {
             // TODO: disable these buttons on first run
-            arVC.sequenceToLoad = DataLoader.sharedInstance.sequenceData(sequenceName: "Movement Test")
+            arVC.sequenceToLoad = DataLoader.sharedInstance.sequenceData(sequenceName: "Breath of Fire 1:1")
             arVC.dismissCompletionHandler = { [unowned self] in
                 self.navigationController?.popToRootViewController(animated: true)
                 self.tabBarController?.selectedIndex = 0

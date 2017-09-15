@@ -311,6 +311,7 @@
 		D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPackageTableViewCell.swift; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
 		D4C9383D1F440585002A2F4C /* BreathFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathFactory.swift; sourceTree = "<group>"; };
+		D4D2019D1F6AE7950032F168 /* Gzip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gzip.framework; path = Carthage/Build/iOS/Gzip.framework; sourceTree = "<group>"; };
 		D4DA792D1F55297400D7ED00 /* Instructions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instructions.framework; path = Carthage/Build/iOS/Instructions.framework; sourceTree = "<group>"; };
 		D4DF08101F4147FF00E8F0EE /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		D4DF08121F41485A00E8F0EE /* FeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedTableViewCell.xib; sourceTree = "<group>"; };
@@ -538,6 +539,7 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4D2019D1F6AE7950032F168 /* Gzip.framework */,
 				D4626DCA1F663407009C8C6A /* ESTabBarController.framework */,
 				D4EE12E81F61A3E800A55E9F /* Result.framework */,
 				D4EE12E31F6106D500A55E9F /* SwiftLCS.framework */,
@@ -846,6 +848,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ESTabBarController.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Gzip.framework",
 			);
 			outputPaths = (
 			);

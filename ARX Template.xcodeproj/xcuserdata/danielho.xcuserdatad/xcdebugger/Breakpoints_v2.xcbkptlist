@@ -100,13 +100,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "526974481.93474"
+            timestampString = "527144917.084789"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1541"
-            endingLineNumber = "1541"
-            landmarkName = "ARTechniqueViewController"
-            landmarkType = "21">
+            startingLineNumber = "1559"
+            endingLineNumber = "1559"
+            landmarkName = "didTapRelatedAnimation(relatedView:sequenceName:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -180,12 +180,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/Views/BreatheCompleteView.swift"
-            timestampString = "526575204.261602"
+            timestampString = "527144917.08639"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "onCommunityTap(_:)"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "onShareTap(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -196,11 +196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "526974481.934906"
+            timestampString = "527144917.086535"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "882"
-            endingLineNumber = "882"
+            startingLineNumber = "899"
+            endingLineNumber = "899"
             landmarkName = "updateVirtualObjectPosition(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -212,11 +212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "526974481.934961"
+            timestampString = "527144917.087482"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "884"
-            endingLineNumber = "884"
+            startingLineNumber = "901"
+            endingLineNumber = "901"
             landmarkName = "updateVirtualObjectPosition(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -260,12 +260,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "526974481.935082"
+            timestampString = "527144917.088351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1503"
-            endingLineNumber = "1503"
-            landmarkName = "hudDidUpdateUkeSwitch(isOn:)"
+            startingLineNumber = "1521"
+            endingLineNumber = "1521"
+            landmarkName = "hudDidUpdateInstructorSwitch(isOn:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -292,11 +292,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "526974481.935155"
+            timestampString = "527144917.089188"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1489"
-            endingLineNumber = "1489"
+            startingLineNumber = "1507"
+            endingLineNumber = "1507"
             landmarkName = "hudDidTapPause()"
             landmarkType = "7">
          </BreakpointContent>
@@ -324,11 +324,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/FirebaseService.swift"
-            timestampString = "526974481.935227"
+            timestampString = "527144917.090002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
             landmarkName = "saveBreathFeedItem(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -340,11 +340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/FirebaseService.swift"
-            timestampString = "526974481.935277"
+            timestampString = "527144917.090062"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
             landmarkName = "retrieveCurrentTimeStreaks(completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -420,11 +420,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/FirebaseService.swift"
-            timestampString = "526974481.935388"
+            timestampString = "527144917.09017"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
             landmarkName = "retrieveBreathFeed(allowedUpdates:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -436,12 +436,92 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/WalkthroughFinalViewController.swift"
-            timestampString = "526974481.935438"
+            timestampString = "527055683.964323"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "19"
             endingLineNumber = "19"
             landmarkName = "onTryTap(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARX Template/Services/StoreKitService.swift"
+            timestampString = "527103787.599418"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "retrieveProductData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARX Template/UI/Views/Table Cells/FeedTableViewCell.swift"
+            timestampString = "527144917.090254"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "update(feedItem:optionsHandler:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ARX_Template.FeedTableViewCell.update(feedItem: ARX_Template.BreathFeedItem, optionsHandler: (Swift.Optional&lt;Swift.String&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "ARX Template"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielho/Modeling%20Files/ARX%20Template/ARX%20Template/UI/Views/Table%20Cells/FeedTableViewCell.swift"
+                  timestampString = "527144281.811315"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "2532">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Foundation.Data) -&gt; () in ARX_Template.FeedTableViewCell.update(feedItem: ARX_Template.BreathFeedItem, optionsHandler: (Swift.Optional&lt;Swift.String&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "ARX Template"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielho/Modeling%20Files/ARX%20Template/ARX%20Template/UI/Views/Table%20Cells/FeedTableViewCell.swift"
+                  timestampString = "527144281.812649"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARX Template/Services/FirebaseService.swift"
+            timestampString = "527144917.090305"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
+            landmarkName = "retrieveImageAtPath(path:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

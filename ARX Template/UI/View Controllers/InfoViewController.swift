@@ -10,12 +10,14 @@ import UIKit
 import FontAwesomeKit
 import AVKit
 import AVFoundation
+import MessageUI
 
 enum SegmentIndexType: Int {
     case what = 0
     case who = 1
     case how = 2
     case why = 3
+    case more = 4
     
     func title() -> String {
         switch self {
@@ -27,6 +29,17 @@ enum SegmentIndexType: Int {
             return "How to use this app"
         case .why:
             return "Benefits"
+        case .more:
+            return "More"
+        }
+    }
+    
+    func ctaTitle() -> String? {
+        switch self {
+        case .more:
+            return "Contact us"
+        default:
+            return nil
         }
     }
     
@@ -40,6 +53,8 @@ enum SegmentIndexType: Int {
             return Bundle.main.url(forResource: "How", withExtension: "m4v")
         case .why:
             return Bundle.main.url(forResource: "Why", withExtension: "m4v")
+        case .more:
+            return nil
         }
     }
     
@@ -60,6 +75,8 @@ enum SegmentIndexType: Int {
             return "Proin id tortor lacus. Quisque finibus ante a aliquam semper. Duis mi urna, tincidunt non tempus et, consectetur at urna. Morbi consequat risus quam, rhoncus placerat mauris sodales at. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi in orci sagittis, consequat neque eu, auctor eros. Cras sit amet ex sapien. Donec a semper erat. Vestibulum rhoncus arcu et rutrum posuere. Maecenas viverra ipsum urna, in consectetur elit convallis a. In erat odio, interdum ut semper eget, sodales sed augue. Sed tincidunt nec velit ut venenatis."
         case .why:
             return "Aliquam pharetra porta est a faucibus. Integer eget purus tincidunt, imperdiet diam viverra, auctor arcu. Vivamus et tincidunt libero, vel suscipit risus. Pellentesque quis erat nec enim dignissim ultricies. Vivamus ultricies rutrum diam auctor sagittis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus ultricies ultricies tellus at varius. Donec quis risus vitae magna varius aliquet ac non eros. Vivamus mattis ultricies erat, et ultrices felis molestie in. Maecenas sit amet viverra ligula, ac hendrerit ligula. Integer blandit tempor risus quis luctus."
+        case .more:
+            return "Have feedback, comments, suggestions, or complaints? Please let us know!"
         }
     }
 }
@@ -71,6 +88,7 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var ctaButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +102,10 @@ class InfoViewController: UIViewController {
         backIcon?.addAttribute("NSForegroundColorAttributeName", value: ThemeManager.sharedInstance.focusForegroundColor())
         closeButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
         
+        ctaButton.backgroundColor = UIColor.clear
+        ctaButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(14)
+//        ctaButton.setTitle("", for: .normal)
+        ctaButton.setTitleColor(ThemeManager.sharedInstance.iconColor(), for: .normal)
         
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         segmentedControl.tintColor = ThemeManager.sharedInstance.focusColor()
@@ -119,10 +141,36 @@ class InfoViewController: UIViewController {
         }
     }
     
+    @IBAction func onButtonTap(_ sender: Any) {
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        composeVC.setToRecipients(["ctr89josh@gmail.com"])
+        composeVC.setSubject("StoryBook Feedback")
+        composeVC.setMessageBody("Hey Josh! Here's my feedback.", isHTML: false)
+        
+        // Present the view controller modally.
+        self.present(composeVC, animated: true, completion: nil)
+    }
+    
     internal func handleSegmentType(segmentIndexType: SegmentIndexType) {
         titleLabel.text = segmentIndexType.title()
         imageView.image = segmentIndexType.image()
         descriptionLabel.text = segmentIndexType.description()
         playButton.isHidden = segmentIndexType.videoUrl() == nil
+        let ctaTitle = segmentIndexType.ctaTitle()
+        ctaButton.isHidden = ctaTitle == nil
+        ctaButton.setTitle(ctaTitle, for: .normal)
+    }
+}
+
+extension InfoViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController,
+                               didFinishWith result: MFMailComposeResult, error: Error?) {
+        // Check the result or perform other tasks.
+        
+        // Dismiss the mail compose view controller.
+        controller.dismiss(animated: true, completion: nil)
     }
 }
