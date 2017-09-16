@@ -32,7 +32,7 @@ class MeViewController: UIViewController {
         
         let isAnonymous = SessionManager.sharedInstance.isAnonymous ?? true
         loginButton.setTitle("Sign into your account", for: .normal)
-        loginButton.isHidden = !isAnonymous
+//        loginButton.isHidden = !isAnonymous
         
         collectionView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         collectionView.register(UINib(nibName: String(describing: UserStatCollectionCell.self), bundle: nil), forCellWithReuseIdentifier: UserStatConstants.CellIdentifier)
@@ -54,7 +54,7 @@ class MeViewController: UIViewController {
     }
     
     @IBAction func onLoginTap(_ sender: Any) {
-        if SessionManager.sharedInstance.isAnonymous ?? true {
+        if true {//SessionManager.sharedInstance.isAnonymous ?? true {
             if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
                 loginVC.viewModel = LoginViewModel()
                 loginVC.completion = { [unowned self] in
@@ -168,15 +168,15 @@ enum StatType: Int {
     func statString(userData: UserData) -> String {
         switch self {
         case .totalTime:
-            return "\(userData.totalTimeCount)"
+            return "\(BreathTimerService.timeString(time: Double(userData.totalTimeCount)))"
         case .currentDayStreak:
-            return "\(userData.dayStreakCount)"
+            return "\(userData.dayStreakCount) days"
         case .currentTimeStreak:
-            return "\(userData.timeStreakCount)"
+            return "\(BreathTimerService.timeString(time: Double(userData.timeStreakCount)))"
         case .maxDayStreak:
-            return "\(userData.maxDayStreak)"
+            return "\(userData.maxDayStreak) days"
         case .maxTimeStreak:
-            return "\(userData.maxTimeStreak)"
+            return "\(BreathTimerService.timeString(time: Double(userData.maxTimeStreak)))"
         default:
             return ""
         }

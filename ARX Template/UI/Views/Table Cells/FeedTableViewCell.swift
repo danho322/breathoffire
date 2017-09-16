@@ -23,6 +23,7 @@ class FeedTableViewCell: UITableViewCell {
     
     internal var optionsHandler: ((String?)->Void)?
     internal var feedKey: String?
+    internal var gifDict: [String: FLAnimatedImage] = Dictionary<String, FLAnimatedImage>()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,7 +45,11 @@ class FeedTableViewCell: UITableViewCell {
     }
 
     func update(feedItem: BreathFeedItem, optionsHandler: @escaping ((String?)->Void)) {
-        feedKey = feedItem.key
+        guard let feedKey = feedItem.key else {
+            return
+        }
+        
+        self.feedKey = feedItem.key
         self.optionsHandler = optionsHandler
 
         var name = feedItem.userName
@@ -60,11 +65,24 @@ class FeedTableViewCell: UITableViewCell {
         }
         timeLabel.text = timeString
         feedImageView.image = nil
+        
         activityIndicator.startAnimating()
-        FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { data in
-            self.activityIndicator.stopAnimating()
-            self.feedImageView.animatedImage = FLAnimatedImage(animatedGIFData: data)
-        })
+        let handleGifData: (FLAnimatedImage?)->Void = { [unowned self] animatedImage in
+            self.feedImageView.animatedImage = animatedImage
+        }
+        if let animatedImage = gifDict[feedKey] {
+            activityIndicator.stopAnimating()
+            handleGifData(animatedImage)
+        } else {
+            FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { [unowned self] data in
+                self.activityIndicator.stopAnimating()
+                let animatedImage = FLAnimatedImage(animatedGIFData: data)
+                handleGifData(animatedImage)
+                self.gifDict[feedKey] = animatedImage
+            })
+        }
+        
+        
         
         if let comment = feedItem.comment, comment.characters.count > 0 {
             commentLabel.text = comment

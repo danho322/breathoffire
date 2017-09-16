@@ -129,7 +129,7 @@ class EmailTableViewCell: UITableViewCell {
     }
 }
 
-class PasswordTableViewCell: UITableViewCell {
+class PasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     
     override func awakeFromNib() {
@@ -137,6 +137,11 @@ class PasswordTableViewCell: UITableViewCell {
         textField.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         textField.font = ThemeManager.sharedInstance.defaultFont(14)
         textField.text = "Enter a password (5 character minimum)"
+        textField.delegate = self
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.isSecureTextEntry = true
     }
 }
 

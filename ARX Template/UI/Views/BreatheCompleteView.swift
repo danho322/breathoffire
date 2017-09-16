@@ -13,8 +13,9 @@ import SwiftySound
 import SDWebImage
 
 struct GifConstants {
-    static let FrameDelay: TimeInterval = 0.25
-    static let FrameCount = 8
+    static let FrameDelay: TimeInterval = 0.1
+    static let FrameCount = 10
+    static let GifImageCompressionQuality: CGFloat = 0.0
 }
 
 class BreatheCompleteView: XibView {

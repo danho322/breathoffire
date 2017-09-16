@@ -41,28 +41,32 @@ class FeedViewController: UIViewController {
     }
     
     class func createGifDataFrom(imagePathArray: [String], completion: @escaping (Data)->Void) {
-        var index = 0
-        var imageCount = 0
-        let imageTotal = imagePathArray.count
-        var imageDict: [Int: UIImage] = Dictionary<Int, UIImage>()
-        for imagePath in imagePathArray {
-            let thisIndex = index
-            FirebaseService.sharedInstance.retrieveDataAtPath(path: imagePath, completion: { imageData in
-                if let image = UIImage(data: imageData) {
-                    imageDict[thisIndex] = image
-                    imageCount += 1
-                    if imageCount == imageTotal {
-                        let imageArray = imageDict.sorted(by: { $0.key < $1.key}).map({ $0.value })
-                        ARXUtilities.createGIF(with: imageArray, frameDelay: GifConstants.FrameDelay, callback: { data, error in
-                            if let data = data {
-                                completion(data)
-                            }
-                        })
+        DispatchQueue.global(qos: .userInitiated).async(execute: {
+            var index = 0
+            var imageCount = 0
+            let imageTotal = imagePathArray.count
+            var imageDict: [Int: UIImage] = Dictionary<Int, UIImage>()
+            for imagePath in imagePathArray {
+                let thisIndex = index
+                FirebaseService.sharedInstance.retrieveDataAtPath(path: imagePath, completion: { imageData in
+                    if let image = UIImage(data: imageData) {
+                        imageDict[thisIndex] = image
+                        imageCount += 1
+                        if imageCount == imageTotal {
+                            let imageArray = imageDict.sorted(by: { $0.key < $1.key}).map({ $0.value })
+                            ARXUtilities.createGIF(with: imageArray, frameDelay: GifConstants.FrameDelay, callback: { data, error in
+                                if let data = data {
+                                    DispatchQueue.main.async(execute: {
+                                        completion(data)
+                                    })
+                                }
+                            })
+                        }
                     }
-                }
-            })
-            index += 1
-        }
+                })
+                index += 1
+            }
+        })
     }
     
     func displayFeedOptions(feedItem: BreathFeedItem, indexPath: IndexPath) {

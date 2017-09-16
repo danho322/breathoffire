@@ -157,10 +157,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     // MARK: - Feed
     
-//    test bfreath count tracking
-//    test breath parameter property of breathing sequence
-//    test delete feed (with new items)
-    
     func saveToBreathFeed(rating: Int?, comment: String?) {
         var index = 0
         var uploadCount = 0
@@ -168,7 +164,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         var pathDict: [Int: String] = Dictionary<Int, String>()
         if screenShot.count > 0 {
             for image in screenShot {
-                let data = UIImageJPEGRepresentation(image, 0.0)
+                let data = UIImageJPEGRepresentation(image, GifConstants.GifImageCompressionQuality)
                 let thisIndex = index
                 FirebaseService.sharedInstance.uploadFeedData(data: data) { path in
                     if let path = path {
@@ -911,6 +907,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 print("updateVirtualObjectPosition \(object) at  cameraWorldPos + cameraToPosition \(pos)")
                 object.position = cameraWorldPos + cameraToPosition
             }
+            setupShadowLightsIfNeeded(target: object)
         }
     }
 	

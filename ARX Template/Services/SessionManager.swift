@@ -98,7 +98,7 @@ class SessionManager {
                 FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .dayStreakCount, value: 1)
                 FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .timeStreakCount, value: 0)
             }
-            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .maxTimeStreak, count: breathTime, defaultValue: 0)
+            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .totalTimeCount, count: breathTime, defaultValue: 0)
             FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .lastStreakTimestamp, value: Date().timeIntervalSince1970)
             
             updateLongestStreaks(userId: currentUserData.userId)

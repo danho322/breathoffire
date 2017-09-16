@@ -94,7 +94,7 @@ extension RankingsViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             if let user = userRankings[safe: indexPath.row] {
                 textLabel = user.userName
-                detailLabel = "\(user.timeStreakCount) time streak"
+                detailLabel = "\(BreathTimerService.timeString(time: Double(user.timeStreakCount))) streak"
             }
         } else if indexPath.section == 1 {
             if let user = dayRankings[safe: indexPath.row] {
@@ -104,7 +104,7 @@ extension RankingsViewController: UITableViewDataSource {
         } else if indexPath.section == 2 {
             if let user = breathRankings[safe: indexPath.row] {
                 textLabel = user.userName
-                detailLabel = "\(user.maxTimeStreak) time max"
+                detailLabel = "\(BreathTimerService.timeString(time: Double(user.maxTimeStreak))) max streak"
             }
         }
         
