@@ -17,7 +17,7 @@ class BreathTimerView: XibView {
     
     internal let circlePathLayer = CAShapeLayer()
     internal let circleRadius: CGFloat = 110
-    internal var currentBreathParameter: BreathParameter?
+    internal var currentBreathParameter: BreathProgramParameter?
     var isRunning = false
     internal var breathCount = 0
     
@@ -83,7 +83,7 @@ class BreathTimerView: XibView {
         return breathCount
     }
 
-    func update(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, breathParameter: BreathParameter?) {
+    func update(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, breathParameter: BreathProgramParameter?) {
         guard let view = view as? BreathTimerView else {
             fatalError("view is not of type BreathTimerView")
         }
@@ -137,7 +137,9 @@ class BreathTimerView: XibView {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(BreathTimerView.doBreathAnimation), object: nil)
         if let currentBreatheParameter = currentBreathParameter, isRunning {
             
-            currentBreatheParameter.playSound.play()
+            let sound = BreathSound(rawValue: currentBreatheParameter.soundID)
+            sound?.play()
+            
             breathCount += 1
             let fireView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.fireContainerImageView.frame.size.width, height: view.fireContainerImageView.frame.size.height))
             fireView.center = view.fireContainerImageView.center

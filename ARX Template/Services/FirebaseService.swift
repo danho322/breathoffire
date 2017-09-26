@@ -83,6 +83,12 @@ struct UserData {
     }
 }
 
+struct IncrementAttributeContainer {
+    let attribute: UserAttribute
+    let count: Int
+    let defaultValue: Int
+}
+
 class FirebaseService: NSObject {
     static let sharedInstance = FirebaseService()
     
@@ -160,16 +166,27 @@ class FirebaseService: NSObject {
         }
     }
     
-    func incrementAttributeCount(userId: String, attribute: UserAttribute, count: Int = 1, defaultValue: Int = 0) {
+    func incrementAttributeCount(userId: String, attribute: UserAttribute? = nil, count: Int = 1, defaultValue: Int = 0, attributeContainers: [IncrementAttributeContainer] = []) {
+        var containers = attributeContainers
+        if let attribute = attribute {
+            containers.append(IncrementAttributeContainer(attribute: attribute, count: count, defaultValue: defaultValue))
+        }
+        
         let ref = Database.database().reference().child("users/\(Constants.AppKey)/\(userId)")
         ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
-            if var post = currentData.value as? [String : AnyObject] {
-                var starCount = post[attribute.rawValue] as? Int ?? defaultValue
-                starCount += count
-                post[attribute.rawValue] = starCount as AnyObject?
+            if var userDict = currentData.value as? [String : AnyObject] {
+                
+                for attributeContainer in containers {
+                    let defaultValue = attributeContainer.defaultValue
+                    let attribute = attributeContainer.attribute
+                    let count = attributeContainer.count
+                    var attributeCount = userDict[attribute.rawValue] as? Int ?? defaultValue
+                    attributeCount += count
+                    userDict[attribute.rawValue] = attributeCount as AnyObject?
+                }
                 
                 // Set value and report transaction success
-                currentData.value = post
+                currentData.value = userDict
                 
                 return TransactionResult.success(withValue: currentData)
             }
@@ -727,16 +744,12 @@ struct AnimationSequenceDataContainer: SearchableData {
     let sequenceArray: [AnimationSequenceData]
     let packageName: String
     
-    var breathProgram: BreathProgram?
     var showHud = true
     
     init(sequenceName: String, snapshotDict: NSDictionary) {
         self.sequenceName = sequenceName
         sequenceDescription = snapshotDict["sequenceDescription"] as? String ?? ""
         packageName = snapshotDict["packageName"] as? String ?? ""
-        if let breathProgramInt = snapshotDict["breathProgram"] as? Int {
-            breathProgram = BreathProgram(rawValue: breathProgramInt)
-        }
         showHud = snapshotDict["showHud"] as? Bool ?? true
         
         var sequenceArrayTemp: [AnimationSequenceData] = []
@@ -792,6 +805,7 @@ struct CharacterAnimationData: SearchableData {
     let ukeAnimation: String?
     let relatedAnimations: [String]?
     let animationDescription: String
+    let breathProgram: BreathProgram?
     
     init(animationName: String, snapshotDict: NSDictionary) {
         instructorAnimation = animationName
@@ -803,6 +817,12 @@ struct CharacterAnimationData: SearchableData {
             relatedAnimations = nil
         }
         animationDescription = snapshotDict["animationDescription"] as? String ?? ""
+        
+        if let breathProgramDict = snapshotDict["breathProgram"] as? NSDictionary {
+            breathProgram = BreathProgram(snapshotDict: breathProgramDict)
+        } else {
+            breathProgram = nil
+        }
     }
     
     init(fileName: String, instructorAnimation: String, ukeAnimation: String? = nil, relatedAnimations: [String]? = nil, animationDescription: String = "") {
@@ -811,6 +831,7 @@ struct CharacterAnimationData: SearchableData {
         self.relatedAnimations = relatedAnimations
         self.instructorAnimation = instructorAnimation
         self.animationDescription = animationDescription
+        self.breathProgram = nil
     }
     
     func searchableString() -> String {
@@ -821,6 +842,67 @@ struct CharacterAnimationData: SearchableData {
         return 1
     }
 }
+
+struct BreathProgram {
+    let sessionTime: Double
+    let soundArray: [BreathProgramSound]
+    let parameterArray: [BreathProgramParameter]
+    
+    init(snapshotDict: NSDictionary) {
+        var p: [BreathProgramParameter] = []
+        if let pArray = snapshotDict["parameterArray"] as? NSArray {
+            for parameter in pArray {
+                if let parameter = parameter as? NSDictionary {
+                    p.append(BreathProgramParameter(snapshotDict: parameter))
+                }
+            }
+        }
+        parameterArray = p
+        
+        var s: [BreathProgramSound] = []
+        if let sArray = snapshotDict["soundArray"] as? NSArray {
+            for sound in sArray {
+                if let sound = sound as? NSDictionary {
+                    s.append(BreathProgramSound(snapshotDict: sound))
+                }
+            }
+        }
+        soundArray = s
+        
+        sessionTime = snapshotDict["sessionTime"] as? Double ?? 0
+    }
+}
+
+struct BreathProgramSound {
+    let soundID: Int
+    let timestamp: Double
+    
+    init(snapshotDict: NSDictionary) {
+        timestamp = snapshotDict["timestamp"] as? Double ?? 0
+        soundID = snapshotDict["soundID"] as? Int ?? 0
+    }
+}
+
+class BreathProgramParameter {
+    let startTime: Double
+    let breathTimeUp: Double
+    let breathTimeDown: Double
+    let soundID: Int
+    
+    init(snapshotDict: NSDictionary) {
+        startTime = snapshotDict["startTime"] as? Double ?? 0
+        breathTimeUp = snapshotDict["breathTimeUp"] as? Double ?? 0
+        breathTimeDown = snapshotDict["breathTimeDown"] as? Double ?? 0
+        soundID = snapshotDict["soundID"] as? Int ?? 0
+    }
+}
+
+func ==<T: BreathProgramParameter>(lhs: T, rhs: T) -> Bool {
+    return lhs.startTime == rhs.startTime &&
+        rhs.breathTimeUp == lhs.breathTimeUp &&
+        rhs.breathTimeDown == lhs.breathTimeDown
+}
+
 
 struct AnimationInstructionData: SearchableData {
     let timestamp: TimeInterval

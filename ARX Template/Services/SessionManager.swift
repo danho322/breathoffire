@@ -86,22 +86,25 @@ class SessionManager {
     }
     
     func onPlayFinish(breathTimeInterval: TimeInterval = 0) {
+        var attributeContainers: [IncrementAttributeContainer] = []
+        
         let breathTime = Int(breathTimeInterval)
         if let currentUserData = currentUserData {
             let lastPlay = Date(timeIntervalSince1970: currentUserData.lastStreakTimestamp)
             if Calendar.current.isDateInYesterday(lastPlay) {
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .dayStreakCount, defaultValue: 1)
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .timeStreakCount, count: breathTime)
+                attributeContainers.append(IncrementAttributeContainer(attribute: .dayStreakCount, count: 1, defaultValue: 1))
+                attributeContainers.append(IncrementAttributeContainer(attribute: .timeStreakCount, count: breathTime, defaultValue: 0))
             } else if Calendar.current.isDateInToday(lastPlay) {
-                FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .timeStreakCount, count: breathTime)
+                attributeContainers.append(IncrementAttributeContainer(attribute: .timeStreakCount, count: breathTime, defaultValue: 0))
             } else if !Calendar.current.isDateInToday(lastPlay) {
                 FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .dayStreakCount, value: 1)
                 FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .timeStreakCount, value: 0)
             }
-            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attribute: .totalTimeCount, count: breathTime, defaultValue: 0)
+            attributeContainers.append(IncrementAttributeContainer(attribute: .totalTimeCount, count: breathTime, defaultValue: 0))
             FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .lastStreakTimestamp, value: Date().timeIntervalSince1970)
-            
             updateLongestStreaks(userId: currentUserData.userId)
+            FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUserData.userId, attributeContainers: attributeContainers)
+
         }
     }
     
@@ -116,6 +119,14 @@ class SessionManager {
             print(user)
             self.currentUserData = user
             completion?(user)
+        }
+    }
+    
+    func updateCurrentUser(completion: ((UserData)->Void)? = nil) {
+        if let currentUserData = currentUserData {
+            retrieveCurrentUser(userId: currentUserData.userId) { userData in
+                completion?(userData)
+            }
         }
     }
     

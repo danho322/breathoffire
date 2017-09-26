@@ -31,6 +31,12 @@ class RankingsViewController: UIViewController {
 //        let RankingsCellNib = UINib(nibName: String(describing: RankingsTableViewCell.self), bundle: nil)
 //        tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingsCellIdentifier)
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         FirebaseService.sharedInstance.retrieveCurrentTimeStreaks() { [unowned self] topUsers in
             self.userRankings = topUsers
             self.tableView.reloadData()

@@ -10,7 +10,7 @@ import Foundation
 import SwiftySound
 
 protocol BreathTimerServiceDelegate {
-    func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathParameter?)
+    func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathProgramParameter?)
     func breathTimeDidFinish()
 }
 
@@ -32,8 +32,10 @@ class BreathTimerService: NSObject {
     }
     
     func scheduleSounds() {
-        for soundContainer in breathProgram.soundArray() {
-            self.perform(#selector(BreathTimerService.fireSound(soundName:)), with: soundContainer.sound.rawValue, afterDelay: soundContainer.timestamp - currentTime)
+        for sound in breathProgram.soundArray {
+            if let soundType = BreathSound(rawValue: sound.soundID) {
+                self.perform(#selector(BreathTimerService.fireSound(soundName:)), with: soundType.filename(), afterDelay: sound.timestamp - currentTime)
+            }
         }
     }
     
@@ -60,8 +62,8 @@ class BreathTimerService: NSObject {
     @objc func updateTimer() {
         currentTime += timeInterval
         
-        let sessionTime = breathProgram.sessionTime()
-        let parameterQueue = breathProgram.parameterArray()
+        let sessionTime = breathProgram.sessionTime
+        let parameterQueue = breathProgram.parameterArray
         if currentTime >= sessionTime {
             timer?.invalidate()
             delegate.breathTimeDidFinish()

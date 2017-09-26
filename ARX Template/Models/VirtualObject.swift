@@ -10,6 +10,7 @@ import SceneKit
 import ARKit
 
 protocol VirtualObjectDelegate {
+    func virtualObjectDidUpdateAnimation(_ object: VirtualObject, animationData: CharacterAnimationData)
     func virtualObjectDidFinishAnimation(_ object: VirtualObject)
 }
 
@@ -123,6 +124,7 @@ class VirtualObject: SCNNode {
             let currentAnimation = animationSequence[currentAnimationIndex]
             if let animationData = DataLoader.sharedInstance.characterAnimation(name: currentAnimation.instructorAnimation) {
                 loadAnimationData(animationData: animationData, speed: currentSpeed ?? currentAnimation.speed, repeatCount: currentAnimation.repeatCount)
+                handleAnimationUpdate(animationData)
             }
         }
     }
@@ -175,6 +177,10 @@ class VirtualObject: SCNNode {
             }
 
         }
+    }
+    
+    internal func handleAnimationUpdate(_ animationData: CharacterAnimationData) {
+        delegate?.virtualObjectDidUpdateAnimation(self, animationData: animationData)
     }
     
     internal func handleAnimationSequenceFinished() {
@@ -231,6 +237,10 @@ extension VirtualObject {
 extension VirtualObject: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         anim.speed = 0
+        incrementAnimation()
+    }
+    
+    func incrementAnimation() {
         currentAnimationIndex += 1
         if currentAnimationIndex >= animationSequence.count {
             currentAnimationIndex = 0

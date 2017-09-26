@@ -53,6 +53,14 @@ class MeViewController: UIViewController {
         purchasedPackages = myPackages
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        SessionManager.sharedInstance.updateCurrentUser() { [unowned self] userData in
+            self.collectionView.reloadData()
+        }
+    }
+    
     @IBAction func onLoginTap(_ sender: Any) {
         if true {//SessionManager.sharedInstance.isAnonymous ?? true {
             if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {

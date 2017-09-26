@@ -92,7 +92,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         updatePlacementUI()
         
         if let sequenceToLoad = sequenceToLoad {
-            breathTimerView.isHidden = sequenceToLoad.breathProgram == nil
+            breathTimerView.isHidden = false
             breathTimerView.alpha = 0
             
             instructionService = InstructionService(delegate: self)
@@ -143,12 +143,20 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         techniqueCoachMarksController.stop(immediately: true)
 	}
 
+    @IBAction func onNextAnimationTap(_ sender: Any) {
+        for object in virtualObjects {
+            object.incrementAnimation()
+        }
+    }
+    
     // MARK: - Breathe
     
-    internal func setupBreathing() {
-        if let breathProgram = sequenceToLoad?.breathProgram {
+    internal func setupBreathing(animationData: CharacterAnimationData) {
+        if let breathProgram = animationData.breathProgram {
             breathTimerService = BreathTimerService(breathProgram: breathProgram, delegate: self)
             breathTimerView.alpha = 0.5
+        } else {
+            breathTimerView.alpha = 0
         }
     }
     
@@ -398,7 +406,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	
     // MARK: - ARKit / ARSCNView
     let session = ARSession()
-	var sessionConfig: ARWorldTrackingConfiguration = ARWorldTrackingSessionConfiguration()
+    var sessionConfig: ARWorldTrackingConfiguration = ARWorldTrackingConfiguration()
 	var use3DOFTracking = false {
 		didSet {
 			if use3DOFTracking {
@@ -1038,7 +1046,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     func startTechnique() {
         // hardcode setup for now
-        setupBreathing()
         startCharacterAnimations()
         
         if SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) {
@@ -1376,7 +1383,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         print("finished with sequence \(object.animationSequence)")
         stopTechniqueServices()
         
-        let breathTime = breathTimerService?.breathProgram.sessionTime() ?? 0
+        let breathTime = breathTimerService?.breathProgram.sessionTime ?? 0
         if let last = object.animationSequence.last {
             if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
                 SessionManager.sharedInstance.onPlayFinish(breathTimeInterval: breathTime)
@@ -1543,6 +1550,10 @@ extension ARTechniqueViewController: InstructionServiceDelegate {
 
 extension ARTechniqueViewController: VirtualObjectDelegate {
     
+    func virtualObjectDidUpdateAnimation(_ object: VirtualObject, animationData: CharacterAnimationData) {
+        setupBreathing(animationData: animationData)
+    }
+    
     func virtualObjectDidFinishAnimation(_ object: VirtualObject) {
         finishSequence(object: object)
     }
@@ -1569,12 +1580,11 @@ extension ARTechniqueViewController: RelatedAnimationsViewDelegate {
         self.relatedAnimationsView?.animateOut()
         self.relatedAnimationsView = nil
         startCharacterAnimations()
-        setupBreathing()
     }
 }
 
 extension ARTechniqueViewController: BreathTimerServiceDelegate {
-    func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathParameter?) {
+    func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathProgramParameter?) {
         breathTimerView.update(timestamp: timestamp, nextParameterTimestamp: nextParameterTimestamp, breathParameter: currentParameter)
     }
     

@@ -25,7 +25,7 @@ class BreatheViewController: UIViewController {
 }
 
 extension BreatheViewController: BreathTimerServiceDelegate {
-    func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathParameter?) {
+    func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathProgramParameter?) {
         breathTimeView.update(timestamp: timestamp, nextParameterTimestamp: nextParameterTimestamp, breathParameter: currentParameter)
     }
     
