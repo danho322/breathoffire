@@ -104,7 +104,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             instructionService = InstructionService(delegate: self)
         }
         
-        if !SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) && !isARModeEnabled {
+        if !SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) || !isARModeEnabled {
             startTechnique()
         }
         
