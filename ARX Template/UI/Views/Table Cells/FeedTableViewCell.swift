@@ -74,15 +74,21 @@ class FeedTableViewCell: UITableViewCell {
             activityIndicator.stopAnimating()
             handleGifData(animatedImage)
         } else {
-            FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { [unowned self] data in
-                self.activityIndicator.stopAnimating()
-                let animatedImage = FLAnimatedImage(animatedGIFData: data)
-                handleGifData(animatedImage)
-                self.gifDict[feedKey] = animatedImage
-            })
+            if let firstImagePath = feedItem.imagePathArray.first {
+                FirebaseService.sharedInstance.retrieveDataAtPath(path: firstImagePath, completion: { [unowned self] imageData in
+                    if let image = UIImage(data: imageData) {
+                        self.activityIndicator.stopAnimating()
+                        self.feedImageView.image = image
+                    }
+                    FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { data in
+                        self.activityIndicator.stopAnimating()
+                        let animatedImage = FLAnimatedImage(animatedGIFData: data)
+                        handleGifData(animatedImage)
+                        self.gifDict[feedKey] = animatedImage
+                    })
+                })
+            }
         }
-        
-        
         
         if let comment = feedItem.comment, comment.characters.count > 0 {
             commentLabel.text = comment

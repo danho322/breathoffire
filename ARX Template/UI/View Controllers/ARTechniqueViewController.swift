@@ -87,6 +87,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             setupGestureRecognizers()
             hudDidTapShowToggle(shouldShow: false)
             restartPlaneDetection()
+        } else {
+            let characterScene0 = ARXCharacterSceneView(frame: sceneView.frame, cameraPosition: SCNVector3(x: 0, y: 0.3, z: 2))
+            view.insertSubview(characterScene0, aboveSubview: sceneView)
+            if let model = characterScene0.model {
+                virtualObjects.append(model)
+            }
         }
         
         updatePlacementUI()

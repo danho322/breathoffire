@@ -64,7 +64,7 @@ class BreathTimerService: NSObject {
         
         let sessionTime = breathProgram.sessionTime
         let parameterQueue = breathProgram.parameterArray
-        if currentTime >= sessionTime {
+        if currentTime >= sessionTime && sessionTime > 0 {
             timer?.invalidate()
             delegate.breathTimeDidFinish()
         }

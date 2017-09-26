@@ -65,6 +65,10 @@ class InstructionService: NSObject {
     @objc func fireInstruction(instruction: Any) {
         if let instruction = instruction as? AnimationInstructionData {
             delegate.didUpdateInstruction(instruction: instruction)
+            
+            if let soundID = instruction.soundID, let breathSound = BreathSound(rawValue: soundID) {
+                breathSound.play()
+            }
         }
     }
 }

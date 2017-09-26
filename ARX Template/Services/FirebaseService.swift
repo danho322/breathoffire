@@ -513,8 +513,10 @@ class FirebaseService: NSObject {
                 if let instructionDict = snapshot.value as? NSDictionary {
                     var instructionArray: [AnimationInstructionData] = []
                     instructionDict.forEach({ obj in
-                        if let timestamp = obj.key as? String, let text = obj.value as? String {
-                            instructionArray.append(AnimationInstructionData(timestamp: Double(timestamp) ?? 0, text: text, animationName: animationName))
+                        if let timestamp = obj.key as? String, let dict = obj.value as? NSDictionary {
+                            let text = dict["text"] as? String ?? ""
+                            let soundID = dict["soundID"] as? Int
+                            instructionArray.append(AnimationInstructionData(timestamp: Double(timestamp) ?? 0, text: text, animationName: animationName, soundID: soundID))
                         }
                     })
                     self.instructionDataDict[animationName] = instructionArray
@@ -908,6 +910,7 @@ struct AnimationInstructionData: SearchableData {
     let timestamp: TimeInterval
     let text: String
     let animationName: String
+    let soundID: Int?
     
     func searchableString() -> String {
         return text

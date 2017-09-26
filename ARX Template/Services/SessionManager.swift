@@ -30,10 +30,30 @@ enum UserAttribute: String {
     case purchasedPackages = "purchasedPackages"
 }
 
-enum TutorialInstructionType {
-    case Walkthrough
-    case Options
-    case ARTechnique
+struct TutorialInstructionID: OptionSet {
+    let rawValue: Int
+    
+    static let None             = TutorialInstructionID(rawValue: 0)
+    static let Walkthrough   = TutorialInstructionID(rawValue: 1 << 0)
+    static let Options    = TutorialInstructionID(rawValue: 1 << 1)
+    static let ARTechnique = TutorialInstructionID(rawValue: 1 << 2)
+}
+
+enum TutorialInstructionType: String {
+    case Walkthrough = "kDefaultWalkthrough"
+    case Options = "kDefaultOptions"
+    case ARTechnique = "kDefaultArtechnique"
+    
+    func ID() -> TutorialInstructionID {
+        switch self {
+        case .Walkthrough:
+            return TutorialInstructionID.Walkthrough
+        case .Options:
+            return TutorialInstructionID.Options
+        case .ARTechnique:
+            return TutorialInstructionID.ARTechnique
+        }
+    }
 }
 
 class SessionManager {
@@ -305,36 +325,23 @@ class SessionManager {
     }
     
     // MARK: - Tutorials
-    var tempWalkthroughFlag = false
-    var tempOptionsFlag = false
-    var tempARTechniqueFlag = false
+    var tutorialStoredValue: Int {
+        set {
+            UserDefaults.standard.set(newValue, for: .tutorialFlag)
+        }
+        get {
+            return UserDefaults.standard.integer(for: .tutorialFlag)
+        }
+    }
     
     func shouldShowTutorial(type: TutorialInstructionType) -> Bool {
-        return false
-        // TODO: retrieve from user data
-        if type == .Walkthrough {
-            return !tempWalkthroughFlag
-        }
-        
-        if type == .Options {
-            return !tempOptionsFlag
-        }
-        
-        if type == .ARTechnique {
-            return !tempARTechniqueFlag
-        }
-        
-        return false
+        let setFlags = TutorialInstructionID(rawValue: tutorialStoredValue)
+        return !setFlags.contains(type.ID())
     }
     
     func onTutorialShow(type: TutorialInstructionType) {
-        // TODO: persist
-        if type == .Walkthrough {
-            tempWalkthroughFlag = true
-        } else if type == .Options {
-            tempOptionsFlag = true
-        } else if type == .ARTechnique {
-            tempARTechniqueFlag = true
-        }
+        var tutorialOptions = TutorialInstructionID(rawValue: tutorialStoredValue)
+        tutorialOptions.insert(type.ID())
+        tutorialStoredValue = tutorialOptions.rawValue
     }
 }
