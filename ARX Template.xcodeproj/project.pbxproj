@@ -100,6 +100,21 @@
 		D49103021EFB05CE008A528E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D49103001EFB05CE008A528E /* Main.storyboard */; };
 		D49103041EFB05CE008A528E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D49103031EFB05CE008A528E /* Assets.xcassets */; };
 		D49103071EFB05CE008A528E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D49103051EFB05CE008A528E /* LaunchScreen.storyboard */; };
+		D49114761F7B77FA00F8402E /* 1_Inhale.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D491146E1F7B72D400F8402E /* 1_Inhale.m4a */; };
+		D49114771F7B77FA00F8402E /* 2_InhaleHold.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D491146B1F7B72D400F8402E /* 2_InhaleHold.m4a */; };
+		D49114781F7B77FA00F8402E /* 3_AndExhale.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114711F7B72D400F8402E /* 3_AndExhale.m4a */; };
+		D49114791F7B77FA00F8402E /* 4_Breathe.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D491146D1F7B72D400F8402E /* 4_Breathe.m4a */; };
+		D491147A1F7B77FA00F8402E /* 5_OutroImaginePerfectHealth.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114691F7B72D400F8402E /* 5_OutroImaginePerfectHealth.m4a */; };
+		D491147B1F7B77FA00F8402E /* 6_BOF.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114731F7B72D500F8402E /* 6_BOF.m4a */; };
+		D491147C1F7B77FA00F8402E /* 7_SitStraightSpine.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D491146A1F7B72D400F8402E /* 7_SitStraightSpine.m4a */; };
+		D491147D1F7B77FA00F8402E /* 8_SufiGrindOneDirection.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114741F7B72D500F8402E /* 8_SufiGrindOneDirection.m4a */; };
+		D491147E1F7B77FA00F8402E /* 9_SufiGrindOtherDirection.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114721F7B72D400F8402E /* 9_SufiGrindOtherDirection.m4a */; };
+		D491147F1F7B77FA00F8402E /* 10_SpinalFlexCrossedLegs.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114751F7B72D500F8402E /* 10_SpinalFlexCrossedLegs.m4a */; };
+		D49114801F7B77FA00F8402E /* 11_SpinalFlexSeated.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D491146F1F7B72D400F8402E /* 11_SpinalFlexSeated.m4a */; };
+		D49114811F7B77FA00F8402E /* 12_SpinalFlexKnees.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114681F7B72D400F8402E /* 12_SpinalFlexKnees.m4a */; };
+		D49114821F7B77FA00F8402E /* 13_SpinalTwistGyanMudraSeatedPosition.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114671F7B72D400F8402E /* 13_SpinalTwistGyanMudraSeatedPosition.m4a */; };
+		D49114831F7B77FA00F8402E /* 14_TorsoTwistGyanMudraSeated.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D491146C1F7B72D400F8402E /* 14_TorsoTwistGyanMudraSeated.m4a */; };
+		D49114841F7B77FA00F8402E /* 15_CorpsePose.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D49114701F7B72D400F8402E /* 15_CorpsePose.m4a */; };
 		D49418891F231E0200CA83E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4612E301F231C08007D13C3 /* GoogleService-Info.plist */; };
 		D494188B1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D494188A1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift */; };
 		D494188D1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D494188C1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib */; };
@@ -273,6 +288,21 @@
 		D49103081EFB05CE008A528E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D49103121EFB068E008A528E /* SceneKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitExtensions.swift; sourceTree = "<group>"; };
 		D49103141EFB068E008A528E /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
+		D49114671F7B72D400F8402E /* 13_SpinalTwistGyanMudraSeatedPosition.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 13_SpinalTwistGyanMudraSeatedPosition.m4a; sourceTree = "<group>"; };
+		D49114681F7B72D400F8402E /* 12_SpinalFlexKnees.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 12_SpinalFlexKnees.m4a; sourceTree = "<group>"; };
+		D49114691F7B72D400F8402E /* 5_OutroImaginePerfectHealth.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 5_OutroImaginePerfectHealth.m4a; sourceTree = "<group>"; };
+		D491146A1F7B72D400F8402E /* 7_SitStraightSpine.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 7_SitStraightSpine.m4a; sourceTree = "<group>"; };
+		D491146B1F7B72D400F8402E /* 2_InhaleHold.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 2_InhaleHold.m4a; sourceTree = "<group>"; };
+		D491146C1F7B72D400F8402E /* 14_TorsoTwistGyanMudraSeated.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 14_TorsoTwistGyanMudraSeated.m4a; sourceTree = "<group>"; };
+		D491146D1F7B72D400F8402E /* 4_Breathe.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 4_Breathe.m4a; sourceTree = "<group>"; };
+		D491146E1F7B72D400F8402E /* 1_Inhale.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 1_Inhale.m4a; sourceTree = "<group>"; };
+		D491146F1F7B72D400F8402E /* 11_SpinalFlexSeated.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 11_SpinalFlexSeated.m4a; sourceTree = "<group>"; };
+		D49114701F7B72D400F8402E /* 15_CorpsePose.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 15_CorpsePose.m4a; sourceTree = "<group>"; };
+		D49114711F7B72D400F8402E /* 3_AndExhale.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 3_AndExhale.m4a; sourceTree = "<group>"; };
+		D49114721F7B72D400F8402E /* 9_SufiGrindOtherDirection.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 9_SufiGrindOtherDirection.m4a; sourceTree = "<group>"; };
+		D49114731F7B72D500F8402E /* 6_BOF.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 6_BOF.m4a; sourceTree = "<group>"; };
+		D49114741F7B72D500F8402E /* 8_SufiGrindOneDirection.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 8_SufiGrindOneDirection.m4a; sourceTree = "<group>"; };
+		D49114751F7B72D500F8402E /* 10_SpinalFlexCrossedLegs.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 10_SpinalFlexCrossedLegs.m4a; sourceTree = "<group>"; };
 		D494188A1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsMOTDTableViewCell.swift; sourceTree = "<group>"; };
 		D494188C1F23DF0C00CA83E2 /* OptionsMyPackagesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsMyPackagesTableViewCell.xib; sourceTree = "<group>"; };
 		D494188E1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsMyPackagesTableViewCell.swift; sourceTree = "<group>"; };
@@ -444,6 +474,7 @@
 		D42DE7641F469DB700264AF1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D49114661F7B72C200F8402E /* Audio */,
 				D4EE12D81F60F0BB00A55E9F /* How.m4v */,
 				D4EE12D71F60F0B900A55E9F /* What.m4v */,
 				D4EE12D61F60F0B600A55E9F /* Why.m4v */,
@@ -688,6 +719,28 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		D49114661F7B72C200F8402E /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				D491146E1F7B72D400F8402E /* 1_Inhale.m4a */,
+				D491146B1F7B72D400F8402E /* 2_InhaleHold.m4a */,
+				D49114711F7B72D400F8402E /* 3_AndExhale.m4a */,
+				D491146D1F7B72D400F8402E /* 4_Breathe.m4a */,
+				D49114691F7B72D400F8402E /* 5_OutroImaginePerfectHealth.m4a */,
+				D49114731F7B72D500F8402E /* 6_BOF.m4a */,
+				D491146A1F7B72D400F8402E /* 7_SitStraightSpine.m4a */,
+				D49114741F7B72D500F8402E /* 8_SufiGrindOneDirection.m4a */,
+				D49114721F7B72D400F8402E /* 9_SufiGrindOtherDirection.m4a */,
+				D49114751F7B72D500F8402E /* 10_SpinalFlexCrossedLegs.m4a */,
+				D491146F1F7B72D400F8402E /* 11_SpinalFlexSeated.m4a */,
+				D49114681F7B72D400F8402E /* 12_SpinalFlexKnees.m4a */,
+				D49114671F7B72D400F8402E /* 13_SpinalTwistGyanMudraSeatedPosition.m4a */,
+				D491146C1F7B72D400F8402E /* 14_TorsoTwistGyanMudraSeated.m4a */,
+				D49114701F7B72D400F8402E /* 15_CorpsePose.m4a */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		D4A04AF01F09FD3C00BEA822 /* Virtual Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +845,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D49114761F7B77FA00F8402E /* 1_Inhale.m4a in Resources */,
+				D49114771F7B77FA00F8402E /* 2_InhaleHold.m4a in Resources */,
+				D49114781F7B77FA00F8402E /* 3_AndExhale.m4a in Resources */,
+				D49114791F7B77FA00F8402E /* 4_Breathe.m4a in Resources */,
+				D491147A1F7B77FA00F8402E /* 5_OutroImaginePerfectHealth.m4a in Resources */,
+				D491147B1F7B77FA00F8402E /* 6_BOF.m4a in Resources */,
+				D491147C1F7B77FA00F8402E /* 7_SitStraightSpine.m4a in Resources */,
+				D491147D1F7B77FA00F8402E /* 8_SufiGrindOneDirection.m4a in Resources */,
+				D491147E1F7B77FA00F8402E /* 9_SufiGrindOtherDirection.m4a in Resources */,
+				D491147F1F7B77FA00F8402E /* 10_SpinalFlexCrossedLegs.m4a in Resources */,
+				D49114801F7B77FA00F8402E /* 11_SpinalFlexSeated.m4a in Resources */,
+				D49114811F7B77FA00F8402E /* 12_SpinalFlexKnees.m4a in Resources */,
+				D49114821F7B77FA00F8402E /* 13_SpinalTwistGyanMudraSeatedPosition.m4a in Resources */,
+				D49114831F7B77FA00F8402E /* 14_TorsoTwistGyanMudraSeated.m4a in Resources */,
+				D49114841F7B77FA00F8402E /* 15_CorpsePose.m4a in Resources */,
 				D4EE12D91F60F0CE00A55E9F /* How.m4v in Resources */,
 				D4EE12DA1F60F0CE00A55E9F /* What.m4v in Resources */,
 				D4EE12DB1F60F0CE00A55E9F /* Why.m4v in Resources */,

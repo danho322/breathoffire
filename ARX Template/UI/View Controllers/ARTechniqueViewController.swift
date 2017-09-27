@@ -91,6 +91,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             let characterScene0 = ARXCharacterSceneView(frame: sceneView.frame, cameraPosition: SCNVector3(x: 0, y: 0.3, z: 2))
             view.insertSubview(characterScene0, aboveSubview: sceneView)
             if let model = characterScene0.model {
+                model.delegate = self
                 virtualObjects.append(model)
             }
         }
@@ -158,6 +159,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     // MARK: - Breathe
     
     internal func setupBreathing(animationData: CharacterAnimationData) {
+        print("setupBreathing")
+        breathTimerService?.stop()
         if let breathProgram = animationData.breathProgram {
             breathTimerService = BreathTimerService(breathProgram: breathProgram, delegate: self)
             breathTimerView.alpha = 0.5
@@ -1557,10 +1560,12 @@ extension ARTechniqueViewController: InstructionServiceDelegate {
 extension ARTechniqueViewController: VirtualObjectDelegate {
     
     func virtualObjectDidUpdateAnimation(_ object: VirtualObject, animationData: CharacterAnimationData) {
+        print("virtualObjectDidUpdateAnimation")
         setupBreathing(animationData: animationData)
     }
     
     func virtualObjectDidFinishAnimation(_ object: VirtualObject) {
+        print("virtualObjectDidFinishAnimation")
         finishSequence(object: object)
     }
 }

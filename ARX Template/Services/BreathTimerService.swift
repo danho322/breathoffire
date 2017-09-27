@@ -29,6 +29,10 @@ class BreathTimerService: NSObject {
     
         timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self,   selector: (#selector(BreathTimerService.updateTimer)), userInfo: nil, repeats: true)
         scheduleSounds()
+        
+        if let repeatSoundID = breathProgram.repeatSoundID, let loopSound = BreathSound(rawValue: repeatSoundID) {
+            loopSound.loop()
+        }
     }
     
     func scheduleSounds() {

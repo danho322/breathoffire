@@ -16,24 +16,68 @@ import SwiftySound
 
 enum BreathSound: Int {
     case quickExhale = 0
+    case inhale = 1
+    case inhaleHold = 2
+    case andExhale = 3
+    case breath = 4
+    case outroPerfectHealth = 5
+    case bof = 6
+    case sitStraightSpine = 7
+    case sufiGrindOneDirection = 8
+    case sufiGrindOtherDirection = 9
+    case spinalFlexCrossedLegs = 10
+    case spinalFlexSeated = 11
+    case spinalFlexKnees = 12
+    case spinalTwistGyanMudraSeated = 13
+    case torsoTwistGyanMudraSeated = 14
+    case corpsePose = 15
     case none = 100
     
     func filename() -> String {
         switch self {
         case .quickExhale:
             return "Breath.m4a"
+        case .inhale:
+            return "1_Inhale.m4a"
+        case .inhaleHold:
+            return "2_InhaleHold.m4a"
+        case .andExhale:
+            return "3_AndExhale.m4a"
+        case .breath:
+            return "4_Breathe.m4a"
+        case .outroPerfectHealth:
+            return "5_OutroImaginePerfectHealth.m4a"
+        case .bof:
+            return "6_BOF.m4a"
+        case .sitStraightSpine:
+            return "7_SitStraightSpine.m4a"
+        case .sufiGrindOneDirection:
+            return "8_SufiGrindOneDirection.m4a"
+        case .sufiGrindOtherDirection:
+            return "9_SufiGrindOtherDirection.m4a"
+        case .spinalFlexCrossedLegs:
+            return "10_SpinalFlexCrossedLegs.m4a"
+        case .spinalFlexSeated:
+            return "11_SpinalFlexSeated.m4a"
+        case .spinalFlexKnees:
+            return "12_SpinalFlexKnees.m4a"
+        case .spinalTwistGyanMudraSeated:
+            return "13_SpinalTwistSyanMudraSeatedPosition.m4a"
+        case .torsoTwistGyanMudraSeated:
+            return "14_TorsoTwistGyanMudraSeated.m4a"
+        case .corpsePose:
+            return "15_CorposePose.m4a"
         default:
             return ""
         }
     }
     
     func play() {
-        switch self {
-        case .quickExhale:
-            Sound.play(file: filename())
-        default:
-            break
-        }
+        Sound.play(file: filename())
+    }
+    
+    func loop() {
+        Sound.play(file: filename(), numberOfLoops: -1)
     }
 }
 

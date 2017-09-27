@@ -101,6 +101,7 @@ class VirtualObject: SCNNode {
     // MARK: - Animations
     
     func loadAnimationSequence(animationSequence: [AnimationSequenceData]) {
+        print("loadAnimationSequence")
         let animator = UIViewPropertyAnimator(duration: 0.1, curve: .easeIn, animations: {
             self.opacity = 1
         })
@@ -120,6 +121,7 @@ class VirtualObject: SCNNode {
     }
     
     internal func loadCurrentAnimationIndex() {
+        print("loadCurrentAnimationIndex: \(currentAnimationIndex)")
         if currentAnimationIndex < animationSequence.count && currentAnimationIndex >= 0 {
             let currentAnimation = animationSequence[currentAnimationIndex]
             if let animationData = DataLoader.sharedInstance.characterAnimation(name: currentAnimation.instructorAnimation) {
@@ -241,6 +243,7 @@ extension VirtualObject: CAAnimationDelegate {
     }
     
     func incrementAnimation() {
+        print("incrementAnimation")
         currentAnimationIndex += 1
         if currentAnimationIndex >= animationSequence.count {
             currentAnimationIndex = 0

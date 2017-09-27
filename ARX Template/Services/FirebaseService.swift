@@ -849,6 +849,7 @@ struct BreathProgram {
     let sessionTime: Double
     let soundArray: [BreathProgramSound]
     let parameterArray: [BreathProgramParameter]
+    let repeatSoundID: Int?
     
     init(snapshotDict: NSDictionary) {
         var p: [BreathProgramParameter] = []
@@ -872,6 +873,7 @@ struct BreathProgram {
         soundArray = s
         
         sessionTime = snapshotDict["sessionTime"] as? Double ?? 0
+        repeatSoundID = snapshotDict["repeatSoundID"] as? Int
     }
 }
 
