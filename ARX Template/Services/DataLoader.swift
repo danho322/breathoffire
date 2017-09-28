@@ -105,6 +105,7 @@ struct DataLoader {
     // Content
     
     func moveOfTheDay() -> AnimationSequenceDataContainer? {
+        return sequenceData(sequenceName: "Yoga Flow A")
         if FirebaseService.sharedInstance.sequenceDataDict.count > 0 {
             let index = Int(arc4random_uniform(UInt32(FirebaseService.sharedInstance.sequenceDataDict.count)))
             let randomMove = Array(FirebaseService.sharedInstance.sequenceDataDict.values)[index]

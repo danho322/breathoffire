@@ -87,7 +87,7 @@ class BreathTimerView: XibView {
         guard let view = view as? BreathTimerView else {
             fatalError("view is not of type BreathTimerView")
         }
-       
+       print("breath timer view update")
         view.timeLabel.text = BreathTimerService.timeString(time: timestamp)
        
         if let currentBreathParameter = currentBreathParameter,
@@ -98,6 +98,8 @@ class BreathTimerView: XibView {
             
             progress = CGFloat(timestamp - currentBreathParameter.startTime) / CGFloat(length)
             if breathParameter == currentBreathParameter {
+                
+                print("is same parameter")
                 return
             }
             
@@ -107,6 +109,11 @@ class BreathTimerView: XibView {
         currentBreathParameter = breathParameter
         isRunning = currentBreathParameter != nil
         doBreathAnimation()
+    }
+    
+    func handleStart() {
+        currentBreathParameter = nil
+        isRunning = true
     }
     
     func finishTimer() {
@@ -134,9 +141,10 @@ class BreathTimerView: XibView {
         guard let view = view as? BreathTimerView else {
             fatalError("view is not of type BreathTimerView")
         }
+        print("doBreathAnimation, \(currentBreathParameter), \(isRunning)")
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(BreathTimerView.doBreathAnimation), object: nil)
         if let currentBreatheParameter = currentBreathParameter, isRunning {
-            
+            print("isRunning: \(self), \(view)")
             let sound = BreathSound(rawValue: currentBreatheParameter.soundID)
             sound?.play()
             
@@ -156,6 +164,7 @@ class BreathTimerView: XibView {
             },
                            completion: { finished in
                             self.fadeOutView(fireView)
+                            print("schedulign in \(currentBreatheParameter.breathTimeDown)")
                             self.perform(#selector(BreathTimerView.doBreathAnimation), with: nil, afterDelay: currentBreatheParameter.breathTimeDown)
             })
         }

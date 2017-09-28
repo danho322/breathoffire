@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         SessionManager.sharedInstance.onStart()
         
+        Sound.enabled = true    // comment out to save default
         Sound.category = .playback
         
         StoreKitService().retrieveProductData()

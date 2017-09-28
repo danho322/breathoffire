@@ -152,7 +152,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 
     @IBAction func onNextAnimationTap(_ sender: Any) {
         for object in virtualObjects {
-            object.incrementAnimation()
+            object.skipCurrentAnimation()
         }
     }
     
@@ -162,8 +162,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         print("setupBreathing")
         breathTimerService?.stop()
         if let breathProgram = animationData.breathProgram {
+            print("setup program")
             breathTimerService = BreathTimerService(breathProgram: breathProgram, delegate: self)
             breathTimerView.alpha = 0.5
+            breathTimerView.isHidden = false
         } else {
             breathTimerView.alpha = 0
         }
@@ -1597,6 +1599,10 @@ extension ARTechniqueViewController: RelatedAnimationsViewDelegate {
 extension ARTechniqueViewController: BreathTimerServiceDelegate {
     func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathProgramParameter?) {
         breathTimerView.update(timestamp: timestamp, nextParameterTimestamp: nextParameterTimestamp, breathParameter: currentParameter)
+    }
+    
+    func breathTimeDidStart() {
+        breathTimerView.handleStart()
     }
     
     func breathTimeDidFinish() {

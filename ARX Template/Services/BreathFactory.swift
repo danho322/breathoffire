@@ -36,7 +36,7 @@ enum BreathSound: Int {
     func filename() -> String {
         switch self {
         case .quickExhale:
-            return "Breath.m4a"
+            return "Breathe.m4a"
         case .inhale:
             return "1_Inhale.m4a"
         case .inhaleHold:
@@ -73,6 +73,7 @@ enum BreathSound: Int {
     }
     
     func play() {
+        print("play \(filename())")
         Sound.play(file: filename())
     }
     

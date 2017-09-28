@@ -29,6 +29,10 @@ extension BreatheViewController: BreathTimerServiceDelegate {
         breathTimeView.update(timestamp: timestamp, nextParameterTimestamp: nextParameterTimestamp, breathParameter: currentParameter)
     }
     
+    func breathTimeDidStart() {
+        breathTimeView.handleStart()
+    }
+    
     func breathTimeDidFinish() {
         breathTimeView.isRunning = false
     }

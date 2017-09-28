@@ -11,6 +11,7 @@ import SwiftySound
 
 protocol BreathTimerServiceDelegate {
     func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathProgramParameter?)
+    func breathTimeDidStart()
     func breathTimeDidFinish()
 }
 
@@ -27,12 +28,10 @@ class BreathTimerService: NSObject {
         self.delegate = delegate
         super.init()
     
+        delegate.breathTimeDidStart()
+        
         timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self,   selector: (#selector(BreathTimerService.updateTimer)), userInfo: nil, repeats: true)
         scheduleSounds()
-        
-        if let repeatSoundID = breathProgram.repeatSoundID, let loopSound = BreathSound(rawValue: repeatSoundID) {
-            loopSound.loop()
-        }
     }
     
     func scheduleSounds() {
@@ -41,6 +40,10 @@ class BreathTimerService: NSObject {
                 self.perform(#selector(BreathTimerService.fireSound(soundName:)), with: soundType.filename(), afterDelay: sound.timestamp - currentTime)
             }
         }
+        
+        if let repeatSoundID = breathProgram.repeatSoundID, let loopSound = BreathSound(rawValue: repeatSoundID) {
+            loopSound.loop()
+        }
     }
     
     @objc func fireSound(soundName: String) {
@@ -48,6 +51,7 @@ class BreathTimerService: NSObject {
     }
     
     func pause() {
+        Sound.stopAll()
         timer?.invalidate()
         NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
@@ -58,6 +62,7 @@ class BreathTimerService: NSObject {
     }
     
     func stop() {
+        Sound.stopAll()
         timer?.invalidate()
         NSObject.cancelPreviousPerformRequests(withTarget: self)
         delegate.breathTimeDidFinish()
@@ -68,6 +73,10 @@ class BreathTimerService: NSObject {
         
         let sessionTime = breathProgram.sessionTime
         let parameterQueue = breathProgram.parameterArray
+        
+        print("tick: \(currentTime), \(sessionTime)")
+
+        
         if currentTime >= sessionTime && sessionTime > 0 {
             timer?.invalidate()
             delegate.breathTimeDidFinish()

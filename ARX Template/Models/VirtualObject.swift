@@ -132,9 +132,10 @@ class VirtualObject: SCNNode {
     }
     
     func loadAnimationData(animationData: CharacterAnimationData, speed: Double, repeatCount: Float) {
+        print("loading animation: \(animationData.fileName), repeat: \(repeatCount)")
         refreshInstructionService(animationData: animationData, speed: speed)
         let speedToUse = Float(max(0.01, speed))
-        removeAllAnimations()
+        armatureNode()?.removeAllAnimations()
         
         if let animation = CAAnimation.animationWithSceneNamed(animationData.fileName) {
             var animationsToSave: [CAAnimation] = []
@@ -164,6 +165,7 @@ class VirtualObject: SCNNode {
     }
     
     func loadAnimation(_ animation: CAAnimation, key: String) {
+        print("load animation: \(animation)")
         armatureNode()?.addAnimation(animation, forKey: key)
     }
     
@@ -205,6 +207,11 @@ class VirtualObject: SCNNode {
         updateAnimationSpeed(speed: max(0.01, speed))
     }
     
+    func skipCurrentAnimation() {
+        
+        incrementAnimation()
+    }
+    
     func currentAnimationTimeOffset() -> TimeInterval {
         for key in animationKeys {
             if let player = animationPlayer(forKey: key) {
@@ -238,6 +245,7 @@ extension VirtualObject {
 
 extension VirtualObject: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        print("animationDidStop, finished: \(flag)")
         anim.speed = 0
         incrementAnimation()
     }
