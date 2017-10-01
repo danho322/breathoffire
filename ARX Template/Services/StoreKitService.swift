@@ -14,7 +14,7 @@ struct StoreKitService {
     //https://github.com/bizz84/SwiftyStoreKit
     
     func retrieveProductData() {
-        SwiftyStoreKit.retrieveProductsInfo(["package_token_1"]) { result in
+        SwiftyStoreKit.retrieveProductsInfo(["com.arxapps.breathe.package_token_1"]) { result in
             if let product = result.retrievedProducts.first {
                 let priceString = product.localizedPrice!
                 print("Product: \(product.localizedDescription), price: \(priceString)")

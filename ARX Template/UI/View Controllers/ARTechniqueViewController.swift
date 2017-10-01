@@ -21,12 +21,17 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var hudBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var endButton: UIButton!
+    @IBOutlet weak var currentAnimationLabel: UILabel!
+    @IBOutlet weak var currentAnimationTimeLabel: UILabel!
     
     var isARModeEnabled = true
     var sequenceToLoad: AnimationSequenceDataContainer?
     var dismissCompletionHandler: (()->Void)?
     
     internal var currentAnimationIndex = 0
+    internal var currentAnimationTimer: Timer?
+    internal var timerStartDate = Date()
+    
     internal var sliderValue: Float = 0.5
     
     internal let placingCoachMarksController = CoachMarksController()
@@ -1560,14 +1565,29 @@ extension ARTechniqueViewController: InstructionServiceDelegate {
 }
 
 extension ARTechniqueViewController: VirtualObjectDelegate {
+    func setupDebugTimer() {
+        currentAnimationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self,   selector: (#selector(ARTechniqueViewController.onTimerTick)), userInfo: nil, repeats: true)
+        timerStartDate = Date()
+        currentAnimationTimeLabel.text = ARXUtilities.durationString(0)
+    }
+    
+    @objc func onTimerTick() {
+        currentAnimationTimeLabel.text = ARXUtilities.durationString(-timerStartDate.timeIntervalSinceNow)
+    }
     
     func virtualObjectDidUpdateAnimation(_ object: VirtualObject, animationData: CharacterAnimationData) {
-        print("virtualObjectDidUpdateAnimation")
+        setupDebugTimer()
+        
         setupBreathing(animationData: animationData)
+        
+        currentAnimationLabel.text = animationData.instructorAnimation
     }
     
     func virtualObjectDidFinishAnimation(_ object: VirtualObject) {
-        print("virtualObjectDidFinishAnimation")
+        currentAnimationTimer?.invalidate()
+    }
+    
+    func virtualObjectDidFinishAnimationSequence(_ object: VirtualObject) {
         finishSequence(object: object)
     }
 }

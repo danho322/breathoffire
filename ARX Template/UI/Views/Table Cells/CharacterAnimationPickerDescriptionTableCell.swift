@@ -16,6 +16,7 @@ class CharacterAnimationPickerDescriptionTableCell: UITableViewCell {
 
     @IBOutlet weak var packageNameLabel: UILabel!
     @IBOutlet weak var packageDescriptionLabel: UILabel!
+    @IBOutlet weak var sequenceSessionDurationLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()

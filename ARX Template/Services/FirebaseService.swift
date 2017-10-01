@@ -773,6 +773,21 @@ struct AnimationSequenceDataContainer: SearchableData {
     func sortPriority() -> Int {
         return 0
     }
+    
+    func sequenceDuration() -> TimeInterval {
+        var duration: TimeInterval = 0
+        for sequenceData in sequenceArray {
+            if let animationData = DataLoader.sharedInstance.characterAnimation(name: sequenceData.instructorAnimation) {
+                print("animationData: \(sequenceData.instructorAnimation)")
+                if let animation = CAAnimation.animationWithSceneNamed(animationData.fileName) {
+                    print(" duration: \(animation.duration)")
+                    let repeatCount: Double = sequenceData.repeatCount > 0 ? Double(sequenceData.repeatCount) : 1
+                    duration = duration + (sequenceData.speed * animation.duration) * repeatCount + sequenceData.delay
+                }
+            }
+        }
+        return duration
+    }
 }
 
 struct AnimationSequenceData {

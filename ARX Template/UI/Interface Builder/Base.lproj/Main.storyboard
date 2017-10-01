@@ -1163,6 +1163,18 @@
                                     <action selector="onToggleBreathTap:" destination="gQx-gU-hL3" eventType="touchUpInside" id="vlz-UN-Ro3"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qU5-rG-3Ai">
+                                <rect key="frame" x="10" y="263" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3C-q6-g4c">
+                                <rect key="frame" x="10" y="293.5" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Le1-2e-IV0" customClass="CharacterHUDView" customModule="ARX_Template" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="547" width="375" height="130"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1177,12 +1189,15 @@
                             <constraint firstItem="ba6-jE-09U" firstAttribute="leading" secondItem="auA-Qr-nK7" secondAttribute="leading" constant="15" id="5Ar-Im-xOT"/>
                             <constraint firstItem="ZiE-8E-3Ig" firstAttribute="trailing" secondItem="auA-Qr-nK7" secondAttribute="trailing" constant="-15" id="5mL-g5-z6t"/>
                             <constraint firstItem="OmM-QP-RfY" firstAttribute="trailing" secondItem="auA-Qr-nK7" secondAttribute="trailing" id="7xI-KL-rPg"/>
+                            <constraint firstItem="qU5-rG-3Ai" firstAttribute="leading" secondItem="7tA-Dg-wg9" secondAttribute="leading" id="8no-dU-x5u"/>
                             <constraint firstItem="Z2Q-42-QYJ" firstAttribute="top" secondItem="hpw-Pw-RqP" secondAttribute="bottom" constant="10" id="AGJ-Do-i0w"/>
                             <constraint firstItem="Zh8-TW-68o" firstAttribute="leading" secondItem="OmM-QP-RfY" secondAttribute="leading" id="CQ7-a1-6Ku"/>
                             <constraint firstItem="OmM-QP-RfY" firstAttribute="bottom" secondItem="k1K-JZ-etP" secondAttribute="bottom" id="Gwc-vg-PdQ"/>
                             <constraint firstItem="cuu-kW-rEx" firstAttribute="top" secondItem="Mec-UJ-eUf" secondAttribute="bottom" constant="10" id="Hgo-o0-avZ"/>
                             <constraint firstItem="Le1-2e-IV0" firstAttribute="top" secondItem="OmM-QP-RfY" secondAttribute="bottom" constant="-120" id="ICK-CY-2zW"/>
+                            <constraint firstItem="qU5-rG-3Ai" firstAttribute="top" secondItem="7tA-Dg-wg9" secondAttribute="bottom" constant="10" id="IaO-xe-7Wf"/>
                             <constraint firstItem="OmM-QP-RfY" firstAttribute="trailing" secondItem="k1K-JZ-etP" secondAttribute="trailing" id="Igh-BI-7Kr"/>
+                            <constraint firstItem="b3C-q6-g4c" firstAttribute="top" secondItem="qU5-rG-3Ai" secondAttribute="bottom" constant="10" id="Izo-Of-DUg"/>
                             <constraint firstItem="Mec-UJ-eUf" firstAttribute="top" secondItem="VQZ-1R-OLo" secondAttribute="bottom" id="Jzl-Oo-Zof"/>
                             <constraint firstItem="Exl-do-84y" firstAttribute="bottom" secondItem="auA-Qr-nK7" secondAttribute="bottom" id="Kjk-JR-IPK"/>
                             <constraint firstItem="7tA-Dg-wg9" firstAttribute="leading" secondItem="bGy-L5-bog" secondAttribute="leading" id="NU4-Pr-bie"/>
@@ -1209,6 +1224,7 @@
                             <constraint firstItem="Le1-2e-IV0" firstAttribute="top" secondItem="Zh8-TW-68o" secondAttribute="bottom" id="p4y-Vm-OtQ"/>
                             <constraint firstItem="MxR-A1-Q9e" firstAttribute="trailing" secondItem="auA-Qr-nK7" secondAttribute="trailing" id="paW-nm-PsH"/>
                             <constraint firstItem="b1R-R5-YB0" firstAttribute="bottom" secondItem="auA-Qr-nK7" secondAttribute="bottom" id="ptM-u9-Xmq"/>
+                            <constraint firstItem="b3C-q6-g4c" firstAttribute="leading" secondItem="qU5-rG-3Ai" secondAttribute="leading" id="q8E-KM-NsY"/>
                             <constraint firstItem="VQZ-1R-OLo" firstAttribute="leading" secondItem="auA-Qr-nK7" secondAttribute="leading" constant="50" id="qBv-Qt-TqY"/>
                             <constraint firstItem="Z2Q-42-QYJ" firstAttribute="centerX" secondItem="OmM-QP-RfY" secondAttribute="centerX" id="qsC-MG-fRH"/>
                             <constraint firstItem="VQZ-1R-OLo" firstAttribute="top" secondItem="auA-Qr-nK7" secondAttribute="top" constant="15" id="sLM-oS-xn6"/>
@@ -1224,6 +1240,8 @@
                     <connections>
                         <outlet property="addObjectButton" destination="Z2Q-42-QYJ" id="6C1-Pc-xiz"/>
                         <outlet property="breathTimerView" destination="k1K-JZ-etP" id="GPS-RY-b9l"/>
+                        <outlet property="currentAnimationLabel" destination="qU5-rG-3Ai" id="uTv-PA-pip"/>
+                        <outlet property="currentAnimationTimeLabel" destination="b3C-q6-g4c" id="GJi-TN-Mdf"/>
                         <outlet property="debugMessageLabel" destination="eOG-9O-hbm" id="wP4-e0-cWY"/>
                         <outlet property="endButton" destination="JIQ-GD-S9b" id="YF8-rj-mzi"/>
                         <outlet property="featurePointCountLabel" destination="8kF-pT-w2a" id="UmN-VA-Qap"/>

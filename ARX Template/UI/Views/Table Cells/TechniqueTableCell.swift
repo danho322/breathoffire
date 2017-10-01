@@ -12,6 +12,7 @@ class TechniqueTableCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var durationLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,12 +22,17 @@ class TechniqueTableCell: UITableViewCell {
         titleLabel.font = ThemeManager.sharedInstance.heavyFont(16)
         descriptionLabel.textColor = ThemeManager.sharedInstance.textColor()
         descriptionLabel.font = ThemeManager.sharedInstance.defaultFont(16)
+        durationLabel.textColor = ThemeManager.sharedInstance.textColor()
+        durationLabel.font = ThemeManager.sharedInstance.defaultFont(16)
     }
 
     func update(with sequenceName: String) {
         titleLabel.text = sequenceName
         if let sequenceData = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName) {
             descriptionLabel.text = sequenceData.sequenceDescription
+            let sequenceDuration = sequenceData.sequenceDuration()
+            let sequenceDurationString = ARXUtilities.durationString(sequenceDuration)
+            durationLabel.text = "Session time: \(sequenceDurationString)"
         }
     }
 

@@ -12,6 +12,8 @@ import ARKit
 protocol VirtualObjectDelegate {
     func virtualObjectDidUpdateAnimation(_ object: VirtualObject, animationData: CharacterAnimationData)
     func virtualObjectDidFinishAnimation(_ object: VirtualObject)
+    func virtualObjectDidFinishAnimationSequence(_ object: VirtualObject)
+    
 }
 
 class VirtualObject: SCNNode {
@@ -101,7 +103,6 @@ class VirtualObject: SCNNode {
     // MARK: - Animations
     
     func loadAnimationSequence(animationSequence: [AnimationSequenceData]) {
-        print("loadAnimationSequence")
         let animator = UIViewPropertyAnimator(duration: 0.1, curve: .easeIn, animations: {
             self.opacity = 1
         })
@@ -121,7 +122,6 @@ class VirtualObject: SCNNode {
     }
     
     internal func loadCurrentAnimationIndex() {
-        print("loadCurrentAnimationIndex: \(currentAnimationIndex)")
         if currentAnimationIndex < animationSequence.count && currentAnimationIndex >= 0 {
             let currentAnimation = animationSequence[currentAnimationIndex]
             if let animationData = DataLoader.sharedInstance.characterAnimation(name: currentAnimation.instructorAnimation) {
@@ -132,7 +132,6 @@ class VirtualObject: SCNNode {
     }
     
     func loadAnimationData(animationData: CharacterAnimationData, speed: Double, repeatCount: Float) {
-        print("loading animation: \(animationData.fileName), repeat: \(repeatCount)")
         refreshInstructionService(animationData: animationData, speed: speed)
         let speedToUse = Float(max(0.01, speed))
         armatureNode()?.removeAllAnimations()
@@ -165,14 +164,13 @@ class VirtualObject: SCNNode {
     }
     
     func loadAnimation(_ animation: CAAnimation, key: String) {
-        print("load animation: \(animation)")
+        print("load animation: \(animation), duration is \(animation.duration)")
         armatureNode()?.addAnimation(animation, forKey: key)
     }
     
     func updateAnimationSpeed(speed: Double) {
         currentSpeed = max(0.01, speed)
         if let armtrNode = armatureNode() {
-            print("keys: \(armtrNode.animationKeys)")
             for key in armtrNode.animationKeys {
                 // this is beta so is subject to change: https://developer.apple.com/documentation/scenekit/scnanimatable/2866031-addanimationplayer?changes=latest_major
                 if let player = animationPlayer(forKey: key) {
@@ -188,7 +186,7 @@ class VirtualObject: SCNNode {
     }
     
     internal func handleAnimationSequenceFinished() {
-        delegate?.virtualObjectDidFinishAnimation(self)
+        delegate?.virtualObjectDidFinishAnimationSequence(self)
     }
     
     func rewind() {
@@ -245,13 +243,12 @@ extension VirtualObject {
 
 extension VirtualObject: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        print("animationDidStop, finished: \(flag)")
         anim.speed = 0
+        delegate?.virtualObjectDidFinishAnimation(self)
         incrementAnimation()
     }
     
     func incrementAnimation() {
-        print("incrementAnimation")
         currentAnimationIndex += 1
         if currentAnimationIndex >= animationSequence.count {
             currentAnimationIndex = 0

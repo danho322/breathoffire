@@ -9,6 +9,7 @@
 import UIKit
 import FontAwesomeKit
 import Instructions
+import SwiftyStoreKit
 
 struct OptionsConstants {
 }
@@ -66,7 +67,9 @@ class OptionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Breathe"
-
+        
+        StoreKitService().retrieveProductData()
+        
         coachMarksController.dataSource = self
         coachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
         
