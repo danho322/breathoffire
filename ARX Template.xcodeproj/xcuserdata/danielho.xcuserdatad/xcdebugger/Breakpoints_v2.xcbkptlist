@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "528572096.855443"
+            timestampString = "528786868.183026"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
             landmarkName = "loadModel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -260,7 +260,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/FirebaseService.swift"
-            timestampString = "528785817.954384"
+            timestampString = "528786868.183492"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "302"
@@ -388,7 +388,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/SessionManager.swift"
-            timestampString = "528785817.954861"
+            timestampString = "528786868.183952"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "119"
@@ -404,7 +404,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/FirebaseService.swift"
-            timestampString = "528785817.954909"
+            timestampString = "528786868.184012"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "195"
@@ -420,13 +420,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "528572096.856559"
+            timestampString = "528786868.184359"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "255"
+            endingLineNumber = "255"
+            landmarkName = "availableObjects"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

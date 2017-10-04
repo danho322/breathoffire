@@ -38,7 +38,7 @@ class Uke: VirtualObject {
         modelLoaded = true
     }
     
-    override func loadAnimationSequence(animationSequence: [AnimationSequenceData]) {
+    override func loadAnimationSequence(animationSequence: [AnimationSequenceData], isDemoMode: Bool = false) {
         
         super.loadAnimationSequence(animationSequence: animationSequence)
     }

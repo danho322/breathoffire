@@ -192,7 +192,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         if let sequenceContainer = sequenceDataContainer(indexPath: indexPath) {
             loadButton.isEnabled = true
             sequenceToLoad = sequenceContainer
-            model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray)
+            model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray, isDemoMode: true)
         }
     }
     

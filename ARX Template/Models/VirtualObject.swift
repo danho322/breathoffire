@@ -24,7 +24,10 @@ class VirtualObject: SCNNode {
     var title: String = ""
     var modelLoaded: Bool = false
     var animationSequence: [AnimationSequenceData] = []
+
     var currentAnimationIndex = 0
+    var isDemoMode = false
+    
     var armatureName = ""
     
     var viewController: ARTechniqueViewController?
@@ -102,14 +105,16 @@ class VirtualObject: SCNNode {
     
     // MARK: - Animations
     
-    func loadAnimationSequence(animationSequence: [AnimationSequenceData]) {
+    func loadAnimationSequence(animationSequence: [AnimationSequenceData], isDemoMode: Bool = false) {
         let animator = UIViewPropertyAnimator(duration: 0.1, curve: .easeIn, animations: {
             self.opacity = 1
         })
         animator.startAnimation()
         
         currentAnimationIndex = 0
+        self.isDemoMode = isDemoMode
         self.animationSequence = animationSequence
+
         loadCurrentAnimationIndex()
     }
     
@@ -127,6 +132,10 @@ class VirtualObject: SCNNode {
             if let animationData = DataLoader.sharedInstance.characterAnimation(name: currentAnimation.instructorAnimation) {
                 loadAnimationData(animationData: animationData, speed: currentSpeed ?? currentAnimation.speed, repeatCount: currentAnimation.repeatCount)
                 handleAnimationUpdate(animationData)
+                
+                if isDemoMode {
+                    self.perform(#selector(VirtualObject.incrementAnimation), with: nil, afterDelay: 3)
+                }
             }
         }
     }
@@ -248,11 +257,17 @@ extension VirtualObject: CAAnimationDelegate {
         incrementAnimation()
     }
     
-    func incrementAnimation() {
+    @objc func incrementAnimation() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        
         currentAnimationIndex += 1
         if currentAnimationIndex >= animationSequence.count {
-            currentAnimationIndex = 0
-            handleAnimationSequenceFinished()
+            currentAnimationIndex = -1
+            if isDemoMode {
+                incrementAnimation()
+            } else {
+                handleAnimationSequenceFinished()
+            }
         } else {
             let currentAnimation = animationSequence[currentAnimationIndex]
             DispatchQueue.main.asyncAfter(deadline: .now() + currentAnimation.delay) {
