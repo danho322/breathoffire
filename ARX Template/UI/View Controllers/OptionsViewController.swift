@@ -60,6 +60,8 @@ class OptionsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var progressVisualEffectView: UIVisualEffectView!
     
     internal var sectionArray: [OptionCellSectionType] = []
     let coachMarksController = CoachMarksController()
@@ -69,6 +71,11 @@ class OptionsViewController: UIViewController {
         title = "Breathe"
         
         StoreKitService().retrieveProductData()
+        
+        progressLabel.font = ThemeManager.sharedInstance.defaultFont(20)
+        progressLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+        FirebaseService.sharedInstance.downloadDelegate = self
+        progressVisualEffectView.isHidden = !FirebaseService.sharedInstance.isDownloadingDB
         
         coachMarksController.dataSource = self
         coachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
@@ -261,5 +268,15 @@ extension OptionsViewController: CoachMarksControllerDataSource, CoachMarksContr
         coachViews.bodyView.nextLabel.text = "Ok"
         
         return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
+    }
+}
+
+extension OptionsViewController: FirebaseServiceDelegate {
+    func firebaseServiceSectionDownloaded(count: Int, total: Int) {
+        progressLabel.text = "Updated \(count) of \(total)..."
+    }
+    
+    func firebaseServiceSectionDownloadFinish() {
+        progressVisualEffectView.isHidden = true
     }
 }

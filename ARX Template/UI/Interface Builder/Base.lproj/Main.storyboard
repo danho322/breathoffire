@@ -457,12 +457,45 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="498"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D5H-ky-rBm">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xZE-TN-qgi">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="v1C-zv-WBP">
+                                            <rect key="frame" x="169.5" y="259" width="37" height="37"/>
+                                        </activityIndicatorView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating files..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgx-tn-QfB">
+                                            <rect key="frame" x="50" y="302" width="275" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Pgx-tn-QfB" firstAttribute="centerX" secondItem="v1C-zv-WBP" secondAttribute="centerX" id="8gu-FO-vPv"/>
+                                        <constraint firstItem="Pgx-tn-QfB" firstAttribute="top" secondItem="v1C-zv-WBP" secondAttribute="bottom" constant="6" id="Raz-Ez-zSK"/>
+                                        <constraint firstItem="v1C-zv-WBP" firstAttribute="centerX" secondItem="xZE-TN-qgi" secondAttribute="centerX" id="pWF-70-5SO"/>
+                                        <constraint firstItem="v1C-zv-WBP" firstAttribute="centerY" secondItem="xZE-TN-qgi" secondAttribute="centerY" id="yMf-IL-f30"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Pgx-tn-QfB" secondAttribute="trailing" constant="50" id="1AB-mg-pAC"/>
+                                    <constraint firstItem="Pgx-tn-QfB" firstAttribute="leading" secondItem="D5H-ky-rBm" secondAttribute="leading" constant="50" id="Ss9-NG-lVt"/>
+                                </constraints>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0uf-gm-Yqg" firstAttribute="leading" secondItem="ARi-FN-off" secondAttribute="leading" id="2Yt-Z7-xJM"/>
+                            <constraint firstItem="D5H-ky-rBm" firstAttribute="top" secondItem="4wG-n0-gAd" secondAttribute="bottom" id="2ll-N1-48V"/>
+                            <constraint firstAttribute="trailing" secondItem="D5H-ky-rBm" secondAttribute="trailing" id="72N-hc-XpS"/>
                             <constraint firstAttribute="trailing" secondItem="0uf-gm-Yqg" secondAttribute="trailing" id="Edx-hK-WTi"/>
+                            <constraint firstItem="Rvs-GC-xHA" firstAttribute="top" secondItem="D5H-ky-rBm" secondAttribute="bottom" id="G18-ho-qW6"/>
                             <constraint firstItem="0uf-gm-Yqg" firstAttribute="top" secondItem="Czc-2J-RLh" secondAttribute="bottom" id="HKO-Hy-AFA"/>
+                            <constraint firstItem="D5H-ky-rBm" firstAttribute="leading" secondItem="ARi-FN-off" secondAttribute="leading" id="P8L-lO-FcI"/>
                             <constraint firstItem="Czc-2J-RLh" firstAttribute="leading" secondItem="ARi-FN-off" secondAttribute="leading" id="W3n-NP-Fin"/>
                             <constraint firstAttribute="trailing" secondItem="Czc-2J-RLh" secondAttribute="trailing" id="fQM-iO-ekj"/>
                             <constraint firstItem="Czc-2J-RLh" firstAttribute="top" secondItem="4wG-n0-gAd" secondAttribute="bottom" id="fXp-jL-ytm"/>
@@ -471,6 +504,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="yaB-hE-hW9"/>
                     <connections>
+                        <outlet property="progressLabel" destination="Pgx-tn-QfB" id="q2h-9M-6ZS"/>
+                        <outlet property="progressVisualEffectView" destination="D5H-ky-rBm" id="PKF-ty-WN2"/>
                         <outlet property="searchBar" destination="0uf-gm-Yqg" id="Kgo-NB-tFq"/>
                         <outlet property="tableView" destination="Czc-2J-RLh" id="uaO-Jq-kk5"/>
                     </connections>

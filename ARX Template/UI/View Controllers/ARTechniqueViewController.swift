@@ -1568,11 +1568,11 @@ extension ARTechniqueViewController: VirtualObjectDelegate {
     func setupDebugTimer() {
         currentAnimationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self,   selector: (#selector(ARTechniqueViewController.onTimerTick)), userInfo: nil, repeats: true)
         timerStartDate = Date()
-        currentAnimationTimeLabel.text = ARXUtilities.durationString(0)
+        currentAnimationTimeLabel.text = "0"
     }
     
     @objc func onTimerTick() {
-        currentAnimationTimeLabel.text = ARXUtilities.durationString(-timerStartDate.timeIntervalSinceNow)
+        currentAnimationTimeLabel.text = "\(-timerStartDate.timeIntervalSinceNow)"
     }
     
     func virtualObjectDidUpdateAnimation(_ object: VirtualObject, animationData: CharacterAnimationData) {

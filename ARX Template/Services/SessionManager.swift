@@ -66,7 +66,6 @@ class SessionManager {
     internal var purchasedPackages: [String: Any] = Dictionary<String, Any>()
     
     init() {
-        _ = FirebaseService.sharedInstance
     }
     
     func isCurrentUser(userId: String) -> Bool {
@@ -91,10 +90,6 @@ class SessionManager {
                 }
             })
         }
-
-        
-        FirebaseService.sharedInstance.retrieveDB()
-        
         Analytics.logEvent(AnalyticsEventAppOpen, parameters: nil)
     }
     
@@ -335,6 +330,8 @@ class SessionManager {
     }
     
     func shouldShowTutorial(type: TutorialInstructionType) -> Bool {
+        return false
+        
         let setFlags = TutorialInstructionID(rawValue: tutorialStoredValue)
         return !setFlags.contains(type.ID())
     }

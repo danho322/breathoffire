@@ -47,22 +47,19 @@ class ARXUtilities {
     }
     
     class func createGIF(with images: [UIImage], loopCount: Int = 0, frameDelay: Double, callback: (_ data: Data?, _ error: NSError?) -> ()) {
-        let resizedImages = images.map({ image in
-            return ARXUtilities.resizeImageWith(image: image, newSize: CGSize(width: 375, height: 375))
-        })
         let fileProperties: [AnyHashable:Any] = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: loopCount]]
         let frameProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFDelayTime as String: frameDelay]]
         
         let documentsDirectory = NSTemporaryDirectory()
         let url = NSURL(fileURLWithPath: documentsDirectory).appendingPathComponent("animated.gif")
-        print(documentsDirectory)
+//        print(documentsDirectory)
         if let url = url,
-            let destination = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeGIF, resizedImages.count, nil) {
+            let destination = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeGIF, images.count, nil) {
             
             CGImageDestinationSetProperties(destination, fileProperties as CFDictionary)
             
-            for i in 0..<resizedImages.count {
-                CGImageDestinationAddImage(destination, resizedImages[i].cgImage!, frameProperties as CFDictionary)
+            for i in 0..<images.count {
+                CGImageDestinationAddImage(destination, images[i].cgImage!, frameProperties as CFDictionary)
             }
             
             if CGImageDestinationFinalize(destination) {

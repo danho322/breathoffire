@@ -89,8 +89,16 @@ struct IncrementAttributeContainer {
     let defaultValue: Int
 }
 
+protocol FirebaseServiceDelegate {
+    func firebaseServiceSectionDownloaded(count: Int, total: Int)
+    func firebaseServiceSectionDownloadFinish()
+}
+
 class FirebaseService: NSObject {
     static let sharedInstance = FirebaseService()
+    
+    var downloadDelegate: FirebaseServiceDelegate?
+    var isDownloadingDB = false
     
     var sectionRefs: [String: DatabaseReference] = Dictionary()
     var sequenceRefs: [String: DatabaseReference] = Dictionary()
@@ -108,9 +116,6 @@ class FirebaseService: NSObject {
     
     override init() {
         super.init()
-        
-        FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = true
         
         retrieveDB()
         retrieveMotivation()
@@ -242,7 +247,6 @@ class FirebaseService: NSObject {
             if let motivationArray = snapshot.value as? NSArray {
                 for motivation in motivationArray {
                     if let motivation = motivation as? String {
-                        print(motivation)
                         quotes.append(motivation)
                     }
                 }
@@ -366,16 +370,21 @@ class FirebaseService: NSObject {
     
     func retrieveDataAtPath(path: String, completion: @escaping (Data) -> Void) {
         self.downloadFileIfNecessary(path: path) {
-            if let data = try? NSData(contentsOfFile: "\(self.getDocumentsDirectory())/\(path)") as Data {
-                // gunzip
-                let decompressedData: Data
-                if data.isGzipped {
-                    decompressedData = try! data.gunzipped()
-                } else {
-                    decompressedData = data
+            DispatchQueue.global(qos: .userInitiated).async(execute: {
+                
+                if let data = try? NSData(contentsOfFile: "\(self.getDocumentsDirectory())/\(path)") as Data {
+                    // gunzip
+                    let decompressedData: Data
+                    if data.isGzipped {
+                        decompressedData = try! data.gunzipped()
+                    } else {
+                        decompressedData = data
+                    }
+                    DispatchQueue.main.async(execute: {
+                        completion(decompressedData)
+                    })
                 }
-                completion(decompressedData)
-            }
+            })
         }
     }
     
@@ -395,13 +404,23 @@ class FirebaseService: NSObject {
     // MARK: - DB Syncing
     
     func retrieveDB() {
+        isDownloadingDB = true
         let sectionNamesRef = Database.database().reference().child("sequenceListSections/\(Constants.AppKey)")
         sectionNamesRef.observe(.value, with: { [unowned self] snapshot in
             self.sequenceSections.removeAll()
             if let sectionSequenceArray = snapshot.value as? NSArray {
+                var sectionDownloadedCount = 0
                 for sectionSequence in sectionSequenceArray {
                     if let sectionString = sectionSequence as? String {
-                        self.retrieveSection(sectionSequence: sectionString)
+//                        print("downloading \(sectionString)")
+                        self.retrieveSection(sectionSequence: sectionString) {
+                            sectionDownloadedCount += 1
+                            self.downloadDelegate?.firebaseServiceSectionDownloaded(count: sectionDownloadedCount, total: sectionSequenceArray.count)
+                            if sectionDownloadedCount == sectionSequenceArray.count {
+                                self.isDownloadingDB = false
+                                self.downloadDelegate?.firebaseServiceSectionDownloadFinish()
+                            }
+                        }
                         self.sequenceSections.append(sectionString)
                     }
                 }
@@ -426,22 +445,38 @@ class FirebaseService: NSObject {
 //        retrieveAllSequenceData()
     }
     
-    internal func retrieveSection(sectionSequence: String) {
+    internal func retrieveSection(sectionSequence: String, sectionCompleteHandler: (()->Void)?) {
+//        print("start section \(sectionSequence)")
         if sectionRefs[sectionSequence] == nil {
             let sectionSequenceRef = Database.database().reference().child("sectionDataSequences/\(sectionSequence)")
             sectionSequenceRef.observe(.value, with: { [unowned self] snapshot in
                 if let sequenceDataNameArray = snapshot.value as? NSArray {
                     var sequenceList: [String] = []
+                    var sequenceDownloadedCount = 0
                     for sequenceDataName in sequenceDataNameArray {
                         if let sequenceDataName = sequenceDataName as? String {
-                            self.retrieveSequenceData(sequenceName: sequenceDataName)
+//                            print("retrieve \(sequenceDataName)")
+                            self.retrieveSequenceData(sequenceName: sequenceDataName) {
+                                sequenceDownloadedCount += 1
+//                                print("finished \(sequenceDataName): \(sequenceDownloadedCount) of \(sequenceDataNameArray)")
+                                if sequenceDownloadedCount == sequenceDataNameArray.count {
+//                                    print("finished section: \(sectionSequence)")
+                                    sectionCompleteHandler?()
+                                }
+                            }
                             sequenceList.append(sequenceDataName)
+                        } else {
+                            sectionCompleteHandler?()
                         }
                     }
                     self.sequenceRows[sectionSequence] = sequenceList
+                } else {
+                    sectionCompleteHandler?()
                 }
             })
             sectionRefs[sectionSequence] = sectionSequenceRef
+        } else {
+            sectionCompleteHandler?()
         }
     }
     
@@ -462,47 +497,64 @@ class FirebaseService: NSObject {
 //        })
 //    }
     
-    internal func retrieveSequenceData(sequenceName: String) {
+    internal func retrieveSequenceData(sequenceName: String, instructorDataRetrievedHandler: (()->Void)? = nil) {
         if sequenceRefs[sequenceName] == nil {
             let sequenceDataRef = Database.database().reference().child("sequenceData/\(sequenceName)")
             sequenceDataRef.observe(.value, with: { [unowned self] snapshot in
+//                print("observe \(sequenceName): \(snapshot.value)")
                 if let sequenceDataDict = snapshot.value as? NSDictionary {
                     let sequence = AnimationSequenceDataContainer(sequenceName: sequenceName, snapshotDict: sequenceDataDict)
-                    self.retrieveAnimationDataFromSequenceData(sequenceDataContainer: sequence)
+                    self.retrieveAnimationDataFromSequenceData(sequenceDataContainer: sequence, instructorDataRetrievedHandler: instructorDataRetrievedHandler)
                     self.sequenceDataDict[sequenceName] = sequence
+                } else {
+                    instructorDataRetrievedHandler?()
                 }
             })
             sequenceRefs[sequenceName] = sequenceDataRef
+        } else {
+            instructorDataRetrievedHandler?()
         }
     }
     
-    internal func retrieveAnimationDataFromSequenceData(sequenceDataContainer: AnimationSequenceDataContainer) {
+    internal func retrieveAnimationDataFromSequenceData(sequenceDataContainer: AnimationSequenceDataContainer, instructorDataRetrievedHandler: (()->Void)? = nil) {
+        var animationDataCount = 0
         for sequenceData in sequenceDataContainer.sequenceArray {
-            retrieveAnimationData(animationName: sequenceData.instructorAnimation, retrieveInstruction: true)
+            retrieveAnimationData(animationName: sequenceData.instructorAnimation, retrieveInstruction: true) {
+                animationDataCount += 1
+                if animationDataCount == sequenceDataContainer.sequenceArray.count {
+                    instructorDataRetrievedHandler?()
+                }
+            }
             retrieveAnimationData(animationName: sequenceData.ukeAnimation)
         }
     }
     
     // need a way to retrieve orphan animations too? or just keep addding to dummy sequence
-    internal func retrieveAnimationData(animationName: String?, retrieveInstruction: Bool = false) {
+    internal func retrieveAnimationData(animationName: String?, retrieveInstruction: Bool = false, fileDownloadedHandler: (()->Void)? = nil) {
         guard let animationName = animationName else {
             return
         }
         
-        if animationRefs[animationName] == nil {
+//        print("animation \(animationName)")
+        if animationRefs[animationName] == nil && animationName.characters.count > 0 {
             let animationDataRef = Database.database().reference().child("animationData/\(animationName)")
             animationDataRef.observe(.value, with: { [unowned self] snapshot in
+//                print("animation observer \(animationName)")
                 if let animationDict = snapshot.value as? NSDictionary {
                     let animationData = CharacterAnimationData(animationName: animationName, snapshotDict: animationDict)
-                    //DH: dae files can't be opened from the documents directory it seems... :(
-                    self.downloadFileIfNecessary(path: animationData.fileName)
+                    self.downloadFileIfNecessary(path: animationData.fileName, completion: fileDownloadedHandler)
+                    
                     if retrieveInstruction {
                         self.retrieveInstructionData(animationName: animationName)
                     }
                     self.animationDataDict[animationName] = animationData
+                } else {
+                    fileDownloadedHandler?()
                 }
             })
             animationRefs[animationName] = animationDataRef
+        } else {
+            fileDownloadedHandler?()
         }
     }
     
@@ -530,10 +582,8 @@ class FirebaseService: NSObject {
     
     func downloadFileIfNecessary(path: String, completion: (() -> Void)? = nil) {
         if !fileExist(path: path) {
-            print("downloading file...")
             downloadFile(path: path, completion: completion)
         } else {
-            print("file already exists")
             completion?()
         }
     }
@@ -634,9 +684,15 @@ class FirebaseService: NSObject {
         return FileManager.default.fileExists(atPath: "\(getDocumentsDirectory())/\(path)")
     }
     
+    internal var _documentsDirectory: String?
     func getDocumentsDirectory() -> String {
+        if let _documentsDirectory = _documentsDirectory {
+            return _documentsDirectory
+        }
+        
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDirectory = paths[0]
+        _documentsDirectory = documentsDirectory
         return documentsDirectory
     }
 }
@@ -778,9 +834,7 @@ struct AnimationSequenceDataContainer: SearchableData {
         var duration: TimeInterval = 0
         for sequenceData in sequenceArray {
             if let animationData = DataLoader.sharedInstance.characterAnimation(name: sequenceData.instructorAnimation) {
-                print("animationData: \(sequenceData.instructorAnimation)")
                 if let animation = CAAnimation.animationWithSceneNamed(animationData.fileName) {
-                    print(" duration: \(animation.duration)")
                     let repeatCount: Double = sequenceData.repeatCount > 0 ? Double(sequenceData.repeatCount) : 1
                     duration = duration + (sequenceData.speed * animation.duration) * repeatCount + sequenceData.delay
                 }

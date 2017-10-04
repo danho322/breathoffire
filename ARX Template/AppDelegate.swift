@@ -9,6 +9,9 @@
 import UIKit
 import SwiftyStoreKit
 import SwiftySound
+import FirebaseAnalytics
+import FirebaseDatabase
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        Database.database().isPersistenceEnabled = true
         SessionManager.sharedInstance.onStart()
         
         Sound.enabled = true    // comment out to save default

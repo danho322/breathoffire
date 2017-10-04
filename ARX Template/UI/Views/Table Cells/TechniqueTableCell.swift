@@ -28,11 +28,16 @@ class TechniqueTableCell: UITableViewCell {
 
     func update(with sequenceName: String) {
         titleLabel.text = sequenceName
+        durationLabel.text = nil
         if let sequenceData = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName) {
             descriptionLabel.text = sequenceData.sequenceDescription
-            let sequenceDuration = sequenceData.sequenceDuration()
-            let sequenceDurationString = ARXUtilities.durationString(sequenceDuration)
-            durationLabel.text = "Session time: \(sequenceDurationString)"
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async { [weak self] in
+                let sequenceDuration = sequenceData.sequenceDuration()
+                let sequenceDurationString = ARXUtilities.durationString(sequenceDuration)
+                DispatchQueue.main.async {
+                    self?.durationLabel.text = "Session time: \(sequenceDurationString)"
+                }
+            }
         }
     }
 
