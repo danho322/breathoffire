@@ -215,7 +215,13 @@ class VirtualObject: SCNNode {
     }
     
     func skipCurrentAnimation() {
-        
+        if let animationKeys = armatureNode()?.animationKeys {
+            for animationKey in animationKeys {
+                if let player = armatureNode()?.animationPlayer(forKey: animationKey) {
+                    player.stop()
+                }
+            }
+        }
         incrementAnimation()
     }
     

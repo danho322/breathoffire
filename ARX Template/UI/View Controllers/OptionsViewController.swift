@@ -91,7 +91,7 @@ class OptionsViewController: UIViewController {
 //            }
 //        }
         sections.append(.packages)
-        sections.append(.techniqueList)
+//        sections.append(.techniqueList)
         sectionArray = sections
         
         searchBar.delegate = self

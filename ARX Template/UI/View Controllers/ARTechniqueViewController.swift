@@ -1580,7 +1580,7 @@ extension ARTechniqueViewController: VirtualObjectDelegate {
         
         setupBreathing(animationData: animationData)
         
-        currentAnimationLabel.text = animationData.instructorAnimation
+        currentAnimationLabel.text = "\(object.currentAnimationIndex): \(animationData.instructorAnimation): \(animationData.animationDuration())"
     }
     
     func virtualObjectDidFinishAnimation(_ object: VirtualObject) {

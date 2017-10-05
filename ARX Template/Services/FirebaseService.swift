@@ -912,6 +912,13 @@ struct CharacterAnimationData: SearchableData {
     func sortPriority() -> Int {
         return 1
     }
+    
+    func animationDuration() -> TimeInterval {
+        if let animation = CAAnimation.animationWithSceneNamed(fileName) {
+            return animation.duration
+        }
+        return 0
+    }
 }
 
 struct BreathProgram {
@@ -952,7 +959,7 @@ struct BreathProgramSound {
     
     init(snapshotDict: NSDictionary) {
         timestamp = snapshotDict["timestamp"] as? Double ?? 0
-        soundID = snapshotDict["soundID"] as? Int ?? 0
+        soundID = snapshotDict["soundID"] as? Int ?? BreathSound.none.rawValue
     }
 }
 
@@ -966,7 +973,7 @@ class BreathProgramParameter {
         startTime = snapshotDict["startTime"] as? Double ?? 0
         breathTimeUp = snapshotDict["breathTimeUp"] as? Double ?? 0
         breathTimeDown = snapshotDict["breathTimeDown"] as? Double ?? 0
-        soundID = snapshotDict["soundID"] as? Int ?? 0
+        soundID = snapshotDict["soundID"] as? Int ?? BreathSound.none.rawValue
     }
 }
 
