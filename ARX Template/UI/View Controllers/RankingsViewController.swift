@@ -28,8 +28,8 @@ class RankingsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-//        let RankingsCellNib = UINib(nibName: String(describing: RankingsTableViewCell.self), bundle: nil)
-//        tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingsCellIdentifier)
+        let RankingsCellNib = UINib(nibName: String(describing: RankingTableViewCell.self), bundle: nil)
+        tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingCellIdentifier)
         
         
     }
@@ -55,12 +55,24 @@ class RankingsViewController: UIViewController {
 }
 
 extension RankingsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 && userRankings.count == 0 {
+            return CGFloat.leastNonzeroMagnitude
+        } else if section == 1 && dayRankings.count == 0 {
+            return CGFloat.leastNonzeroMagnitude
+        } else if section == 2 && breathRankings.count == 0 {
+            return CGFloat.leastNonzeroMagnitude
+        }
+        return 30
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
+        if section == 0 && userRankings.count != 0 {
             return "Top breath streaks"
-        } else if section == 1 {
+        } else if section == 1 && dayRankings.count != 0 {
             return "Max day streaks"
-        } else if section == 2 {
+        } else if section == 2 && breathRankings.count != 0 {
             return "Max breath streaks"
         }
         return ""
@@ -88,35 +100,37 @@ extension RankingsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.RankingsCellIdentifier, for: indexPath)
-//        if let cell = cell as? RankingsTableViewCell {
-//            let item = RankingsItems[indexPath.row]
-//            cell.update(RankingsItem: item) { [unowned self] key in
-//                self.displayRankingsOptions(RankingsItem: item, indexPath: indexPath)
-//            }
-//        }
         var textLabel = ""
         var detailLabel = ""
+        var location: String?
         if indexPath.section == 0 {
             if let user = userRankings[safe: indexPath.row] {
                 textLabel = user.userName
+                location = user.city
                 detailLabel = "\(BreathTimerService.timeString(time: Double(user.timeStreakCount))) streak"
             }
         } else if indexPath.section == 1 {
             if let user = dayRankings[safe: indexPath.row] {
                 textLabel = user.userName
+                location = user.city
                 detailLabel = "\(user.maxDayStreak) days max"
             }
         } else if indexPath.section == 2 {
             if let user = breathRankings[safe: indexPath.row] {
                 textLabel = user.userName
+                location = user.city
                 detailLabel = "\(BreathTimerService.timeString(time: Double(user.maxTimeStreak))) max streak"
             }
         }
         
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        cell.textLabel?.text = textLabel
-        cell.detailTextLabel?.text = detailLabel
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.RankingCellIdentifier, for: indexPath)
+        if let cell = cell as? RankingTableViewCell {
+            cell.rankingLabel.text = "\(indexPath.row + 1)"
+            cell.userNameLabel.text = textLabel
+            cell.locationLabel.text = location
+            cell.rankingDescriptionLabel.text = detailLabel
+            
+        }
         return cell
     }
 }

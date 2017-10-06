@@ -22,4 +22,5 @@ struct CellIdentifiers {
     static let PackageDescription = "DescriptionCellIdentifier"
     static let FeedCellIdentifier = "FeedCellIdentifier"
     static let FeedMapCellIdentifier = "FeedMapCellIdentifier"
+    static let RankingCellIdentifier = "RankingCellIdentifier"
 }

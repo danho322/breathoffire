@@ -35,6 +35,8 @@
 		D43D4BB61F048282002F369F /* VirtualObjectSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4BA51F048282002F369F /* VirtualObjectSelectionViewController.swift */; };
 		D43D4BB81F0483C1002F369F /* ARTechniqueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48AAFB11F04803F0091B261 /* ARTechniqueViewController.swift */; };
 		D43D4BB91F048476002F369F /* ARSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B951F048282002F369F /* ARSettingsViewController.swift */; };
+		D44162C71F8744DE0044A37C /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44162C61F8744DE0044A37C /* RankingTableViewCell.swift */; };
+		D44162C91F87454C0044A37C /* RankingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D44162C81F87454C0044A37C /* RankingTableViewCell.xib */; };
 		D447EFCC1F5835DE0047DEF0 /* gong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D447EFCB1F58340C0047DEF0 /* gong.m4a */; };
 		D44B24E41F182E7E00459032 /* VirtualObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44B24E31F182E7E00459032 /* VirtualObject.swift */; };
 		D44EE60F1EFCDFA0003A1A3E /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44EE60E1EFCDFA0003A1A3E /* OptionsViewController.swift */; };
@@ -211,6 +213,8 @@
 		D43D4B9D1F048282002F369F /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/Utilities.swift; sourceTree = "<group>"; };
 		D43D4BA41F048282002F369F /* TextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextManager.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/TextManager.swift; sourceTree = "<group>"; };
 		D43D4BA51F048282002F369F /* VirtualObjectSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VirtualObjectSelectionViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/VirtualObjectSelectionViewController.swift; sourceTree = "<group>"; };
+		D44162C61F8744DE0044A37C /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
+		D44162C81F87454C0044A37C /* RankingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankingTableViewCell.xib; sourceTree = "<group>"; };
 		D447EFCB1F58340C0047DEF0 /* gong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = gong.m4a; sourceTree = "<group>"; };
 		D44B24E31F182E7E00459032 /* VirtualObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObject.swift; sourceTree = "<group>"; };
 		D44B737C1F1A661E00115C64 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
@@ -497,6 +501,7 @@
 				D4DF08141F414FAE00E8F0EE /* FeedTableViewCell.swift */,
 				D4B93FCA1F4BDABE00BE092E /* FeedMapTableViewCell.swift */,
 				D43988FD1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift */,
+				D44162C61F8744DE0044A37C /* RankingTableViewCell.swift */,
 			);
 			path = "Table Cells";
 			sourceTree = "<group>";
@@ -553,6 +558,7 @@
 				D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */,
 				D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */,
 				D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */,
+				D44162C81F87454C0044A37C /* RankingTableViewCell.xib */,
 			);
 			path = "Interface Builder";
 			sourceTree = "<group>";
@@ -884,6 +890,7 @@
 				D403472E1F5C6968008AF23D /* Walkthrough.storyboard in Resources */,
 				D4ECE16E1F22C7F400E8B788 /* spark.png in Resources */,
 				D49102FD1EFB05CE008A528E /* art.scnassets in Resources */,
+				D44162C91F87454C0044A37C /* RankingTableViewCell.xib in Resources */,
 				D422C2B01F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib in Resources */,
 				D49103071EFB05CE008A528E /* LaunchScreen.storyboard in Resources */,
 				D43988F81F6798A300AE367C /* UserPackagesCollectionCell.xib in Resources */,
@@ -1005,6 +1012,7 @@
 				D4730ED91F14444D003097BE /* TechniqueSearchViewController.swift in Sources */,
 				D45352C11EFDDDBC00C09259 /* UIViewExtensions.swift in Sources */,
 				D4A04B021F0B146200BEA822 /* RelatedAnimationsView.swift in Sources */,
+				D44162C71F8744DE0044A37C /* RankingTableViewCell.swift in Sources */,
 				D4DF08111F4147FF00E8F0EE /* FeedViewController.swift in Sources */,
 				D4EDCCF51F4943F100849037 /* RankingsViewController.swift in Sources */,
 				D44EE60F1EFCDFA0003A1A3E /* OptionsViewController.swift in Sources */,
