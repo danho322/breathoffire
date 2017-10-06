@@ -22,7 +22,8 @@ class FeedMapTableViewCell: UITableViewCell {
         // Initialization code
         mapView.delegate = self
         
-        titleLabel.textColor = ThemeManager.sharedInstance.feedTextColor()
+        backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        titleLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
         titleLabel.font = ThemeManager.sharedInstance.heavyFont(16)
         titleLabel.text = "Breath of Fire Community"
         motivationLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()

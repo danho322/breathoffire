@@ -15,8 +15,8 @@ class MeViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     internal var purchasedPackages: [AnimationPackage] = []
-    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
-    fileprivate let itemsPerRow: CGFloat = 3
+    fileprivate let sectionInsets = UIEdgeInsets(top: 30.0, left: 10.0, bottom: 30.0, right: 10.0)
+    fileprivate let itemsPerRow: CGFloat = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,7 +215,7 @@ extension MeViewController: UICollectionViewDataSource {
                     stat = statType.statString(userData: userData)
                 }
                 
-                cell.titleLabel.text = title
+                cell.titleLabel.text = title.uppercased()
                 cell.statLabel.text = stat
             } else if let cell = cell as? UserPackagesCollectionCell {
                 cell.carousel.dataSource = self
@@ -239,9 +239,8 @@ extension MeViewController: UICollectionViewDelegateFlowLayout {
             let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
             let availableWidth = view.frame.width - paddingSpace
             let widthPerItem = indexPath.row == 0 ? availableWidth : availableWidth / itemsPerRow
-            let heightPerItem = availableWidth / itemsPerRow
             
-            return CGSize(width: widthPerItem, height: heightPerItem)
+            return CGSize(width: widthPerItem, height: 100)
         }
         return CGSize(width: view.frame.width, height: 200)
     }
