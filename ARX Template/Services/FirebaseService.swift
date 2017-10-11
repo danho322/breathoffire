@@ -413,6 +413,7 @@ class FirebaseService: NSObject {
             if let sectionSequenceArray = snapshot.value as? NSArray {
                 var sectionDownloadedCount = 0
                 for sectionSequence in sectionSequenceArray {
+                    print(sectionSequenceArray)
                     if let sectionString = sectionSequence as? String {
                         print("downloading \(sectionString)")
                         self.retrieveSection(sectionSequence: sectionString) {
@@ -425,6 +426,8 @@ class FirebaseService: NSObject {
                             }
                         }
                         self.sequenceSections.append(sectionString)
+                    } else {
+                        sectionDownloadedCount += 1
                     }
                 }
             }
@@ -833,13 +836,17 @@ struct AnimationSequenceDataContainer: SearchableData {
         return 0
     }
     
-    func sequenceDuration() -> TimeInterval {
+    func sequenceDuration() -> TimeInterval? {
         var duration: TimeInterval = 0
         for sequenceData in sequenceArray {
             if let animationData = DataLoader.sharedInstance.characterAnimation(name: sequenceData.instructorAnimation) {
                 if let animation = CAAnimation.animationWithSceneNamed(animationData.fileName) {
-                    let repeatCount: Double = sequenceData.repeatCount > 0 ? Double(sequenceData.repeatCount) : 1
-                    duration = duration + (sequenceData.speed * animation.duration) * repeatCount + sequenceData.delay
+                    if sequenceData.repeatCount >= 0 {
+                        let repeatCount: Double = sequenceData.repeatCount > 0 ? Double(sequenceData.repeatCount) : 1
+                        duration = duration + (sequenceData.speed * animation.duration) * repeatCount + sequenceData.delay
+                    } else {
+                        return nil
+                    }
                 }
             }
         }

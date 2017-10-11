@@ -32,8 +32,10 @@ class TechniqueTableCell: UITableViewCell {
         if let sequenceData = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName) {
             descriptionLabel.text = sequenceData.sequenceDescription
             DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async { [weak self] in
-                let sequenceDuration = sequenceData.sequenceDuration()
-                let sequenceDurationString = ARXUtilities.durationString(sequenceDuration)
+                var sequenceDurationString = "No limit"
+                if let sequenceDuration = sequenceData.sequenceDuration() {
+                    sequenceDurationString = ARXUtilities.durationString(sequenceDuration)
+                }
                 DispatchQueue.main.async {
                     self?.durationLabel.text = "Session time: \(sequenceDurationString)"
                 }

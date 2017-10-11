@@ -38,6 +38,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal let techniqueCoachMarksController = CoachMarksController()
     internal var instructionService: InstructionService?
     internal var breathTimerService: BreathTimerService?
+    internal var sessionTimer: Timer?
     
     internal var virtualObjects: [VirtualObject] = []
     internal var currentPlacementState: ARObjectPlacementState = .ScanningEmpty
@@ -1067,6 +1068,15 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) {
             techniqueCoachMarksController.start(on: self)
         }
+        
+        setupSessionTimer() 
+    }
+    
+    internal func setupSessionTimer() {
+        sessionTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [unowned self] _ in
+            print("tick")
+            add counter
+        })
     }
     
     // MARK: - Screenshot
@@ -1368,14 +1378,14 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     @IBAction func onEndTap(_ sender: Any) {
         hudDidTapPause()
+        let breathTime = self.breathTimerService?.timer?.timeInterval ?? 0
         let alertMessage = UIAlertController(title: NSLocalizedString("End Session?", comment: "Action sheet title"),
                                              message: nil,
                                              preferredStyle: .actionSheet)
         
         
         alertMessage.addAction(UIAlertAction(title: NSLocalizedString("End", comment: "Ok button title"), style: .default, handler: { [unowned self] _ in
-            self.stopTechniqueServices()
-            self.dismiss()
+            self.finishSequence(object: self.virtualObjects.first!, timeBreathed: breathTime)
         }))
         
         alertMessage.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { [unowned self] _ in
@@ -1395,11 +1405,15 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         breathTimerService?.stop()
     }
     
-    func finishSequence(object: VirtualObject) {
+    func finishSequence(object: VirtualObject, timeBreathed: TimeInterval? = nil) {
         print("finished with sequence \(object.animationSequence)")
         stopTechniqueServices()
         
-        let breathTime = breathTimerService?.breathProgram.sessionTime ?? 0
+        var breathTime = breathTimerService?.breathProgram.sessionTime ?? 0
+        if let timeBreathed = timeBreathed {
+            breathTime = timeBreathed
+        }
+        
         if let last = object.animationSequence.last {
             if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
                 SessionManager.sharedInstance.onPlayFinish(breathTimeInterval: breathTime)
@@ -1428,7 +1442,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                     })
                     breathCompletionView.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
                     
-                    breathCompletionView.update(breathCount: self.breathTimerView.currentBreathCount(), screenshot: self.screenShot, sequenceContainer: nil)
+                    let breathDuration = BreathTimerService.timeString(time: breathTime)
+                    breathCompletionView.update(breathDuration: breathDuration, screenshot: self.screenShot, sequenceContainer: nil)
                     self.view.addSubview(breathCompletionView)
                     breathCompletionView.animateIn()
                 }
@@ -1539,6 +1554,7 @@ extension ARTechniqueViewController: CharacterHUDViewDelegate {
     }
     
     func hudDidTapPause() {
+        sessionTimer?.invalidate()
         pauseVirtualObjects()
         instructionView.removeAllLabels()
         instructionService?.pause()
@@ -1546,6 +1562,7 @@ extension ARTechniqueViewController: CharacterHUDViewDelegate {
     }
     
     func hudDidTapPlay() {
+        setupSessionTimer()
         resumeVirtualObjects()
         instructionService?.resume()
         breathTimerService?.resume()

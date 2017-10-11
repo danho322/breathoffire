@@ -1094,7 +1094,7 @@
                                     <constraint firstAttribute="height" constant="45" id="iag-Zq-m8w"/>
                                     <constraint firstAttribute="width" constant="45" id="ynB-nc-9VR"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Finish"/>
                                 <connections>
                                     <action selector="onEndTap:" destination="gQx-gU-hL3" eventType="touchUpInside" id="Fjg-T3-JTW"/>
                                 </connections>

@@ -130,12 +130,12 @@ class BreatheCompleteView: XibView {
     }
     
     // artechniqueviewcontroller needs to be refactored to hold the container
-    func update(breathCount: Int, screenshot: [UIImage]?, sequenceContainer: AnimationSequenceDataContainer?) {
+    func update(breathDuration: String, screenshot: [UIImage]?, sequenceContainer: AnimationSequenceDataContainer?) {
         guard let view = view as? BreatheCompleteView else {
             fatalError("view is not of type BreatheCompleteView")
         }
-        view.shareText = "I did \(breathCount) breaths using the Breath of Fire app!"
-        view.detailsLabel.text = "You did \(breathCount) Breaths of Fire!"
+        view.shareText = "I breathed for \(breathDuration) using the Breath of Fire app!"
+        view.detailsLabel.text = "Total time: \(breathDuration)"
         view.screenshotImageView.image = screenshot?.first
         view.screenshotImageView.layer.masksToBounds = true
         view.screenshotImageView.layer.cornerRadius = view.screenshotImageView.frame.size.width / 2

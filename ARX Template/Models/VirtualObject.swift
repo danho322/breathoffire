@@ -158,7 +158,7 @@ class VirtualObject: SCNNode {
                 animation.speed = speedToUse
             }
             
-            animation.repeatCount = repeatCount
+            animation.repeatCount = repeatCount != -1 ? repeatCount : Float.greatestFiniteMagnitude
             animation.fadeInDuration = 0
             animation.fadeOutDuration = 0
             animation.delegate = self

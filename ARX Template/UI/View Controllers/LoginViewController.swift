@@ -250,7 +250,7 @@ class LoginViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func dismiss() {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: completion)
     }
     
     // MARK: - Keyboard
