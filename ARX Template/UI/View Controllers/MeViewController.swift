@@ -15,7 +15,7 @@ class MeViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     internal var purchasedPackages: [AnimationPackage] = []
-    fileprivate let sectionInsets = UIEdgeInsets(top: 30.0, left: 10.0, bottom: 30.0, right: 10.0)
+    fileprivate let sectionInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 50.0, right: 10.0)
     fileprivate let itemsPerRow: CGFloat = 2
     
     override func viewDidLoad() {
@@ -23,16 +23,24 @@ class MeViewController: UIViewController {
         title = "Profile"
         
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        userNameLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
 
+        userNameLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+        userNameLabel.font = ThemeManager.sharedInstance.defaultFont(20)
+        
+        loginButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
+        loginButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
+        loginButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(14)
+        loginButton.layer.cornerRadius = 3
+        loginButton.layer.masksToBounds = true
+        
         // Do any additional setup after loading the view.
         if let currentUserData = SessionManager.sharedInstance.currentUserData {
-            userNameLabel.text = "Username: \(currentUserData.userName)"
+            userNameLabel.text = currentUserData.userName
         }
         
         let isAnonymous = SessionManager.sharedInstance.isAnonymous ?? true
         loginButton.setTitle("Sign into your account", for: .normal)
-//        loginButton.isHidden = !isAnonymous
+        loginButton.isHidden = !isAnonymous
         
         collectionView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         collectionView.register(UINib(nibName: String(describing: UserStatCollectionCell.self), bundle: nil), forCellWithReuseIdentifier: UserStatConstants.CellIdentifier)
@@ -58,18 +66,21 @@ class MeViewController: UIViewController {
         
         SessionManager.sharedInstance.updateCurrentUser() { [unowned self] userData in
             self.collectionView.reloadData()
+            self.onViewAppear()
+        }
+    }
+    
+    internal func onViewAppear() {
+        if SessionManager.sharedInstance.shouldShowUpsellLogin() {
+            SessionManager.sharedInstance.presentLogin(on: self) { [unowned self] in
+                self.collectionView.reloadData()
+            }
         }
     }
     
     @IBAction func onLoginTap(_ sender: Any) {
-        if true {//SessionManager.sharedInstance.isAnonymous ?? true {
-            if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-                loginVC.viewModel = LoginViewModel()
-                loginVC.completion = { [unowned self] in
-                    self.collectionView.reloadData()
-                }
-                present(loginVC, animated: true, completion: nil)
-            }
+        SessionManager.sharedInstance.presentLogin(on: self) { [unowned self] in
+            self.collectionView.reloadData()
         }
     }
     

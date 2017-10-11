@@ -1404,32 +1404,45 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
                 SessionManager.sharedInstance.onPlayFinish(breathTimeInterval: breathTime)
                 
-                let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: Sizes.ScreenHeight)
                 
-                
-                // TODO: sequence container should have a state on what completion view to show
-                
-                //                let relatedView = RelatedAnimationsView(frame: frame)
-                //                relatedView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-                //                relatedView.relatedAnimations = data.relatedAnimations ?? []
-                //                relatedView.set(delegate: self)
-                //                view.addSubview(relatedView)
-                //                relatedView.animateIn()
-                //                relatedAnimationsView = relatedView
-                let breathCompletionView = BreatheCompleteView(frame: frame,
-                                                               parentVC: self,
-                                                               shareCommunityHandler: { [unowned self] rating, comment in
-                                                                self.saveToBreathFeed(rating: rating, comment: comment)
-                    },
-                                                               dismissHandler: { [unowned self] in
-                                                                self.dismiss()
-                })
-                breathCompletionView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-                
-                breathCompletionView.update(breathCount: breathTimerView.currentBreathCount(), screenshot: screenShot, sequenceContainer: nil)
-                view.addSubview(breathCompletionView)
-                breathCompletionView.animateIn()
+                checkUpsellLogin() { [unowned self] in
+                    let frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: Sizes.ScreenHeight)
+                    
+                    
+                    // TODO: sequence container should have a state on what completion view to show
+                    
+                    //                let relatedView = RelatedAnimationsView(frame: frame)
+                    //                relatedView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
+                    //                relatedView.relatedAnimations = data.relatedAnimations ?? []
+                    //                relatedView.set(delegate: self)
+                    //                view.addSubview(relatedView)
+                    //                relatedView.animateIn()
+                    //                relatedAnimationsView = relatedView
+                    let breathCompletionView = BreatheCompleteView(frame: frame,
+                                                                   parentVC: self,
+                                                                   shareCommunityHandler: { [unowned self] rating, comment in
+                                                                    self.saveToBreathFeed(rating: rating, comment: comment)
+                        },
+                                                                   dismissHandler: {
+                                                                    self.dismiss()
+                    })
+                    breathCompletionView.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
+                    
+                    breathCompletionView.update(breathCount: self.breathTimerView.currentBreathCount(), screenshot: self.screenShot, sequenceContainer: nil)
+                    self.view.addSubview(breathCompletionView)
+                    breathCompletionView.animateIn()
+                }
             }
+        }
+    }
+    
+    internal func checkUpsellLogin(completion: @escaping ()->Void) {
+        if SessionManager.sharedInstance.shouldShowUpsellLogin() {
+            SessionManager.sharedInstance.presentLogin(on: self) { [unowned self] in
+                completion()
+            }
+        } else {
+            completion()
         }
     }
     

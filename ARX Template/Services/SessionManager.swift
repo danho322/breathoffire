@@ -66,6 +66,7 @@ class SessionManager {
     internal var purchasedPackages: [String: Any] = Dictionary<String, Any>()
     
     init() {
+    
     }
     
     func isCurrentUser(userId: String) -> Bool {
@@ -76,17 +77,22 @@ class SessionManager {
     }
     
     func onStart() {
+        
+        let userLoggedInHandler: (UserData)->Void = { _ in
+            FirebaseService.sharedInstance.onUserLoggedIn()
+        }
+        
         if let currentUser = Auth.auth().currentUser {
             // already signed in
             self.isAnonymous = currentUser.isAnonymous
             onLogin()
-            retrieveCurrentUser(userId: currentUser.uid)
+            retrieveCurrentUser(userId: currentUser.uid, completion: userLoggedInHandler)
         } else {
             Auth.auth().signInAnonymously(completion: { (user, error) in
                 if let user = user {
                     self.isAnonymous = user.isAnonymous
                     self.onLogin()
-                    self.retrieveCurrentUser(userId: user.uid)
+                    self.retrieveCurrentUser(userId: user.uid, completion: userLoggedInHandler)
                 }
             })
         }
@@ -319,6 +325,27 @@ class SessionManager {
         }
     }
     
+    // MARK: - Login
+    
+    internal var hasShownUpsellLogin = false
+    
+    func shouldShowUpsellLogin() -> Bool {
+        let isAnonymous = SessionManager.sharedInstance.isAnonymous ?? true
+        if !hasShownUpsellLogin && isAnonymous {
+            hasShownUpsellLogin = true
+            return true
+        }
+        return false
+    }
+    
+    func presentLogin(on viewController: UIViewController, completion: @escaping ()->Void) {
+        if let loginVC = viewController.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+            loginVC.viewModel = LoginViewModel()
+            loginVC.completion = completion
+            viewController.present(loginVC, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - Tutorials
     var tutorialStoredValue: Int {
         set {
@@ -330,8 +357,6 @@ class SessionManager {
     }
     
     func shouldShowTutorial(type: TutorialInstructionType) -> Bool {
-        return false
-        
         let setFlags = TutorialInstructionID(rawValue: tutorialStoredValue)
         return !setFlags.contains(type.ID())
     }

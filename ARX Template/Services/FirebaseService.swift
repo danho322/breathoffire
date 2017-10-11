@@ -116,7 +116,9 @@ class FirebaseService: NSObject {
     
     override init() {
         super.init()
-        
+    }
+    
+    func onUserLoggedIn() {
         retrieveDB()
         retrieveMotivation()
     }
@@ -298,7 +300,7 @@ class FirebaseService: NSObject {
                         }
                     }
                 }
-                completionHandler(items)
+                completionHandler(items.sorted(by: { $0.maxDayStreak > $1.maxDayStreak }))
             })
     }
     
@@ -412,8 +414,9 @@ class FirebaseService: NSObject {
                 var sectionDownloadedCount = 0
                 for sectionSequence in sectionSequenceArray {
                     if let sectionString = sectionSequence as? String {
-//                        print("downloading \(sectionString)")
+                        print("downloading \(sectionString)")
                         self.retrieveSection(sectionSequence: sectionString) {
+                            print("finished \(sectionString)")
                             sectionDownloadedCount += 1
                             self.downloadDelegate?.firebaseServiceSectionDownloaded(count: sectionDownloadedCount, total: sectionSequenceArray.count)
                             if sectionDownloadedCount == sectionSequenceArray.count {

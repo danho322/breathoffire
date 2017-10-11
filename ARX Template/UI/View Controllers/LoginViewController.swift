@@ -171,8 +171,10 @@ class SubtitleTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     override func awakeFromNib() {
-        titleLabel.font = ThemeManager.sharedInstance.defaultFont(12)
+        titleLabel.font = ThemeManager.sharedInstance.defaultFont(16)
         titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
+        titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
     }
 }
@@ -206,7 +208,7 @@ class LoginViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var viewModel: LoginViewModel?
     var completion: (()->Void)?
     
-    internal var currentState: AuthViewState = .login
+    internal var currentState: AuthViewState = .register
     internal var disposables = CompositeDisposable()
     
     deinit {
@@ -216,7 +218,7 @@ class LoginViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentState = .login
+        currentState = .register
         
         // Do any additional setup after loading the view.
         tableView.delegate = self
@@ -339,6 +341,7 @@ class LoginViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case .Headline(let title):
             if let cell = cell as? HeadlineTableViewCell {
                 cell.titleLabel.text = title
+
             }
         case .Subtitle(let title):
             if let cell = cell as? SubtitleTableViewCell {

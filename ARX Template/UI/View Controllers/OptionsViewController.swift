@@ -119,7 +119,11 @@ class OptionsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if SessionManager.sharedInstance.shouldShowTutorial(type: .Options) {
+        checkShouldStartTutorial()
+    }
+    
+    func checkShouldStartTutorial() {
+        if !FirebaseService.sharedInstance.isDownloadingDB && SessionManager.sharedInstance.shouldShowTutorial(type: .Options) {
             coachMarksController.start(on: self)
         }
     }
@@ -278,5 +282,6 @@ extension OptionsViewController: FirebaseServiceDelegate {
     
     func firebaseServiceSectionDownloadFinish() {
         progressVisualEffectView.isHidden = true
+        checkShouldStartTutorial()
     }
 }
