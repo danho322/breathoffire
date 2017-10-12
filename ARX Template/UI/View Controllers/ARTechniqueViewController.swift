@@ -13,6 +13,10 @@ import Photos
 import FontAwesomeKit
 import Instructions
 
+struct ARTechniqueConstants {
+    static let SessionTimerInterval: TimeInterval = 0.1
+}
+
 class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet weak var breathTimerView: BreathTimerView!
@@ -39,6 +43,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var instructionService: InstructionService?
     internal var breathTimerService: BreathTimerService?
     internal var sessionTimer: Timer?
+    internal var sessionCounter: TimeInterval = 0
     
     internal var virtualObjects: [VirtualObject] = []
     internal var currentPlacementState: ARObjectPlacementState = .ScanningEmpty
@@ -1069,13 +1074,14 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             techniqueCoachMarksController.start(on: self)
         }
         
+        sessionCounter = 0
         setupSessionTimer() 
     }
     
     internal func setupSessionTimer() {
-        sessionTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [unowned self] _ in
+        sessionTimer = Timer.scheduledTimer(withTimeInterval: ARTechniqueConstants.SessionTimerInterval, repeats: true, block: { [unowned self] _ in
             print("tick")
-            add counter
+            self.sessionCounter += ARTechniqueConstants.SessionTimerInterval
         })
     }
     
@@ -1378,7 +1384,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     @IBAction func onEndTap(_ sender: Any) {
         hudDidTapPause()
-        let breathTime = self.breathTimerService?.timer?.timeInterval ?? 0
+        let breathTime = sessionCounter
         let alertMessage = UIAlertController(title: NSLocalizedString("End Session?", comment: "Action sheet title"),
                                              message: nil,
                                              preferredStyle: .actionSheet)

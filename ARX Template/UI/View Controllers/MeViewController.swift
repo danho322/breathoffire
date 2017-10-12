@@ -117,6 +117,7 @@ extension MeViewController: iCarouselDataSource {
             //this `if ... else` statement because the view will be
             //recycled and used with other index values later
             itemView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+            itemView.backgroundColor = UIColor.lightGray
             FirebaseService.sharedInstance.retrieveImageAtPath(path: purchasedPackages[index].imageBGPath) { image in
                 itemView.image = image
             }

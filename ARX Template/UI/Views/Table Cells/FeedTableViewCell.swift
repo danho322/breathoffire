@@ -65,6 +65,7 @@ class FeedTableViewCell: UITableViewCell {
         }
         timeLabel.text = timeString
         feedImageView.image = nil
+        feedImageView.backgroundColor = UIColor.lightGray
         
         activityIndicator.startAnimating()
         let handleGifData: (FLAnimatedImage?)->Void = { [unowned self] animatedImage in
