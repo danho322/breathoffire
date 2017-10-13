@@ -190,11 +190,13 @@ enum StatType: Int {
         case .totalTime:
             return "\(BreathTimerService.timeString(time: Double(userData.totalTimeCount)))"
         case .currentDayStreak:
-            return "\(userData.dayStreakCount) days"
+            let dayString = userData.dayStreakCount == 1 ? "day" : "days"
+            return "\(userData.dayStreakCount) \(dayString)"
         case .currentTimeStreak:
             return "\(BreathTimerService.timeString(time: Double(userData.timeStreakCount)))"
         case .maxDayStreak:
-            return "\(userData.maxDayStreak) days"
+            let dayString = userData.maxDayStreak == 1 ? "day" : "days"
+            return "\(userData.maxDayStreak) \(dayString)"
         case .maxTimeStreak:
             return "\(BreathTimerService.timeString(time: Double(userData.maxTimeStreak)))"
         default:

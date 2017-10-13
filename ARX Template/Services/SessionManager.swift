@@ -119,7 +119,7 @@ class SessionManager {
                 attributeContainers.append(IncrementAttributeContainer(attribute: .timeStreakCount, count: breathTime, defaultValue: 0))
             } else if !Calendar.current.isDateInToday(lastPlay) {
                 FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .dayStreakCount, value: 1)
-                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .timeStreakCount, value: 0)
+                FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .timeStreakCount, value: breathTimeInterval)
             }
             attributeContainers.append(IncrementAttributeContainer(attribute: .totalTimeCount, count: breathTime, defaultValue: 0))
             FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .lastStreakTimestamp, value: Date().timeIntervalSince1970)

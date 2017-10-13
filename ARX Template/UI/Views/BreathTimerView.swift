@@ -12,8 +12,6 @@ import SwiftySound
 class BreathTimerView: XibView {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var fireContainerImageView: UIImageView!
-    @IBOutlet weak var pauseButton: UIButton!
-    @IBOutlet weak var endButton: UIButton!
     
     internal let circlePathLayer = CAShapeLayer()
     internal let circleRadius: CGFloat = 110
@@ -127,12 +125,6 @@ class BreathTimerView: XibView {
         },
                        completion: { finished in
         })
-    }
-    
-    @IBAction func onPauseTap(_ sender: Any) {
-    }
-    
-    @IBAction func onEndTap(_ sender: Any) {
     }
     
     // MARK: - Animations

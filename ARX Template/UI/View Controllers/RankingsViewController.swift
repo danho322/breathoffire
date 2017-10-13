@@ -113,7 +113,8 @@ extension RankingsViewController: UITableViewDataSource {
             if let user = dayRankings[safe: indexPath.row] {
                 textLabel = user.userName
                 location = user.city
-                detailLabel = "\(user.maxDayStreak) days max"
+                let dayString = user.maxDayStreak == 1 ? "day" : "days"
+                detailLabel = "\(user.maxDayStreak) \(dayString) max"
             }
         } else if indexPath.section == 2 {
             if let user = breathRankings[safe: indexPath.row] {

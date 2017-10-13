@@ -34,7 +34,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     internal var currentAnimationIndex = 0
     internal var currentAnimationTimer: Timer?
-    internal var timerStartDate = Date()
     
     internal var sliderValue: Float = 0.5
     
@@ -88,15 +87,15 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     func setupViewControllerTechnique() {
         Setting.registerDefaults()
         sceneView.isHidden = !isARModeEnabled
+        setupUIControls()
+        hudDidTapShowToggle(shouldShow: false)
         if isARModeEnabled {
             setupScene()
             setupDebug()
-            setupUIControls()
             setupFocusSquare()
             updateSettings()
             resetVirtualObject()
             setupGestureRecognizers()
-            hudDidTapShowToggle(shouldShow: false)
             restartPlaneDetection()
         } else {
             let characterScene0 = ARXCharacterSceneView(frame: sceneView.frame, cameraPosition: SCNVector3(x: 0, y: 0.3, z: 2))
@@ -1075,12 +1074,13 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
         
         sessionCounter = 0
-        setupSessionTimer() 
+        setupSessionTimer(speedMultipler: sliderValue * 2)
     }
     
-    internal func setupSessionTimer() {
-        sessionTimer = Timer.scheduledTimer(withTimeInterval: ARTechniqueConstants.SessionTimerInterval, repeats: true, block: { [unowned self] _ in
-            print("tick")
+    internal func setupSessionTimer(speedMultipler: Float) {
+        sessionTimer?.invalidate()
+        sessionTimer = Timer.scheduledTimer(withTimeInterval: ARTechniqueConstants.SessionTimerInterval / Double(speedMultipler), repeats: true, block: { [unowned self] _ in
+            self.currentAnimationTimeLabel.text = "\(self.sessionCounter)s"
             self.sessionCounter += ARTechniqueConstants.SessionTimerInterval
         })
     }
@@ -1290,8 +1290,13 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         let closeIcon = FAKIonIcons.closeIcon(withSize: 25)
         closeIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
         
-        endButton.setAttributedTitle(closeIcon?.attributedString(), for: .normal)
-        
+        endButton.setTitle("Finish", for: .normal)
+        endButton.titleLabel?.font = ThemeManager.sharedInstance.defaultFont(16)
+        endButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
+        endButton.layer.borderColor = ThemeManager.sharedInstance.focusForegroundColor().cgColor
+        endButton.layer.borderWidth = 1
+        endButton.layer.cornerRadius = 10
+        endButton.layer.masksToBounds = true
         
         textManager = TextManager(viewController: self)
 		
@@ -1551,6 +1556,7 @@ extension ARTechniqueViewController: CharacterHUDViewDelegate {
         for object in virtualObjects {
             object.updateAnimationSpeed(speed: Double(value * 2))
         }
+        setupSessionTimer(speedMultipler: sliderValue)
     }
     
     func hudDidTapRewind() {
@@ -1568,7 +1574,7 @@ extension ARTechniqueViewController: CharacterHUDViewDelegate {
     }
     
     func hudDidTapPlay() {
-        setupSessionTimer()
+        setupSessionTimer(speedMultipler: sliderValue * 2)
         resumeVirtualObjects()
         instructionService?.resume()
         breathTimerService?.resume()
@@ -1601,19 +1607,7 @@ extension ARTechniqueViewController: InstructionServiceDelegate {
 }
 
 extension ARTechniqueViewController: VirtualObjectDelegate {
-    func setupDebugTimer() {
-        currentAnimationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self,   selector: (#selector(ARTechniqueViewController.onTimerTick)), userInfo: nil, repeats: true)
-        timerStartDate = Date()
-        currentAnimationTimeLabel.text = "0"
-    }
-    
-    @objc func onTimerTick() {
-        currentAnimationTimeLabel.text = "\(-timerStartDate.timeIntervalSinceNow)"
-    }
-    
     func virtualObjectDidUpdateAnimation(_ object: VirtualObject, animationData: CharacterAnimationData) {
-        setupDebugTimer()
-        
         setupBreathing(animationData: animationData)
         
         currentAnimationLabel.text = "\(object.currentAnimationIndex): \(animationData.instructorAnimation): \(animationData.animationDuration())"

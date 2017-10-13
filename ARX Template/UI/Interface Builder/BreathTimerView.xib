@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,41 +34,17 @@
                         <constraint firstAttribute="width" constant="220" id="wI2-rZ-KZT"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4C0-EV-25q">
-                    <rect key="frame" x="162" y="572" width="50" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="EdI-Pp-J11"/>
-                        <constraint firstAttribute="height" constant="50" id="hxZ-3M-VZy"/>
-                    </constraints>
-                    <state key="normal" title="Pause"/>
-                    <connections>
-                        <action selector="onPauseTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="FzL-Vy-dM8"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yW6-uO-Sbt">
-                    <rect key="frame" x="172" y="637" width="30" height="30"/>
-                    <state key="normal" title="End"/>
-                    <connections>
-                        <action selector="onEndTap:" destination="iN0-l3-epB" eventType="touchUpInside" id="OnH-z7-iYI"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="yW6-uO-Sbt" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="7Jf-x3-28N"/>
                 <constraint firstItem="174-Q9-mNc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="48" id="Bwv-n6-Ecx"/>
-                <constraint firstItem="4C0-EV-25q" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="MqH-Ej-TFz"/>
                 <constraint firstItem="UF7-Lc-RqK" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="eWA-ex-7Ow"/>
                 <constraint firstItem="UF7-Lc-RqK" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="k9M-Ex-hru"/>
                 <constraint firstItem="174-Q9-mNc" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="s2M-GX-ome"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="4C0-EV-25q" secondAttribute="bottom" constant="45" id="sti-JN-9Sh"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="yW6-uO-Sbt" secondAttribute="bottom" id="xER-rn-nqI"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="endButton" destination="yW6-uO-Sbt" id="1Tw-58-PmE"/>
                 <outlet property="fireContainerImageView" destination="UF7-Lc-RqK" id="mKx-BF-Yfk"/>
-                <outlet property="pauseButton" destination="4C0-EV-25q" id="eAd-BD-IMB"/>
                 <outlet property="timeLabel" destination="174-Q9-mNc" id="wVh-kF-1kF"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="59.5"/>

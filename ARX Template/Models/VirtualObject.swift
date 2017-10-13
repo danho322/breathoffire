@@ -182,7 +182,7 @@ class VirtualObject: SCNNode {
         if let armtrNode = armatureNode() {
             for key in armtrNode.animationKeys {
                 // this is beta so is subject to change: https://developer.apple.com/documentation/scenekit/scnanimatable/2866031-addanimationplayer?changes=latest_major
-                if let player = animationPlayer(forKey: key) {
+                if let player = armtrNode.animationPlayer(forKey: key) {
                     player.speed = CGFloat(speed)
                 }
             }
@@ -215,9 +215,9 @@ class VirtualObject: SCNNode {
     }
     
     func skipCurrentAnimation() {
-        if let animationKeys = armatureNode()?.animationKeys {
-            for animationKey in animationKeys {
-                if let player = armatureNode()?.animationPlayer(forKey: animationKey) {
+        if let armtrNode = armatureNode() {
+            for key in armtrNode.animationKeys {
+                if let player = armtrNode.animationPlayer(forKey: key) {
                     player.stop()
                 }
             }
@@ -226,9 +226,11 @@ class VirtualObject: SCNNode {
     }
     
     func currentAnimationTimeOffset() -> TimeInterval {
-        for key in animationKeys {
-            if let player = animationPlayer(forKey: key) {
-                return player.animation.timeOffset
+        if let armtrNode = armatureNode() {
+            for key in armtrNode.animationKeys {
+                if let player = armtrNode.animationPlayer(forKey: key) {
+                    return player.animation.timeOffset
+                }
             }
         }
         return 0
