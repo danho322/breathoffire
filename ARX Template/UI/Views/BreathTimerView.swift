@@ -62,6 +62,23 @@ class BreathTimerView: XibView {
         circlePathLayer.path = circlePath().cgPath
     }
     
+    func hideBreathUI(_ isHidden: Bool) {
+        guard let view = view as? BreathTimerView else {
+            return
+        }
+        
+        view.fireContainerImageView.isHidden = isHidden
+    }
+    
+    func updateAlpha(_ alpha: CGFloat) {
+        
+        guard let view = view as? BreathTimerView else {
+            return
+        }
+        
+        view.fireContainerImageView.alpha = alpha
+    }
+    
     func circleFrame() -> CGRect {
         var circleFrame = CGRect(x: 0, y: 0, width: 2 * circleRadius, height: 2 * circleRadius)
         circleFrame.origin.x = circlePathLayer.bounds.midX - circleFrame.midX + 0//20
@@ -80,13 +97,25 @@ class BreathTimerView: XibView {
     func currentBreathCount() -> Int {
         return breathCount
     }
-
-    func update(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, breathParameter: BreathProgramParameter?) {
+    
+    func updateTimeLabel(_ timeInterval: TimeInterval) {
         guard let view = view as? BreathTimerView else {
             fatalError("view is not of type BreathTimerView")
         }
-       print("breath timer view update")
-        view.timeLabel.text = BreathTimerService.timeString(time: timestamp)
+        
+        view.timeLabel.text = BreathTimerService.timeString(time: timeInterval)
+    }
+
+    func update(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, breathParameter: BreathProgramParameter?, sessionTimestamp: TimeInterval? = nil) {
+        guard let view = view as? BreathTimerView else {
+            fatalError("view is not of type BreathTimerView")
+        }
+
+        if let sessionTimestamp = sessionTimestamp {
+            view.timeLabel.text = BreathTimerService.timeString(time: sessionTimestamp)
+        } else {
+            view.timeLabel.text = BreathTimerService.timeString(time: timestamp)
+        }
        
         if let currentBreathParameter = currentBreathParameter,
             let breathParameter = breathParameter {

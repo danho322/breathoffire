@@ -107,20 +107,20 @@ extension RankingsViewController: UITableViewDataSource {
             if let user = userRankings[safe: indexPath.row] {
                 textLabel = user.userName
                 location = user.city
-                detailLabel = "\(BreathTimerService.timeString(time: Double(user.timeStreakCount))) streak"
+                detailLabel = "\(BreathTimerService.timeString(time: Double(user.timeStreakCount)))"
             }
         } else if indexPath.section == 1 {
             if let user = dayRankings[safe: indexPath.row] {
                 textLabel = user.userName
                 location = user.city
                 let dayString = user.maxDayStreak == 1 ? "day" : "days"
-                detailLabel = "\(user.maxDayStreak) \(dayString) max"
+                detailLabel = "\(user.maxDayStreak) \(dayString)"
             }
         } else if indexPath.section == 2 {
             if let user = breathRankings[safe: indexPath.row] {
                 textLabel = user.userName
                 location = user.city
-                detailLabel = "\(BreathTimerService.timeString(time: Double(user.maxTimeStreak))) max streak"
+                detailLabel = "\(BreathTimerService.timeString(time: Double(user.maxTimeStreak)))"
             }
         }
         

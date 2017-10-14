@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 protocol InstructionServiceDelegate {
     func didUpdateInstruction(instruction: AnimationInstructionData)
@@ -17,6 +18,8 @@ class InstructionService: NSObject {
     internal var startTime = Date()
     internal var pauseTime = Date()
     internal var currentSpeed: Double = 1
+    internal let synth = AVSpeechSynthesizer()
+    
     var delegate: InstructionServiceDelegate!
     
     init(delegate: InstructionServiceDelegate) {
@@ -69,6 +72,10 @@ class InstructionService: NSObject {
             if let soundID = instruction.soundID, let breathSound = BreathSound(rawValue: soundID) {
                 breathSound.play()
             }
+            
+            let myUtterance = AVSpeechUtterance(string: instruction.text)
+            myUtterance.rate = 0.4
+            synth.speak(myUtterance)
         }
     }
 }

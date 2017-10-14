@@ -39,7 +39,7 @@ class MeViewController: UIViewController {
         }
         
         let isAnonymous = SessionManager.sharedInstance.isAnonymous ?? true
-        loginButton.setTitle("Sign into your account", for: .normal)
+        loginButton.setTitle("Sign up", for: .normal)
         loginButton.isHidden = !isAnonymous
         
         collectionView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()

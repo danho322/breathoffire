@@ -109,8 +109,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         updatePlacementUI()
         
         if let sequenceToLoad = sequenceToLoad {
-            breathTimerView.isHidden = false
-            breathTimerView.alpha = 0
+            breathTimerView.hideBreathUI(false)
+            breathTimerView.updateAlpha(0)
             
             instructionService = InstructionService(delegate: self)
         }
@@ -174,10 +174,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if let breathProgram = animationData.breathProgram {
             print("setup program")
             breathTimerService = BreathTimerService(breathProgram: breathProgram, delegate: self)
-            breathTimerView.alpha = 0.5
-            breathTimerView.isHidden = false
+            breathTimerView.updateAlpha(0.5)
+            breathTimerView.hideBreathUI(false)
         } else {
-            breathTimerView.alpha = 0
+            breathTimerView.updateAlpha(0)
         }
     }
     
@@ -348,6 +348,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             
             settingsButton.isHidden = !currentPlacementState.isPlaced()
             screenshotButton.isHidden = !currentPlacementState.isPlaced()
+            endButton.isHidden = !currentPlacementState.isPlaced()
             
             let shouldShowDebugVisuals = currentPlacementState.showDebugVisuals()
             if showDebugVisuals != shouldShowDebugVisuals {
@@ -1082,6 +1083,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         sessionTimer = Timer.scheduledTimer(withTimeInterval: ARTechniqueConstants.SessionTimerInterval / Double(speedMultipler), repeats: true, block: { [unowned self] _ in
             self.currentAnimationTimeLabel.text = "\(self.sessionCounter)s"
             self.sessionCounter += ARTechniqueConstants.SessionTimerInterval
+            self.breathTimerView.updateTimeLabel(self.sessionCounter)
         })
     }
     
@@ -1648,7 +1650,7 @@ extension ARTechniqueViewController: RelatedAnimationsViewDelegate {
 
 extension ARTechniqueViewController: BreathTimerServiceDelegate {
     func breathTimerDidTick(timestamp: TimeInterval, nextParameterTimestamp: TimeInterval, currentParameter: BreathProgramParameter?) {
-        breathTimerView.update(timestamp: timestamp, nextParameterTimestamp: nextParameterTimestamp, breathParameter: currentParameter)
+        breathTimerView.update(timestamp: timestamp, nextParameterTimestamp: nextParameterTimestamp, breathParameter: currentParameter, sessionTimestamp: sessionCounter)
     }
     
     func breathTimeDidStart() {

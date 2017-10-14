@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "529562061.825802"
+            timestampString = "529700164.448325"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1629"
-            endingLineNumber = "1629"
+            startingLineNumber = "1631"
+            endingLineNumber = "1631"
             landmarkName = "didTapRelatedAnimation(relatedView:sequenceName:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -196,7 +196,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/MeViewController.swift"
-            timestampString = "529562061.825943"
+            timestampString = "529700164.448804"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
@@ -339,13 +339,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "529562061.826497"
+            filePath = "ARX Template/Services/FirebaseService.swift"
+            timestampString = "529700164.449286"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "loadCurrentAnimationIndex()"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "setUserAttribute(userId:attribute:value:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -355,13 +355,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "529562061.826547"
+            filePath = "ARX Template/Services/FirebaseService.swift"
+            timestampString = "529700164.449476"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
-            landmarkName = "loadAnimationData(animationData:speed:repeatCount:)"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
+            landmarkName = "retrieveCurrentTimeStreaks(completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
