@@ -107,6 +107,10 @@ class FeedViewController: UIViewController {
             alertMessage.popoverPresentationController?.sourceRect = cell.frame
             alertMessage.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
         }
+        if let popoverPresentationController = alertMessage.popoverPresentationController {
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceRect = self.view.bounds
+        }
         self.present(alertMessage, animated: true, completion: nil)
     }
     
@@ -121,7 +125,10 @@ class FeedViewController: UIViewController {
             self.tableView.reloadData()
         }))
         alertMessage.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
+        if let popoverPresentationController = alertMessage.popoverPresentationController {
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceRect = self.view.bounds
+        }
         self.present(alertMessage, animated: true, completion: nil)
     }
 }

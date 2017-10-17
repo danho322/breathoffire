@@ -297,6 +297,10 @@ class SessionManager {
                                             cancelHandler()
                                             
             }))
+            if let popoverPresentationController = alert.popoverPresentationController {
+                popoverPresentationController.sourceView = viewController.view
+                popoverPresentationController.sourceRect = viewController.view.bounds
+            }
             viewController.present(alert, animated: true, completion: nil)
         } else {
             onPurchasePackage(packageName: packageName) { success in

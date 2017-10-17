@@ -109,13 +109,13 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         updatePlacementUI()
         
         if let sequenceToLoad = sequenceToLoad {
-            breathTimerView.hideBreathUI(false)
+            breathTimerView.hideBreathUI(true)
             breathTimerView.updateAlpha(0)
             
             instructionService = InstructionService(delegate: self)
         }
         
-        if !SessionManager.sharedInstance.shouldShowTutorial(type: .ARTechnique) || !isARModeEnabled {
+        if !isARModeEnabled {
             startTechnique()
         }
         
@@ -147,6 +147,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                     }
                 )
             )
+            if let popoverPresentationController = alert.popoverPresentationController {
+                popoverPresentationController.sourceView = self.view
+                popoverPresentationController.sourceRect = self.view.bounds
+            }
             self.present(alert, animated: true, completion: nil)
         }
 	}
@@ -348,7 +352,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             
             settingsButton.isHidden = !currentPlacementState.isPlaced()
             screenshotButton.isHidden = !currentPlacementState.isPlaced()
-            endButton.isHidden = !currentPlacementState.isPlaced()
+            endButton.isHidden = !currentPlacementState.hideStatusLabel()
             
             let shouldShowDebugVisuals = currentPlacementState.showDebugVisuals()
             if showDebugVisuals != shouldShowDebugVisuals {
@@ -1405,10 +1409,13 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             self.hudDidTapPlay()
         }))
         
-            alertMessage.popoverPresentationController?.sourceView = endButton
-            alertMessage.popoverPresentationController?.sourceRect = endButton.frame
-            alertMessage.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
-        
+        alertMessage.popoverPresentationController?.sourceView = endButton
+        alertMessage.popoverPresentationController?.sourceRect = endButton.frame
+        alertMessage.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+        if let popoverPresentationController = alertMessage.popoverPresentationController {
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceRect = self.view.bounds
+        }
         self.present(alertMessage, animated: true, completion: nil)
     }
     

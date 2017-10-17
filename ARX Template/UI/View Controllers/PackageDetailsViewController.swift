@@ -157,7 +157,10 @@ class PackageDetailsViewController: UIViewController {
                                                                             alert.addAction(UIAlertAction(title: "Ok",
                                                                                                           style: UIAlertActionStyle.default,
                                                                                                           handler: nil))
-                                                                            
+                                                                            if let popoverPresentationController = alert.popoverPresentationController {
+                                                                                popoverPresentationController.sourceView = self.view
+                                                                                popoverPresentationController.sourceRect = self.view.bounds
+                                                                            }
                                                                             self.present(alert, animated: true, completion: nil)
                                                                             })
         }

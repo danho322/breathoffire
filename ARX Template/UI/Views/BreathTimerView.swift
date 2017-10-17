@@ -50,6 +50,8 @@ class BreathTimerView: XibView {
         view.layer.addSublayer(circlePathLayer)
         
         progress = 0
+        
+        view.timeLabel.text = BreathTimerService.timeString(time: 0)
     }
     
     override func layoutSubviews() {
