@@ -27,6 +27,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     @IBOutlet weak var endButton: UIButton!
     @IBOutlet weak var currentAnimationLabel: UILabel!
     @IBOutlet weak var currentAnimationTimeLabel: UILabel!
+    @IBOutlet weak var showPortalButton: UIButton!
+    @IBOutlet weak var hidePortalButton: UIButton!
+    @IBOutlet weak var toggleBreathButton: UIButton!
+    @IBOutlet weak var nextAnimationButton: UIButton!
     
     var isARModeEnabled = true
     var sequenceToLoad: AnimationSequenceDataContainer?
@@ -82,6 +86,24 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if let hudView = hudView.view as? CharacterHUDView {
             hudView.delegate = self
         }
+        
+        #if DEBUG
+            currentAnimationLabel.isHidden = false
+            currentAnimationTimeLabel.isHidden = false
+            settingsButton.isHidden = false
+            messagePanel.isHidden = false
+            showPortalButton.isHidden = false
+            hidePortalButton.isHighlighted = false
+            nextAnimationButton.isHidden = false
+        #else
+            currentAnimationLabel.isHidden = true
+            currentAnimationTimeLabel.isHidden = true
+            settingsButton.isHidden = true
+            messagePanel.isHidden = true
+            showPortalButton.isHidden = true
+            hidePortalButton.isHighlighted = true
+            nextAnimationButton.isHidden = true
+        #endif
     }
     
     func setupViewControllerTechnique() {

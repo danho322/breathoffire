@@ -105,8 +105,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1631"
             endingLineNumber = "1631"
-            landmarkName = "virtualObjectDidFinishAnimationSequence(_:)"
-            landmarkType = "7">
+            landmarkName = "ARTechniqueViewController"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

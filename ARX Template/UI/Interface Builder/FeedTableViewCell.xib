@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -51,7 +51,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8G-MF-EQL">
-                        <rect key="frame" x="30" y="345" width="337" height="20.5"/>
+                        <rect key="frame" x="8" y="345" width="359" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -75,6 +75,16 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFa-uJ-AuN">
+                        <rect key="frame" x="167" y="168" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="cVQ-HS-D5g"/>
+                            <constraint firstAttribute="width" constant="40" id="rob-Il-h6m"/>
+                        </constraints>
+                        <connections>
+                            <action selector="onPlayTap:" destination="utU-Um-yTx" eventType="touchUpInside" id="gFt-Ag-xXx"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
@@ -87,8 +97,11 @@
                     <constraint firstItem="11L-hG-9N8" firstAttribute="top" secondItem="XGu-9N-mUW" secondAttribute="top" constant="-10" id="HCx-SD-K3p"/>
                     <constraint firstItem="11L-hG-9N8" firstAttribute="trailing" secondItem="rOc-PC-1xH" secondAttribute="trailing" id="IH0-C3-z1X"/>
                     <constraint firstItem="wyb-I4-WaA" firstAttribute="centerX" secondItem="rOc-PC-1xH" secondAttribute="centerX" id="Ofv-N4-YNc"/>
+                    <constraint firstItem="UFa-uJ-AuN" firstAttribute="centerX" secondItem="yzA-4v-zTn" secondAttribute="centerX" id="Qpb-Fj-rWR"/>
                     <constraint firstItem="KfA-jt-Kfa" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="8" id="UJJ-Gb-dfl"/>
+                    <constraint firstItem="UFa-uJ-AuN" firstAttribute="centerY" secondItem="yzA-4v-zTn" secondAttribute="centerY" id="VvW-0q-WQU"/>
                     <constraint firstItem="wyb-I4-WaA" firstAttribute="centerY" secondItem="rOc-PC-1xH" secondAttribute="centerY" id="WS9-MK-qAg"/>
+                    <constraint firstItem="f8G-MF-EQL" firstAttribute="leading" secondItem="7KD-vJ-V4t" secondAttribute="leading" id="XeK-Tl-pIZ"/>
                     <constraint firstItem="11L-hG-9N8" firstAttribute="leading" secondItem="rOc-PC-1xH" secondAttribute="leading" id="YiD-F2-3np"/>
                     <constraint firstItem="XGu-9N-mUW" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" constant="30" id="b7U-cv-YxE"/>
                     <constraint firstAttribute="trailing" secondItem="f8G-MF-EQL" secondAttribute="trailing" constant="8" id="fx6-lZ-aJf"/>
@@ -102,7 +115,6 @@
                     <constraint firstItem="rOc-PC-1xH" firstAttribute="centerX" secondItem="yzA-4v-zTn" secondAttribute="centerX" id="sbk-6y-Jk3"/>
                     <constraint firstItem="f8G-MF-EQL" firstAttribute="top" secondItem="XGu-9N-mUW" secondAttribute="bottom" constant="5" id="sn8-Le-aie"/>
                     <constraint firstItem="rOc-PC-1xH" firstAttribute="leading" secondItem="yzA-4v-zTn" secondAttribute="leading" id="st0-zV-vFT"/>
-                    <constraint firstItem="f8G-MF-EQL" firstAttribute="leading" secondItem="XGu-9N-mUW" secondAttribute="leading" id="uy9-bY-rTN"/>
                     <constraint firstItem="uZp-uv-2Q0" firstAttribute="leading" secondItem="rOc-PC-1xH" secondAttribute="leading" id="wNB-Uv-2EE"/>
                     <constraint firstAttribute="trailing" secondItem="XGu-9N-mUW" secondAttribute="trailing" constant="50" id="yaf-6d-v6A"/>
                     <constraint firstItem="rOc-PC-1xH" firstAttribute="top" secondItem="yzA-4v-zTn" secondAttribute="top" id="zf4-wS-lka"/>
@@ -115,6 +127,7 @@
                 <outlet property="leftQuoteLabel" destination="KfA-jt-Kfa" id="rog-Bc-LM6"/>
                 <outlet property="moreButton" destination="kIo-Rr-Jl3" id="Veb-Ey-a6i"/>
                 <outlet property="nameLabel" destination="7KD-vJ-V4t" id="EjR-2S-iBg"/>
+                <outlet property="playButton" destination="UFa-uJ-AuN" id="wTT-2y-DM6"/>
                 <outlet property="timeLabel" destination="f8G-MF-EQL" id="k6L-77-feH"/>
                 <outlet property="timeLabelTopConstraint" destination="sn8-Le-aie" id="J1r-0c-SaH"/>
             </connections>

@@ -56,7 +56,7 @@
                 <navigationController id="jQ3-5C-gDA" customClass="ARXNavigationController" customModule="ARX_Template" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Breathe" id="b4v-4f-Jdf"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="oZR-w1-a1Z">
-                        <rect key="frame" x="0.0" y="20" width="375" height="48"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -447,7 +447,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Czc-2J-RLh">
-                                <rect key="frame" x="0.0" y="68" width="375" height="550"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <searchBar hidden="YES" contentMode="redraw" placeholder="Search techniques" translatesAutoresizingMaskIntoConstraints="NO" id="0uf-gm-Yqg">
@@ -458,16 +458,16 @@
                                 </userDefinedRuntimeAttributes>
                             </searchBar>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D5H-ky-rBm">
-                                <rect key="frame" x="0.0" y="68" width="375" height="550"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xZE-TN-qgi">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="550"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="v1C-zv-WBP">
-                                            <rect key="frame" x="169.5" y="257" width="37" height="37"/>
+                                            <rect key="frame" x="169.5" y="259" width="37" height="37"/>
                                         </activityIndicatorView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating files..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgx-tn-QfB">
-                                            <rect key="frame" x="50" y="300" width="275" height="21"/>
+                                            <rect key="frame" x="50" y="302" width="275" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -903,7 +903,7 @@
                 <navigationController id="4pE-Rk-OzT" customClass="ARXNavigationController" customModule="ARX_Template" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" id="BG5-9a-tdF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="eWV-a7-jYc">
-                        <rect key="frame" x="0.0" y="20" width="375" height="48"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -927,13 +927,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PA-gB-zD8">
-                                <rect key="frame" x="20" y="78" width="79" height="21"/>
+                                <rect key="frame" x="20" y="74" width="79" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWo-Tt-Jmc">
-                                <rect key="frame" x="285" y="74" width="80" height="30"/>
+                                <rect key="frame" x="285" y="70" width="80" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="0bL-ub-e92"/>
                                 </constraints>
@@ -944,7 +944,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Oap-4O-4yD">
-                                <rect key="frame" x="0.0" y="109" width="375" height="509"/>
+                                <rect key="frame" x="0.0" y="105" width="375" height="513"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="EAK-lR-zEd">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1282,16 +1282,20 @@
                         <outlet property="debugMessageLabel" destination="eOG-9O-hbm" id="wP4-e0-cWY"/>
                         <outlet property="endButton" destination="JIQ-GD-S9b" id="YF8-rj-mzi"/>
                         <outlet property="featurePointCountLabel" destination="8kF-pT-w2a" id="UmN-VA-Qap"/>
+                        <outlet property="hidePortalButton" destination="cuu-kW-rEx" id="fJD-rA-qgD"/>
                         <outlet property="hudBottomConstraint" destination="ICK-CY-2zW" id="hW4-iW-gJb"/>
                         <outlet property="hudView" destination="Le1-2e-IV0" id="9E6-1f-9rz"/>
                         <outlet property="instructionView" destination="Zh8-TW-68o" id="IV7-me-7ST"/>
                         <outlet property="messageLabel" destination="1vb-5z-Fun" id="ijd-d7-U1L"/>
                         <outlet property="messagePanel" destination="VQZ-1R-OLo" id="UGV-89-vcm"/>
+                        <outlet property="nextAnimationButton" destination="7tA-Dg-wg9" id="zBg-al-MKO"/>
                         <outlet property="restartExperienceButton" destination="twb-Zb-eDD" id="F0y-3x-93y"/>
                         <outlet property="sceneView" destination="auA-Qr-nK7" id="foM-bM-C7X"/>
                         <outlet property="screenshotButton" destination="ba6-jE-09U" id="hSg-mh-ZCQ"/>
                         <outlet property="settingsButton" destination="ZiE-8E-3Ig" id="cio-Mj-yHn"/>
+                        <outlet property="showPortalButton" destination="Mec-UJ-eUf" id="Gxn-h6-Cc9"/>
                         <outlet property="statusLabel" destination="hpw-Pw-RqP" id="ifX-oY-Qra"/>
+                        <outlet property="toggleBreathButton" destination="bGy-L5-bog" id="Ktn-2s-wpr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WR5-SV-Trt" sceneMemberID="firstResponder"/>

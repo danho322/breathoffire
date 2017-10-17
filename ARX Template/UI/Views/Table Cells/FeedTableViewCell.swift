@@ -20,10 +20,12 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var leftQuoteLabel: UILabel!
     @IBOutlet weak var timeLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var playButton: UIButton!
     
     internal var optionsHandler: ((String?)->Void)?
     internal var feedKey: String?
     internal var gifDict: [String: FLAnimatedImage] = Dictionary<String, FLAnimatedImage>()
+    internal var gifCreation: (()->Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,6 +37,10 @@ class FeedTableViewCell: UITableViewCell {
         commentLabel.font = ThemeManager.sharedInstance.defaultFont(16)
         timeLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         timeLabel.font = ThemeManager.sharedInstance.defaultFont(12)
+        
+        let playIcon = FAKMaterialIcons.playCircleIcon(withSize: 40)
+        playIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        playButton.setAttributedTitle(playIcon?.attributedString(), for: .normal)
         
         let leftQuote = FAKIonIcons.quoteIcon(withSize: 12)
         leftQuote?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
@@ -48,7 +54,8 @@ class FeedTableViewCell: UITableViewCell {
         guard let feedKey = feedItem.key else {
             return
         }
-        
+        self.playButton.isHidden = false
+        self.gifCreation = nil
         self.feedKey = feedItem.key
         self.optionsHandler = optionsHandler
 
@@ -81,12 +88,15 @@ class FeedTableViewCell: UITableViewCell {
                         self.activityIndicator.stopAnimating()
                         self.feedImageView.image = image
                     }
-                    FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { data in
-                        self.activityIndicator.stopAnimating()
-                        let animatedImage = FLAnimatedImage(animatedGIFData: data)
-                        handleGifData(animatedImage)
-                        self.gifDict[feedKey] = animatedImage
-                    })
+                    self.gifCreation = {
+                        self.playButton.isHidden = true
+                        FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { data in
+                            self.activityIndicator.stopAnimating()
+                            let animatedImage = FLAnimatedImage(animatedGIFData: data)
+                            handleGifData(animatedImage)
+                            self.gifDict[feedKey] = animatedImage
+                        })
+                    }
                 })
             }
         }
@@ -120,6 +130,10 @@ class FeedTableViewCell: UITableViewCell {
         return cocoaString.range(of: substring)
     }
 
+    @IBAction func onPlayTap(_ sender: Any) {
+        gifCreation?()
+    }
+    
     @IBAction func onRemoveTap(_ sender: Any) {
         optionsHandler?(feedKey)
     }
