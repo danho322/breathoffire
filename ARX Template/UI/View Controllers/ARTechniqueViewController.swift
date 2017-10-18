@@ -95,14 +95,16 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             showPortalButton.isHidden = false
             hidePortalButton.isHighlighted = false
             nextAnimationButton.isHidden = false
+            toggleBreathButton.isHidden = false
         #else
             currentAnimationLabel.isHidden = true
             currentAnimationTimeLabel.isHidden = true
             settingsButton.isHidden = true
             messagePanel.isHidden = true
             showPortalButton.isHidden = true
-            hidePortalButton.isHighlighted = true
+            hidePortalButton.isHidden = true
             nextAnimationButton.isHidden = true
+            toggleBreathButton.isHidden = true
         #endif
     }
     
@@ -126,6 +128,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 model.delegate = self
                 virtualObjects.append(model)
             }
+            restartExperienceButton.isHidden = true
         }
         
         updatePlacementUI()

@@ -76,10 +76,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFa-uJ-AuN">
-                        <rect key="frame" x="167" y="168" width="40" height="40"/>
+                        <rect key="frame" x="147" y="148" width="80" height="80"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="cVQ-HS-D5g"/>
-                            <constraint firstAttribute="width" constant="40" id="rob-Il-h6m"/>
+                            <constraint firstAttribute="height" constant="80" id="cVQ-HS-D5g"/>
+                            <constraint firstAttribute="width" constant="80" id="rob-Il-h6m"/>
                         </constraints>
                         <connections>
                             <action selector="onPlayTap:" destination="utU-Um-yTx" eventType="touchUpInside" id="gFt-Ag-xXx"/>

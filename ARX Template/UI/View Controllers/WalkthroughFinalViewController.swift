@@ -26,7 +26,9 @@ class WalkthroughFinalViewController: BWWalkthroughPageViewController {
                 self.navigationController?.popToRootViewController(animated: true)
                 self.tabBarController?.selectedIndex = 0
             }
-            self.present(arVC, animated: true, completion: nil)
+            self.present(arVC, animated: true, completion: {
+                self.dismiss(animated: false, completion: nil)
+            })
         }
     }
 }

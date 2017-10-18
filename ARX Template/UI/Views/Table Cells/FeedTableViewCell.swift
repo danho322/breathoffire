@@ -38,7 +38,7 @@ class FeedTableViewCell: UITableViewCell {
         timeLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         timeLabel.font = ThemeManager.sharedInstance.defaultFont(12)
         
-        let playIcon = FAKMaterialIcons.playCircleIcon(withSize: 40)
+        let playIcon = FAKMaterialIcons.playCircleIcon(withSize: 80)
         playIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         playButton.setAttributedTitle(playIcon?.attributedString(), for: .normal)
         

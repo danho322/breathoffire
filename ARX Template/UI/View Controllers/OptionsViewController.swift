@@ -178,7 +178,7 @@ extension OptionsViewController: UITableViewDelegate {
             if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
                 let motdSequenceContainer = DataLoader.sharedInstance.moveOfTheDay() {
                 arVC.sequenceToLoad = motdSequenceContainer
-                arVC.isARModeEnabled = false
+//                arVC.isARModeEnabled = false
                 arVC.dismissCompletionHandler = { [unowned self] in
                     self.navigationController?.popToRootViewController(animated: true)
                     self.tabBarController?.selectedIndex = 0
