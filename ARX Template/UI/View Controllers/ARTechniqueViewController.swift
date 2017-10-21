@@ -1086,6 +1086,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 
             //DH: do we want to stop plane detection?
 //            stopPlaneDetection()
+            hitTestVisualization?.remove()
             showHitTestAPIVisualization = false
             
             scheduleScreenshot()

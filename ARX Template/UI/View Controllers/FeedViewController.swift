@@ -25,6 +25,8 @@ class FeedViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        let motivationCellNib = UINib(nibName: String(describing: FeedMotivationTableViewCell.self), bundle: nil)
+        tableView.register(motivationCellNib, forCellReuseIdentifier: CellIdentifiers.FeedMotivationCellIdentifier)
         let mapCellNib = UINib(nibName: String(describing: FeedMapTableViewCell.self), bundle: nil)
         tableView.register(mapCellNib, forCellReuseIdentifier: CellIdentifiers.FeedMapCellIdentifier)
         let feedCellNib = UINib(nibName: String(describing: FeedTableViewCell.self), bundle: nil)
@@ -146,7 +148,7 @@ extension FeedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return 2
         } else {
             return feedItems.count
         }
@@ -154,14 +156,21 @@ extension FeedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMapCellIdentifier, for: indexPath)
-            if let cell = cell as? FeedMapTableViewCell {
-                let locations = feedItems.filter({ $0.coordinate != nil }).map({ CLLocation(latitude: $0.coordinate!.latitude, longitude: $0.coordinate!.longitude) })
-              
-                cell.update(locations: locations)
-            }
-            return cell
+            if (indexPath.row == 0) {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMotivationCellIdentifier) {
+                    return cell
+                }
+            } else {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMapCellIdentifier) as? FeedMapTableViewCell {
+                    let locations = feedItems.filter({ $0.coordinate != nil }).map({ CLLocation(latitude: $0.coordinate!.latitude, longitude: $0.coordinate!.longitude) })
+                    
+                    cell.update(locations: locations)
+                
+                    return cell
+                    
+                }
 
+            }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedCellIdentifier, for: indexPath)
             if let cell = cell as? FeedTableViewCell {
@@ -172,5 +181,6 @@ extension FeedViewController: UITableViewDataSource {
             }
             return cell
         }
+        return UITableViewCell()
     }
 }

@@ -16,7 +16,7 @@ struct ThemeManager {
     }
     
     func feedBackgroundColor() -> UIColor {
-        return UIColor.white
+        return ThemeManager.sharedInstance.backgroundColor()
     }
     
     func feedTextColor() -> UIColor {

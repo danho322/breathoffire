@@ -18,7 +18,6 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var leftQuoteLabel: UILabel!
-    @IBOutlet weak var timeLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var playButton: UIButton!
     
@@ -81,6 +80,7 @@ class FeedTableViewCell: UITableViewCell {
         if let animatedImage = gifDict[feedKey] {
             activityIndicator.stopAnimating()
             handleGifData(animatedImage)
+            playButton.isHidden = true
         } else {
             if let firstImagePath = feedItem.imagePathArray.first {
                 FirebaseService.sharedInstance.retrieveDataAtPath(path: firstImagePath, completion: { [unowned self] imageData in
@@ -105,12 +105,10 @@ class FeedTableViewCell: UITableViewCell {
             commentLabel.text = comment
             commentLabel.isHidden = false
             leftQuoteLabel.isHidden = false
-            timeLabelTopConstraint.constant = 5
         } else {
             commentLabel.text = nil
             commentLabel.isHidden = true
             leftQuoteLabel.isHidden = true
-            timeLabelTopConstraint.constant = -5
         }
         
         let nameText = "\(name) did \(feedItem.breathCount) breaths"
