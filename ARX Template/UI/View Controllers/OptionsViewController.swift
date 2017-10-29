@@ -120,6 +120,10 @@ class OptionsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         checkShouldStartTutorial()
+        
+        ARXLocationService.sharedInstance.retrieveUserLocation(userData: nil, handler: { coordinate in
+            
+        })
     }
     
     func checkShouldStartTutorial() {

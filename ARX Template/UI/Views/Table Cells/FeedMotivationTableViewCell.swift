@@ -10,6 +10,9 @@ import UIKit
 
 class FeedMotivationTableViewCell: UITableViewCell {
     @IBOutlet weak var motivationLabel: UILabel!
+    @IBOutlet weak var breatheButton: UIButton!
+    
+    var breatheHandler: (()->Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,6 +26,10 @@ class FeedMotivationTableViewCell: UITableViewCell {
             self.motivationLabel.text = quote
         }
         
+        breatheButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
+        breatheButton.setTitle("Breathe", for: .normal)
+        breatheButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
+        breatheButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(16)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -31,4 +38,8 @@ class FeedMotivationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    @IBAction func onBreatheTap(_ sender: Any) {
+        print("bame")
+        breatheHandler?()
+    }
 }

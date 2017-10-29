@@ -32,7 +32,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This application will use the camera for Augmented Reality.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The location is used for augmenting reality</string>
+	<string>Contribute to the Breath of Fire heatmap.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Save photos of your AR experience</string>
 	<key>NSPhotoLibraryUsageDescription</key>

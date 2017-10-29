@@ -23,6 +23,20 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WlN-PR-lNh">
+                        <rect key="frame" x="306" y="125" width="46" height="30"/>
+                        <inset key="titleEdgeInsets" minX="5" minY="5" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="Button"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="onBreatheTap:" destination="Kxd-Dn-s9A" eventType="touchUpInside" id="UtZ-TJ-44S"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
@@ -30,10 +44,13 @@
                     <constraint firstItem="eW0-7c-3qN" firstAttribute="leading" secondItem="zK5-xh-xAa" secondAttribute="leading" constant="15" id="WwF-cV-Rr6"/>
                     <constraint firstAttribute="trailing" secondItem="eW0-7c-3qN" secondAttribute="trailing" constant="15" id="adR-TT-IfH"/>
                     <constraint firstAttribute="bottom" secondItem="eW0-7c-3qN" secondAttribute="bottom" constant="50" id="i8y-Xd-0g9"/>
+                    <constraint firstAttribute="trailing" secondItem="WlN-PR-lNh" secondAttribute="trailing" constant="23" id="uuB-gy-BFP"/>
+                    <constraint firstAttribute="bottom" secondItem="WlN-PR-lNh" secondAttribute="bottom" constant="19.5" id="vze-IF-lUJ"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
+                <outlet property="breatheButton" destination="WlN-PR-lNh" id="7cv-O3-b1n"/>
                 <outlet property="motivationLabel" destination="eW0-7c-3qN" id="Z8i-Ug-UwV"/>
             </connections>
             <point key="canvasLocation" x="-183.5" y="-11.5"/>

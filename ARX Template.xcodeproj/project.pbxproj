@@ -48,6 +48,7 @@
 		D45352C11EFDDDBC00C09259 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45352C01EFDDDBC00C09259 /* UIViewExtensions.swift */; };
 		D45352C31EFF6EEC00C09259 /* FontAwesomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D45352C21EFF6EC900C09259 /* FontAwesomeKit.framework */; };
 		D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45352C41F00CCEC00C09259 /* InstructionService.swift */; };
+		D454DC5D1FA5545C0021D203 /* ARXLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D454DC5C1FA5545C0021D203 /* ARXLocationService.swift */; };
 		D45621401F0B58BB0052E218 /* TechniqueTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */; };
 		D45621421F0B59730052E218 /* TechniqueTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621411F0B59730052E218 /* TechniqueTableCell.swift */; };
 		D45621441F0B5B420052E218 /* SpruceAnimatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */; };
@@ -229,6 +230,7 @@
 		D45352C01EFDDDBC00C09259 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		D45352C21EFF6EC900C09259 /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = Carthage/Build/iOS/FontAwesomeKit.framework; sourceTree = "<group>"; };
 		D45352C41F00CCEC00C09259 /* InstructionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionService.swift; sourceTree = "<group>"; };
+		D454DC5C1FA5545C0021D203 /* ARXLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXLocationService.swift; sourceTree = "<group>"; };
 		D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TechniqueTableCell.xib; sourceTree = "<group>"; };
 		D45621411F0B59730052E218 /* TechniqueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueTableCell.swift; sourceTree = "<group>"; };
 		D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpruceAnimatingViewController.swift; sourceTree = "<group>"; };
@@ -719,6 +721,7 @@
 				D470B8D01F1F19CC00920CAB /* ThemeManager.swift */,
 				D4A72D291F3AC92300553086 /* BreathTimerService.swift */,
 				D4C9383D1F440585002A2F4C /* BreathFactory.swift */,
+				D454DC5C1FA5545C0021D203 /* ARXLocationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1056,6 +1059,7 @@
 				D49102FF1EFB05CE008A528E /* TechniqueARViewController.swift in Sources */,
 				D4B93FC31F4A83F700BE092E /* ARXNavigationController.swift in Sources */,
 				D43D4BAC1F048282002F369F /* Plane.swift in Sources */,
+				D454DC5D1FA5545C0021D203 /* ARXLocationService.swift in Sources */,
 				D422C2AE1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift in Sources */,
 				D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */,
 				D45352BD1EFDDCA600C09259 /* CharacterHUDView.swift in Sources */,

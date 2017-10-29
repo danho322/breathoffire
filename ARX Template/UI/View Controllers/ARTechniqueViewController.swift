@@ -232,16 +232,18 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                         if uploadCount == uploadTotal {
                             if let currentUserData = SessionManager.sharedInstance.currentUserData {
                                 // add to feed path
-                                let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970,
-                                                              imagePathArray: pathArray,
-                                                              userId: currentUserData.userId,
-                                                              userName: currentUserData.userName,
-                                                              breathCount: self.breathTimerView.currentBreathCount(),
-                                                              city: currentUserData.city,
-                                                              coordinate: currentUserData.coordinate,
-                                                              rating: rating,
-                                                              comment: comment)
-                                FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
+                                ARXLocationService.sharedInstance.retrieveUserLocation(userData: currentUserData, handler: { coordinate in
+                                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970,
+                                                                  imagePathArray: pathArray,
+                                                                  userId: currentUserData.userId,
+                                                                  userName: currentUserData.userName,
+                                                                  breathCount: self.breathTimerView.currentBreathCount(),
+                                                                  city: currentUserData.city,
+                                                                  coordinate: coordinate,
+                                                                  rating: rating,
+                                                                  comment: comment)
+                                    FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
+                                })
                             }
                         }
                     } else {

@@ -17,7 +17,7 @@ class Instructor: VirtualObject {
     override init() {
         super.init()
         self.name = "Virtual object root node"
-        self.modelName = "final_complete_character2"
+        self.modelName = "character_proper_rig_complex"
         self.fileExtension = "dae"
         self.thumbImage = UIImage(named: "cup")
         self.title = "Jiujitsu"

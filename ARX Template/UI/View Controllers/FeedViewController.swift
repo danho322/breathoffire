@@ -11,10 +11,122 @@ import SDWebImage
 
 struct FeedConstants {
 }
+
+enum FeedViewSectionTypes: Int {
+    case motivation = 0
+    case map = 1
+    case feed = 2
+    case userRanking = 3
+    case breathRanking = 4
+    case dayRanking = 5
+    case count = 6
+    
+    func rowCount(vc: FeedViewController) -> Int {
+        if self == .feed {
+            return min(1, vc.feedItems.count)
+        } else if self == .userRanking {
+            return vc.userRankings.count
+        } else if self == .dayRanking {
+            return vc.dayRankings.count
+        } else if self == .breathRanking {
+            return vc.breathRankings.count
+        } else {
+            return 1
+        }
+    }
+    
+    func cell(indexPath: IndexPath, vc: FeedViewController) -> UITableViewCell {
+        if self == .motivation {
+            if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMotivationCellIdentifier) as? FeedMotivationTableViewCell {
+                cell.breatheHandler = {
+                    print("handle breathe PLEASE")
+                }
+                return cell
+            }
+        } else if self == .map {
+            if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMapCellIdentifier) as? FeedMapTableViewCell {
+                let locations = vc.feedItems.filter({ $0.coordinate != nil }).map({ CLLocation(latitude: $0.coordinate!.latitude, longitude: $0.coordinate!.longitude) })
+                cell.update(locations: locations)
+                return cell
+            }
+        } else if self == .feed {
+            let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedCellIdentifier, for: indexPath)
+            if let cell = cell as? FeedTableViewCell {
+                let item = vc.feedItems[indexPath.row]
+                cell.update(feedItem: item) { key in
+                    vc.displayFeedOptions(feedItem: item, indexPath: indexPath)
+                }
+            }
+            return cell
+        } else {
+            var textLabel = ""
+            var detailLabel = ""
+            var location: String?
+            if self == .userRanking  {
+                if let user = vc.userRankings[safe: indexPath.row] {
+                    textLabel = user.userName
+                    location = user.city
+                    detailLabel = "\(BreathTimerService.timeString(time: Double(user.timeStreakCount)))"
+                }
+            } else if self == .dayRanking {
+                if let user = vc.dayRankings[safe: indexPath.row] {
+                    textLabel = user.userName
+                    location = user.city
+                    let dayString = user.maxDayStreak == 1 ? "day" : "days"
+                    detailLabel = "\(user.maxDayStreak) \(dayString)"
+                }
+            } else if self == .breathRanking {
+                if let user = vc.breathRankings[safe: indexPath.row] {
+                    textLabel = user.userName
+                    location = user.city
+                    detailLabel = "\(BreathTimerService.timeString(time: Double(user.maxTimeStreak)))"
+                }
+            }
+            
+            if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.RankingCellIdentifier, for: indexPath) as? RankingTableViewCell {
+                cell.rankingLabel.text = "\(indexPath.row + 1)"
+                cell.userNameLabel.text = textLabel
+                cell.locationLabel.text = location
+                cell.rankingDescriptionLabel.text = detailLabel
+                return cell
+            }
+        }
+        return UITableViewCell()
+    }
+    
+    func heightForSectionHeader(vc: FeedViewController) -> CGFloat {
+        if self == .userRanking {
+            return vc.userRankings.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
+        } else if self == .dayRanking {
+            return vc.dayRankings.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
+        } else if self == .breathRanking {
+            return vc.breathRankings.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
+        } else {
+            return CGFloat.leastNonzeroMagnitude
+        }
+    }
+    
+    func titleForSectionHeader(vc: FeedViewController) -> String? {
+        if self == .userRanking {
+            return "Top breath streaks"
+        } else if self == .dayRanking {
+            return "Max day streaks"
+        } else if self == .breathRanking {
+            return "Max breath streaks"
+        } else {
+            return nil
+        }
+    }
+}
+
 class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     internal var feedItems: [BreathFeedItem] = []
+    internal var userRankings: [UserData] = []
+    internal var dayRankings: [UserData] = []
+    internal var breathRankings: [UserData] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,6 +143,8 @@ class FeedViewController: UIViewController {
         tableView.register(mapCellNib, forCellReuseIdentifier: CellIdentifiers.FeedMapCellIdentifier)
         let feedCellNib = UINib(nibName: String(describing: FeedTableViewCell.self), bundle: nil)
         tableView.register(feedCellNib , forCellReuseIdentifier: CellIdentifiers.FeedCellIdentifier)
+        let RankingsCellNib = UINib(nibName: String(describing: RankingTableViewCell.self), bundle: nil)
+        tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingCellIdentifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +152,21 @@ class FeedViewController: UIViewController {
         
         FirebaseService.sharedInstance.retrieveBreathFeed(allowedUpdates: 2) { items in
             self.feedItems = items
+            self.tableView.reloadData()
+        }
+        
+        FirebaseService.sharedInstance.retrieveCurrentTimeStreaks() { [unowned self] topUsers in
+            self.userRankings = topUsers
+            self.tableView.reloadData()
+        }
+        
+        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxDayStreak) { [unowned self] topDayUsers in
+            self.dayRankings = topDayUsers
+            self.tableView.reloadData()
+        }
+        
+        FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxTimeStreak) { [unowned self] topBreathUsers in
+            self.breathRankings = topBreathUsers
             self.tableView.reloadData()
         }
     }
@@ -136,50 +265,37 @@ class FeedViewController: UIViewController {
 }
 
 extension FeedViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let sectionType = FeedViewSectionTypes(rawValue: section) {
+            return sectionType.heightForSectionHeader(vc: self)
+        }
+        return CGFloat.leastNonzeroMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let sectionType = FeedViewSectionTypes(rawValue: section) {
+            return sectionType.titleForSectionHeader(vc: self)
+        }
+        return nil
     }
 }
 
 extension FeedViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return FeedViewSectionTypes.count.rawValue
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 2
+        if let sectionType = FeedViewSectionTypes(rawValue: section) {
+            return sectionType.rowCount(vc: self)
         } else {
-            return feedItems.count
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            if (indexPath.row == 0) {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMotivationCellIdentifier) {
-                    return cell
-                }
-            } else {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMapCellIdentifier) as? FeedMapTableViewCell {
-                    let locations = feedItems.filter({ $0.coordinate != nil }).map({ CLLocation(latitude: $0.coordinate!.latitude, longitude: $0.coordinate!.longitude) })
-                    
-                    cell.update(locations: locations)
-                
-                    return cell
-                    
-                }
-
-            }
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedCellIdentifier, for: indexPath)
-            if let cell = cell as? FeedTableViewCell {
-                let item = feedItems[indexPath.row]
-                cell.update(feedItem: item) { [unowned self] key in
-                    self.displayFeedOptions(feedItem: item, indexPath: indexPath)
-                }
-            }
-            return cell
+        if let sectionType = FeedViewSectionTypes(rawValue: indexPath.section) {
+            return sectionType.cell(indexPath: indexPath, vc: self)
         }
         return UITableViewCell()
     }

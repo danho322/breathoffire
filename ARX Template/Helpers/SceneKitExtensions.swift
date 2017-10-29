@@ -79,19 +79,6 @@ extension CAAnimation {
         var animation: CAAnimation?
         var scene: SCNScene?
         
-        // hack to see if animations load this way
-//        let collada = Bundle.mainBundle().URLForResource("art.scnassets/\(daeNamed)", withExtension: "dae")!
-//        return SCNSceneSource(URL: collada, options: nil)!
-//        let resourceName = "Models.scnassets/nakedman/WalkingAnimation"
-//        let nameExtension = "dae"
-//        if let collada = Bundle.main.url(forResource: resourceName, withExtension: nameExtension) {
-//            if let sceneSource = SCNSceneSource(url: collada, options: nil) {
-//                print(sceneSource.identifiersOfEntries(withClass: CAAnimation.self))
-//                return sceneSource.entryWithIdentifier("WalkingAnimation-1", withClass: CAAnimation.self)!
-//
-//            }
-//        }
-        
         scene = SCNScene(named: name)
         // this is the way we were doing it before
         if scene == nil {   // Try documents directory
