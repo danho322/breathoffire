@@ -24,7 +24,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WlN-PR-lNh">
-                        <rect key="frame" x="306" y="125" width="46" height="30"/>
+                        <rect key="frame" x="272" y="125" width="80" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="8uP-oC-NR9"/>
+                        </constraints>
                         <inset key="titleEdgeInsets" minX="5" minY="5" maxX="0.0" maxY="0.0"/>
                         <state key="normal" title="Button"/>
                         <userDefinedRuntimeAttributes>

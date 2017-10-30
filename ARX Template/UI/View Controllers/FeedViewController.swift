@@ -1,4 +1,4 @@
-//
+ //
 //  FeedViewController.swift
 //  ARX Template
 //
@@ -38,8 +38,17 @@ enum FeedViewSectionTypes: Int {
     func cell(indexPath: IndexPath, vc: FeedViewController) -> UITableViewCell {
         if self == .motivation {
             if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMotivationCellIdentifier) as? FeedMotivationTableViewCell {
-                cell.breatheHandler = {
-                    print("handle breathe PLEASE")
+                cell.breatheHandler = { [unowned vc] in
+                    if let arVC = vc.storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
+                        let motdSequenceContainer = DataLoader.sharedInstance.moveOfTheDay() {
+                        arVC.sequenceToLoad = motdSequenceContainer
+                        //                arVC.isARModeEnabled = false
+                        arVC.dismissCompletionHandler = {
+                            vc.navigationController?.popToRootViewController(animated: true)
+                            vc.tabBarController?.selectedIndex = 0
+                        }
+                        vc.present(arVC, animated: true, completion: nil)
+                    }
                 }
                 return cell
             }
@@ -50,12 +59,13 @@ enum FeedViewSectionTypes: Int {
                 return cell
             }
         } else if self == .feed {
-            let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedCellIdentifier, for: indexPath)
-            if let cell = cell as? FeedTableViewCell {
-                let item = vc.feedItems[indexPath.row]
-                cell.update(feedItem: item) { key in
-                    vc.displayFeedOptions(feedItem: item, indexPath: indexPath)
-                }
+            let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedHorizontalScrollViewIdentifier, for: indexPath)
+            if let cell = cell as? FeedHorizontalScrollViewTableViewCell {
+                cell.update(feedItems: vc.feedItems, optionsHandler: { key in
+                    if let item = vc.feedItems.filter({ $0.key == key }).first {
+                        vc.displayFeedOptions(feedItem: item, indexPath: indexPath)
+                    }
+                })
             }
             return cell
         } else {
@@ -143,6 +153,8 @@ class FeedViewController: UIViewController {
         tableView.register(mapCellNib, forCellReuseIdentifier: CellIdentifiers.FeedMapCellIdentifier)
         let feedCellNib = UINib(nibName: String(describing: FeedTableViewCell.self), bundle: nil)
         tableView.register(feedCellNib , forCellReuseIdentifier: CellIdentifiers.FeedCellIdentifier)
+        let feedHorizontalCellNib = UINib(nibName: String(describing: FeedHorizontalScrollViewTableViewCell.self), bundle: nil)
+        tableView.register(feedHorizontalCellNib , forCellReuseIdentifier: CellIdentifiers.FeedHorizontalScrollViewIdentifier)
         let RankingsCellNib = UINib(nibName: String(describing: RankingTableViewCell.self), bundle: nil)
         tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingCellIdentifier)
     }

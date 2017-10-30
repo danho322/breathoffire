@@ -144,28 +144,15 @@ class MainTabBarController: ESTabBarController {
         if let viewControllers = viewControllers {
             for viewController in viewControllers {
                 if viewController is CommunityViewController {
-                    var tabItems: [(UIViewController, String)] = []
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let communityVC = storyboard.instantiateViewController(withIdentifier: "FeedViewControllerIdentifier")
-                    tabItems.append((communityVC, "Feed"))
-                    let rankingsVC = storyboard.instantiateViewController(withIdentifier: "RankingsViewControllerIdentifier")
-                    tabItems.append((rankingsVC, "Rankings"))
                     
-                    let tabPageController = TabPageViewController.create()
-                    tabPageController.title = "Community"
-                    tabPageController.tabItems = tabItems
-                    tabPageController.option.currentColor = ThemeManager.sharedInstance.backgroundColor()
-                    tabPageController.option.tabBackgroundColor = ThemeManager.sharedInstance.backgroundColor()
-                    tabPageController.option.defaultColor = ThemeManager.sharedInstance.labelTitleColor()
-                    tabPageController.option.currentColor = ThemeManager.sharedInstance.focusForegroundColor()
-
-                    
-                    let navigationController = ARXNavigationController(rootViewController: tabPageController)
-                    tabPageController.title = "Breath of Fire"
+                    let navigationController = ARXNavigationController(rootViewController: communityVC)
+                    communityVC.title = "Breath of Fire"
                     navigationController.delegate = self
                     
                     let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
-                    tabPageController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
+                    communityVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
                     
                     
                     let tabIcon = FAKIonIcons.iosWorldIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))

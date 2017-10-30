@@ -30,8 +30,7 @@ class FeedMapTableViewCell: UITableViewCell {
             center = userCoordinate
         }
         mapView.region = MKCoordinateRegionMake(center, span)
-        
-        
+
         let weights = locations.map({ _ in
             return Double(1)
         })

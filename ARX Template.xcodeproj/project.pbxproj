@@ -49,6 +49,11 @@
 		D45352C31EFF6EEC00C09259 /* FontAwesomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D45352C21EFF6EC900C09259 /* FontAwesomeKit.framework */; };
 		D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45352C41F00CCEC00C09259 /* InstructionService.swift */; };
 		D454DC5D1FA5545C0021D203 /* ARXLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D454DC5C1FA5545C0021D203 /* ARXLocationService.swift */; };
+		D454DC5F1FA68D3D0021D203 /* PaginatedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D454DC5E1FA68D3D0021D203 /* PaginatedScrollView.swift */; };
+		D454DC611FA68EEE0021D203 /* FeedHorizontalScrollViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D454DC601FA68EEE0021D203 /* FeedHorizontalScrollViewTableViewCell.xib */; };
+		D454DC631FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D454DC621FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift */; };
+		D454DC651FA76AAD0021D203 /* FeedGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D454DC641FA76AAD0021D203 /* FeedGifView.swift */; };
+		D454DC671FA76BC50021D203 /* FeedGifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D454DC661FA76BC50021D203 /* FeedGifView.xib */; };
 		D45621401F0B58BB0052E218 /* TechniqueTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */; };
 		D45621421F0B59730052E218 /* TechniqueTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621411F0B59730052E218 /* TechniqueTableCell.swift */; };
 		D45621441F0B5B420052E218 /* SpruceAnimatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */; };
@@ -231,6 +236,11 @@
 		D45352C21EFF6EC900C09259 /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = Carthage/Build/iOS/FontAwesomeKit.framework; sourceTree = "<group>"; };
 		D45352C41F00CCEC00C09259 /* InstructionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionService.swift; sourceTree = "<group>"; };
 		D454DC5C1FA5545C0021D203 /* ARXLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXLocationService.swift; sourceTree = "<group>"; };
+		D454DC5E1FA68D3D0021D203 /* PaginatedScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedScrollView.swift; sourceTree = "<group>"; };
+		D454DC601FA68EEE0021D203 /* FeedHorizontalScrollViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedHorizontalScrollViewTableViewCell.xib; sourceTree = "<group>"; };
+		D454DC621FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHorizontalScrollViewTableViewCell.swift; sourceTree = "<group>"; };
+		D454DC641FA76AAD0021D203 /* FeedGifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedGifView.swift; sourceTree = "<group>"; };
+		D454DC661FA76BC50021D203 /* FeedGifView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedGifView.xib; sourceTree = "<group>"; };
 		D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TechniqueTableCell.xib; sourceTree = "<group>"; };
 		D45621411F0B59730052E218 /* TechniqueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueTableCell.swift; sourceTree = "<group>"; };
 		D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpruceAnimatingViewController.swift; sourceTree = "<group>"; };
@@ -470,6 +480,8 @@
 				D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */,
 				D4A72D2D1F3ACA2D00553086 /* BreathTimerView.swift */,
 				D46B68D31F40053D00DAB0AD /* BreatheCompleteView.swift */,
+				D454DC5E1FA68D3D0021D203 /* PaginatedScrollView.swift */,
+				D454DC641FA76AAD0021D203 /* FeedGifView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -509,6 +521,7 @@
 				D43988FD1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift */,
 				D44162C61F8744DE0044A37C /* RankingTableViewCell.swift */,
 				D4FA886B1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift */,
+				D454DC621FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift */,
 			);
 			path = "Table Cells";
 			sourceTree = "<group>";
@@ -567,6 +580,8 @@
 				D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */,
 				D44162C81F87454C0044A37C /* RankingTableViewCell.xib */,
 				D4FA88691F9AB8F900837DB6 /* FeedMotivationTableViewCell.xib */,
+				D454DC601FA68EEE0021D203 /* FeedHorizontalScrollViewTableViewCell.xib */,
+				D454DC661FA76BC50021D203 /* FeedGifView.xib */,
 			);
 			path = "Interface Builder";
 			sourceTree = "<group>";
@@ -877,6 +892,7 @@
 				D49114781F7B77FA00F8402E /* 3_AndExhale.m4a in Resources */,
 				D49114791F7B77FA00F8402E /* 4_Breathe.m4a in Resources */,
 				D491147A1F7B77FA00F8402E /* 5_OutroImaginePerfectHealth.m4a in Resources */,
+				D454DC611FA68EEE0021D203 /* FeedHorizontalScrollViewTableViewCell.xib in Resources */,
 				D491147B1F7B77FA00F8402E /* 6_BOF.m4a in Resources */,
 				D491147C1F7B77FA00F8402E /* 7_SitStraightSpine.m4a in Resources */,
 				D491147D1F7B77FA00F8402E /* 8_SufiGrindOneDirection.m4a in Resources */,
@@ -888,6 +904,7 @@
 				D49114831F7B77FA00F8402E /* 14_TorsoTwistGyanMudraSeated.m4a in Resources */,
 				D49114841F7B77FA00F8402E /* 15_CorpsePose.m4a in Resources */,
 				D4EE12D91F60F0CE00A55E9F /* How.m4v in Resources */,
+				D454DC671FA76BC50021D203 /* FeedGifView.xib in Resources */,
 				D4EE12DA1F60F0CE00A55E9F /* What.m4v in Resources */,
 				D4EE12DB1F60F0CE00A55E9F /* Why.m4v in Resources */,
 				D447EFCC1F5835DE0047DEF0 /* gong.m4a in Resources */,
@@ -1016,6 +1033,7 @@
 				D4A04AFB1F09FF2100BEA822 /* Cup.swift in Sources */,
 				D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */,
 				D4A04AFC1F09FF2100BEA822 /* Instructor.swift in Sources */,
+				D454DC631FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift in Sources */,
 				D4EE12E51F61071B00A55E9F /* LoginViewModel.swift in Sources */,
 				D41332361F44A11500851996 /* TimeFormatType.swift in Sources */,
 				D494188F1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift in Sources */,
@@ -1065,6 +1083,8 @@
 				D45352BD1EFDDCA600C09259 /* CharacterHUDView.swift in Sources */,
 				D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */,
 				D43D4BAE1F048282002F369F /* ARCameraTrackingState.swift in Sources */,
+				D454DC5F1FA68D3D0021D203 /* PaginatedScrollView.swift in Sources */,
+				D454DC651FA76AAD0021D203 /* FeedGifView.swift in Sources */,
 				D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */,
 				D468FE311F49130A00DEBAE6 /* CommunityViewController.swift in Sources */,
 				D44EE6111EFD388F003A1A3E /* TechniqueSceneKitViewController.swift in Sources */,

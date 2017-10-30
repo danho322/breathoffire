@@ -21,6 +21,7 @@ struct CellIdentifiers {
     static let ViewAllTechniques = "TechniquesCellIdentifier"
     static let PackageDescription = "DescriptionCellIdentifier"
     static let FeedCellIdentifier = "FeedCellIdentifier"
+    static let FeedHorizontalScrollViewIdentifier = "FeedHorizontalScrollViewIdentifier"
     static let FeedMotivationCellIdentifier = "FeedMotivationCellIdentifier"
     static let FeedMapCellIdentifier = "FeedMapCellIdentifier"
     static let RankingCellIdentifier = "RankingCellIdentifier"
