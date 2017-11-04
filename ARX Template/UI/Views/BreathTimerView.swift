@@ -12,6 +12,7 @@ import SwiftySound
 class BreathTimerView: XibView {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var fireContainerImageView: UIImageView!
+    @IBOutlet weak var centerImageView: UIImageView!
     
     internal let circlePathLayer = CAShapeLayer()
     internal let circleRadius: CGFloat = 110
@@ -46,7 +47,7 @@ class BreathTimerView: XibView {
         circlePathLayer.frame = view.fireContainerImageView.frame
         circlePathLayer.lineWidth = 4
         circlePathLayer.fillColor = UIColor.clear.cgColor
-        circlePathLayer.strokeColor = UIColor.orange.cgColor
+        circlePathLayer.strokeColor = UIColor.clear.cgColor // invisible until deemed necessary for a future feature
         view.layer.addSublayer(circlePathLayer)
         
         progress = 0
@@ -62,6 +63,9 @@ class BreathTimerView: XibView {
         
         circlePathLayer.frame = CGRect(x: view.fireContainerImageView.frame.origin.x, y: view.fireContainerImageView.frame.origin.y, width: view.fireContainerImageView.frame.size.width, height: view.fireContainerImageView.frame.size.height)
         circlePathLayer.path = circlePath().cgPath
+        
+        view.centerImageView.layer.cornerRadius = view.centerImageView.frame.size.width / 2
+        view.centerImageView.layer.masksToBounds = true
     }
     
     func hideBreathUI(_ isHidden: Bool) {
@@ -70,6 +74,8 @@ class BreathTimerView: XibView {
         }
         
         view.fireContainerImageView.isHidden = isHidden
+        view.timeLabel.isHidden = isHidden
+        view.centerImageView.isHidden = isHidden
     }
     
     func updateAlpha(_ alpha: CGFloat) {
@@ -79,6 +85,8 @@ class BreathTimerView: XibView {
         }
         
         view.fireContainerImageView.alpha = alpha
+        view.timeLabel.alpha = alpha
+        view.centerImageView.alpha = alpha
     }
     
     func circleFrame() -> CGRect {
@@ -174,32 +182,32 @@ class BreathTimerView: XibView {
             breathCount += 1
             let fireView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.fireContainerImageView.frame.size.width, height: view.fireContainerImageView.frame.size.height))
             fireView.center = view.fireContainerImageView.center
-            fireView.image = UIImage(named: "FireEmoji")
-            fireView.backgroundColor = UIColor.clear
+//            fireView.image = UIImage(named: "FireEmoji")
+            fireView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
             fireView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             view.addSubview(fireView)
             UIView.animate(withDuration: currentBreatheParameter.breathTimeUp,
                            delay: 0,
-                           options: [.curveLinear],
+                           options: [.curveEaseOut],
                            animations: {
                             fireView.transform = CGAffineTransform.identity
-                
+                            fireView.alpha = 0.1
             },
                            completion: { finished in
-                            self.fadeOutView(fireView)
+                            self.breatheInView(fireView)
                             print("schedulign in \(currentBreatheParameter.breathTimeDown)")
                             self.perform(#selector(BreathTimerView.doBreathAnimation), with: nil, afterDelay: currentBreatheParameter.breathTimeDown)
             })
         }
     }
     
-    internal func fadeOutView(_ view: UIView) {
+    internal func breatheInView(_ view: UIView) {
         UIView.animate(withDuration: 0.5,
                        delay: 0,
-                       options: [.curveLinear],
+                       options: [.curveEaseOut],
                        animations: {
-                        view.alpha = 0
-                        view.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                        view.alpha = 1
+                        view.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
                         
         },
                        completion: { finished in

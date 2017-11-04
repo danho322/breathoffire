@@ -324,7 +324,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/FirebaseService.swift"
-            timestampString = "529775615.512879"
+            timestampString = "531466319.722823"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "273"
@@ -340,7 +340,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "531070355.231117"
+            timestampString = "531466319.723259"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1092"
@@ -388,12 +388,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/Views/Table Cells/FeedHorizontalScrollViewTableViewCell.swift"
-            timestampString = "531070355.23131"
+            timestampString = "531290957.464998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "update(feedItems:optionsHandler:)"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARX Template/Services/FirebaseService.swift"
+            timestampString = "531466319.723387"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "retrieveMaxAttributes(attribute:completionHandler:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__ObjC.DataSnapshot) -&gt; () in ARX_Template.FirebaseService.retrieveMaxAttributes(attribute: ARX_Template.UserAttribute, completionHandler: (Swift.Array&lt;ARX_Template.UserData&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "ARX Template"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielho/Modeling%20Files/ARX%20Template/ARX%20Template/Services/FirebaseService.swift"
+                  timestampString = "531466189.038972"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "303"
+                  endingLineNumber = "303"
+                  offsetFromSymbolStart = "3439">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (ARX_Template.UserData, ARX_Template.UserData) -&gt; Swift.Bool in closure #1 (__ObjC.DataSnapshot) -&gt; () in ARX_Template.FirebaseService.retrieveMaxAttributes(attribute: ARX_Template.UserAttribute, completionHandler: (Swift.Array&lt;ARX_Template.UserData&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "ARX Template"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielho/Modeling%20Files/ARX%20Template/ARX%20Template/Services/FirebaseService.swift"
+                  timestampString = "531466189.041836"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "304"
+                  endingLineNumber = "304"
+                  offsetFromSymbolStart = "75">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARX Template/Services/FirebaseService.swift"
+            timestampString = "531466319.723689"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
+            landmarkName = "retrieveMaxAttributes(attribute:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

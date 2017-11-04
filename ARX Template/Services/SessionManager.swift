@@ -28,6 +28,25 @@ enum UserAttribute: String {
     case latitude = "latitude"
     case longitude = "longitude"
     case purchasedPackages = "purchasedPackages"
+    
+    func attributeValue(userData: UserData) -> Int {
+        switch self {
+        case .maxDayStreak:
+            return userData.maxDayStreak
+        case .maxTimeStreak:
+            return userData.maxTimeStreak
+        case .totalTimeCount:
+            return userData.totalTimeCount
+        case .playCount:
+            return userData.playCount
+        case .dayStreakCount:
+            return userData.dayStreakCount
+        case .timeStreakCount:
+            return userData.timeStreakCount
+        default:
+            return 0
+        }
+    }
 }
 
 struct TutorialInstructionID: OptionSet {

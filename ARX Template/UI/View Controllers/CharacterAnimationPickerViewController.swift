@@ -34,7 +34,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
     internal var sectionSequenceDict = Dictionary<String, [String]>()
     internal var sectionNames: [String] = []
     
-    internal var model: VirtualObject?
+    internal var model: Instructor?
     internal var sequenceToLoad: AnimationSequenceDataContainer?
     internal var sliderValue: Float = 0
     
@@ -192,7 +192,17 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         if let sequenceContainer = sequenceDataContainer(indexPath: indexPath) {
             loadButton.isEnabled = true
             sequenceToLoad = sequenceContainer
-            model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray, isDemoMode: true)
+            
+            if let model = model {
+                if sequenceContainer.instructorType != model.type {
+                    model.removeFromParentNode()
+                    let male = Instructor(type: sequenceContainer.instructorType)
+                    male.loadModel()
+                    self.model = male
+                    self.sceneView.scene?.rootNode.addChildNode(male)
+                }
+            }
+            self.model?.loadAnimationSequence(animationSequence: sequenceContainer.sequenceArray, isDemoMode: true)
         }
     }
     

@@ -20,6 +20,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
     internal var gifCreationDict: [String: (()->Void)] = Dictionary<String, (()->Void)>()
     internal var keyArray: [String?] = []
     internal var currentKey: String?
+    internal var gifViews: [FeedGifView] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,7 +33,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
         self.optionsHandler = optionsHandler
         
         keyArray = []
-        var gifViews: [FeedGifView] = []
+        gifViews = []
         for feedItem in feedItems {
             if let gifView = createFeedGifView(for: feedItem) {
                 gifViews.append(gifView)
@@ -79,6 +80,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
 extension FeedHorizontalScrollViewTableViewCell: PaginatedScrollViewDelegate {
     func scrollViewDidUpdateToIndex(scrollView: PaginatedScrollView, index: Int) {
         currentKey = keyArray[index]
+        gifViews[index].startGifAnimation()
     }
     
     func scrollViewDidTapView(scrollView: PaginatedScrollView, view: UIView?, index: Int) {

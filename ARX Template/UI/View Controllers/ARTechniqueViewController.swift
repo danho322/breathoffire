@@ -1040,7 +1040,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		// Load the content asynchronously.
 		DispatchQueue.global().async {
 			self.isLoadingObject = true
-			let object = Instructor()
+            let object = Instructor(type: self.sequenceToLoad?.instructorType)
 			object.viewController = self
             object.delegate = self
             

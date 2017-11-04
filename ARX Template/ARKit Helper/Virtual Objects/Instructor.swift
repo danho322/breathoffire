@@ -10,18 +10,42 @@ import Foundation
 import SceneKit
 import ARKit
 
+enum InstructorType: Int {
+    case generic = 0
+    case dennySimple = 1
+    case dennyComplex = 2
+    
+    func fileName() -> String {
+        switch self {
+        case .generic:
+            return "JiujitsuModel4"
+        case .dennySimple:
+            return "final_complete_character2"
+        case .dennyComplex:
+            return "character_proper_rig_complex"
+        }
+    }
+    
+    func armtatureName() -> String {
+        return "Armtr"
+    }
+}
+
 class Instructor: VirtualObject {
     
+    var type: InstructorType
     var scene: SCNScene?
     
-    override init() {
+    init(type: InstructorType? = nil) {
+        let typeToUse = type ?? .generic
+        self.type = typeToUse
         super.init()
         self.name = "Virtual object root node"
-        self.modelName = "character_proper_rig_complex"
+        self.modelName =  typeToUse.fileName()
         self.fileExtension = "dae"
         self.thumbImage = UIImage(named: "cup")
         self.title = "Jiujitsu"
-        self.armatureName = "Armtr"
+        self.armatureName = typeToUse.armtatureName()
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -300,7 +300,9 @@ class FirebaseService: NSObject {
                         }
                     }
                 }
-                completionHandler(items.sorted(by: { $0.maxDayStreak > $1.maxDayStreak }))
+                completionHandler(items.sorted(by: { user0, user1 in
+                    return attribute.attributeValue(userData: user0) > attribute.attributeValue(userData: user1)                    
+                }))
             })
     }
     
@@ -807,6 +809,7 @@ struct AnimationSequenceDataContainer: SearchableData {
     let sequenceDescription: String
     let sequenceArray: [AnimationSequenceData]
     let packageName: String
+    let instructorType: InstructorType
     
     var showHud = true
     
@@ -815,6 +818,13 @@ struct AnimationSequenceDataContainer: SearchableData {
         sequenceDescription = snapshotDict["sequenceDescription"] as? String ?? ""
         packageName = snapshotDict["packageName"] as? String ?? ""
         showHud = snapshotDict["showHud"] as? Bool ?? true
+        
+        let instructorTypeValue = snapshotDict["instructorType"] as? Int ?? 0
+        if let type = InstructorType(rawValue: instructorTypeValue) {
+            instructorType = type
+        } else {
+            instructorType = .generic
+        }
         
         var sequenceArrayTemp: [AnimationSequenceData] = []
         if let sequenceDataArray = snapshotDict["sequenceArray"] as? NSArray {

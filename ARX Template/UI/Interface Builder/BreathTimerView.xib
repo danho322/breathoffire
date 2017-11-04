@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,20 +35,31 @@
                         <constraint firstAttribute="width" constant="220" id="wI2-rZ-KZT"/>
                     </constraints>
                 </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FireEmoji" translatesAutoresizingMaskIntoConstraints="NO" id="TQ4-Ww-kiU">
+                    <rect key="frame" x="165" y="321" width="44" height="45"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="TQ4-Ww-kiU" firstAttribute="width" secondItem="UF7-Lc-RqK" secondAttribute="width" multiplier="0.2" id="6Us-Di-d9S"/>
+                <constraint firstItem="TQ4-Ww-kiU" firstAttribute="centerY" secondItem="UF7-Lc-RqK" secondAttribute="centerY" id="82V-gR-5Ab"/>
+                <constraint firstItem="TQ4-Ww-kiU" firstAttribute="centerX" secondItem="UF7-Lc-RqK" secondAttribute="centerX" id="8VG-Ax-JPH"/>
                 <constraint firstItem="174-Q9-mNc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="48" id="Bwv-n6-Ecx"/>
+                <constraint firstItem="TQ4-Ww-kiU" firstAttribute="height" secondItem="UF7-Lc-RqK" secondAttribute="height" multiplier="0.2" id="Gbl-9B-mJC"/>
                 <constraint firstItem="UF7-Lc-RqK" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="eWA-ex-7Ow"/>
                 <constraint firstItem="UF7-Lc-RqK" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="k9M-Ex-hru"/>
                 <constraint firstItem="174-Q9-mNc" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="s2M-GX-ome"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="centerImageView" destination="TQ4-Ww-kiU" id="kKK-YG-9gq"/>
                 <outlet property="fireContainerImageView" destination="UF7-Lc-RqK" id="mKx-BF-Yfk"/>
                 <outlet property="timeLabel" destination="174-Q9-mNc" id="wVh-kF-1kF"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="59.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="FireEmoji" width="512" height="512"/>
+    </resources>
 </document>

@@ -13,14 +13,14 @@
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedMapCellIdentifier" id="0vK-8g-qlB" customClass="FeedMapTableViewCell" customModule="ARX_Template" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0vK-8g-qlB" id="DH5-AB-Nol">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0vK-8g-qlB" id="DH5-AB-Nol">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="249.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" mapType="mutedStandard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsCompass="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tEY-6l-dAp">
-                        <rect key="frame" x="15" y="0.0" width="345" height="200"/>
+                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="mutedStandard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsCompass="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tEY-6l-dAp">
+                        <rect key="frame" x="40" y="0.0" width="295" height="150"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="200" id="00k-io-Zwk"/>
+                            <constraint firstAttribute="height" constant="150" id="00k-io-Zwk"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -29,15 +29,15 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </mapView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jhp-cx-Xit">
-                        <rect key="frame" x="15" y="0.0" width="345" height="200"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jhp-cx-Xit">
+                        <rect key="frame" x="40" y="0.0" width="295" height="150"/>
                     </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="jhp-cx-Xit" firstAttribute="top" secondItem="tEY-6l-dAp" secondAttribute="top" id="45a-Si-UkE"/>
                     <constraint firstItem="jhp-cx-Xit" firstAttribute="trailing" secondItem="tEY-6l-dAp" secondAttribute="trailing" id="4Tz-u0-Zoh"/>
-                    <constraint firstAttribute="trailing" secondItem="tEY-6l-dAp" secondAttribute="trailing" constant="15" id="5CC-Pv-gJ7"/>
-                    <constraint firstItem="tEY-6l-dAp" firstAttribute="leading" secondItem="DH5-AB-Nol" secondAttribute="leading" constant="15" id="8kl-Wg-rzW"/>
+                    <constraint firstAttribute="trailing" secondItem="tEY-6l-dAp" secondAttribute="trailing" constant="40" id="5CC-Pv-gJ7"/>
+                    <constraint firstItem="tEY-6l-dAp" firstAttribute="leading" secondItem="DH5-AB-Nol" secondAttribute="leading" constant="40" id="8kl-Wg-rzW"/>
                     <constraint firstItem="jhp-cx-Xit" firstAttribute="leading" secondItem="tEY-6l-dAp" secondAttribute="leading" id="NXQ-eH-8er"/>
                     <constraint firstItem="tEY-6l-dAp" firstAttribute="top" secondItem="DH5-AB-Nol" secondAttribute="top" id="QCy-GS-L5S"/>
                     <constraint firstItem="jhp-cx-Xit" firstAttribute="bottom" secondItem="tEY-6l-dAp" secondAttribute="bottom" id="wYr-dx-YYq"/>

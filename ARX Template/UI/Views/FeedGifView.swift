@@ -34,7 +34,7 @@ class FeedGifView: XibView {
             fatalError("view is not of type FeedGifView")
         }
         
-        view.playButton.isHidden = false
+//        view.playButton.isHidden = false
         view.gifCreation = nil
         view.animatedImageView.image = nil
         view.animatedImageView.backgroundColor = UIColor.lightGray
@@ -63,6 +63,14 @@ class FeedGifView: XibView {
         view.activityIndicator.stopAnimating()
         view.animatedImageView.animatedImage = image
         view.playButton.isHidden = true
+    }
+    
+    func startGifAnimation() {
+        guard let view = view as? FeedGifView else {
+            fatalError("view is not of type FeedGifView")
+        }
+        
+        view.onPlayTap(self)
     }
     
     @IBAction func onPlayTap(_ sender: Any) {
