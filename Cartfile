@@ -5,9 +5,7 @@ github "rs/SDWebImage"
 github "bizz84/SwiftyStoreKit"
 github "adamcichy/SwiftySound"
 github "hsousa/HCSStarRatingView"
-github "EndouMari/TabPageViewController"
 github "Dschee/iCarousel" "without-examples"
-github "gpolak/LFHeatMap"
 github "ephread/Instructions" ~> 1.0.0
 github "ReactiveCocoa/ReactiveCocoa" == 6.0.1
 github "Frugghi/SwiftLCS" == 1.1.1

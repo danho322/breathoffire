@@ -53,7 +53,9 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
         feedGifView.onUpdate()
 
         if let animatedImage = gifDict[feedKey] {
-            feedGifView.onAnimatedImageLoad(image: animatedImage)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                feedGifView.onAnimatedImageLoad(image: animatedImage)
+            })
         } else {
             if let firstImagePath = feedItem.imagePathArray.first {
                 FirebaseService.sharedInstance.retrieveDataAtPath(path: firstImagePath, completion: { [unowned self] imageData in

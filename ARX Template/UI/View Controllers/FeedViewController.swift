@@ -284,12 +284,12 @@ extension FeedViewController: UITableViewDelegate {
         return CGFloat.leastNonzeroMagnitude
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let sectionType = FeedViewSectionTypes(rawValue: section) {
-            return sectionType.titleForSectionHeader(vc: self)
-        }
-        return nil
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if let sectionType = FeedViewSectionTypes(rawValue: section) {
+//            return sectionType.rowCount(vc: self) > 0 ? sectionType.titleForSectionHeader(vc: self) : ""
+//        }
+//        return nil
+//    }
 }
 
 extension FeedViewController: UITableViewDataSource {
@@ -310,5 +310,21 @@ extension FeedViewController: UITableViewDataSource {
             return sectionType.cell(indexPath: indexPath, vc: self)
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let sectionType = FeedViewSectionTypes(rawValue: section),
+            sectionType.rowCount(vc: self) > 0 {
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
+            headerView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+            let label = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.frame.size.width - 5, height: 50))
+            label.backgroundColor = UIColor.clear
+            label.textColor = ThemeManager.sharedInstance.labelTitleColor()
+            label.font = ThemeManager.sharedInstance.heavyFont(16)
+            label.text = sectionType.titleForSectionHeader(vc: self)
+            headerView.addSubview(label)
+            return headerView
+        }
+        return nil 
     }
 }

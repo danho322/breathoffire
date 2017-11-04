@@ -61,6 +61,7 @@ class FeedGifView: XibView {
         }
         
         view.activityIndicator.stopAnimating()
+        view.activityIndicator.isHidden = true
         view.animatedImageView.animatedImage = image
         view.playButton.isHidden = true
     }

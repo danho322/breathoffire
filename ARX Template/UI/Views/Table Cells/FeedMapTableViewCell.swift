@@ -34,8 +34,10 @@ class FeedMapTableViewCell: UITableViewCell {
         let weights = locations.map({ _ in
             return Double(1)
         })
-        let heatMap = LFHeatMap.heatMap(for: mapView, boost: 1, locations: locations, weights: weights)
-        heatImageView.image = heatMap
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [unowned self] in
+            let heatMap = LFHeatMap.heatMap(for: self.mapView, boost: 1, locations: locations, weights: weights)
+            self.heatImageView.image = heatMap
+        })
     }
 }
 

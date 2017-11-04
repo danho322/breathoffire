@@ -8,7 +8,6 @@
 
 import UIKit
 import ESTabBarController
-import TabPageViewController
 import FontAwesomeKit
 import Instructions
 
