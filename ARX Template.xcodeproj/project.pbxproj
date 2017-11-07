@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D4007AC11F4BE34400DD29D9 /* quake.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4B93FC91F4BDA8600BE092E /* quake.plist */; };
 		D403472E1F5C6968008AF23D /* Walkthrough.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D403472D1F5C6968008AF23D /* Walkthrough.storyboard */; };
 		D403472F1F5C6AD5008AF23D /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D403472B1F5C6945008AF23D /* BWWalkthroughPageViewController.swift */; };
 		D40347301F5C6AD5008AF23D /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D403472C1F5C6945008AF23D /* BWWalkthroughViewController.swift */; };
@@ -15,6 +14,9 @@
 		D422C2AE1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */; };
 		D422C2B01F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */; };
 		D427C9451F0770D30096C2A1 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D427C9441F0770C20096C2A1 /* InstructionView.swift */; };
+		D42917851FB032B400996BD4 /* LFHeatMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D42917831FB032B400996BD4 /* LFHeatMap.m */; };
+		D42917871FB0334400996BD4 /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42917861FB0334400996BD4 /* CommunityViewController.swift */; };
+		D42917891FB0338500996BD4 /* quake.plist in Resources */ = {isa = PBXBuildFile; fileRef = D42917881FB0338500996BD4 /* quake.plist */; };
 		D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42A6C501F1422AE00A3F2F0 /* TechniqueSearchable.swift */; };
 		D42DE7681F46A4FE00264AF1 /* Breathe.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D42DE7651F469DC400264AF1 /* Breathe.m4a */; };
 		D43751511F5D1141004B6B9E /* UserStatCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */; };
@@ -63,7 +65,6 @@
 		D45AAC021F250E1F00BE41E0 /* SDWebImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D45AAC001F250DC000BE41E0 /* SDWebImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D45AAC051F2563CC00BE41E0 /* PackageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45AAC041F2563CC00BE41E0 /* PackageDetailsViewController.swift */; };
 		D4612E2F1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4612E2E1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib */; };
-		D468FE311F49130A00DEBAE6 /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468FE301F49130A00DEBAE6 /* CommunityViewController.swift */; };
 		D468FE341F49156B00DEBAE6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */; };
 		D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A6E171F0FEECF0096446C /* FirebaseService.swift */; };
 		D46B68D21F40028500DAB0AD /* BreatheCompleteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D46B68D11F40028500DAB0AD /* BreatheCompleteView.xib */; };
@@ -152,9 +153,9 @@
 		D4B93FC31F4A83F700BE092E /* ARXNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */; };
 		D4B93FCB1F4BDABE00BE092E /* FeedMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B93FCA1F4BDABE00BE092E /* FeedMapTableViewCell.swift */; };
 		D4B93FCD1F4BDF9100BE092E /* FeedMapTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4B93FCC1F4BDF9100BE092E /* FeedMapTableViewCell.xib */; };
-		D4B93FCE1F4BE1C500BE092E /* LFHeatMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B93FC81F4BDA3300BE092E /* LFHeatMap.m */; };
 		D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */; };
 		D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */; };
+		D4C201C51FB178C50014DA12 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C201C41FB178C50014DA12 /* AnimationHelper.swift */; };
 		D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */; };
 		D4C9383E1F440585002A2F4C /* BreathFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C9383D1F440585002A2F4C /* BreathFactory.swift */; };
 		D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */; };
@@ -199,6 +200,10 @@
 		D422C2AD1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailsDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		D422C2AF1F2717FC0022B111 /* PackageDetailsDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageDetailsDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		D427C9441F0770C20096C2A1 /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
+		D42917831FB032B400996BD4 /* LFHeatMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFHeatMap.m; sourceTree = "<group>"; };
+		D42917841FB032B400996BD4 /* LFHeatMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFHeatMap.h; sourceTree = "<group>"; };
+		D42917861FB0334400996BD4 /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
+		D42917881FB0338500996BD4 /* quake.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = quake.plist; sourceTree = "<group>"; };
 		D42A6C501F1422AE00A3F2F0 /* TechniqueSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueSearchable.swift; sourceTree = "<group>"; };
 		D42AC3301F4A3798006A53C5 /* iCarousel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iCarousel.framework; path = Carthage/Build/iOS/iCarousel.framework; sourceTree = "<group>"; };
 		D42DE7631F46980D00264AF1 /* SwiftySound.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftySound.framework; path = Carthage/Build/iOS/SwiftySound.framework; sourceTree = "<group>"; };
@@ -255,7 +260,6 @@
 		D4612E341F231D66007D13C3 /* GPPACLPickerResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GPPACLPickerResources.bundle; sourceTree = "<group>"; };
 		D4626DCA1F663407009C8C6A /* ESTabBarController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ESTabBarController.framework; path = Carthage/Build/iOS/ESTabBarController.framework; sourceTree = "<group>"; };
 		D468FE2F1F48AADA00DEBAE6 /* HCSStarRatingView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HCSStarRatingView.framework; path = Carthage/Build/iOS/HCSStarRatingView.framework; sourceTree = "<group>"; };
-		D468FE301F49130A00DEBAE6 /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
 		D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TabPageViewController.framework; path = Carthage/Build/iOS/TabPageViewController.framework; sourceTree = "<group>"; };
 		D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		D46A6E171F0FEECF0096446C /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
@@ -350,13 +354,11 @@
 		D4B06A931F2BA1F0004DFE50 /* PortalRoomObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalRoomObject.swift; sourceTree = "<group>"; };
 		D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXNavigationController.swift; sourceTree = "<group>"; };
 		D4B93FC61F4BDA3100BE092E /* ARX Template-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ARX Template-Bridging-Header.h"; sourceTree = "<group>"; };
-		D4B93FC71F4BDA3200BE092E /* LFHeatMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LFHeatMap.h; path = Carthage/Checkouts/LFHeatMap/LFHeatMap/LFHeatMap.h; sourceTree = SOURCE_ROOT; };
-		D4B93FC81F4BDA3300BE092E /* LFHeatMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LFHeatMap.m; path = Carthage/Checkouts/LFHeatMap/LFHeatMap/LFHeatMap.m; sourceTree = SOURCE_ROOT; };
-		D4B93FC91F4BDA8600BE092E /* quake.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = quake.plist; path = Carthage/Checkouts/LFHeatMap/LFHeatMapDemo/LFHeatMapDemo/quake.plist; sourceTree = SOURCE_ROOT; };
 		D4B93FCA1F4BDABE00BE092E /* FeedMapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMapTableViewCell.swift; sourceTree = "<group>"; };
 		D4B93FCC1F4BDF9100BE092E /* FeedMapTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedMapTableViewCell.xib; sourceTree = "<group>"; };
 		D4C0CF1D1F250A3300EB252D /* OptionsPackageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsPackageTableViewCell.xib; sourceTree = "<group>"; };
 		D4C0CF1F1F250A4F00EB252D /* OptionsPackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPackageTableViewCell.swift; sourceTree = "<group>"; };
+		D4C201C41FB178C50014DA12 /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		D4C4D5E81F21BD64000CE79D /* ARXCharacterSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARXCharacterSceneView.swift; sourceTree = "<group>"; };
 		D4C9383D1F440585002A2F4C /* BreathFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathFactory.swift; sourceTree = "<group>"; };
 		D4CD2E9C1F80A36A0055F287 /* ARX Template.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ARX Template.entitlements"; sourceTree = "<group>"; };
@@ -458,13 +460,13 @@
 				D4A72D2F1F3B79F300553086 /* BreatheViewController.swift */,
 				D4DF08101F4147FF00E8F0EE /* FeedViewController.swift */,
 				D46D950C1F4168C100098689 /* MeViewController.swift */,
-				D468FE301F49130A00DEBAE6 /* CommunityViewController.swift */,
 				D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */,
 				D4EDCCF41F4943F100849037 /* RankingsViewController.swift */,
 				D4B93FC21F4A83F700BE092E /* ARXNavigationController.swift */,
 				D43751541F5DB967004B6B9E /* InfoViewController.swift */,
 				D4EE12E61F6107B100A55E9F /* LoginViewController.swift */,
 				D45118D51F68FBF400610F08 /* WalkthroughFinalViewController.swift */,
+				D42917861FB0334400996BD4 /* CommunityViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -737,6 +739,7 @@
 				D4A72D291F3AC92300553086 /* BreathTimerService.swift */,
 				D4C9383D1F440585002A2F4C /* BreathFactory.swift */,
 				D454DC5C1FA5545C0021D203 /* ARXLocationService.swift */,
+				D4C201C41FB178C50014DA12 /* AnimationHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -790,9 +793,9 @@
 		D4B93FC51F4BDA1F00BE092E /* LFHeatMap */ = {
 			isa = PBXGroup;
 			children = (
-				D4B93FC91F4BDA8600BE092E /* quake.plist */,
-				D4B93FC71F4BDA3200BE092E /* LFHeatMap.h */,
-				D4B93FC81F4BDA3300BE092E /* LFHeatMap.m */,
+				D42917881FB0338500996BD4 /* quake.plist */,
+				D42917841FB032B400996BD4 /* LFHeatMap.h */,
+				D42917831FB032B400996BD4 /* LFHeatMap.m */,
 				D4B93FC61F4BDA3100BE092E /* ARX Template-Bridging-Header.h */,
 			);
 			path = LFHeatMap;
@@ -908,7 +911,6 @@
 				D4EE12DA1F60F0CE00A55E9F /* What.m4v in Resources */,
 				D4EE12DB1F60F0CE00A55E9F /* Why.m4v in Resources */,
 				D447EFCC1F5835DE0047DEF0 /* gong.m4a in Resources */,
-				D4007AC11F4BE34400DD29D9 /* quake.plist in Resources */,
 				D43751511F5D1141004B6B9E /* UserStatCollectionCell.xib in Resources */,
 				D42DE7681F46A4FE00264AF1 /* Breathe.m4a in Resources */,
 				D49418891F231E0200CA83E2 /* GoogleService-Info.plist in Resources */,
@@ -921,6 +923,7 @@
 				D49103071EFB05CE008A528E /* LaunchScreen.storyboard in Resources */,
 				D43988F81F6798A300AE367C /* UserPackagesCollectionCell.xib in Resources */,
 				D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */,
+				D42917891FB0338500996BD4 /* quake.plist in Resources */,
 				D49418931F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib in Resources */,
 				D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */,
 				D4A72D2C1F3ACA0300553086 /* BreathTimerView.xib in Resources */,
@@ -954,7 +957,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyStoreKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftySound.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/HCSStarRatingView.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/TabPageViewController.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/iCarousel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Instructions.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftLCS.framework",
@@ -1022,7 +1024,6 @@
 			files = (
 				D403472F1F5C6AD5008AF23D /* BWWalkthroughPageViewController.swift in Sources */,
 				D40347301F5C6AD5008AF23D /* BWWalkthroughViewController.swift in Sources */,
-				D4B93FCE1F4BE1C500BE092E /* LFHeatMap.m in Sources */,
 				D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */,
 				D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */,
 				D468FE341F49156B00DEBAE6 /* MainTabBarController.swift in Sources */,
@@ -1084,9 +1085,9 @@
 				D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */,
 				D43D4BAE1F048282002F369F /* ARCameraTrackingState.swift in Sources */,
 				D454DC5F1FA68D3D0021D203 /* PaginatedScrollView.swift in Sources */,
+				D42917871FB0334400996BD4 /* CommunityViewController.swift in Sources */,
 				D454DC651FA76AAD0021D203 /* FeedGifView.swift in Sources */,
 				D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */,
-				D468FE311F49130A00DEBAE6 /* CommunityViewController.swift in Sources */,
 				D44EE6111EFD388F003A1A3E /* TechniqueSceneKitViewController.swift in Sources */,
 				D44B24E41F182E7E00459032 /* VirtualObject.swift in Sources */,
 				D49102FB1EFB05CE008A528E /* AppDelegate.swift in Sources */,
@@ -1097,7 +1098,9 @@
 				D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */,
 				D43D4BB51F048282002F369F /* TextManager.swift in Sources */,
 				D43D4BAF1F048282002F369F /* Utilities.swift in Sources */,
+				D4C201C51FB178C50014DA12 /* AnimationHelper.swift in Sources */,
 				D46F91771F0F04AA003B7F8A /* SessionManager.swift in Sources */,
+				D42917851FB032B400996BD4 /* LFHeatMap.m in Sources */,
 				D4A72D301F3B79F300553086 /* BreatheViewController.swift in Sources */,
 				D470B8D11F1F19CC00920CAB /* ThemeManager.swift in Sources */,
 				D4C9383E1F440585002A2F4C /* BreathFactory.swift in Sources */,

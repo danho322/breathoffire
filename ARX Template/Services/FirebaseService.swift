@@ -850,7 +850,7 @@ struct AnimationSequenceDataContainer: SearchableData {
         var duration: TimeInterval = 0
         for sequenceData in sequenceArray {
             if let animationData = DataLoader.sharedInstance.characterAnimation(name: sequenceData.instructorAnimation) {
-                if let animation = CAAnimation.animationWithSceneNamed(animationData.fileName) {
+                if let animation = AnimationHelper.sharedInstance.animationWithSceneNamed(animationData.fileName) {
                     if sequenceData.repeatCount >= 0 {
                         let repeatCount: Double = sequenceData.repeatCount > 0 ? Double(sequenceData.repeatCount) : 1
                         duration = duration + (sequenceData.speed * animation.duration) * repeatCount + sequenceData.delay
@@ -934,7 +934,7 @@ struct CharacterAnimationData: SearchableData {
     }
     
     func animationDuration() -> TimeInterval {
-        if let animation = CAAnimation.animationWithSceneNamed(fileName) {
+        if let animation = AnimationHelper.sharedInstance.animationWithSceneNamed(fileName) {
             return animation.duration
         }
         return 0

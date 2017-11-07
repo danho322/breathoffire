@@ -12,8 +12,10 @@ class ARXCharacterSceneView: SCNView {
     var model: VirtualObject?
     var charactorRotation: SCNVector4?
     var cameraPosition: SCNVector3?
+    var instructorType: InstructorType
     
-    init(frame: CGRect, options: [String : Any]? = nil, characterRotation: SCNVector4? = nil, cameraPosition: SCNVector3? = nil) {
+    init(frame: CGRect, options: [String : Any]? = nil, characterRotation: SCNVector4? = nil, cameraPosition: SCNVector3? = nil, instructorType: InstructorType = .generic) {
+        self.instructorType = instructorType
         super.init(frame: frame, options: options)
         self.charactorRotation = characterRotation
         self.cameraPosition = cameraPosition
@@ -21,6 +23,7 @@ class ARXCharacterSceneView: SCNView {
     }
     
     required init?(coder aDecoder: NSCoder) {
+        instructorType = .generic
         super.init(coder: aDecoder)
         setupScene()
     }
@@ -33,7 +36,7 @@ class ARXCharacterSceneView: SCNView {
     
     internal func setupScene() {
         self.scene = SCNScene()
-        let male = Instructor()
+        let male = Instructor(type: instructorType)
         male.loadModel()
         self.model = male
         let target = male.armatureNode()

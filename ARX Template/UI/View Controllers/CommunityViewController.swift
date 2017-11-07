@@ -2,14 +2,13 @@
 //  CommunityViewController.swift
 //  ARX Template
 //
-//  Created by Daniel Ho on 8/19/17.
+//  Created by Daniel Ho on 11/5/17.
 //  Copyright © 2017 Daniel Ho. All rights reserved.
 //
 
 import UIKit
-import TabPageViewController
 
-class CommunityViewController: TabPageViewController {
+class CommunityViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

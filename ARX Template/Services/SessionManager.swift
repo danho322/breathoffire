@@ -123,6 +123,7 @@ class SessionManager {
         if let currentUser = Auth.auth().currentUser {
             FirebaseService.sharedInstance.incrementAttributeCount(userId: currentUser.uid, attribute: .playCount)
         }
+        Analytics.logEvent("on_play", parameters: nil)
     }
     
     func onPlayFinish(breathTimeInterval: TimeInterval = 0) {

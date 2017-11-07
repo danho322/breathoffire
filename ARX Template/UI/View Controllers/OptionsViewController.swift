@@ -10,6 +10,7 @@ import UIKit
 import FontAwesomeKit
 import Instructions
 import SwiftyStoreKit
+import FirebaseAnalytics
 
 struct OptionsConstants {
 }
@@ -169,10 +170,12 @@ extension OptionsViewController: UITableViewDelegate {
             let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: packageName)
             if hasPackage {
                 handlePackageTap(packageName: packageName)
+                Analytics.logEvent("options_package_tap_has", parameters: nil)
             } else {
                 if let packageDetailsVC = storyboard?.instantiateViewController(withIdentifier: "PackageDetailsIdentifier") as? PackageDetailsViewController {
                     packageDetailsVC.packageName = packageName
                     navigationController?.pushViewController(packageDetailsVC, animated: true)
+                    Analytics.logEvent("options_package_tap_no_has", parameters: nil)
                 }
             }
         } else if section == .moveOfDay {
@@ -188,6 +191,7 @@ extension OptionsViewController: UITableViewDelegate {
                     self.tabBarController?.selectedIndex = 0
                 }
                 present(arVC, animated: true, completion: nil)
+                Analytics.logEvent("options_motd_tap", parameters: nil)
             }
         } else {
             handlePackageTap(packageName: "Jiujitsu Basics")

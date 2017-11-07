@@ -144,27 +144,32 @@ class VirtualObject: SCNNode {
         refreshInstructionService(animationData: animationData, speed: speed)
         let speedToUse = Float(max(0.01, speed))
         armatureNode()?.removeAllAnimations()
-        
-        if let animation = CAAnimation.animationWithSceneNamed(animationData.fileName) {
-            var animationsToSave: [CAAnimation] = []
-            if let group = animation as? CAAnimationGroup, let animations = group.animations {
-                for subAnimation in animations {
-                    subAnimation.speed = speedToUse
-                    subAnimation.fillMode = kCAFillModeBoth
-                    subAnimation.isRemovedOnCompletion = false
-                    animationsToSave.append(subAnimation)
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async { [unowned self] in
+            if let animation = AnimationHelper.sharedInstance.animationWithSceneNamed(animationData.fileName) {
+                var animationsToSave: [CAAnimation] = []
+                if let group = animation as? CAAnimationGroup, let animations = group.animations {
+                    for subAnimation in animations {
+                        subAnimation.speed = speedToUse
+                        subAnimation.fillMode = kCAFillModeBoth
+                        subAnimation.isRemovedOnCompletion = false
+                        animationsToSave.append(subAnimation)
+                    }
+                    group.animations = animationsToSave
+                    animation.speed = speedToUse
                 }
-                group.animations = animationsToSave
-                animation.speed = speedToUse
-            }
-            
-            animation.repeatCount = repeatCount != -1 ? repeatCount : Float.greatestFiniteMagnitude
-            animation.fadeInDuration = 0
-            animation.fadeOutDuration = 0
-            animation.delegate = self
-            animation.fillMode = kCAFillModeBoth
-            animation.isRemovedOnCompletion = false
-            loadAnimation(animation, key: animationData.instructorAnimation)
+                
+                animation.repeatCount = repeatCount != -1 ? repeatCount : Float.greatestFiniteMagnitude
+                animation.fadeInDuration = 0
+                animation.fadeOutDuration = 0
+                animation.delegate = self
+                animation.fillMode = kCAFillModeBoth
+                animation.isRemovedOnCompletion = false
+                
+                DispatchQueue.main.async {
+                    self.loadAnimation(animation, key: animationData.instructorAnimation)
+                    
+                }
+        }
         }
     }
     
@@ -173,7 +178,6 @@ class VirtualObject: SCNNode {
     }
     
     func loadAnimation(_ animation: CAAnimation, key: String) {
-        print("load animation: \(animation), duration is \(animation.duration)")
         armatureNode()?.addAnimation(animation, forKey: key)
     }
     
@@ -182,6 +186,7 @@ class VirtualObject: SCNNode {
         if let armtrNode = armatureNode() {
             for key in armtrNode.animationKeys {
                 // this is beta so is subject to change: https://developer.apple.com/documentation/scenekit/scnanimatable/2866031-addanimationplayer?changes=latest_major
+                
                 if let player = armtrNode.animationPlayer(forKey: key) {
                     player.speed = CGFloat(speed)
                 }
@@ -196,6 +201,12 @@ class VirtualObject: SCNNode {
     
     internal func handleAnimationSequenceFinished() {
         delegate?.virtualObjectDidFinishAnimationSequence(self)
+    }
+    
+    func stop() {
+        isDemoMode = false
+        armatureNode()?.removeAllAnimations()
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
     
     func rewind() {
@@ -267,7 +278,6 @@ extension VirtualObject: CAAnimationDelegate {
     
     @objc func incrementAnimation() {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
-        
         currentAnimationIndex += 1
         if currentAnimationIndex >= animationSequence.count {
             currentAnimationIndex = -1

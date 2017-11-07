@@ -86,6 +86,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if let hudView = hudView.view as? CharacterHUDView {
             hudView.delegate = self
         }
+        breathTimerView.hideBreathUI(true)
         
         #if DEBUG
             currentAnimationLabel.isHidden = false
@@ -122,7 +123,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             setupGestureRecognizers()
             restartPlaneDetection()
         } else {
-            let characterScene0 = ARXCharacterSceneView(frame: sceneView.frame, cameraPosition: SCNVector3(x: 0, y: 0.3, z: 2))
+            let instructorType: InstructorType = sequenceToLoad?.instructorType ?? .generic
+            let characterScene0 = ARXCharacterSceneView(frame: sceneView.frame, cameraPosition: SCNVector3(x: 0, y: 0.3, z: 2), instructorType: instructorType)
             view.insertSubview(characterScene0, aboveSubview: sceneView)
             if let model = characterScene0.model {
                 model.delegate = self
@@ -203,7 +205,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if let breathProgram = animationData.breathProgram {
             print("setup program")
             breathTimerService = BreathTimerService(breathProgram: breathProgram, delegate: self)
-            breathTimerView.updateAlpha(0.5)
+            breathTimerView.updateAlpha(0.8)
             breathTimerView.hideBreathUI(false)
         } else {
             breathTimerView.updateAlpha(0)

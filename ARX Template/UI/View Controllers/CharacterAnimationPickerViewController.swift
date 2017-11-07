@@ -176,6 +176,8 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         
         Sound.enabled = audioSwitch.isOn
         
+        model?.stop()
+        
         if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController {
             // TODO: disable these buttons on first run
             arVC.isARModeEnabled = modeSwitch.isOn
@@ -194,6 +196,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
             sequenceToLoad = sequenceContainer
             
             if let model = model {
+                model.stop()
                 if sequenceContainer.instructorType != model.type {
                     model.removeFromParentNode()
                     let male = Instructor(type: sequenceContainer.instructorType)

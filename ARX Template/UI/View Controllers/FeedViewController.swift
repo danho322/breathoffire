@@ -8,7 +8,8 @@
 
 import UIKit
 import SDWebImage
-
+import FirebaseAnalytics
+ 
 struct FeedConstants {
 }
 
@@ -48,6 +49,7 @@ enum FeedViewSectionTypes: Int {
                             vc.tabBarController?.selectedIndex = 0
                         }
                         vc.present(arVC, animated: true, completion: nil)
+                        Analytics.logEvent("feed_breath_tap", parameters: nil)
                     }
                 }
                 return cell
