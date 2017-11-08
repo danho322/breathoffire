@@ -29,7 +29,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
         optionsButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(16)
     }
     
-    func update(feedItems: [BreathFeedItem], optionsHandler: @escaping ((String?)->Void)) {
+    func update(feedItems: [BreathFeedItem], optionsHandler: @escaping ((String?)->Void), outerScrollView: UIScrollView?) {
         self.optionsHandler = optionsHandler
         
         keyArray = []
@@ -41,7 +41,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
             }
         }
         
-        paginatedScrollView.setPageViews(pageViewArray: gifViews, delegate: self)
+        paginatedScrollView.setPageViews(pageViewArray: gifViews, delegate: self, outerScrollView: outerScrollView)
     }
     
     internal func createFeedGifView(for feedItem: BreathFeedItem) -> FeedGifView? {

@@ -152,7 +152,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
                 self.sceneView.pointOfView = cameraNode
                 
                 // show statistics such as fps and timing information
-                self.sceneView.showsStatistics = true
+                self.sceneView.showsStatistics = false
                 
                 // configure the view
                 

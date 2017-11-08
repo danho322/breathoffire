@@ -77,7 +77,7 @@ class TechniqueSceneKitViewController: UIViewController {
             self.sceneView.allowsCameraControl = true
             
             // show statistics such as fps and timing information
-            self.sceneView.showsStatistics = true
+            self.sceneView.showsStatistics = false
             
             // configure the view
             self.sceneView.backgroundColor = UIColor.black

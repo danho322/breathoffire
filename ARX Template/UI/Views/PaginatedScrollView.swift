@@ -23,6 +23,8 @@ class PaginatedScrollView: UIScrollView {
     internal var viewArray: [UIView] = []
     internal var paginatedDelegate: PaginatedScrollViewDelegate?
     
+    weak var outerScrollView: UIScrollView?
+    
     override var bounds: CGRect {
         didSet {
             updateSizes()
@@ -57,11 +59,11 @@ class PaginatedScrollView: UIScrollView {
         paginatedDelegate?.scrollViewDidTapView(scrollView: self, view: view, index: index)
     }
     
-    func setPageViews(pageViewArray: [UIView], delegate: PaginatedScrollViewDelegate?) {
+    func setPageViews(pageViewArray: [UIView], delegate: PaginatedScrollViewDelegate?, outerScrollView: UIScrollView?) {
         for subview in subviews {
             subview.removeFromSuperview()
         }
-        
+        self.outerScrollView = outerScrollView
         viewArray = pageViewArray
         paginatedDelegate = delegate
         updateSizes()
@@ -128,6 +130,10 @@ extension PaginatedScrollView: UIScrollViewDelegate {
         }
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        outerScrollView?.isScrollEnabled = false
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         handleFinishScrolling()
     }
@@ -136,6 +142,7 @@ extension PaginatedScrollView: UIScrollViewDelegate {
         if !decelerate {
             handleFinishScrolling()
         }
+        outerScrollView?.isScrollEnabled = true
     }
 }
 

@@ -106,10 +106,6 @@ class VirtualObject: SCNNode {
     // MARK: - Animations
     
     func loadAnimationSequence(animationSequence: [AnimationSequenceData], isDemoMode: Bool = false) {
-        let animator = UIViewPropertyAnimator(duration: 0.1, curve: .easeIn, animations: {
-            self.opacity = 1
-        })
-        animator.startAnimation()
         
         currentAnimationIndex = 0
         self.isDemoMode = isDemoMode
@@ -270,6 +266,9 @@ extension VirtualObject {
 // Animations
 
 extension VirtualObject: CAAnimationDelegate {
+    func animationDidStart(_ anim: CAAnimation) {
+    }
+    
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         anim.speed = 0
         delegate?.virtualObjectDidFinishAnimation(self)

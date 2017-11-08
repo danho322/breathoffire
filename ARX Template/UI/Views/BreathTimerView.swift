@@ -172,10 +172,8 @@ class BreathTimerView: XibView {
         guard let view = view as? BreathTimerView else {
             fatalError("view is not of type BreathTimerView")
         }
-        print("doBreathAnimation, \(currentBreathParameter), \(isRunning)")
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(BreathTimerView.doBreathAnimation), object: nil)
         if let currentBreatheParameter = currentBreathParameter, isRunning {
-            print("isRunning: \(self), \(view)")
             let sound = BreathSound(rawValue: currentBreatheParameter.soundID)
             sound?.play()
             
@@ -185,6 +183,8 @@ class BreathTimerView: XibView {
 //            fireView.image = UIImage(named: "FireEmoji")
             fireView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
             fireView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            fireView.layer.cornerRadius = fireView.frame.size.height
+            fireView.layer.masksToBounds = true
             view.addSubview(fireView)
             UIView.animate(withDuration: currentBreatheParameter.breathTimeUp,
                            delay: 0,
@@ -195,7 +195,6 @@ class BreathTimerView: XibView {
             },
                            completion: { finished in
                             self.breatheInView(fireView)
-                            print("schedulign in \(currentBreatheParameter.breathTimeDown)")
                             self.perform(#selector(BreathTimerView.doBreathAnimation), with: nil, afterDelay: currentBreatheParameter.breathTimeDown)
             })
         }

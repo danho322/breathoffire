@@ -66,8 +66,8 @@ enum FeedViewSectionTypes: Int {
                 cell.update(feedItems: vc.feedItems, optionsHandler: { key in
                     if let item = vc.feedItems.filter({ $0.key == key }).first {
                         vc.displayFeedOptions(feedItem: item, indexPath: indexPath)
-                    }
-                })
+                    }},
+                    outerScrollView: vc.tableView)
             }
             return cell
         } else {
@@ -330,3 +330,11 @@ extension FeedViewController: UITableViewDataSource {
         return nil 
     }
 }
+ 
+ extension FeedViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        print(gestureRecognizer)
+        print(otherGestureRecognizer)
+        return true
+    }
+ }
