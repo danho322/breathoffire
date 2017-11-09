@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="a8y-l2-kfH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="a8y-l2-kfH">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -843,6 +843,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uPH-ve-eb0" customClass="GradientView" customModule="ARX_Template" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                        <color key="value" red="1" green="0.94661107003568179" blue="0.47206835547626835" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                        <color key="value" red="0.26167076066307493" green="0.93936448543231499" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="L3t-ra-XPV">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -852,7 +870,11 @@
                         <constraints>
                             <constraint firstItem="L3t-ra-XPV" firstAttribute="top" secondItem="jau-JA-yNq" secondAttribute="bottom" id="BHG-Of-WAu"/>
                             <constraint firstItem="6rf-Oq-0ku" firstAttribute="top" secondItem="L3t-ra-XPV" secondAttribute="bottom" id="C73-Qn-uGh"/>
+                            <constraint firstAttribute="trailing" secondItem="uPH-ve-eb0" secondAttribute="trailing" id="Eaa-36-n0b"/>
+                            <constraint firstItem="uPH-ve-eb0" firstAttribute="top" secondItem="jau-JA-yNq" secondAttribute="bottom" id="OHf-07-ihB"/>
                             <constraint firstItem="L3t-ra-XPV" firstAttribute="leading" secondItem="Hp0-9E-931" secondAttribute="leading" id="hXv-NI-L7Q"/>
+                            <constraint firstItem="6rf-Oq-0ku" firstAttribute="top" secondItem="uPH-ve-eb0" secondAttribute="bottom" id="pnJ-Z0-8nU"/>
+                            <constraint firstItem="uPH-ve-eb0" firstAttribute="leading" secondItem="Hp0-9E-931" secondAttribute="leading" id="uwE-jW-g8E"/>
                             <constraint firstAttribute="trailing" secondItem="L3t-ra-XPV" secondAttribute="trailing" id="vfs-pT-J8M"/>
                         </constraints>
                     </view>
@@ -1321,7 +1343,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ast-OJ-Ade">
-                                                    <rect key="frame" x="318" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didChangeSetting:" destination="Z5v-8R-mK3" eventType="valueChanged" id="BhI-ba-ZwM"/>
                                                     </connections>
@@ -1348,7 +1370,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iPk-mo-d7W">
-                                                    <rect key="frame" x="318" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didChangeSetting:" destination="Z5v-8R-mK3" eventType="valueChanged" id="N1w-9x-Foq"/>
                                                     </connections>
@@ -1375,7 +1397,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TUP-6R-J4j">
-                                                    <rect key="frame" x="318" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didChangeSetting:" destination="Z5v-8R-mK3" eventType="valueChanged" id="yFl-b1-daj"/>
                                                     </connections>
@@ -1402,7 +1424,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Dee-I5-Qup">
-                                                    <rect key="frame" x="318" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didChangeSetting:" destination="Z5v-8R-mK3" eventType="valueChanged" id="iov-By-dwb"/>
                                                     </connections>
@@ -1433,7 +1455,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DCJ-qH-otw">
-                                                    <rect key="frame" x="318" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didChangeSetting:" destination="Z5v-8R-mK3" eventType="valueChanged" id="53U-RF-I4N"/>
                                                     </connections>
@@ -1460,7 +1482,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="17t-4H-yKb">
-                                                    <rect key="frame" x="318" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didChangeSetting:" destination="Z5v-8R-mK3" eventType="valueChanged" id="2d8-Jz-Gtr"/>
                                                     </connections>
@@ -1491,7 +1513,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Fou-Xv-ziL">
-                                                    <rect key="frame" x="318" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didChangeSetting:" destination="Z5v-8R-mK3" eventType="valueChanged" id="XRi-cn-jd8"/>
                                                     </connections>
@@ -1518,7 +1540,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YRK-lb-8Ix">
-                                                    <rect key="frame" x="318" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="didChangeSetting:" destination="Z5v-8R-mK3" eventType="valueChanged" id="KKQ-k2-07A"/>
                                                     </connections>
@@ -1637,7 +1659,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="19K-0u-eWF">
-                                                    <rect key="frame" x="8" y="8" width="359" height="50"/>
+                                                    <rect key="frame" x="15" y="11" width="345" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="JkW-bV-uqc"/>
                                                     </constraints>
@@ -1666,7 +1688,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nce-la-kPh">
-                                                    <rect key="frame" x="8" y="8" width="359" height="50"/>
+                                                    <rect key="frame" x="15" y="11" width="345" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="YOh-um-RMb"/>
                                                     </constraints>
@@ -1695,7 +1717,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Zip Code" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WAJ-jv-nzZ">
-                                                    <rect key="frame" x="8" y="8" width="359" height="50"/>
+                                                    <rect key="frame" x="15" y="11" width="345" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="1vW-WM-wfV"/>
                                                     </constraints>
@@ -1724,7 +1746,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="idk-yl-04B">
-                                                    <rect key="frame" x="8" y="8" width="359" height="50"/>
+                                                    <rect key="frame" x="15" y="11" width="345" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="pBO-B9-dBv"/>
                                                     </constraints>
@@ -1753,7 +1775,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWq-1t-MPD">
-                                                    <rect key="frame" x="8" y="8" width="359" height="50"/>
+                                                    <rect key="frame" x="15" y="11" width="345" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="eRH-ke-9vW"/>
                                                     </constraints>
@@ -1780,7 +1802,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQQ-6E-5j7">
-                                                    <rect key="frame" x="18" y="21.5" width="339" height="1"/>
+                                                    <rect key="frame" x="25" y="21.5" width="325" height="1"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="hhu-j5-ixu"/>
@@ -1828,7 +1850,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qyc-aM-QDp">
-                                                    <rect key="frame" x="8" y="8" width="359" height="28"/>
+                                                    <rect key="frame" x="15" y="11" width="345" height="22"/>
                                                     <state key="normal" title="Submit"/>
                                                 </button>
                                             </subviews>

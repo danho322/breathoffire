@@ -144,7 +144,7 @@ class FeedViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = ThemeManager.sharedInstance.feedBackgroundColor()
-        tableView.backgroundColor = ThemeManager.sharedInstance.feedBackgroundColor()
+        tableView.backgroundColor = UIColor.clear
 
         tableView.delegate = self
         tableView.dataSource = self

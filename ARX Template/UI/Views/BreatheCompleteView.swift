@@ -142,13 +142,13 @@ class BreatheCompleteView: XibView {
         view.screenshotImageView.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
         view.screenshotImageView.layer.borderWidth = 2
         
-        for subview in view.screenshotImageView.subviews {
-            subview.removeFromSuperview()
-        }
-        
         Sound.play(file: "gong.m4a")
         
         if let screenshot = screenshot {
+            for subview in view.screenshotImageView.subviews {
+                subview.removeFromSuperview()
+            }
+            
             ARXUtilities.createGIF(with: screenshot, frameDelay: GifConstants.FrameDelay, callback: { data, error in
                 print("gif")
                 let animatedImage = FLAnimatedImage(animatedGIFData: data)

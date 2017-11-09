@@ -84,7 +84,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "531813158.335069"
+            timestampString = "531896924.81692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "70"
@@ -164,7 +164,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/Views/BreatheCompleteView.swift"
-            timestampString = "529392362.40467"
+            timestampString = "531933131.633697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "173"
@@ -308,7 +308,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "531813158.335428"
+            timestampString = "531895623.314879"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1094"
@@ -324,7 +324,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "531813158.335489"
+            timestampString = "531896924.817209"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "244"
@@ -339,40 +339,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ARX Template/UI/View Controllers/CharacterAnimationPickerViewController.swift"
-            timestampString = "531813158.33554"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
-            landmarkName = "onLoadTap(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "531813158.335587"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "loadAnimationSequence(animationSequence:isDemoMode:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "531813158.335633"
+            timestampString = "531895623.314989"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1298"
@@ -388,7 +356,7 @@
                   moduleName = "ARX Template"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/danielho/Modeling%20Files/ARX%20Template/ARX%20Template/UI/View%20Controllers/ARTechniqueViewController.swift"
-                  timestampString = "531812832.428612"
+                  timestampString = "531933131.945274"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1298"
@@ -403,7 +371,7 @@
                   moduleName = "ARX Template"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/danielho/Modeling%20Files/ARX%20Template/ARX%20Template/UI/View%20Controllers/ARTechniqueViewController.swift"
-                  timestampString = "531812832.430465"
+                  timestampString = "531933131.947157"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1298"
@@ -420,12 +388,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "531813158.33568"
+            timestampString = "531896924.817281"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "209"
             endingLineNumber = "209"
-            landmarkName = "stop()"
+            landmarkName = "rewind()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -435,45 +403,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "531813158.335728"
+            filePath = "ARX Template/UI/Views/BreathTimerView.swift"
+            timestampString = "531933131.633988"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "loadAnimationData(animationData:speed:repeatCount:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ARX Template/Models/VirtualObject.swift"
-            timestampString = "531813158.335775"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
-            landmarkName = "loadAnimation(_:key:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ARX Template/UI/Views/Table Cells/FeedHorizontalScrollViewTableViewCell.swift"
-            timestampString = "531813158.335826"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "update(feedItems:optionsHandler:outerScrollView:)"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "doBreathAnimation()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

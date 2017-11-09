@@ -21,7 +21,7 @@ class RankingTableViewCell: UITableViewCell {
         // Initialization code
         selectionStyle = .none
         
-        backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        backgroundColor = UIColor.clear
         rankingBGView.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         rankingLabel.textColor = ThemeManager.sharedInstance.iconColor()
         userNameLabel.textColor = ThemeManager.sharedInstance.textColor()

@@ -56,6 +56,7 @@
 		D454DC631FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D454DC621FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift */; };
 		D454DC651FA76AAD0021D203 /* FeedGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D454DC641FA76AAD0021D203 /* FeedGifView.swift */; };
 		D454DC671FA76BC50021D203 /* FeedGifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D454DC661FA76BC50021D203 /* FeedGifView.xib */; };
+		D45520731FB4A518006EC132 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45520721FB4A518006EC132 /* GradientView.swift */; };
 		D45621401F0B58BB0052E218 /* TechniqueTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */; };
 		D45621421F0B59730052E218 /* TechniqueTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621411F0B59730052E218 /* TechniqueTableCell.swift */; };
 		D45621441F0B5B420052E218 /* SpruceAnimatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */; };
@@ -246,6 +247,7 @@
 		D454DC621FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHorizontalScrollViewTableViewCell.swift; sourceTree = "<group>"; };
 		D454DC641FA76AAD0021D203 /* FeedGifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedGifView.swift; sourceTree = "<group>"; };
 		D454DC661FA76BC50021D203 /* FeedGifView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedGifView.xib; sourceTree = "<group>"; };
+		D45520721FB4A518006EC132 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		D456213F1F0B58BB0052E218 /* TechniqueTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TechniqueTableCell.xib; sourceTree = "<group>"; };
 		D45621411F0B59730052E218 /* TechniqueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechniqueTableCell.swift; sourceTree = "<group>"; };
 		D45621431F0B5B420052E218 /* SpruceAnimatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpruceAnimatingViewController.swift; sourceTree = "<group>"; };
@@ -722,6 +724,7 @@
 				D4A091BF1F2070AE00C03805 /* ARXUtilities.swift */,
 				D4A091C11F2071C900C03805 /* ARXConstants.swift */,
 				D41332351F44A11500851996 /* TimeFormatType.swift */,
+				D45520721FB4A518006EC132 /* GradientView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1048,6 +1051,7 @@
 				D43D4BB91F048476002F369F /* ARSettingsViewController.swift in Sources */,
 				D43D4BB81F0483C1002F369F /* ARTechniqueViewController.swift in Sources */,
 				D43751551F5DB967004B6B9E /* InfoViewController.swift in Sources */,
+				D45520731FB4A518006EC132 /* GradientView.swift in Sources */,
 				D494188B1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift in Sources */,
 				D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */,
 				D4D7318B1EFB8B8400C65E99 /* DataLoader.swift in Sources */,

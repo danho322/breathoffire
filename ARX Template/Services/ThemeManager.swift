@@ -11,6 +11,13 @@ import UIKit
 struct ThemeManager {
     static let sharedInstance = ThemeManager()
     
+    func backgroundView(frame: CGRect) -> CALayer {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [backgroundColor().cgColor, focusColor().cgColor]
+        gradientLayer.locations = [ 0.0, 1.0]
+        return gradientLayer
+    }
+    
     func backgroundColor(alpha: CGFloat = 1) -> UIColor {
         return UIColor(red: 46 / 255.0, green: 42 / 255.0, blue: 70 / 255.0, alpha: alpha)
     }
@@ -52,13 +59,13 @@ struct ThemeManager {
     }
     
     func defaultFont(_ size: CGFloat) -> UIFont {
-//        let fontFamilyNames = UIFont.familyNames
-//        for familyName in fontFamilyNames {
-//            print("------------------------------")
-//            print("Font Family Name = [\(familyName)]")
-//            let names = UIFont.fontNames(forFamilyName: familyName)
-//            print("Font Names = [\(names)]")
-//        }
+        let fontFamilyNames = UIFont.familyNames
+        for familyName in fontFamilyNames {
+            print("------------------------------")
+            print("Font Family Name = [\(familyName)]")
+            let names = UIFont.fontNames(forFamilyName: familyName)
+            print("Font Names = [\(names)]")
+        }
         
         return UIFont(name: "AvenirNext-Regular", size: size) ?? UIFont.systemFont(ofSize: size)
     }

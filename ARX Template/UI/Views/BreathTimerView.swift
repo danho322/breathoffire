@@ -138,6 +138,8 @@ class BreathTimerView: XibView {
                 
                 print("is same parameter")
                 return
+            } else {
+                print("parameter: \(breathParameter.breathTimeDown)")
             }
             
             progress = timestamp > 0 ? 1 : 0
@@ -177,15 +179,19 @@ class BreathTimerView: XibView {
             let sound = BreathSound(rawValue: currentBreatheParameter.soundID)
             sound?.play()
             
+            if currentBreatheParameter.breathTimeUp + currentBreatheParameter.breathTimeDown == 0 {
+                return
+            }
+            
             breathCount += 1
             let fireView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.fireContainerImageView.frame.size.width, height: view.fireContainerImageView.frame.size.height))
             fireView.center = view.fireContainerImageView.center
 //            fireView.image = UIImage(named: "FireEmoji")
-            fireView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-            fireView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-            fireView.layer.cornerRadius = fireView.frame.size.height
+            fireView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+            fireView.layer.cornerRadius = fireView.frame.size.height / 2
+            fireView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
             fireView.layer.masksToBounds = true
-            view.addSubview(fireView)
+            view.insertSubview(fireView, belowSubview: view.fireContainerImageView)
             UIView.animate(withDuration: currentBreatheParameter.breathTimeUp,
                            delay: 0,
                            options: [.curveEaseOut],
@@ -194,19 +200,22 @@ class BreathTimerView: XibView {
                             fireView.alpha = 0.1
             },
                            completion: { finished in
-                            self.breatheInView(fireView)
+                            self.breatheInView(fireView, duration: currentBreatheParameter.breathTimeDown)
                             self.perform(#selector(BreathTimerView.doBreathAnimation), with: nil, afterDelay: currentBreatheParameter.breathTimeDown)
             })
         }
     }
     
-    internal func breatheInView(_ view: UIView) {
-        UIView.animate(withDuration: 0.5,
+    internal func breatheInView(_ view: UIView, duration: TimeInterval) {
+        var durationToUse = duration > 0.3 ? duration : 0.3
+        var transformToUse = duration > 0.3 ? CGAffineTransform(scaleX: 0.1, y: 0.1) : CGAffineTransform(scaleX: 1.5, y: 1.5)
+        var alphaToUse: CGFloat = duration > 0.3 ? 1 : 0
+        UIView.animate(withDuration: durationToUse,
                        delay: 0,
                        options: [.curveEaseOut],
                        animations: {
-                        view.alpha = 1
-                        view.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+                        view.alpha = alphaToUse
+                        view.transform = transformToUse
                         
         },
                        completion: { finished in
