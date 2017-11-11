@@ -843,24 +843,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uPH-ve-eb0" customClass="GradientView" customModule="ARX_Template" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="startColor">
-                                        <color key="value" red="1" green="0.94661107003568179" blue="0.47206835547626835" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="endColor">
-                                        <color key="value" red="0.26167076066307493" green="0.93936448543231499" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
-                                        <real key="value" value="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="L3t-ra-XPV">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -870,11 +852,7 @@
                         <constraints>
                             <constraint firstItem="L3t-ra-XPV" firstAttribute="top" secondItem="jau-JA-yNq" secondAttribute="bottom" id="BHG-Of-WAu"/>
                             <constraint firstItem="6rf-Oq-0ku" firstAttribute="top" secondItem="L3t-ra-XPV" secondAttribute="bottom" id="C73-Qn-uGh"/>
-                            <constraint firstAttribute="trailing" secondItem="uPH-ve-eb0" secondAttribute="trailing" id="Eaa-36-n0b"/>
-                            <constraint firstItem="uPH-ve-eb0" firstAttribute="top" secondItem="jau-JA-yNq" secondAttribute="bottom" id="OHf-07-ihB"/>
                             <constraint firstItem="L3t-ra-XPV" firstAttribute="leading" secondItem="Hp0-9E-931" secondAttribute="leading" id="hXv-NI-L7Q"/>
-                            <constraint firstItem="6rf-Oq-0ku" firstAttribute="top" secondItem="uPH-ve-eb0" secondAttribute="bottom" id="pnJ-Z0-8nU"/>
-                            <constraint firstItem="uPH-ve-eb0" firstAttribute="leading" secondItem="Hp0-9E-931" secondAttribute="leading" id="uwE-jW-g8E"/>
                             <constraint firstAttribute="trailing" secondItem="L3t-ra-XPV" secondAttribute="trailing" id="vfs-pT-J8M"/>
                         </constraints>
                     </view>

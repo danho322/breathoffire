@@ -15,6 +15,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
     @IBOutlet weak var optionsButton: UIButton!
     @IBOutlet weak var paginatedScrollView: PaginatedScrollView!
     
+    internal var concatenatedKey = ""
     internal var optionsHandler: ((String?)->Void)?
     internal var gifDict: [String: FLAnimatedImage] = Dictionary<String, FLAnimatedImage>()
     internal var gifCreationDict: [String: (()->Void)] = Dictionary<String, (()->Void)>()
@@ -30,10 +31,17 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
     }
     
     func update(feedItems: [BreathFeedItem], optionsHandler: @escaping ((String?)->Void), outerScrollView: UIScrollView?) {
+        let thisKey = feedItems.map({ $0.key ?? "" }).joined()
+        if thisKey == concatenatedKey {
+            return
+        }
+        concatenatedKey = thisKey
+        
         self.optionsHandler = optionsHandler
         
         keyArray = []
         gifViews = []
+        
         for feedItem in feedItems {
             if let gifView = createFeedGifView(for: feedItem) {
                 gifViews.append(gifView)
