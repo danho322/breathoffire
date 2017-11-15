@@ -37,7 +37,7 @@ class BreatheCompleteView: XibView {
     
     
     weak var parentVC: UIViewController?
-    var shareCommunityHandler: ((Int?, String?)->Void)?
+    var shareCommunityHandler: ((Bool, Int?, String?)->Void)?
     var dismissHandler: (()->Void)?
     
     internal var ratingValue: Int?
@@ -49,7 +49,7 @@ class BreatheCompleteView: XibView {
         NotificationCenter.default.removeObserver(self)
     }
     
-    convenience init(frame: CGRect, parentVC: UIViewController, shareCommunityHandler: ((Int?, String?)->Void)?, dismissHandler: (()->Void)?) {
+    convenience init(frame: CGRect, parentVC: UIViewController, shareCommunityHandler: ((Bool, Int?, String?)->Void)?, dismissHandler: (()->Void)?) {
         self.init(frame: frame)
         self.parentVC = parentVC
         self.shareCommunityHandler = shareCommunityHandler
@@ -136,7 +136,9 @@ class BreatheCompleteView: XibView {
         }
         view.shareText = "I breathed for \(breathDuration) using the Breath of Fire app!"
         view.detailsLabel.text = "Total time: \(breathDuration)"
-        view.screenshotImageView.image = screenshot?.first
+        if let screenshot = screenshot, screenshot.count > 0 {
+            view.screenshotImageView.image = screenshot.first
+        }
         view.screenshotImageView.layer.masksToBounds = true
         view.screenshotImageView.layer.cornerRadius = view.screenshotImageView.frame.size.width / 2
         view.screenshotImageView.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
@@ -201,7 +203,7 @@ class BreatheCompleteView: XibView {
         communityCheckmarkImageView.image = circleIcon?.image(with: CGSize(width: 25, height: 25))
         
         let textToShare = didEditText ? commentTextView.text : ""
-        viewToUse.shareCommunityHandler?(viewToUse.ratingValue, textToShare)
+        viewToUse.shareCommunityHandler?(true, viewToUse.ratingValue, textToShare)
  
         ratingTitleLabel.isHidden = true
         ratingHeightConstraint.constant = 0
@@ -210,11 +212,22 @@ class BreatheCompleteView: XibView {
         commentTextView.resignFirstResponder()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-            self.onDismissTap(self)
+            self.dismiss()
         })
     }
     
     @IBAction func onDismissTap(_ sender: Any) {
+        var viewToUse = self
+        if let superview = self.superview as? BreatheCompleteView {
+            viewToUse = superview
+        }
+        
+        viewToUse.shareCommunityHandler?(false, nil, nil)
+        
+        dismiss()
+    }
+    
+    internal func dismiss() {
         var viewToDismiss = self
         if let superview = self.superview as? BreatheCompleteView {
             viewToDismiss = superview

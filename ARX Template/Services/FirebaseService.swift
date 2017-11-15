@@ -309,6 +309,7 @@ class FirebaseService: NSObject {
     // MARK: - Feed
     
     func saveBreathFeedItem(_ feedItem: BreathFeedItem) {
+        print("saving item")
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)/\(UUID().uuidString)")
         ref.setValue(feedItem.valueDict())
     }

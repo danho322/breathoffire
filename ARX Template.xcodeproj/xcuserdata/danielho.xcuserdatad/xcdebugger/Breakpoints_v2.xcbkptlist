@@ -164,11 +164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/Views/BreatheCompleteView.swift"
-            timestampString = "531933131.633697"
+            timestampString = "532287937.006692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "onShareTap(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -308,7 +308,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "531895623.314879"
+            timestampString = "532287937.006933"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1094"
@@ -340,45 +340,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "531895623.314989"
+            timestampString = "532287937.007012"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1298"
             endingLineNumber = "1298"
-            landmarkName = "showDebugVisuals"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ARX_Template.ARTechniqueViewController.showDebugVisuals.didset : Swift.Bool"
-                  moduleName = "ARX Template"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/danielho/Modeling%20Files/ARX%20Template/ARX%20Template/UI/View%20Controllers/ARTechniqueViewController.swift"
-                  timestampString = "532070145.03309"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1298"
-                  endingLineNumber = "1298"
-                  offsetFromSymbolStart = "955">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (ARX_Template.Plane) -&gt; () in ARX_Template.ARTechniqueViewController.showDebugVisuals.didset : Swift.Bool"
-                  moduleName = "ARX Template"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/danielho/Modeling%20Files/ARX%20Template/ARX%20Template/UI/View%20Controllers/ARTechniqueViewController.swift"
-                  timestampString = "532070145.035152"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1298"
-                  endingLineNumber = "1298"
-                  offsetFromSymbolStart = "18">
-               </Location>
-            </Locations>
+            landmarkName = "refreshFeaturePoints()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -403,13 +371,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ARX Template/UI/Views/BreathTimerView.swift"
-            timestampString = "531933131.633988"
+            filePath = "ARX Template/UI/Views/BreatheCompleteView.swift"
+            timestampString = "532287937.007078"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "doBreathAnimation()"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "onCommunityTap(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

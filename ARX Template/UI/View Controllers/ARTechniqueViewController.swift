@@ -217,36 +217,23 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     // MARK: - Feed
     
-    func saveToBreathFeed(rating: Int?, comment: String?) {
+    func saveToBreathFeed(rating: Int?, comment: String?, screenShotArray: [UIImage]) {
         var index = 0
         var uploadCount = 0
         let uploadTotal = screenShot.count
         var pathDict: [Int: String] = Dictionary<Int, String>()
-        if screenShot.count > 0 {
-            for image in screenShot {
+        if screenShotArray.count > 0 {
+            for image in screenShotArray {
                 let data = UIImageJPEGRepresentation(image, GifConstants.GifImageCompressionQuality)
                 let thisIndex = index
-                FirebaseService.sharedInstance.uploadFeedData(data: data) { path in
+                FirebaseService.sharedInstance.uploadFeedData(data: data) { [unowned self] path in
                     if let path = path {
                         pathDict[thisIndex] = path
                         let pathArray = pathDict.sorted(by: { $0.key < $1.key}).map({ $0.value })
                         uploadCount += 1
+                        print("\(uploadCount) out of \(uploadTotal)")
                         if uploadCount == uploadTotal {
-                            if let currentUserData = SessionManager.sharedInstance.currentUserData {
-                                // add to feed path
-                                ARXLocationService.sharedInstance.retrieveUserLocation(userData: currentUserData, handler: { coordinate in
-                                    let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970,
-                                                                  imagePathArray: pathArray,
-                                                                  userId: currentUserData.userId,
-                                                                  userName: currentUserData.userName,
-                                                                  breathCount: self.breathTimerView.currentBreathCount(),
-                                                                  city: currentUserData.city,
-                                                                  coordinate: coordinate,
-                                                                  rating: rating,
-                                                                  comment: comment)
-                                    FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
-                                })
-                            }
+                            self.executeShareSaveWithLocation(rating: rating, comment: comment, pathArray: pathArray)
                         }
                     } else {
                         print("an upload error ocurred")
@@ -254,6 +241,26 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 }
                 index += 1
             }
+        } else {
+            executeShareSaveWithLocation(rating: rating, comment: comment, pathArray: [])
+        }
+    }
+    
+    internal func executeShareSaveWithLocation(rating: Int?, comment: String?, pathArray: [String]) {
+        if let currentUserData = SessionManager.sharedInstance.currentUserData {
+            // add to feed path
+            ARXLocationService.sharedInstance.retrieveUserLocation(userData: currentUserData, handler: { coordinate in
+                let feedItem = BreathFeedItem(timestamp: Date().timeIntervalSince1970,
+                                              imagePathArray: pathArray,
+                                              userId: currentUserData.userId,
+                                              userName: currentUserData.userName,
+                                              breathCount: self.breathTimerView.currentBreathCount(),
+                                              city: currentUserData.city,
+                                              coordinate: coordinate,
+                                              rating: rating,
+                                              comment: comment)
+                FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
+            })
         }
     }
     
@@ -1484,8 +1491,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                     //                relatedAnimationsView = relatedView
                     let breathCompletionView = BreatheCompleteView(frame: frame,
                                                                    parentVC: self,
-                                                                   shareCommunityHandler: { [unowned self] rating, comment in
-                                                                    self.saveToBreathFeed(rating: rating, comment: comment)
+                                                                   shareCommunityHandler: { [unowned self] didShare, rating, comment in
+                                                                    let imageArray = didShare ? self.screenShot : []
+                                                                    self.saveToBreathFeed(rating: rating, comment: comment, screenShotArray:
+imageArray)
                         },
                                                                    dismissHandler: {
                                                                     self.dismiss()

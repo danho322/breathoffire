@@ -62,7 +62,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
 
         if let animatedImage = gifDict[feedKey] {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                feedGifView.onAnimatedImageLoad(image: animatedImage)
+                feedGifView.onAnimatedImageLoad(image: animatedImage, key: feedKey)
             })
         } else {
             if let firstImagePath = feedItem.imagePathArray.first {
@@ -71,7 +71,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
                                                 gifCreation: {
                                                     FeedViewController.createGifDataFrom(imagePathArray: feedItem.imagePathArray, completion: { data in
                                                         let animatedImage = FLAnimatedImage(animatedGIFData: data)
-                                                        feedGifView.onAnimatedImageLoad(image: animatedImage)
+                                                        feedGifView.onAnimatedImageLoad(image: animatedImage, key: feedItem.key)
                                                         self.gifDict[feedKey] = animatedImage
                                                     })
                     })

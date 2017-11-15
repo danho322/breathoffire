@@ -17,6 +17,7 @@ class FeedGifView: XibView {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     internal var gifCreation: (()->Void)?
+    internal var currentAnimatedKey: String?
     
     override func setupUI() {
         guard let view = view as? FeedGifView else {
@@ -55,11 +56,17 @@ class FeedGifView: XibView {
         view.gifCreation = gifCreation
     }
     
-    func onAnimatedImageLoad(image: FLAnimatedImage?) {
+    func onAnimatedImageLoad(image: FLAnimatedImage?, key: String?) {
         guard let view = view as? FeedGifView else {
             fatalError("view is not of type FeedGifView")
         }
         
+        if let key = key {
+            if view.currentAnimatedKey == key {
+                return
+            }
+        }
+        view.currentAnimatedKey = key
         view.activityIndicator.stopAnimating()
         view.activityIndicator.isHidden = true
         view.animatedImageView.animatedImage = image

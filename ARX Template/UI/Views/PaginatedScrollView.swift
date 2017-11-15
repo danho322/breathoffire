@@ -67,7 +67,7 @@ class PaginatedScrollView: UIScrollView {
         viewArray = pageViewArray
         paginatedDelegate = delegate
         updateSizes()
-        handleFinishScrolling()
+        paginatedDelegate?.scrollViewDidUpdateToIndex(scrollView: self, index: 0)
     }
     
     func appendPageView(pageView: UIView) {
