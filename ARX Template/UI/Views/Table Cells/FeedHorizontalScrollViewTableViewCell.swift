@@ -22,6 +22,7 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
     internal var keyArray: [String?] = []
     internal var currentKey: String?
     internal var gifViews: [FeedGifView] = []
+    internal var isFirstGifLoad = true
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -75,6 +76,10 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
                                                         self.gifDict[feedKey] = animatedImage
                                                     })
                     })
+                    if self.isFirstGifLoad {
+                        self.isFirstGifLoad = false
+                        feedGifView.startGifAnimation()
+                    }
                 })
             }
         }

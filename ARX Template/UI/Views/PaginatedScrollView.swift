@@ -78,7 +78,7 @@ class PaginatedScrollView: UIScrollView {
         pageView.frame = CGRect(x: x, y: 0, width: scrollViewWidth - PaginatedScrollViewConstants.Space, height: frame.size.height)
         pageView.center = CGPoint(x: pageView.center.x, y: frame.size.height / 2)
         addSubview(pageView)
-        x += scrollViewWidth + PaginatedScrollViewConstants.Space
+        x += scrollViewWidth
 
         contentSize = CGSize(width: x, height: frame.size.height)
         
@@ -110,9 +110,9 @@ class PaginatedScrollView: UIScrollView {
         var index = 0
         for view in viewArray {
             let alpha: CGFloat = currentIndex == index ? 1 : 1 - PaginatedScrollViewConstants.OutOfFocusAlphMultiplier / 2
-            UIView.animate(withDuration: 0.4, animations: {
+            UIView.animate(withDuration: 0.4, delay: 0, options: [.allowUserInteraction], animations: {
                 view.alpha = alpha
-            })
+            }, completion: nil)
             index += 1
         }
         paginatedDelegate?.scrollViewDidUpdateToIndex(scrollView: self, index: currentIndex)

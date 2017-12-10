@@ -78,6 +78,10 @@ class FeedGifView: XibView {
             fatalError("view is not of type FeedGifView")
         }
         
+        if view.animatedImageView.isAnimating {
+            return
+        }
+        
         view.onPlayTap(self)
     }
     

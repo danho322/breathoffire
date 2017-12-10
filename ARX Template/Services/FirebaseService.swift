@@ -319,7 +319,7 @@ class FirebaseService: NSObject {
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
         var handle: UInt?
         handle = ref.queryOrdered(byChild: "timestamp")
-            .queryLimited(toFirst: 50)
+            .queryLimited(toLast: 50)
             .observe(.value, with: { [unowned self] snapshot in
                 var items: [BreathFeedItem] = []
                 if let feedDict = snapshot.value as? NSDictionary {
