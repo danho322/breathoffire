@@ -153,6 +153,11 @@ class SessionManager {
     func onLogin() {
         if let currentUser = Auth.auth().currentUser {
             FirebaseService.sharedInstance.setUserAttribute(userId: currentUser.uid, attribute: .lastLoggedIn, value: Date().description)
+            
+            var testSession: LiveSession?
+            testSession = LiveSession(userId: currentUser.uid, intention: "This is a test intension")
+            FirebaseService.sharedInstance.saveLiveSession(testSession)
+            FirebaseService.sharedInstance.getCurrentSessions()
         }
     }
     

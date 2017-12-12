@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,6 +24,26 @@
                             <constraint firstAttribute="width" secondItem="hBE-6x-7IW" secondAttribute="height" multiplier="1:1" id="9k3-z9-waz"/>
                         </constraints>
                     </scrollView>
+                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5lz-Xk-ffK" customClass="GradientView" customModule="ARX_Template" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="40" height="152"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                <color key="value" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="diagonalMode" value="NO"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYl-2l-Jth">
                         <rect key="frame" x="345" y="0.0" width="30" height="30"/>
                         <state key="normal" title="..."/>
@@ -31,15 +51,63 @@
                             <action selector="onOptionsTap:" destination="rqi-iD-zxS" eventType="touchUpInside" id="FQR-pw-LQT"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AM3-oq-701">
+                        <rect key="frame" x="0.0" y="11" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.47861102223396301" green="0.44123575091362" blue="0.55694693326950073" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="E6M-ce-5jU"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LQx-xJ-Ifb">
+                        <rect key="frame" x="0.0" y="75" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.50211429595947266" green="0.46069595217704773" blue="0.5843956470489502" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="0DW-zZ-zGC"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4bN-3N-1Tq" customClass="GradientView" customModule="ARX_Template" customModuleProvider="target">
+                        <rect key="frame" x="325" y="1" width="50" height="152"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                <color key="value" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="diagonalMode" value="NO"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="AYl-2l-Jth" firstAttribute="top" secondItem="GTN-zo-juf" secondAttribute="top" id="0C6-rH-aQF"/>
-                    <constraint firstItem="hBE-6x-7IW" firstAttribute="leading" secondItem="GTN-zo-juf" secondAttribute="leading" constant="40" id="Drq-us-pM6"/>
+                    <constraint firstItem="4bN-3N-1Tq" firstAttribute="bottom" secondItem="hBE-6x-7IW" secondAttribute="bottom" id="7o3-Lw-fDw"/>
+                    <constraint firstItem="hBE-6x-7IW" firstAttribute="leading" secondItem="5lz-Xk-ffK" secondAttribute="trailing" constant="10" id="DH6-0X-cPy"/>
+                    <constraint firstItem="hBE-6x-7IW" firstAttribute="leading" secondItem="GTN-zo-juf" secondAttribute="leading" constant="50" id="Drq-us-pM6"/>
+                    <constraint firstAttribute="trailing" secondItem="AM3-oq-701" secondAttribute="trailing" id="H9w-20-lqC"/>
+                    <constraint firstAttribute="trailing" secondItem="LQx-xJ-Ifb" secondAttribute="trailing" id="HcL-e8-neL"/>
+                    <constraint firstAttribute="trailing" secondItem="4bN-3N-1Tq" secondAttribute="trailing" id="TTb-le-fwQ"/>
                     <constraint firstItem="hBE-6x-7IW" firstAttribute="top" secondItem="GTN-zo-juf" secondAttribute="top" constant="40" id="Tl2-YB-zPA"/>
+                    <constraint firstItem="LQx-xJ-Ifb" firstAttribute="bottom" secondItem="hBE-6x-7IW" secondAttribute="bottom" constant="1" id="Uez-HC-gdb"/>
+                    <constraint firstItem="4bN-3N-1Tq" firstAttribute="leading" secondItem="hBE-6x-7IW" secondAttribute="trailing" constant="10" id="WeE-DV-imp"/>
                     <constraint firstAttribute="trailing" secondItem="AYl-2l-Jth" secondAttribute="trailing" id="Xrd-U9-zgJ"/>
-                    <constraint firstAttribute="trailing" secondItem="hBE-6x-7IW" secondAttribute="trailing" constant="40" id="itN-hB-gxg"/>
+                    <constraint firstItem="4bN-3N-1Tq" firstAttribute="top" secondItem="hBE-6x-7IW" secondAttribute="top" id="ZAP-1H-nF2"/>
+                    <constraint firstItem="5lz-Xk-ffK" firstAttribute="bottom" secondItem="hBE-6x-7IW" secondAttribute="bottom" id="dJL-ja-0gF"/>
+                    <constraint firstItem="AM3-oq-701" firstAttribute="leading" secondItem="GTN-zo-juf" secondAttribute="leading" id="dgJ-AH-oJR"/>
+                    <constraint firstAttribute="trailing" secondItem="hBE-6x-7IW" secondAttribute="trailing" constant="50" id="itN-hB-gxg"/>
+                    <constraint firstItem="5lz-Xk-ffK" firstAttribute="top" secondItem="hBE-6x-7IW" secondAttribute="top" id="mT3-QT-zJw"/>
+                    <constraint firstItem="LQx-xJ-Ifb" firstAttribute="leading" secondItem="GTN-zo-juf" secondAttribute="leading" id="sGI-kX-7WZ"/>
+                    <constraint firstItem="5lz-Xk-ffK" firstAttribute="leading" secondItem="GTN-zo-juf" secondAttribute="leading" id="wdv-fA-7ON"/>
                     <constraint firstAttribute="bottom" secondItem="hBE-6x-7IW" secondAttribute="bottom" constant="10.5" id="xft-Gt-rNJ"/>
+                    <constraint firstItem="AM3-oq-701" firstAttribute="top" secondItem="hBE-6x-7IW" secondAttribute="top" constant="-1" id="zdg-lB-gXj"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

@@ -139,6 +139,8 @@ class FeedViewController: UIViewController {
     internal var dayRankings: [UserData] = []
     internal var breathRankings: [UserData] = []
     
+    internal var cellHeights = [IndexPath:CGFloat]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -165,7 +167,7 @@ class FeedViewController: UIViewController {
         super.viewWillAppear(animated)
         
         FirebaseService.sharedInstance.retrieveBreathFeed(allowedUpdates: 2) { items in
-            self.feedItems = items
+            self.feedItems = items.filter({ $0.imagePathArray.count > 0 })
             self.tableView.reloadData()
         }
         
@@ -286,6 +288,11 @@ extension FeedViewController: UITableViewDelegate {
         return CGFloat.leastNonzeroMagnitude
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let frame = tableView.rectForRow(at: indexPath)
+        cellHeights[indexPath] = frame.size.height
+    }
+    
 //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //        if let sectionType = FeedViewSectionTypes(rawValue: section) {
 //            return sectionType.rowCount(vc: self) > 0 ? sectionType.titleForSectionHeader(vc: self) : ""
@@ -328,6 +335,10 @@ extension FeedViewController: UITableViewDataSource {
             return headerView
         }
         return nil 
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeights[indexPath] ?? 110.0
     }
 }
  

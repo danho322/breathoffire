@@ -227,6 +227,36 @@ class FirebaseService: NSObject {
         }
     }
     
+    // MARK: - Live Sessions
+    
+    func saveLiveSession(_ session: LiveSession?) {
+        let ref = Database.database().reference().child("liveSessions/\(Constants.AppKey)")
+        let child = ref.childByAutoId()
+        child.setValue(session?.valueDict())
+    }
+    
+    func getCurrentSessions() {
+        let startTimestamp = Int(Date().timeIntervalSince1970) - LiveSession.PingFrequency
+        let ref = Database.database().reference().child("liveSessions/\(Constants.AppKey)")
+        ref.queryOrdered(byChild: LiveSession.PingTimestampKey)
+            .queryStarting(atValue: startTimestamp)
+            .queryLimited(toLast: 10)
+            .observe(.value, with: { [unowned self] snapshot in
+            var liveSessions: [LiveSession] = []
+            if let sessionsDict = snapshot.value as? NSDictionary {
+                for (_, sessionDict) in sessionsDict {
+                    if let sessionDict = sessionDict as? NSDictionary {
+                        let liveSession = LiveSession(snapshotDict: sessionDict)
+                        liveSessions.append(liveSession)
+                    }
+                }
+                print("sessions: \(liveSessions)")
+            }
+        })
+        
+//        now display
+    }
+    
     // MARK: - Motivation
     
     func retrieveMotivationOfTheDay(completionHandler: @escaping ((String)->Void)) {
@@ -310,7 +340,7 @@ class FirebaseService: NSObject {
     
     func saveBreathFeedItem(_ feedItem: BreathFeedItem) {
         print("saving item")
-        let ref = Database.database().reference().child("feed/\(Constants.AppKey)/\(UUID().uuidString)")
+        let ref = Database.database().reference().child("feed/\(Constants.AppKey)").childByAutoId()
         ref.setValue(feedItem.valueDict())
     }
     
@@ -1020,3 +1050,38 @@ struct AnimationInstructionData: SearchableData {
     }
 }
 
+struct LiveSession {
+    static let PingTimestampKey = "pingTimestamp"
+    static let PingFrequency = 30
+    
+    let creatorUserId: String
+    let startTimestamp: TimeInterval
+    let pingTimestamp: TimeInterval
+    let intention: String
+    let userCount: Int
+    
+    init(userId: String, intention: String) {
+        startTimestamp = Date().timeIntervalSince1970
+        pingTimestamp = Date().timeIntervalSince1970
+        userCount = 1
+        self.creatorUserId = userId
+        self.intention = intention
+    }
+    
+    init(snapshotDict: NSDictionary) {
+        creatorUserId = snapshotDict["creatorUserId"] as? String ?? ""
+        startTimestamp = snapshotDict["startTimestamp"] as? TimeInterval ?? 0
+        pingTimestamp = snapshotDict["pingTimestamp"] as? TimeInterval ?? 0
+        intention = snapshotDict["intention"] as? String ?? ""
+        userCount = snapshotDict["userCount"] as? Int ?? 1
+    }
+    
+    func valueDict() -> [String: Any] {
+        let dict: [String: Any] = ["creatorUserId": creatorUserId,
+                                   "startTimestamp": Int(startTimestamp),
+                                   "pingTimestamp": Int(pingTimestamp),
+                                   "intention": intention,
+                                   "userCount": userCount]
+        return dict
+    }
+}

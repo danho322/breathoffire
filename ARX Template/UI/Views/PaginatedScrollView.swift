@@ -42,7 +42,7 @@ class PaginatedScrollView: UIScrollView {
     }
     
     internal func setupUI() {
-        isPagingEnabled = true
+        isPagingEnabled = false
         clipsToBounds = false
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
@@ -107,27 +107,27 @@ class PaginatedScrollView: UIScrollView {
     
     func handleFinishScrolling() {
         let currentIndex = currentPage()
-        var index = 0
-        for view in viewArray {
-            let alpha: CGFloat = currentIndex == index ? 1 : 1 - PaginatedScrollViewConstants.OutOfFocusAlphMultiplier / 2
-            UIView.animate(withDuration: 0.4, delay: 0, options: [.allowUserInteraction], animations: {
-                view.alpha = alpha
-            }, completion: nil)
-            index += 1
-        }
+//        var index = 0
+//        for view in viewArray {
+//            let alpha: CGFloat = currentIndex == index ? 1 : 1 - PaginatedScrollViewConstants.OutOfFocusAlphMultiplier / 2
+//            UIView.animate(withDuration: 0.4, delay: 0, options: [.allowUserInteraction], animations: {
+//                view.alpha = alpha
+//            }, completion: nil)
+//            index += 1
+//        }
         paginatedDelegate?.scrollViewDidUpdateToIndex(scrollView: self, index: currentIndex)
     }
 }
 
 extension PaginatedScrollView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var index = 0
-        let contentWidth = scrollView.contentSize.width
-        for view in viewArray {
-            let indexOffset = abs(scrollView.contentOffset.x - view.frame.origin.x) / contentWidth
-            view.alpha = 1 - indexOffset * PaginatedScrollViewConstants.OutOfFocusAlphMultiplier
-            index += 1
-        }
+//        var index = 0
+//        let contentWidth = scrollView.contentSize.width
+//        for view in viewArray {
+//            let indexOffset = abs(scrollView.contentOffset.x - view.frame.origin.x) / contentWidth
+//            view.alpha = 1 - indexOffset * PaginatedScrollViewConstants.OutOfFocusAlphMultiplier
+//            index += 1
+//        }
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
