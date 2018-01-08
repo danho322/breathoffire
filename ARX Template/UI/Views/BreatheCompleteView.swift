@@ -144,7 +144,7 @@ class BreatheCompleteView: XibView {
         view.screenshotImageView.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
         view.screenshotImageView.layer.borderWidth = 2
         
-        Sound.play(file: "gong.m4a")
+//        Sound.play(file: "gong.m4a")
         
         if let screenshot = screenshot {
             for subview in view.screenshotImageView.subviews {

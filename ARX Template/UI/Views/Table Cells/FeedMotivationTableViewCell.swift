@@ -27,7 +27,7 @@ class FeedMotivationTableViewCell: UITableViewCell {
         }
         
         breatheButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
-        breatheButton.setTitle("Breathe", for: .normal)
+        breatheButton.setTitle("Live Breathe", for: .normal)
         breatheButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
         breatheButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(16)
     }

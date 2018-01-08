@@ -16,15 +16,18 @@ struct FeedConstants {
 enum FeedViewSectionTypes: Int {
     case motivation = 0
     case map = 1
-    case feed = 2
-    case userRanking = 3
-    case breathRanking = 4
-    case dayRanking = 5
-    case count = 6
+    case liveSessions = 2
+    case feed = 3
+    case userRanking = 4
+    case breathRanking = 5
+    case dayRanking = 6
+    case count = 7
     
     func rowCount(vc: FeedViewController) -> Int {
         if self == .feed {
             return min(1, vc.feedItems.count)
+        } else if self == .liveSessions {
+            return vc.liveSessions.count
         } else if self == .userRanking {
             return vc.userRankings.count
         } else if self == .dayRanking {
@@ -40,17 +43,8 @@ enum FeedViewSectionTypes: Int {
         if self == .motivation {
             if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMotivationCellIdentifier) as? FeedMotivationTableViewCell {
                 cell.breatheHandler = { [unowned vc] in
-                    if let arVC = vc.storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
-                        let motdSequenceContainer = DataLoader.sharedInstance.moveOfTheDay() {
-                        arVC.sequenceToLoad = motdSequenceContainer
-                        //                arVC.isARModeEnabled = false
-                        arVC.dismissCompletionHandler = {
-                            vc.navigationController?.popToRootViewController(animated: true)
-                            vc.tabBarController?.selectedIndex = 0
-                        }
-                        vc.present(arVC, animated: true, completion: nil)
-                        Analytics.logEvent("feed_breath_tap", parameters: nil)
-                    }
+                    vc.handleLiveBreathTap()
+                    Analytics.logEvent("feed_breath_tap", parameters: nil)
                 }
                 return cell
             }
@@ -93,6 +87,15 @@ enum FeedViewSectionTypes: Int {
                     location = user.city
                     detailLabel = "\(BreathTimerService.timeString(time: Double(user.maxTimeStreak)))"
                 }
+            } else if self == .liveSessions {
+                if let session = vc.liveSessions[safe: indexPath.row] {
+                    textLabel = "\(session.userName)"
+                    if session.userCount > 1 {
+                        textLabel = "\(textLabel) and \(session.userCount) others"
+                    }
+                    location = session.intention
+                    detailLabel = ""
+                }
             }
             
             if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.RankingCellIdentifier, for: indexPath) as? RankingTableViewCell {
@@ -113,6 +116,8 @@ enum FeedViewSectionTypes: Int {
             return vc.dayRankings.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
         } else if self == .breathRanking {
             return vc.breathRankings.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
+        } else if self == .liveSessions {
+            return vc.liveSessions.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
         } else {
             return CGFloat.leastNonzeroMagnitude
         }
@@ -125,6 +130,8 @@ enum FeedViewSectionTypes: Int {
             return "Max day streaks"
         } else if self == .breathRanking {
             return "Max breath streaks"
+        } else if self == .liveSessions {
+            return "Current live sessions"
         } else {
             return nil
         }
@@ -134,6 +141,7 @@ enum FeedViewSectionTypes: Int {
 class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
+    internal var liveSessions: [LiveSession] = []
     internal var feedItems: [BreathFeedItem] = []
     internal var userRankings: [UserData] = []
     internal var dayRankings: [UserData] = []
@@ -166,7 +174,11 @@ class FeedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        FirebaseService.sharedInstance.retrieveBreathFeed(allowedUpdates: 2) { items in
+        LiveSessionManager.sharedInstance.currentSessions() { [unowned self] liveSessions in
+            self.liveSessions = liveSessions
+        }
+        
+        FirebaseService.sharedInstance.retrieveBreathFeed(allowedUpdates: 2) { [unowned self] items in
             self.feedItems = items.filter({ $0.imagePathArray.count > 0 })
             self.tableView.reloadData()
         }
@@ -201,12 +213,14 @@ class FeedViewController: UIViewController {
                         imageCount += 1
                         if imageCount == imageTotal {
                             let imageArray = imageDict.sorted(by: { $0.key < $1.key}).map({ $0.value })
-                            ARXUtilities.createGIF(with: imageArray, frameDelay: GifConstants.FrameDelay, callback: { data, error in
-                                if let data = data {
-                                    DispatchQueue.main.async(execute: {
-                                        completion(data)
-                                    })
-                                }
+                            DispatchQueue.global(qos: .userInitiated).async(execute: {
+                                ARXUtilities.createGIF(with: imageArray, frameDelay: GifConstants.FrameDelay, callback: { data, error in
+                                    if let data = data {
+                                        DispatchQueue.main.async(execute: {
+                                            completion(data)
+                                        })
+                                    }
+                                })
                             })
                         }
                     }
@@ -278,9 +292,58 @@ class FeedViewController: UIViewController {
         }
         self.present(alertMessage, animated: true, completion: nil)
     }
+    
+    func handleLiveBreathTap() {
+        let alert = UIAlertController(title: "Breathe with Purpose",
+                                      message: "Start a breathing session that anybody can join.\n\nSet an intention for you and others to focus on, and let the universe manifest it.",
+                                      preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "What is your intention? (optional)"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Start", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+            let intention = textField?.text
+            self.startARTechnique(sequenceContainer: DataLoader.sharedInstance.moveOfTheDay(),
+                             liveSessionInfo: LiveSessionInfo(type: .create, liveSession: nil, intention: intention))
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func startARTechnique(sequenceContainer: AnimationSequenceDataContainer?, liveSessionInfo: LiveSessionInfo? = nil) {
+        if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
+            let sequenceContainer = sequenceContainer {
+            arVC.sequenceToLoad = sequenceContainer
+            if let liveSessionInfo = liveSessionInfo {
+                arVC.liveSessionInfo = liveSessionInfo
+            }
+            arVC.dismissCompletionHandler = {
+                self.navigationController?.popToRootViewController(animated: true)
+                self.tabBarController?.selectedIndex = 0
+            }
+            self.present(arVC, animated: true, completion: nil)
+            
+        }
+    }
 }
 
 extension FeedViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let sectionType = FeedViewSectionTypes(rawValue: indexPath.section) {
+            if sectionType == .liveSessions, let liveSession = liveSessions[safe: indexPath.row] {
+                // show alert to join
+//                is this not working?
+                startARTechnique(sequenceContainer: DataLoader.sharedInstance.sequenceData(sequenceName: liveSession.sequenceName),
+                                 liveSessionInfo: LiveSessionInfo(type: .join, liveSession: liveSession, intention: nil))
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let sectionType = FeedViewSectionTypes(rawValue: section) {
             return sectionType.heightForSectionHeader(vc: self)

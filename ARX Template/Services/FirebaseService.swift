@@ -16,6 +16,14 @@ import Gzip
 
 struct Constants {
     static let AppKey = "jiujitsu"
+    
+    static let isSimulator: Bool = {
+        var isSim = false
+        #if arch(i386) || arch(x86_64)
+            isSim = true
+        #endif
+        return isSim
+    }()
 }
 
 // This class stores the remote app data
@@ -229,32 +237,120 @@ class FirebaseService: NSObject {
     
     // MARK: - Live Sessions
     
-    func saveLiveSession(_ session: LiveSession?) {
+    func saveLiveSession(_ session: LiveSession?) -> String {
         let ref = Database.database().reference().child("liveSessions/\(Constants.AppKey)")
         let child = ref.childByAutoId()
         child.setValue(session?.valueDict())
+        return child.key
     }
     
-    func getCurrentSessions() {
-        let startTimestamp = Int(Date().timeIntervalSince1970) - LiveSession.PingFrequency
+    func getLiveSession(key: String, sessionHandler: @escaping (LiveSession?)->Void) {
+        let ref = Database.database().reference().child("liveSessions/\(Constants.AppKey)/\(key)")
+        ref.observe(.value, with: { snapshot in
+            if let sessionDict = snapshot.value as? NSDictionary {
+                let session = LiveSession(key: key, snapshotDict: sessionDict)
+                sessionHandler(session)
+            } else {
+                sessionHandler(nil)
+            }
+        })
+    }
+    
+    func getCurrentSessions(sessionHandler: @escaping ([LiveSession])->Void) {
+        let startTimestamp = Date().timeIntervalSince1970 - LiveSession.PingFrequency
         let ref = Database.database().reference().child("liveSessions/\(Constants.AppKey)")
         ref.queryOrdered(byChild: LiveSession.PingTimestampKey)
             .queryStarting(atValue: startTimestamp)
             .queryLimited(toLast: 10)
-            .observe(.value, with: { [unowned self] snapshot in
+            .observe(.value, with: { snapshot in
             var liveSessions: [LiveSession] = []
             if let sessionsDict = snapshot.value as? NSDictionary {
-                for (_, sessionDict) in sessionsDict {
-                    if let sessionDict = sessionDict as? NSDictionary {
-                        let liveSession = LiveSession(snapshotDict: sessionDict)
+                for (key, sessionDict) in sessionsDict {
+                    if let key = key as? String, let sessionDict = sessionDict as? NSDictionary {
+                        let liveSession = LiveSession(key: key, snapshotDict: sessionDict)
                         liveSessions.append(liveSession)
                     }
                 }
-                print("sessions: \(liveSessions)")
+            }
+            sessionHandler(liveSessions)
+        })
+    }
+    
+    func pingCurrentLiveSession(key: String?) {
+        if let key = key {
+            let ref = Database.database().reference().child("liveSessions/\(Constants.AppKey)/\(key)")
+            ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
+                if var sessionDict = currentData.value as? [String : Any] {
+                    let prevPing = sessionDict["pingTimestamp"] as? Double ?? 0
+                    let currentPing = Date().timeIntervalSince1970
+                    sessionDict["pingTimestamp"] = max(prevPing, currentPing)
+                    
+                    // Set value and report transaction success
+                    currentData.value = sessionDict
+                    
+                    return TransactionResult.success(withValue: currentData)
+                }
+                return TransactionResult.success(withValue: currentData)
+            }) { (error, committed, snapshot) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func updateLiveSessionUserCount(key: String?, count: Int) {
+        if let key = key {
+            let ref = Database.database().reference().child("liveSessions/\(Constants.AppKey)/\(key)")
+            ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
+                if var sessionDict = currentData.value as? [String : Any] {
+                    sessionDict["userCount"] = count
+                    
+                    // Set value and report transaction success
+                    currentData.value = sessionDict
+                    
+                    return TransactionResult.success(withValue: currentData)
+                }
+                return TransactionResult.success(withValue: currentData)
+            }) { (error, committed, snapshot) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func listenLiveSessionUserList(key: String, eventType: DataEventType, listHandler: @escaping (Set<String>)->Void) -> ()->Void {
+        let ref = Database.database().reference().child("liveSessionUserList/\(Constants.AppKey)/\(key)")
+        let handle = ref.observe(eventType, with: { snapshot in
+            if let nameDict = snapshot.value as? [String: Int] {
+                let nameSet = Set(nameDict.keys)
+                listHandler(nameSet)
             }
         })
-        
-//        now display
+        // THIS IS HOW YOU ONLY LISTEN TO A VALUE?
+        return {
+            ref.removeObserver(withHandle: handle)
+        }
+    }
+    
+    func addLiveSessionUserList(key: String, userName: String) {
+        let ref = Database.database().reference().child("liveSessionUserList/\(Constants.AppKey)/\(key)")
+        ref.runTransactionBlock({ (currentData: MutableData) -> TransactionResult in
+            if var userList = currentData.value as? [String : Int] {
+                userList[userName] = 1
+                
+                // Set value and report transaction success
+                currentData.value = userList
+            } else {
+                currentData.value = [userName: 1]
+            }
+            return TransactionResult.success(withValue: currentData)
+        }) { (error, committed, snapshot) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     // MARK: - Motivation
@@ -1047,41 +1143,5 @@ struct AnimationInstructionData: SearchableData {
     
     func sortPriority() -> Int {
         return 2
-    }
-}
-
-struct LiveSession {
-    static let PingTimestampKey = "pingTimestamp"
-    static let PingFrequency = 30
-    
-    let creatorUserId: String
-    let startTimestamp: TimeInterval
-    let pingTimestamp: TimeInterval
-    let intention: String
-    let userCount: Int
-    
-    init(userId: String, intention: String) {
-        startTimestamp = Date().timeIntervalSince1970
-        pingTimestamp = Date().timeIntervalSince1970
-        userCount = 1
-        self.creatorUserId = userId
-        self.intention = intention
-    }
-    
-    init(snapshotDict: NSDictionary) {
-        creatorUserId = snapshotDict["creatorUserId"] as? String ?? ""
-        startTimestamp = snapshotDict["startTimestamp"] as? TimeInterval ?? 0
-        pingTimestamp = snapshotDict["pingTimestamp"] as? TimeInterval ?? 0
-        intention = snapshotDict["intention"] as? String ?? ""
-        userCount = snapshotDict["userCount"] as? Int ?? 1
-    }
-    
-    func valueDict() -> [String: Any] {
-        let dict: [String: Any] = ["creatorUserId": creatorUserId,
-                                   "startTimestamp": Int(startTimestamp),
-                                   "pingTimestamp": Int(pingTimestamp),
-                                   "intention": intention,
-                                   "userCount": userCount]
-        return dict
     }
 }

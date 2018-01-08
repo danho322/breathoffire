@@ -57,6 +57,11 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     internal var hasSetupViewController = false
     internal var portal: PortalRoomObject?
     
+    // live session
+    var liveSessionInfo = LiveSessionInfo(type: .none, liveSession: nil, intention: nil)
+    internal var liveSessionCounter: TimeInterval = 0
+    internal var liveSessionKey: String?
+    
     // feed
     internal var screenShot: [UIImage] = []
     
@@ -70,6 +75,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if Constants.isSimulator {
+            isARModeEnabled = false
+        }
 
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         
@@ -197,6 +206,23 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
     }
     
+    // MARK: - Live Sessions
+    
+    func startLiveSession() {
+        liveSessionKey = LiveSessionManager.sharedInstance.startLiveSession(intention: liveSessionInfo.intention ?? "", sequenceName: sequenceToLoad?.sequenceName ?? "", delegate: self)
+    }
+    
+    func joinLiveSession(key: String?) {
+        liveSessionKey = key
+        if let key = key {
+            LiveSessionManager.sharedInstance.joinLiveSession(key: key, delegate: self)
+        }
+    }
+    
+    func pingLiveSession() {
+        LiveSessionManager.sharedInstance.pingCurrentLiveSession(key: liveSessionKey)
+    }
+    
     // MARK: - Breathe
     
     internal func setupBreathing(animationData: CharacterAnimationData) {
@@ -246,7 +272,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
     }
     
+    internal var hasSent = false
     internal func executeShareSaveWithLocation(rating: Int?, comment: String?, pathArray: [String]) {
+        if hasSent {
+            return
+        }
+        hasSent = true
         if let currentUserData = SessionManager.sharedInstance.currentUserData {
             // add to feed path
             ARXLocationService.sharedInstance.retrieveUserLocation(userData: currentUserData, handler: { coordinate in
@@ -1117,6 +1148,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         
         sessionCounter = 0
         setupSessionTimer(speedMultipler: sliderValue * 2)
+        
+        if liveSessionInfo.type == .create {
+            startLiveSession()
+        } else if liveSessionInfo.type == .join {
+            joinLiveSession(key: liveSessionInfo.liveSession?.key)
+        }
     }
     
     internal func setupSessionTimer(speedMultipler: Float) {
@@ -1125,18 +1162,24 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             self.currentAnimationTimeLabel.text = "\(self.sessionCounter)s"
             self.sessionCounter += ARTechniqueConstants.SessionTimerInterval
             self.breathTimerView.updateTimeLabel(self.sessionCounter)
+            
+            self.liveSessionCounter += ARTechniqueConstants.SessionTimerInterval
+            if self.liveSessionCounter >= LiveSession.PingFrequency {
+                self.liveSessionCounter = 0
+                self.pingLiveSession()
+            }
         })
     }
     
     // MARK: - Screenshot
     
     func scheduleScreenshot() {
-        let randSec = TimeInterval(arc4random_uniform(10))
+        let randSec = TimeInterval(arc4random_uniform(30))
         
         let frames = GifConstants.FrameCount
         let interval: TimeInterval = GifConstants.FrameDelay
         for index in 1...frames {
-            perform(#selector(ARTechniqueViewController.captureScreenshot), with: nil, afterDelay: 5 + randSec + TimeInterval(index) * interval)
+            perform(#selector(ARTechniqueViewController.captureScreenshot), with: nil, afterDelay: 10 + randSec + TimeInterval(index) * interval)
         }
     }
     
@@ -1596,6 +1639,12 @@ imageArray)
 	func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
 		updateSettings()
 	}
+}
+
+extension ARTechniqueViewController: LiveSessionDelegate {
+    func onUserJoined(userName: String, userCount: Int) {
+        instructionView.addInstruction(text: "\(userName) joined the session, \(userCount) users total")
+    }
 }
 
 extension ARTechniqueViewController: CharacterHUDViewDelegate {

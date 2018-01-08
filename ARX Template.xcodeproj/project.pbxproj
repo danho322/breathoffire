@@ -22,6 +22,7 @@
 		D43751511F5D1141004B6B9E /* UserStatCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */; };
 		D43751531F5D1196004B6B9E /* UserStatCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43751521F5D1196004B6B9E /* UserStatCollectionCell.swift */; };
 		D43751551F5DB967004B6B9E /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43751541F5DB967004B6B9E /* InfoViewController.swift */; };
+		D437DCD31FE0E27600AB5A0C /* LiveSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D437DCD21FE0E27600AB5A0C /* LiveSessionManager.swift */; };
 		D43988F81F6798A300AE367C /* UserPackagesCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */; };
 		D43988FA1F67994500AE367C /* UserPackagesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */; };
 		D43988FC1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */; };
@@ -213,6 +214,7 @@
 		D43751501F5D1141004B6B9E /* UserStatCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserStatCollectionCell.xib; sourceTree = "<group>"; };
 		D43751521F5D1196004B6B9E /* UserStatCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatCollectionCell.swift; sourceTree = "<group>"; };
 		D43751541F5DB967004B6B9E /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		D437DCD21FE0E27600AB5A0C /* LiveSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionManager.swift; sourceTree = "<group>"; };
 		D43988F71F6798A300AE367C /* UserPackagesCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserPackagesCollectionCell.xib; sourceTree = "<group>"; };
 		D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPackagesCollectionCell.swift; sourceTree = "<group>"; };
 		D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterAnimationPickerDescriptionTableCell.xib; sourceTree = "<group>"; };
@@ -743,6 +745,7 @@
 				D4C9383D1F440585002A2F4C /* BreathFactory.swift */,
 				D454DC5C1FA5545C0021D203 /* ARXLocationService.swift */,
 				D4C201C41FB178C50014DA12 /* AnimationHelper.swift */,
+				D437DCD21FE0E27600AB5A0C /* LiveSessionManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1099,6 +1102,7 @@
 				D45352BF1EFDDD5600C09259 /* XibView.swift in Sources */,
 				D4B06A941F2BA1F0004DFE50 /* PortalRoomObject.swift in Sources */,
 				D45118D61F68FBF400610F08 /* WalkthroughFinalViewController.swift in Sources */,
+				D437DCD31FE0E27600AB5A0C /* LiveSessionManager.swift in Sources */,
 				D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */,
 				D43D4BB51F048282002F369F /* TextManager.swift in Sources */,
 				D43D4BAF1F048282002F369F /* Utilities.swift in Sources */,

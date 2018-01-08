@@ -42,7 +42,7 @@ class PaginatedScrollView: UIScrollView {
     }
     
     internal func setupUI() {
-        isPagingEnabled = false
+        isPagingEnabled = true
         clipsToBounds = false
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
@@ -107,6 +107,8 @@ class PaginatedScrollView: UIScrollView {
     
     func handleFinishScrolling() {
         let currentIndex = currentPage()
+        
+        setContentOffset(CGPoint(x: CGFloat(currentIndex) * (frame.width + PaginatedScrollViewConstants.Space), y: 0), animated: true)
 //        var index = 0
 //        for view in viewArray {
 //            let alpha: CGFloat = currentIndex == index ? 1 : 1 - PaginatedScrollViewConstants.OutOfFocusAlphMultiplier / 2
