@@ -17,12 +17,18 @@ class WalkthroughFinalViewController: BWWalkthroughPageViewController {
     }
     
     @IBAction func onTryTap(_ sender: Any) {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        if let arVC = mainStoryboard.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController {
-            // TODO: disable these buttons on first run
-            arVC.sequenceToLoad = DataLoader.sharedInstance.sequenceData(sequenceName: "Breath of Fire 1:1")
-            arVC.dismissCompletionHandler = { [unowned self] in
+        self.startARTechnique(sequenceContainer: DataLoader.sharedInstance.moveOfTheDay(),
+                              liveSessionInfo: LiveSessionInfo(type: .create, liveSession: nil, intention: "My first session"))
+    }
+    
+    func startARTechnique(sequenceContainer: AnimationSequenceDataContainer?, liveSessionInfo: LiveSessionInfo? = nil) {
+        if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
+            let sequenceContainer = sequenceContainer {
+            arVC.sequenceToLoad = sequenceContainer
+            if let liveSessionInfo = liveSessionInfo {
+                arVC.liveSessionInfo = liveSessionInfo
+            }
+            arVC.dismissCompletionHandler = {
                 self.navigationController?.popToRootViewController(animated: true)
                 self.tabBarController?.selectedIndex = 0
             }

@@ -56,12 +56,14 @@ struct TutorialInstructionID: OptionSet {
     static let Walkthrough   = TutorialInstructionID(rawValue: 1 << 0)
     static let Options    = TutorialInstructionID(rawValue: 1 << 1)
     static let ARTechnique = TutorialInstructionID(rawValue: 1 << 2)
+    static let ARWalkthrough = TutorialInstructionID(rawValue: 1 << 3)
 }
 
 enum TutorialInstructionType: String {
     case Walkthrough = "kDefaultWalkthrough"
     case Options = "kDefaultOptions"
     case ARTechnique = "kDefaultArtechnique"
+    case ARWalkthrough = "kDefaultARWalkthrough"
     
     func ID() -> TutorialInstructionID {
         switch self {
@@ -71,6 +73,8 @@ enum TutorialInstructionType: String {
             return TutorialInstructionID.Options
         case .ARTechnique:
             return TutorialInstructionID.ARTechnique
+        case .ARWalkthrough:
+            return TutorialInstructionID.ARWalkthrough
         }
     }
 }

@@ -37,6 +37,87 @@ struct DataLoader {
         return text
     }
     
+    func viewForPlacementState(_ state: ARObjectPlacementState) -> UIView? {
+        var view: UIView?
+        switch state {
+        case .ScanningEmpty:
+            view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            view?.backgroundColor = UIColor.clear
+            // handHoldingPhone
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = UIImage(named: "handHoldingPhone")
+            view?.addSubview(imageView)
+            imageView.center = CGPoint(x: 25, y: 25)
+            
+            let groupAnimation = CAAnimationGroup()
+            groupAnimation.beginTime = CACurrentMediaTime()
+            groupAnimation.duration = 1
+            groupAnimation.repeatCount = Float.greatestFiniteMagnitude
+            groupAnimation.autoreverses = true
+            
+            let moveX = CABasicAnimation(keyPath: "transform.translation.y")
+            moveX.fromValue = 0
+            moveX.toValue = 50.0
+            
+            groupAnimation.animations = [moveX]
+            imageView.layer.add(groupAnimation, forKey: nil)
+        case .ScanningProgress:
+            view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            view?.backgroundColor = UIColor.clear
+            // handHoldingPhone
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = UIImage(named: "handHoldingPhone")
+            view?.addSubview(imageView)
+            imageView.center = CGPoint(x: 25, y: 25)
+            
+            let groupAnimation = CAAnimationGroup()
+            groupAnimation.beginTime = CACurrentMediaTime()
+            groupAnimation.duration = 1
+            groupAnimation.repeatCount = Float.greatestFiniteMagnitude
+            groupAnimation.autoreverses = true
+            
+            let moveX = CABasicAnimation(keyPath: "transform.translation.x")
+            moveX.fromValue = 0
+            moveX.toValue = 50.0
+            
+            groupAnimation.animations = [moveX]
+            imageView.layer.add(groupAnimation, forKey: nil)
+        case .PlacedEditing:
+            view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            view?.backgroundColor = UIColor.clear
+            // pinch
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = UIImage(named: "pinch")
+            view?.addSubview(imageView)
+            imageView.center = CGPoint(x: 25, y: 25)
+            
+            let groupAnimation = CAAnimationGroup()
+            groupAnimation.beginTime = CACurrentMediaTime()
+            groupAnimation.duration = 3
+            groupAnimation.repeatCount = Float.greatestFiniteMagnitude
+            
+            let scaleDown = CABasicAnimation(keyPath: "transform.scale")
+            scaleDown.fromValue = 0.8
+            scaleDown.toValue = 1.0
+            let rotate = CABasicAnimation(keyPath: "transform.rotation")
+            rotate.fromValue = .pi/5.0
+            rotate.toValue = 0.0
+            let fade = CABasicAnimation(keyPath: "opacity")
+            fade.fromValue = 0.0
+            fade.toValue = 1.0
+            
+            groupAnimation.animations = [scaleDown,rotate,fade]
+            imageView.layer.add(groupAnimation, forKey: nil)
+        default:
+            break
+        }
+        
+        return view
+    }
+    
     // Models
     
     func instructionData(animationName: String) -> [AnimationInstructionData]? {

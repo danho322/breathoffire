@@ -435,7 +435,7 @@ class FirebaseService: NSObject {
     // MARK: - Feed
     
     func saveBreathFeedItem(_ feedItem: BreathFeedItem) {
-        print("saving item")
+        print("saving item: \(feedItem.valueDict())")
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)").childByAutoId()
         ref.setValue(feedItem.valueDict())
     }

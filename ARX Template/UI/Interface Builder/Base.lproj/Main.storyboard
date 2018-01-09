@@ -1049,6 +1049,14 @@
                                     <action selector="showSettings:" destination="gQx-gU-hL3" eventType="touchUpInside" id="P9b-Yp-W7y"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wy9-qi-ryr">
+                                <rect key="frame" x="137" y="347" width="100" height="100"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Ap0-fK-y7y"/>
+                                    <constraint firstAttribute="height" constant="100" id="COO-Kb-XCk"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpw-Pw-RqP">
                                 <rect key="frame" x="50" y="457" width="275" height="0.0"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
@@ -1223,8 +1231,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="bGy-L5-bog" firstAttribute="top" secondItem="cuu-kW-rEx" secondAttribute="bottom" constant="10" id="1JZ-k3-EJA"/>
+                            <constraint firstItem="hpw-Pw-RqP" firstAttribute="top" secondItem="wy9-qi-ryr" secondAttribute="bottom" constant="10" id="21y-JF-OhP"/>
                             <constraint firstItem="ba6-jE-09U" firstAttribute="leading" secondItem="auA-Qr-nK7" secondAttribute="leading" constant="15" id="5Ar-Im-xOT"/>
                             <constraint firstItem="ZiE-8E-3Ig" firstAttribute="trailing" secondItem="auA-Qr-nK7" secondAttribute="trailing" constant="-15" id="5mL-g5-z6t"/>
+                            <constraint firstItem="wy9-qi-ryr" firstAttribute="centerX" secondItem="hpw-Pw-RqP" secondAttribute="centerX" id="6pf-Ks-Zss"/>
                             <constraint firstItem="OmM-QP-RfY" firstAttribute="trailing" secondItem="auA-Qr-nK7" secondAttribute="trailing" id="7xI-KL-rPg"/>
                             <constraint firstItem="qU5-rG-3Ai" firstAttribute="leading" secondItem="7tA-Dg-wg9" secondAttribute="leading" id="8no-dU-x5u"/>
                             <constraint firstItem="Z2Q-42-QYJ" firstAttribute="top" secondItem="hpw-Pw-RqP" secondAttribute="bottom" constant="10" id="AGJ-Do-i0w"/>
@@ -1294,6 +1304,7 @@
                         <outlet property="screenshotButton" destination="ba6-jE-09U" id="hSg-mh-ZCQ"/>
                         <outlet property="settingsButton" destination="ZiE-8E-3Ig" id="cio-Mj-yHn"/>
                         <outlet property="showPortalButton" destination="Mec-UJ-eUf" id="Gxn-h6-Cc9"/>
+                        <outlet property="statusImageViewContainer" destination="wy9-qi-ryr" id="tdR-rK-nN3"/>
                         <outlet property="statusLabel" destination="hpw-Pw-RqP" id="ifX-oY-Qra"/>
                         <outlet property="toggleBreathButton" destination="bGy-L5-bog" id="Ktn-2s-wpr"/>
                     </connections>

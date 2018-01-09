@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -249,6 +249,151 @@ Hint: Place your phone on a table or chair and sit in front of it.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bUJ-on-Q5b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3220" y="80.50974512743629"/>
+        </scene>
+        <!--Walkthrough Page View Controller-->
+        <scene sceneID="G3M-H1-hhc">
+            <objects>
+                <viewController storyboardIdentifier="arwalk0" id="c5d-Kd-DQQ" customClass="BWWalkthroughPageViewController" customModule="ARX_Template" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HOg-X5-qNr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Find a quiet and relaxing environment, where you can sit and focus without distractions." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2A5-eI-4N6">
+                                <rect key="frame" x="50" y="333" width="275" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animationType" value="Linear"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="speed">
+                                        <point key="value" x="0.0" y="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="speedVariance">
+                                        <point key="value" x="0.0" y="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZZS-g0-IeV">
+                                <rect key="frame" x="67" y="107" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.93308943509999998" green="0.35411640999999999" blue="0.2705411613" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="0bZ-h1-qfL"/>
+                                    <constraint firstAttribute="height" constant="128" id="tXH-oE-giD"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2A5-eI-4N6" firstAttribute="centerX" secondItem="aPc-RF-eZl" secondAttribute="centerX" id="9ma-jr-n8y"/>
+                            <constraint firstItem="2A5-eI-4N6" firstAttribute="centerY" secondItem="aPc-RF-eZl" secondAttribute="centerY" id="I4f-VI-upr"/>
+                            <constraint firstItem="2A5-eI-4N6" firstAttribute="top" secondItem="ZZS-g0-IeV" secondAttribute="bottom" constant="78" id="aGJ-Sc-hcO"/>
+                            <constraint firstItem="aPc-RF-eZl" firstAttribute="trailing" secondItem="2A5-eI-4N6" secondAttribute="trailing" constant="50" id="bfO-5Q-X82"/>
+                            <constraint firstItem="2A5-eI-4N6" firstAttribute="leading" secondItem="aPc-RF-eZl" secondAttribute="leading" constant="50" id="cNh-Yj-KFt"/>
+                            <constraint firstItem="ZZS-g0-IeV" firstAttribute="centerX" secondItem="2A5-eI-4N6" secondAttribute="centerX" id="jVx-xj-4zI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aPc-RF-eZl"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DbT-RI-yTY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="590" y="839"/>
+        </scene>
+        <!--Walkthrough Page View Controller-->
+        <scene sceneID="wyt-nZ-Mgv">
+            <objects>
+                <viewController storyboardIdentifier="arwalk1" id="teP-ha-ong" customClass="BWWalkthroughPageViewController" customModule="ARX_Template" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kfM-Am-u54">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUz-pr-4Bz">
+                                <rect key="frame" x="50" y="333" width="275" height="63"/>
+                                <string key="text">Place your phone in front of you with the camera facing forward. You should have a clear view of your screen without holding it.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animationType" value="Linear"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="speed">
+                                        <point key="value" x="0.0" y="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="speedVariance">
+                                        <point key="value" x="0.0" y="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NYN-Cv-w4i">
+                                <rect key="frame" x="67" y="97" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.93308943509999998" green="0.35411640999999999" blue="0.2705411613" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="8wv-Ya-FcK"/>
+                                    <constraint firstAttribute="width" constant="240" id="ZiW-H8-yWz"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aUz-pr-4Bz" firstAttribute="top" secondItem="NYN-Cv-w4i" secondAttribute="bottom" constant="78" id="1Ve-MT-saY"/>
+                            <constraint firstItem="NYN-Cv-w4i" firstAttribute="centerX" secondItem="aUz-pr-4Bz" secondAttribute="centerX" id="EUO-Oo-0MS"/>
+                            <constraint firstItem="aUz-pr-4Bz" firstAttribute="centerY" secondItem="znn-5r-DpF" secondAttribute="centerY" id="FEP-nW-0ew"/>
+                            <constraint firstItem="aUz-pr-4Bz" firstAttribute="leading" secondItem="znn-5r-DpF" secondAttribute="leading" constant="50" id="RXw-fO-xrV"/>
+                            <constraint firstItem="aUz-pr-4Bz" firstAttribute="centerX" secondItem="znn-5r-DpF" secondAttribute="centerX" id="S3V-Cp-R0t"/>
+                            <constraint firstItem="znn-5r-DpF" firstAttribute="trailing" secondItem="aUz-pr-4Bz" secondAttribute="trailing" constant="50" id="yqu-jw-ebc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="znn-5r-DpF"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OSP-3z-w5e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1510" y="839"/>
+        </scene>
+        <!--Walkthrough Page View Controller-->
+        <scene sceneID="cOd-0Y-vN5">
+            <objects>
+                <viewController storyboardIdentifier="arwalk2" id="FZO-IJ-VQN" customClass="BWWalkthroughPageViewController" customModule="ARX_Template" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FRT-iv-Mww">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Once you place your Teacher, he will guide you through the exercise." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wk0-yV-lRc">
+                                <rect key="frame" x="50" y="333" width="275" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animationType" value="Linear"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="speed">
+                                        <point key="value" x="0.0" y="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="speedVariance">
+                                        <point key="value" x="0.0" y="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oBw-UG-Gy3">
+                                <rect key="frame" x="67" y="117" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.93308943509999998" green="0.35411640999999999" blue="0.2705411613" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="ejd-GR-tYF"/>
+                                    <constraint firstAttribute="height" constant="128" id="mPg-di-DVD"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Wk0-yV-lRc" firstAttribute="centerX" secondItem="VCL-O0-4BI" secondAttribute="centerX" id="GLm-4c-EVK"/>
+                            <constraint firstItem="oBw-UG-Gy3" firstAttribute="centerX" secondItem="Wk0-yV-lRc" secondAttribute="centerX" id="ZPc-hS-06H"/>
+                            <constraint firstItem="VCL-O0-4BI" firstAttribute="trailing" secondItem="Wk0-yV-lRc" secondAttribute="trailing" constant="50" id="dr5-Zl-ovN"/>
+                            <constraint firstItem="Wk0-yV-lRc" firstAttribute="top" secondItem="oBw-UG-Gy3" secondAttribute="bottom" constant="78" id="iz8-hn-H2a"/>
+                            <constraint firstItem="Wk0-yV-lRc" firstAttribute="leading" secondItem="VCL-O0-4BI" secondAttribute="leading" constant="50" id="jpr-z4-GFa"/>
+                            <constraint firstItem="Wk0-yV-lRc" firstAttribute="centerY" secondItem="VCL-O0-4BI" secondAttribute="centerY" id="xyT-Pl-RYm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="VCL-O0-4BI"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z2a-rf-24g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2345" y="839"/>
         </scene>
     </scenes>
 </document>

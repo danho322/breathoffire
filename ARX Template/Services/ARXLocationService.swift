@@ -25,7 +25,7 @@ class ARXLocationService: NSObject {
 
         let authStatus = CLLocationManager.authorizationStatus()
         if authStatus == .denied || authStatus == .restricted {
-            handler(userData?.coordinate)
+            executeLocationHandler(userData?.coordinate)
             return
         } else if authStatus == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
@@ -37,19 +37,24 @@ class ARXLocationService: NSObject {
     fileprivate func attemptRetrieveLocation() {
         locationManager.startUpdatingLocation()
     }
+    
+    fileprivate func executeLocationHandler(_ coordinate: CLLocationCoordinate2D?) {
+        locationHandler?(coordinate)
+        locationHandler = nil
+    }
 }
 
 extension ARXLocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            locationHandler?(location.coordinate)
+            executeLocationHandler(location.coordinate)
             manager.stopUpdatingLocation()
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .denied || status == .restricted {
-            locationHandler?(userData?.coordinate)
+            executeLocationHandler(userData?.coordinate)
         } else {
             attemptRetrieveLocation()
         }

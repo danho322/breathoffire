@@ -21,8 +21,11 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     @IBOutlet weak var breathTimerView: BreathTimerView!
     @IBOutlet weak var instructionView: InstructionView!
+    var walkthroughVC: BWWalkthroughViewController?
+    
     @IBOutlet weak var hudView: CharacterHUDView!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var statusImageViewContainer: UIView!
     @IBOutlet weak var hudBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var endButton: UIButton!
     @IBOutlet weak var currentAnimationLabel: UILabel!
@@ -171,23 +174,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
         
         if !hasSetupViewController {
-            let message = isARModeEnabled ?
-                    "Point your camera toward your gym surface." :
-                    "Find a comfortable place for your practice."
-            let alert = UIAlertController(title: "Get Ready", message: message, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(
-                UIAlertAction(title: "Ok",
-                              style: UIAlertActionStyle.default,
-                              handler: { [unowned self] _ in
-                                self.setupViewControllerTechnique()
-                    }
-                )
-            )
-            if let popoverPresentationController = alert.popoverPresentationController {
-                popoverPresentationController.sourceView = self.view
-                popoverPresentationController.sourceRect = self.view.bounds
-            }
-            self.present(alert, animated: true, completion: nil)
+            onViewWillAppear()
         }
 	}
 	
@@ -204,6 +191,53 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         for object in virtualObjects {
             object.skipCurrentAnimation()
         }
+    }
+    
+    // MARK: - Starting session
+    
+    fileprivate func onViewWillAppear() {
+        if SessionManager.sharedInstance.shouldShowTutorial(type: .ARWalkthrough) {
+            displayWalkthrough()
+        } else {
+          displayGetReady()
+        }
+    }
+    
+    fileprivate func displayWalkthrough() {
+        // Get view controllers and build the walkthrough
+        let stb = UIStoryboard(name: "Walkthrough", bundle: nil)
+        let walkthrough = stb.instantiateViewController(withIdentifier: "walk") as! BWWalkthroughViewController
+        let page_zero = stb.instantiateViewController(withIdentifier: "arwalk0")
+        let page_one = stb.instantiateViewController(withIdentifier: "arwalk1")
+        let page_two = stb.instantiateViewController(withIdentifier: "arwalk2")
+        
+        // Attach the pages to the master
+        walkthrough.delegate = self
+        walkthrough.add(viewController:page_zero)
+        walkthrough.add(viewController:page_one)
+        walkthrough.add(viewController:page_two)
+        walkthroughVC = walkthrough
+        present(walkthrough, animated: true, completion: nil)
+    }
+    
+    fileprivate func displayGetReady() {
+        let message = isARModeEnabled ?
+            "Point the phone camera ahead of you toward the floor." :
+        "Find a comfortable place for your practice."
+        let alert = UIAlertController(title: "Get Ready", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(
+            UIAlertAction(title: "Ok",
+                          style: UIAlertActionStyle.default,
+                          handler: { [unowned self] _ in
+                            self.setupViewControllerTechnique()
+                }
+            )
+        )
+        if let popoverPresentationController = alert.popoverPresentationController {
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceRect = self.view.bounds
+        }
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Live Sessions
@@ -367,6 +401,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     // MARK: - Gestures
     
     func setupGestureRecognizers() {
+        view.isMultipleTouchEnabled = true
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(ARTechniqueViewController.handleTap))
         tap.numberOfTapsRequired = 2
         sceneView.addGestureRecognizer(tap)
@@ -411,7 +447,15 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             }
             
             statusLabel.text = DataLoader.sharedInstance.textForPlacementState(currentPlacementState)
+            for subview in statusImageViewContainer.subviews {
+                subview.removeFromSuperview()
+            }
+            if let view = DataLoader.sharedInstance.viewForPlacementState(currentPlacementState) {
+                statusImageViewContainer.addSubview(view)
+                view.center = CGPoint(x: statusImageViewContainer.frame.size.width / 2, y: statusImageViewContainer.frame.size.height / 2)
+            }
             statusLabel.isHidden = currentPlacementState.hideStatusLabel()
+            statusImageViewContainer.isHidden = statusLabel.isHidden
             addObjectButton.isHidden = currentPlacementState.hideAddButton()
             
             let showHud = sequenceToLoad?.showHud ?? false
@@ -428,6 +472,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         } else {
             statusLabel.text = nil
             statusLabel.isHidden = true
+            statusImageViewContainer.isHidden = statusLabel.isHidden
             addObjectButton.isHidden = true
             hudView.isHidden = true
             
@@ -696,23 +741,32 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     // MARK: - Gesture Recognizers
 	
 	var currentGesture: Gesture?
+    var currentTouchesSet: Set<UITouch> = Set()
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesBegan")
+        print("touchesBegan: \(touches.count)")
         super.touchesBegan(touches, with: event)
         
+        touches.forEach({ [unowned self] touch in
+            self.currentTouchesSet.insert(touch)
+        })
         
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(delayedTouchesBegan), object: nil)
+        self.perform(#selector(delayedTouchesBegan), with: nil, afterDelay: 0.2)
+	}
+    
+    @objc fileprivate func delayedTouchesBegan() {
         for object in virtualObjects {
             if currentGesture == nil {
-                currentGesture = Gesture.startGestureFromTouches(touches, self.sceneView, object, currentPlacementState)
+                currentGesture = Gesture.startGestureFromTouches(currentTouchesSet, self.sceneView, object, currentPlacementState)
             } else {
-                currentGesture = currentGesture!.updateGestureFromTouches(touches, .touchBegan)
+                currentGesture = currentGesture!.updateGestureFromTouches(currentTouchesSet, .touchBegan)
             }
         }
         
-		displayVirtualObjectTransform()
-        initialTouchPosition = touches.first?.location(in: sceneView)
-	}
+        displayVirtualObjectTransform()
+        initialTouchPosition = currentTouchesSet.first?.location(in: sceneView)
+    }
 	
 	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
@@ -749,7 +803,11 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 
             }
         }
-	}
+        
+        touches.forEach({ [unowned self] touch in
+            self.currentTouchesSet.remove(touch)
+        })
+    }
 	
 	override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
@@ -1002,10 +1060,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 cameraToPosition.setLength(Float(averageDistance))
                 let averagedDistancePos = cameraWorldPos + cameraToPosition
                 
-                print("updateVirtualObjectPosition \(object) at  averagedDistancePos \(pos)")
                 object.position = averagedDistancePos
             } else {
-                print("updateVirtualObjectPosition \(object) at  cameraWorldPos + cameraToPosition \(pos)")
                 object.position = cameraWorldPos + cameraToPosition
             }
             setupShadowLightsIfNeeded(target: object)
@@ -1907,5 +1963,21 @@ extension ARTechniqueViewController: CoachMarksControllerDelegate {
     func shouldHandleOverlayTap(in coachMarksController: CoachMarksController, at index: Int) -> Bool {
         print("shoudlHandleOverlay")
         return true
+    }
+}
+
+// MARK: - Walkthrough
+extension ARTechniqueViewController: BWWalkthroughViewControllerDelegate {
+    func walkthroughCloseButtonPressed() {
+        SessionManager.sharedInstance.onTutorialShow(type: .ARWalkthrough)
+        
+        walkthroughVC?.dismiss(animated: true, completion: nil)
+        
+        displayGetReady()
+    }
+    
+    func walkthroughPageDidChange(_ pageNumber: Int) {
+        print("now at \(pageNumber)")
+        walkthroughVC?.closeButton?.isHidden = pageNumber != 2
     }
 }

@@ -61,12 +61,12 @@ class FeedMapTableViewCell: UITableViewCell {
         
 //        let span = MKCoordinateSpanMake(25.502001722875953, 67.978134479121621) // US
 //        let span = MKCoordinateSpanMake(12, 35) // State
-        var span = MKCoordinateSpanMake(0.25, 0.25) // County
+        var span = MKCoordinateSpanMake(0.5, 0.5) // County
         if let minLng = minLng,
             let maxLng = maxLng,
             let minLat = minLat,
             let maxLat = maxLat {
-            let spanMultiplier: Double = 2
+            let spanMultiplier: Double = 0.5
             span = MKCoordinateSpanMake(spanMultiplier * (maxLat - minLat), spanMultiplier * (maxLng - minLng))
         }
         

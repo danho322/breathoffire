@@ -146,9 +146,9 @@ class InfoViewController: UIViewController {
         composeVC.mailComposeDelegate = self
         
         // Configure the fields of the interface.
-        composeVC.setToRecipients(["ctr89josh@gmail.com"])
-        composeVC.setSubject("StoryBook Feedback")
-        composeVC.setMessageBody("Hey Josh! Here's my feedback.", isHTML: false)
+        composeVC.setToRecipients(["dan@arxapps.com"])
+        composeVC.setSubject("Breathe of Fire feedback")
+        composeVC.setMessageBody("", isHTML: false)
         
         // Present the view controller modally.
         self.present(composeVC, animated: true, completion: nil)
