@@ -25,4 +25,5 @@ struct CellIdentifiers {
     static let FeedMotivationCellIdentifier = "FeedMotivationCellIdentifier"
     static let FeedMapCellIdentifier = "FeedMapCellIdentifier"
     static let RankingCellIdentifier = "RankingCellIdentifier"
+    static let LiveSessionCellIdentifier = "LiveSessionCellIdentifier"
 }

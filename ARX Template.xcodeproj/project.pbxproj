@@ -67,6 +67,8 @@
 		D45AAC021F250E1F00BE41E0 /* SDWebImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D45AAC001F250DC000BE41E0 /* SDWebImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D45AAC051F2563CC00BE41E0 /* PackageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45AAC041F2563CC00BE41E0 /* PackageDetailsViewController.swift */; };
 		D4612E2F1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4612E2E1F231A9C007D13C3 /* OptionsMOTDTableViewCell.xib */; };
+		D462006C20047EEB0049E5CC /* LiveSessionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D462006B20047EEB0049E5CC /* LiveSessionTableViewCell.xib */; };
+		D462007120047F250049E5CC /* LiveSessionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D462007020047F250049E5CC /* LiveSessionTableViewCell.swift */; };
 		D468FE341F49156B00DEBAE6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468FE331F49156B00DEBAE6 /* MainTabBarController.swift */; };
 		D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46A6E171F0FEECF0096446C /* FirebaseService.swift */; };
 		D46B68D21F40028500DAB0AD /* BreatheCompleteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D46B68D11F40028500DAB0AD /* BreatheCompleteView.xib */; };
@@ -262,6 +264,8 @@
 		D4612E321F231D66007D13C3 /* GINInviteResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GINInviteResources.bundle; sourceTree = "<group>"; };
 		D4612E331F231D66007D13C3 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
 		D4612E341F231D66007D13C3 /* GPPACLPickerResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GPPACLPickerResources.bundle; sourceTree = "<group>"; };
+		D462006B20047EEB0049E5CC /* LiveSessionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LiveSessionTableViewCell.xib; sourceTree = "<group>"; };
+		D462007020047F250049E5CC /* LiveSessionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionTableViewCell.swift; sourceTree = "<group>"; };
 		D4626DCA1F663407009C8C6A /* ESTabBarController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ESTabBarController.framework; path = Carthage/Build/iOS/ESTabBarController.framework; sourceTree = "<group>"; };
 		D468FE2F1F48AADA00DEBAE6 /* HCSStarRatingView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HCSStarRatingView.framework; path = Carthage/Build/iOS/HCSStarRatingView.framework; sourceTree = "<group>"; };
 		D468FE321F49142F00DEBAE6 /* TabPageViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TabPageViewController.framework; path = Carthage/Build/iOS/TabPageViewController.framework; sourceTree = "<group>"; };
@@ -528,6 +532,7 @@
 				D44162C61F8744DE0044A37C /* RankingTableViewCell.swift */,
 				D4FA886B1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift */,
 				D454DC621FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift */,
+				D462007020047F250049E5CC /* LiveSessionTableViewCell.swift */,
 			);
 			path = "Table Cells";
 			sourceTree = "<group>";
@@ -588,6 +593,7 @@
 				D4FA88691F9AB8F900837DB6 /* FeedMotivationTableViewCell.xib */,
 				D454DC601FA68EEE0021D203 /* FeedHorizontalScrollViewTableViewCell.xib */,
 				D454DC661FA76BC50021D203 /* FeedGifView.xib */,
+				D462006B20047EEB0049E5CC /* LiveSessionTableViewCell.xib */,
 			);
 			path = "Interface Builder";
 			sourceTree = "<group>";
@@ -904,6 +910,7 @@
 				D454DC611FA68EEE0021D203 /* FeedHorizontalScrollViewTableViewCell.xib in Resources */,
 				D491147B1F7B77FA00F8402E /* 6_BOF.m4a in Resources */,
 				D491147C1F7B77FA00F8402E /* 7_SitStraightSpine.m4a in Resources */,
+				D462006C20047EEB0049E5CC /* LiveSessionTableViewCell.xib in Resources */,
 				D491147D1F7B77FA00F8402E /* 8_SufiGrindOneDirection.m4a in Resources */,
 				D491147E1F7B77FA00F8402E /* 9_SufiGrindOtherDirection.m4a in Resources */,
 				D491147F1F7B77FA00F8402E /* 10_SpinalFlexCrossedLegs.m4a in Resources */,
@@ -1102,6 +1109,7 @@
 				D45352BF1EFDDD5600C09259 /* XibView.swift in Sources */,
 				D4B06A941F2BA1F0004DFE50 /* PortalRoomObject.swift in Sources */,
 				D45118D61F68FBF400610F08 /* WalkthroughFinalViewController.swift in Sources */,
+				D462007120047F250049E5CC /* LiveSessionTableViewCell.swift in Sources */,
 				D437DCD31FE0E27600AB5A0C /* LiveSessionManager.swift in Sources */,
 				D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */,
 				D43D4BB51F048282002F369F /* TextManager.swift in Sources */,

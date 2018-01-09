@@ -61,21 +61,31 @@ class FeedMapTableViewCell: UITableViewCell {
         
 //        let span = MKCoordinateSpanMake(25.502001722875953, 67.978134479121621) // US
 //        let span = MKCoordinateSpanMake(12, 35) // State
+        var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2DMake(38.836910245556396, -95.823448005444746),
+                                           span: MKCoordinateSpanMake(25.502001722875953, 67.978134479121621))
         var span = MKCoordinateSpanMake(0.5, 0.5) // County
         if let minLng = minLng,
             let maxLng = maxLng,
             let minLat = minLat,
             let maxLat = maxLat {
-            let spanMultiplier: Double = 0.5
+            let spanMultiplier: Double = 1.5
             span = MKCoordinateSpanMake(spanMultiplier * (maxLat - minLat), spanMultiplier * (maxLng - minLng))
+            mapRegion = MKCoordinateRegionMake(CLLocationCoordinate2D(latitude: maxLat - span.latitudeDelta / 2, longitude: maxLng - span.longitudeDelta / 2), span)
         }
         
-        var center = CLLocationCoordinate2DMake(38.836910245556396, -95.823448005444746)
+        
+        var center: CLLocationCoordinate2D?
         if let user = SessionManager.sharedInstance.currentUserData,
             let userCoordinate = user.coordinate {
-            center = userCoordinate
+            
+            if ARXLocationService.regionContains(region: mapRegion, coordinate: userCoordinate) {
+                center = userCoordinate
+            }
         }
-        mapView.region = MKCoordinateRegionMake(center, span)
+        if let center = center {
+            mapRegion = MKCoordinateRegionMake(center, span)
+        }
+        mapView.region = mapRegion
 
         let weights = locations.map({ _ in
             return Double(0.5)

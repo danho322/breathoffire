@@ -66,6 +66,7 @@ enum FeedViewSectionTypes: Int {
             }
             return cell
         } else {
+            var isRanking = true
             var textLabel = ""
             var detailLabel = ""
             var location: String?
@@ -89,17 +90,15 @@ enum FeedViewSectionTypes: Int {
                     detailLabel = "\(BreathTimerService.timeString(time: Double(user.maxTimeStreak)))"
                 }
             } else if self == .liveSessions {
-                if let session = vc.liveSessions[safe: indexPath.row] {
-                    textLabel = "\(session.userName)"
-                    if session.userCount > 1 {
-                        textLabel = "\(textLabel) and \(session.userCount) others"
-                    }
-                    location = session.intention
-                    detailLabel = ""
+                isRanking = false
+                if let session = vc.liveSessions[safe: indexPath.row],
+                    let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.LiveSessionCellIdentifier, for: indexPath) as? LiveSessionTableViewCell{
+                    cell.configure(session)
+                    return cell
                 }
             }
             
-            if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.RankingCellIdentifier, for: indexPath) as? RankingTableViewCell {
+            if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.RankingCellIdentifier, for: indexPath) as? RankingTableViewCell, isRanking {
                 cell.rankingLabel.text = "\(indexPath.row + 1)"
                 cell.userNameLabel.text = textLabel
                 cell.locationLabel.text = location
@@ -175,6 +174,8 @@ class FeedViewController: UIViewController {
         tableView.register(feedHorizontalCellNib , forCellReuseIdentifier: CellIdentifiers.FeedHorizontalScrollViewIdentifier)
         let RankingsCellNib = UINib(nibName: String(describing: RankingTableViewCell.self), bundle: nil)
         tableView.register(RankingsCellNib , forCellReuseIdentifier: CellIdentifiers.RankingCellIdentifier)
+        let LiveSessionCellNib = UINib(nibName: String(describing: LiveSessionTableViewCell.self), bundle: nil)
+        tableView.register(LiveSessionCellNib , forCellReuseIdentifier: CellIdentifiers.LiveSessionCellIdentifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {

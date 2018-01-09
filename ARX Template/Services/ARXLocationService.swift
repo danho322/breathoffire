@@ -42,6 +42,19 @@ class ARXLocationService: NSObject {
         locationHandler?(coordinate)
         locationHandler = nil
     }
+    
+    /* Standardises and angle to [-180 to 180] degrees */
+    class func standardAngle(_ inputAngle: CLLocationDegrees) -> CLLocationDegrees {
+        let angle = inputAngle.truncatingRemainder(dividingBy: 360)
+        return angle < -180 ? -360 - angle : angle > 180 ? 360 - 180 : angle
+    }
+    
+    /* confirms that a region contains a location */
+    class func regionContains(region: MKCoordinateRegion, coordinate: CLLocationCoordinate2D) -> Bool {
+        let deltaLat = abs(standardAngle(region.center.latitude - coordinate.latitude))
+        let deltalong = abs(standardAngle(region.center.longitude - coordinate.longitude))
+        return region.span.latitudeDelta >= deltaLat && region.span.longitudeDelta >= deltalong
+    }
 }
 
 extension ARXLocationService: CLLocationManagerDelegate {
