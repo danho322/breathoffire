@@ -29,6 +29,26 @@ class FeedHorizontalScrollViewTableViewCell: UITableViewCell {
         // Initialization code
         optionsButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
         optionsButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(16)
+        
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeRight(_:)))
+        swipeRightGesture.direction = .right
+        addGestureRecognizer(swipeRightGesture)
+        
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeLeft(_:)))
+        swipeLeftGesture.direction = .left
+        addGestureRecognizer(swipeLeftGesture)
+        
+    }
+    
+    @objc func onSwipeRight(_ sender: AnyObject) {
+        var x = paginatedScrollView.contentOffset.x - paginatedScrollView.frame.width
+        x = x >= 0 ? x : 0
+        paginatedScrollView.setContentOffset(CGPoint(x: x, y: paginatedScrollView.contentOffset.y), animated: true)
+    }
+    
+    @objc func onSwipeLeft(_ sender: AnyObject) {
+        
+        paginatedScrollView.setContentOffset(CGPoint(x: paginatedScrollView.contentOffset.x + paginatedScrollView.frame.width, y: paginatedScrollView.contentOffset.y), animated: true)
     }
     
     func update(feedItems: [BreathFeedItem], optionsHandler: @escaping ((String?)->Void), outerScrollView: UIScrollView?) {

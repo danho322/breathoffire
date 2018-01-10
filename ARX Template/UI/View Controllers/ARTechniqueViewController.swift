@@ -28,6 +28,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     @IBOutlet weak var statusImageViewContainer: UIView!
     @IBOutlet weak var hudBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var endButton: UIButton!
+    @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var currentAnimationLabel: UILabel!
     @IBOutlet weak var currentAnimationTimeLabel: UILabel!
     @IBOutlet weak var showPortalButton: UIButton!
@@ -64,6 +65,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     var liveSessionInfo = LiveSessionInfo(type: .none, liveSession: nil, intention: nil)
     internal var liveSessionCounter: TimeInterval = 0
     internal var liveSessionKey: String?
+    internal var joinedUserNames: [String] = []
     
     // feed
     internal var screenShot: [UIImage] = []
@@ -142,7 +144,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 model.delegate = self
                 virtualObjects.append(model)
             }
-            restartExperienceButton.isHidden = true
         }
         
         updatePlacementUI()
@@ -255,6 +256,69 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     func pingLiveSession() {
         LiveSessionManager.sharedInstance.pingCurrentLiveSession(key: liveSessionKey)
+    }
+    
+    func removeUserAvatar(userName: String) {
+        if let userNode = sceneView.scene.rootNode.childNode(withName: userName, recursively: true) {
+            userNode.removeFromParentNode()
+        }
+    }
+    
+    @objc func addUserAvatar(userName: String) {
+        if let virtualObject = virtualObjects.first {
+            let incrementX: Float = 0.08
+            let incrementY: Float = 0.05
+            let randX = Float(arc4random_uniform(10)) * incrementX - (10 * incrementX)
+            let randY = Float(arc4random_uniform(15)) * incrementY
+            let randZ = Float(arc4random_uniform(10)) * incrementX
+            
+            let (direction, _) = getUserVector()
+            
+            let position = SCNVector3(virtualObject.position.x + randX * direction.x, virtualObject.position.y + randY * direction.y, virtualObject.position.z + (2 + randZ) * direction.z)
+            addTextToScene(userName, position: position, eulerAngles: virtualObject.eulerAngles, fontSize: 0.1, fontColor: ThemeManager.sharedInstance.backgroundColor())
+        }
+    }
+    
+    func addIntentionToScene() {
+        if let liveSessionIntention = liveSessionInfo.intention {
+            if let virtualObject = virtualObjects.first {
+                
+                let (direction, _) = getUserVector()
+                
+                let position = SCNVector3(virtualObject.position.x + direction.x, virtualObject.position.y + direction.y, virtualObject.position.z + direction.z * 5)
+                
+                addTextToScene(liveSessionIntention, position: position, eulerAngles: virtualObject.eulerAngles, fontSize: 0.2, fontColor: ThemeManager.sharedInstance.focusForegroundColor())
+            }
+        }
+    }
+    
+    internal func addTextToScene(_ text: String, position: SCNVector3, eulerAngles: SCNVector3, fontSize: CGFloat, fontColor: UIColor) {
+        let annotationNode = SCNNode()
+        
+        var v1 = SCNVector3(x: 0,y: 0,z: 0)
+        var v2 = SCNVector3(x: 0,y: 0,z: 0)
+        
+        let sDepth: CGFloat = fontSize / 10
+        let newText = SCNText(string: text, extrusionDepth: sDepth)
+        newText.font = UIFont (name: "AvenirNext-Regular", size: fontSize)
+        newText.isWrapped = true
+        newText.firstMaterial!.diffuse.contents = fontColor
+        newText.firstMaterial!.specular.contents = fontColor
+        print(newText.boundingBox)
+
+        let textNode = SCNNode(geometry: newText)
+        v1 = textNode.boundingBox.min
+        v2 = textNode.boundingBox.max
+        let dx:Float = Float(v1.x - v2.x)/2.0
+        let dy:Float = Float(v1.y - v2.y)
+        textNode.position = SCNVector3Make(dx, dy, Float(sDepth/2))
+        
+        annotationNode.addChildNode(textNode)
+        annotationNode.name = text
+        annotationNode.position = position
+        sceneView.scene.rootNode.addChildNode(annotationNode)
+        
+        annotationNode.eulerAngles = eulerAngles
     }
     
     // MARK: - Breathe
@@ -464,6 +528,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             settingsButton.isHidden = !currentPlacementState.isPlaced()
             screenshotButton.isHidden = !currentPlacementState.isPlaced()
             endButton.isHidden = !currentPlacementState.hideStatusLabel()
+            exitButton.isHidden = currentPlacementState.hideStatusLabel()
+            restartExperienceButton.isHidden = !currentPlacementState.showDebugVisuals()
             
             let shouldShowDebugVisuals = currentPlacementState.showDebugVisuals()
             if showDebugVisuals != shouldShowDebugVisuals {
@@ -1210,6 +1276,15 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         } else if liveSessionInfo.type == .join {
             joinLiveSession(key: liveSessionInfo.liveSession?.key)
         }
+        addIntentionToScene()
+        //testing
+        perform(#selector(addUserAvatar(userName:)), with: "Anonymous", afterDelay: 5)
+        perform(#selector(addUserAvatar(userName:)), with: "Denny Prokopos", afterDelay: 10)
+        perform(#selector(addUserAvatar(userName:)), with: "Anonymous 1", afterDelay: 15)
+        perform(#selector(addUserAvatar(userName:)), with: "Daniel Ho", afterDelay: 20)
+        perform(#selector(addUserAvatar(userName:)), with: "Anonymous 2", afterDelay: 25)
+        perform(#selector(addUserAvatar(userName:)), with: "Jakub Burkot", afterDelay: 30)
+
     }
     
     internal func setupSessionTimer(speedMultipler: Float) {
@@ -1431,6 +1506,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     func setupUIControls() {
         let closeIcon = FAKIonIcons.closeIcon(withSize: 25)
         closeIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
+        exitButton.setAttributedTitle(closeIcon?.attributedString(), for: .normal)
         
         endButton.setTitle("Finish", for: .normal)
         endButton.titleLabel?.font = ThemeManager.sharedInstance.defaultFont(16)
@@ -1529,6 +1605,30 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		}
 	}
     
+    @IBAction func onExitTap(_ sender: Any) {
+        let alertMessage = UIAlertController(title: NSLocalizedString("Exit Session?", comment: "Action sheet title"),
+                                             message: nil,
+                                             preferredStyle: .actionSheet)
+        
+        
+        alertMessage.addAction(UIAlertAction(title: NSLocalizedString("Exit", comment: "Ok button title"), style: .default, handler: { [unowned self] _ in
+            self.dismiss()
+        }))
+        
+        alertMessage.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { [unowned self] _ in
+            self.hudDidTapPlay()
+        }))
+        
+        alertMessage.popoverPresentationController?.sourceView = endButton
+        alertMessage.popoverPresentationController?.sourceRect = endButton.frame
+        alertMessage.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+        if let popoverPresentationController = alertMessage.popoverPresentationController {
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceRect = self.view.bounds
+        }
+        self.present(alertMessage, animated: true, completion: nil)
+    }
+    
     @IBAction func onEndTap(_ sender: Any) {
         hudDidTapPause()
         let breathTime = sessionCounter
@@ -1601,7 +1701,28 @@ imageArray)
                     breathCompletionView.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
                     
                     let breathDuration = BreathTimerService.timeString(time: breathTime)
-                    breathCompletionView.update(breathDuration: breathDuration, screenshot: self.screenShot, sequenceContainer: nil)
+                    var shareText = "I finished a session with the Breath of Fire app! \(Constants.AppStoreLink)"
+                    var detailText = "Total time: \(breathDuration)"
+                    
+                    if let animationSequenceData = self.sequenceToLoad {
+                        shareText = "I finished \(animationSequenceData.sequenceName) using the Breath of Fire app! \(Constants.AppStoreLink)"
+                        detailText = "\(animationSequenceData.sequenceName) completed"
+                        
+                        if self.joinedUserNames.count == 1 {
+                            shareText = "I used the Breath of Fire app to CONNECT TO THE UNIVERSE! \(Constants.AppStoreLink)"
+                            detailText = "\(animationSequenceData.sequenceName) completed\nwith \(self.joinedUserNames[0])"
+                        } else if self.joinedUserNames.count > 1 {
+                            shareText = "\(self.joinedUserNames.joined(separator: ", ")) and I used the Breath of Fire app to CONNECT TO THE UNIVERSE! \(Constants.AppStoreLink)"
+                            var names = self.joinedUserNames.joined(separator: ", ")
+                            if let lastName = self.joinedUserNames.last {
+                                names = names.replacingOccurrences(of: ", \(lastName)", with: "and \(lastName)")
+                                detailText = "\(animationSequenceData.sequenceName) completed\nwith \(names)"
+                            }
+                        }
+                    }
+                    
+                    
+                    breathCompletionView.update(detailsText: detailText, shareText: shareText, screenshot: self.screenShot, sequenceContainer: nil)
                     self.view.addSubview(breathCompletionView)
                     breathCompletionView.animateIn()
                 }
@@ -1699,7 +1820,17 @@ imageArray)
 
 extension ARTechniqueViewController: LiveSessionDelegate {
     func onUserJoined(userName: String, userCount: Int) {
-        instructionView.addInstruction(text: "\(userName) joined the session, \(userCount) users total")
+        
+        var nameToAdd = userName
+        
+        var i = 1
+        while joinedUserNames.contains(nameToAdd) {
+            nameToAdd = "\(userName) \(i)"
+            i += 1
+        }
+        joinedUserNames.append(nameToAdd)
+        instructionView.addInstruction(text: "\(nameToAdd) joined the session, \(userCount) users total")
+        addUserAvatar(userName: nameToAdd)
     }
 }
 

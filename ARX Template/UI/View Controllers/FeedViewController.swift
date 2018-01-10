@@ -181,8 +181,10 @@ class FeedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        LiveSessionManager.sharedInstance.currentSessions() { [unowned self] liveSessions in
-            self.liveSessions = liveSessions
+        if let userId = SessionManager.sharedInstance.currentUserData?.userId {
+            LiveSessionManager.sharedInstance.currentSessions() { [unowned self] liveSessions in
+                self.liveSessions = liveSessions.filter({ $0.creatorUserId != userId })
+            }
         }
         
         FirebaseService.sharedInstance.retrieveBreathFeed(allowedUpdates: 2) { [unowned self] items in

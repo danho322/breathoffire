@@ -69,12 +69,18 @@ class LiveSessionManager {
     
     var prevSet: Set<String> = Set<String>()
     func listenToUserCount(key: String?, delegate: LiveSessionDelegate) {
+        var currentUser = ""
+        if let user = SessionManager.sharedInstance.currentUserData {
+            currentUser = user.userName
+        }
         if let key = key {
             _ = FirebaseService.sharedInstance.listenLiveSessionUserList(key: key, eventType: .value, listHandler: { nameSet in
                 let newUsers = nameSet.subtracting(self.prevSet)
                 // new users is the newly joined
                 for user in newUsers {
-                    delegate.onUserJoined(userName: user, userCount: nameSet.count)
+                    if currentUser != user {
+                        delegate.onUserJoined(userName: user, userCount: nameSet.count)
+                    }
                 }
                 self.prevSet = newUsers
             })

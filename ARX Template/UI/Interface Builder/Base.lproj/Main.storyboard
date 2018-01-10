@@ -645,9 +645,9 @@
                                 </connections>
                             </segmentedControl>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1w8-zF-t5E">
-                                <rect key="frame" x="0.0" y="67" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="67" width="375" height="56"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="1w8-zF-t5E" secondAttribute="height" multiplier="375:200" id="PjQ-Ik-pq1"/>
+                                    <constraint firstAttribute="width" secondItem="1w8-zF-t5E" secondAttribute="height" multiplier="375:56" id="PjQ-Ik-pq1"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNP-4m-wcj">
@@ -657,7 +657,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjs-MA-nho">
-                                <rect key="frame" x="0.0" y="267" width="375" height="400"/>
+                                <rect key="frame" x="0.0" y="123" width="375" height="544"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3CA-kC-u70">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
@@ -695,7 +695,7 @@
                                 </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MOo-pK-baW">
-                                <rect key="frame" x="172" y="152" width="30" height="30"/>
+                                <rect key="frame" x="172" y="80" width="30" height="30"/>
                                 <connections>
                                     <action selector="onPlayTap:" destination="HiZ-AO-84A" eventType="touchUpInside" id="yw6-Yo-jmI"/>
                                 </connections>
@@ -1099,6 +1099,12 @@
                                     <action selector="restartExperience:" destination="gQx-gU-hL3" eventType="touchUpInside" id="duX-uW-uSO"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zne-Ec-PlQ">
+                                <rect key="frame" x="10" y="40" width="30" height="30"/>
+                                <connections>
+                                    <action selector="onExitTap:" destination="gQx-gU-hL3" eventType="touchUpInside" id="9kI-Ak-mZK"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIQ-GD-S9b">
                                 <rect key="frame" x="177.5" y="502" width="20" height="45"/>
                                 <constraints>
@@ -1258,7 +1264,9 @@
                             <constraint firstItem="twb-Zb-eDD" firstAttribute="leading" secondItem="VQZ-1R-OLo" secondAttribute="trailing" constant="15" id="RR4-3J-s0R"/>
                             <constraint firstItem="bGy-L5-bog" firstAttribute="leading" secondItem="cuu-kW-rEx" secondAttribute="leading" id="U6I-cg-gwH"/>
                             <constraint firstItem="k1K-JZ-etP" firstAttribute="top" secondItem="OmM-QP-RfY" secondAttribute="top" id="Ujz-Q1-QmL"/>
+                            <constraint firstItem="Zne-Ec-PlQ" firstAttribute="top" secondItem="OmM-QP-RfY" secondAttribute="top" constant="20" id="XWF-HK-hFN"/>
                             <constraint firstItem="Mec-UJ-eUf" firstAttribute="leading" secondItem="OmM-QP-RfY" secondAttribute="leading" constant="10" id="XxI-Ar-SIg"/>
+                            <constraint firstItem="Zne-Ec-PlQ" firstAttribute="leading" secondItem="OmM-QP-RfY" secondAttribute="leading" constant="10" id="Y3o-zX-qiA"/>
                             <constraint firstAttribute="bottom" secondItem="auA-Qr-nK7" secondAttribute="bottom" id="YeT-pR-6wr"/>
                             <constraint firstItem="twb-Zb-eDD" firstAttribute="top" secondItem="OmM-QP-RfY" secondAttribute="top" constant="20" id="bVA-U0-21F"/>
                             <constraint firstItem="Zh8-TW-68o" firstAttribute="top" secondItem="OmM-QP-RfY" secondAttribute="top" constant="15" id="dKV-RG-R3b"/>
@@ -1291,6 +1299,7 @@
                         <outlet property="currentAnimationTimeLabel" destination="b3C-q6-g4c" id="GJi-TN-Mdf"/>
                         <outlet property="debugMessageLabel" destination="eOG-9O-hbm" id="wP4-e0-cWY"/>
                         <outlet property="endButton" destination="JIQ-GD-S9b" id="YF8-rj-mzi"/>
+                        <outlet property="exitButton" destination="Zne-Ec-PlQ" id="70F-ck-owp"/>
                         <outlet property="featurePointCountLabel" destination="8kF-pT-w2a" id="UmN-VA-Qap"/>
                         <outlet property="hidePortalButton" destination="cuu-kW-rEx" id="fJD-rA-qgD"/>
                         <outlet property="hudBottomConstraint" destination="ICK-CY-2zW" id="hW4-iW-gJb"/>

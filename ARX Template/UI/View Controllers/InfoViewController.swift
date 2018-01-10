@@ -44,6 +44,8 @@ enum SegmentIndexType: Int {
     }
     
     func videoUrl() -> URL? {
+        return nil
+        
         switch self {
         case .what:
             return Bundle.main.url(forResource: "What", withExtension: "m4v")

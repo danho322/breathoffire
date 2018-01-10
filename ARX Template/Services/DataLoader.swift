@@ -100,10 +100,10 @@ struct DataLoader {
             groupAnimation.repeatCount = Float.greatestFiniteMagnitude
             
             let scaleDown = CABasicAnimation(keyPath: "transform.scale")
-            scaleDown.fromValue = 0.8
-            scaleDown.toValue = 1.0
+            scaleDown.fromValue = 1.2
+            scaleDown.toValue = 0.8
             let rotate = CABasicAnimation(keyPath: "transform.rotation")
-            rotate.fromValue = .pi/5.0
+            rotate.fromValue = .pi/2.0
             rotate.toValue = 0.0
             let fade = CABasicAnimation(keyPath: "opacity")
             fade.fromValue = 0.0

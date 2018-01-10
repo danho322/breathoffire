@@ -61,6 +61,7 @@ class BreatheCompleteView: XibView {
             fatalError("view is not of type BreatheCompleteView")
         }
         
+        view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         view.containerView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         view.titleLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         view.detailsLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
@@ -100,6 +101,17 @@ class BreatheCompleteView: XibView {
         NotificationCenter.default.addObserver(self, selector: #selector(BreatheCompleteView.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if let view = view as? BreatheCompleteView {
+            view.screenshotImageView.layer.masksToBounds = true
+            view.screenshotImageView.layer.cornerRadius = view.screenshotImageView.frame.size.width / 2
+            view.screenshotImageView.layer.borderColor = UIColor.clear.cgColor
+
+        }
+    }
+    
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let view = view as? BreatheCompleteView else {
             fatalError("view is not of type LoginView")
@@ -130,19 +142,16 @@ class BreatheCompleteView: XibView {
     }
     
     // artechniqueviewcontroller needs to be refactored to hold the container
-    func update(breathDuration: String, screenshot: [UIImage]?, sequenceContainer: AnimationSequenceDataContainer?) {
+    func update(detailsText: String, shareText: String, screenshot: [UIImage]?, sequenceContainer: AnimationSequenceDataContainer?) {
         guard let view = view as? BreatheCompleteView else {
             fatalError("view is not of type BreatheCompleteView")
         }
-        view.shareText = "I breathed for \(breathDuration) using the Breath of Fire app!"
-        view.detailsLabel.text = "Total time: \(breathDuration)"
+        
+        view.shareText = shareText
+        view.detailsLabel.text = detailsText
         if let screenshot = screenshot, screenshot.count > 0 {
             view.screenshotImageView.image = screenshot.first
         }
-        view.screenshotImageView.layer.masksToBounds = true
-        view.screenshotImageView.layer.cornerRadius = view.screenshotImageView.frame.size.width / 2
-        view.screenshotImageView.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
-        view.screenshotImageView.layer.borderWidth = 2
         
 //        Sound.play(file: "gong.m4a")
         

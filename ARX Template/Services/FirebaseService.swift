@@ -16,6 +16,7 @@ import Gzip
 
 struct Constants {
     static let AppKey = "jiujitsu"
+    static let AppStoreLink = "TODO APPSTORE LINK"
     
     static let isSimulator: Bool = {
         var isSim = false
