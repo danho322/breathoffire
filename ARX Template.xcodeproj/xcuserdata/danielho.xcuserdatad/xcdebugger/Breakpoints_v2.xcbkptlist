@@ -345,8 +345,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "255"
             endingLineNumber = "255"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "joinLiveSession(key:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -441,8 +441,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1847"
             endingLineNumber = "1847"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "onUserJoined(userName:userCount:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -457,8 +457,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1299"
             endingLineNumber = "1299"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "testAddUser(index:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

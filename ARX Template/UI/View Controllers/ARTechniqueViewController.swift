@@ -279,7 +279,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             let (direction, _) = getUserVector()
             
             let position = SCNVector3(virtualObject.position.x + randX * direction.x, virtualObject.position.y + randY * direction.y, virtualObject.position.z + direction.z * 2)
-            let textNode = addTextToScene(userName, position: position, eulerAngles: virtualObject.eulerAngles, fontSize: 0.1, fontColor: ThemeManager.sharedInstance.secondaryFocusForegroundColor())
+            let textNode = addTextToScene("\(userName) joined", position: position, eulerAngles: virtualObject.eulerAngles, fontSize: 0.1, fontColor: ThemeManager.sharedInstance.secondaryFocusForegroundColor())
             
             SCNTransaction.animationDuration = 10.0
             textNode.position = SCNVector3(x: position.x, y: position.y + 1, z: position.z)
@@ -1285,13 +1285,13 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             joinLiveSession(key: liveSessionInfo.liveSession?.key)
         }
         addIntentionToScene()
-        //testing
-        perform(#selector(testAddUser(index:)), with: "0", afterDelay: 5)
-        perform(#selector(testAddUser(index:)), with: "1", afterDelay: 10)
-        perform(#selector(testAddUser(index:)), with: "2", afterDelay: 15)
-        perform(#selector(testAddUser(index:)), with: "3", afterDelay: 20)
-        perform(#selector(testAddUser(index:)), with: "4", afterDelay: 25)
-        perform(#selector(testAddUser(index:)), with: "5", afterDelay: 30)
+//        //testing
+//        perform(#selector(testAddUser(index:)), with: "0", afterDelay: 5)
+//        perform(#selector(testAddUser(index:)), with: "1", afterDelay: 10)
+//        perform(#selector(testAddUser(index:)), with: "2", afterDelay: 15)
+//        perform(#selector(testAddUser(index:)), with: "3", afterDelay: 20)
+//        perform(#selector(testAddUser(index:)), with: "4", afterDelay: 25)
+//        perform(#selector(testAddUser(index:)), with: "5", afterDelay: 30)
         
     }
     
@@ -1852,7 +1852,6 @@ extension ARTechniqueViewController: LiveSessionDelegate {
             i += 1
         }
         joinedUserNames.append(nameToAdd)
-        instructionView.addInstruction(text: "\(nameToAdd) joined the session, \(userCount) users total")
         addUserAvatar(userName: nameToAdd)
     }
 }
