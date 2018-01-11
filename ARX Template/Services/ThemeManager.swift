@@ -42,6 +42,10 @@ struct ThemeManager {
         return UIColor.white
     }
     
+    func secondaryFocusForegroundColor() -> UIColor {
+        return UIColor(red: 241 / 255.0, green: 241 / 255.0, blue: 241 / 255.0, alpha: 1)
+    }
+    
     func errorTextColor() -> UIColor {
         return UIColor.red
     }

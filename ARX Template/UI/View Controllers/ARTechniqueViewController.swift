@@ -222,23 +222,27 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     
     fileprivate func displayGetReady() {
-        let message = isARModeEnabled ?
-            "Point the phone camera ahead of you toward the floor." :
-        "Find a comfortable place for your practice."
-        let alert = UIAlertController(title: "Get Ready", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(
-            UIAlertAction(title: "Ok",
-                          style: UIAlertActionStyle.default,
-                          handler: { [unowned self] _ in
-                            self.setupViewControllerTechnique()
-                }
+        if !isARModeEnabled {
+            let message = isARModeEnabled ?
+                "Point the phone camera ahead of you toward the floor." :
+            "Find a comfortable place for your practice."
+            let alert = UIAlertController(title: "Get Ready", message: message, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(
+                UIAlertAction(title: "Ok",
+                              style: UIAlertActionStyle.default,
+                              handler: { [unowned self] _ in
+                                self.setupViewControllerTechnique()
+                    }
+                )
             )
-        )
-        if let popoverPresentationController = alert.popoverPresentationController {
-            popoverPresentationController.sourceView = self.view
-            popoverPresentationController.sourceRect = self.view.bounds
+            if let popoverPresentationController = alert.popoverPresentationController {
+                popoverPresentationController.sourceView = self.view
+                popoverPresentationController.sourceRect = self.view.bounds
+            }
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            setupViewControllerTechnique()
         }
-        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Live Sessions
@@ -270,12 +274,16 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             let incrementY: Float = 0.05
             let randX = Float(arc4random_uniform(10)) * incrementX - (10 * incrementX)
             let randY = Float(arc4random_uniform(15)) * incrementY
-            let randZ = Float(arc4random_uniform(10)) * incrementX
+//            let randZ = Float(arc4random_uniform(5)) * incrementX
             
             let (direction, _) = getUserVector()
             
-            let position = SCNVector3(virtualObject.position.x + randX * direction.x, virtualObject.position.y + randY * direction.y, virtualObject.position.z + (2 + randZ) * direction.z)
-            addTextToScene(userName, position: position, eulerAngles: virtualObject.eulerAngles, fontSize: 0.1, fontColor: ThemeManager.sharedInstance.backgroundColor())
+            let position = SCNVector3(virtualObject.position.x + randX * direction.x, virtualObject.position.y + randY * direction.y, virtualObject.position.z + direction.z * 2)
+            let textNode = addTextToScene(userName, position: position, eulerAngles: virtualObject.eulerAngles, fontSize: 0.1, fontColor: ThemeManager.sharedInstance.secondaryFocusForegroundColor())
+            
+            SCNTransaction.animationDuration = 10.0
+            textNode.position = SCNVector3(x: position.x, y: position.y + 1, z: position.z)
+            textNode.opacity = 0
         }
     }
     
@@ -287,12 +295,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 
                 let position = SCNVector3(virtualObject.position.x + direction.x, virtualObject.position.y + direction.y, virtualObject.position.z + direction.z * 5)
                 
-                addTextToScene(liveSessionIntention, position: position, eulerAngles: virtualObject.eulerAngles, fontSize: 0.2, fontColor: ThemeManager.sharedInstance.focusForegroundColor())
+                addTextToScene(liveSessionIntention, position: position, eulerAngles: virtualObject.eulerAngles, fontSize: 0.3, fontColor: ThemeManager.sharedInstance.focusForegroundColor())
             }
         }
     }
     
-    internal func addTextToScene(_ text: String, position: SCNVector3, eulerAngles: SCNVector3, fontSize: CGFloat, fontColor: UIColor) {
+    internal func addTextToScene(_ text: String, position: SCNVector3, eulerAngles: SCNVector3, fontSize: CGFloat, fontColor: UIColor) -> SCNNode {
         let annotationNode = SCNNode()
         
         var v1 = SCNVector3(x: 0,y: 0,z: 0)
@@ -319,6 +327,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         sceneView.scene.rootNode.addChildNode(annotationNode)
         
         annotationNode.eulerAngles = eulerAngles
+        
+        return annotationNode
     }
     
     // MARK: - Breathe
@@ -525,7 +535,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             let showHud = sequenceToLoad?.showHud ?? false
             hudView.isHidden = !currentPlacementState.isPlaced() || !showHud
             
-            settingsButton.isHidden = !currentPlacementState.isPlaced()
             screenshotButton.isHidden = !currentPlacementState.isPlaced()
             endButton.isHidden = !currentPlacementState.hideStatusLabel()
             exitButton.isHidden = currentPlacementState.hideStatusLabel()
@@ -1178,7 +1187,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	var isLoadingObject: Bool = false {
 		didSet {
 			DispatchQueue.main.async {
-				self.settingsButton.isEnabled = !self.isLoadingObject
 				self.addObjectButton.isEnabled = !self.isLoadingObject
 				self.screenshotButton.isEnabled = !self.isLoadingObject
 				self.restartExperienceButton.isEnabled = !self.isLoadingObject
@@ -1278,13 +1286,29 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
         addIntentionToScene()
         //testing
-        perform(#selector(addUserAvatar(userName:)), with: "Anonymous", afterDelay: 5)
-        perform(#selector(addUserAvatar(userName:)), with: "Denny Prokopos", afterDelay: 10)
-        perform(#selector(addUserAvatar(userName:)), with: "Anonymous 1", afterDelay: 15)
-        perform(#selector(addUserAvatar(userName:)), with: "Daniel Ho", afterDelay: 20)
-        perform(#selector(addUserAvatar(userName:)), with: "Anonymous 2", afterDelay: 25)
-        perform(#selector(addUserAvatar(userName:)), with: "Jakub Burkot", afterDelay: 30)
-
+        perform(#selector(testAddUser(index:)), with: "0", afterDelay: 5)
+        perform(#selector(testAddUser(index:)), with: "1", afterDelay: 10)
+        perform(#selector(testAddUser(index:)), with: "2", afterDelay: 15)
+        perform(#selector(testAddUser(index:)), with: "3", afterDelay: 20)
+        perform(#selector(testAddUser(index:)), with: "4", afterDelay: 25)
+        perform(#selector(testAddUser(index:)), with: "5", afterDelay: 30)
+        
+    }
+    
+    @objc func testAddUser(index: String) {
+        if index == "0" {
+            onUserJoined(userName: "Anonymous", userCount: 1)
+        } else if index == "1" {
+            onUserJoined(userName: "Denny Prokopos", userCount: 2)
+        } else if index == "2" {
+            onUserJoined(userName: "Anonymous", userCount: 3)
+        } else if index == "3" {
+            onUserJoined(userName: "Daniel Ho", userCount: 4)
+        } else if index == "4" {
+            onUserJoined(userName: "Anonymous", userCount: 5)
+        } else if index == "5" {
+            onUserJoined(userName: "Jakub Burkot", userCount: 6)
+        }
     }
     
     internal func setupSessionTimer(speedMultipler: Float) {
@@ -1475,7 +1499,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         didSet {
 			featurePointCountLabel.isHidden = !showDebugVisuals
 			debugMessageLabel.isHidden = !showDebugVisuals
-			messagePanel.isHidden = !showDebugVisuals
 			planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
 			
 			if showDebugVisuals {
@@ -1715,7 +1738,7 @@ imageArray)
                             shareText = "\(self.joinedUserNames.joined(separator: ", ")) and I used the Breath of Fire app to CONNECT TO THE UNIVERSE! \(Constants.AppStoreLink)"
                             var names = self.joinedUserNames.joined(separator: ", ")
                             if let lastName = self.joinedUserNames.last {
-                                names = names.replacingOccurrences(of: ", \(lastName)", with: "and \(lastName)")
+                                names = names.replacingOccurrences(of: ", \(lastName)", with: " and \(lastName)")
                                 detailText = "\(animationSequenceData.sequenceName) completed\nwith \(names)"
                             }
                         }

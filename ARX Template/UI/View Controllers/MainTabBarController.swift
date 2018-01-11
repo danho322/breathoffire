@@ -17,10 +17,11 @@ class ExampleIrregularityContentView: ESTabBarItemContentView {
         super.init(frame: frame)
         
         self.imageView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        self.imageView.layer.borderWidth = 3.0
-        self.imageView.layer.borderColor = UIColor.init(white: 235 / 255.0, alpha: 1.0).cgColor
-        self.imageView.layer.cornerRadius = 35
-        self.insets = UIEdgeInsetsMake(-20, 0, 0, 0)
+//        self.imageView.layer.borderWidth = 3.0
+//        self.imageView.layer.borderColor = UIColor.init(white: 235 / 255.0, alpha: 1.0).cgColor
+//        self.imageView.layer.cornerRadius = 35
+        self.imageView.contentMode = .scaleAspectFit
+        self.insets = UIEdgeInsetsMake(10, 0, 0, 0)
         let transform = CGAffineTransform.identity
         self.imageView.transform = transform
         self.superview?.bringSubview(toFront: self)
@@ -147,15 +148,14 @@ class MainTabBarController: ESTabBarController {
                     let communityVC = storyboard.instantiateViewController(withIdentifier: "FeedViewControllerIdentifier")
                     
                     let navigationController = ARXNavigationController(rootViewController: communityVC)
-                    communityVC.title = "Breath of Fire"
+                    communityVC.title = "Community"
                     navigationController.delegate = self
-                    
                     let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     communityVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
                     
                     
-                    let tabIcon = FAKIonIcons.iosWorldIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
-                    navigationController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Breath of Fire", image: tabIcon, selectedImage: tabIcon)
+                    let tabIcon = FAKFontAwesome.usersIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                    navigationController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Community", image: tabIcon, selectedImage: tabIcon)
                     
                     newViewControllers.append(navigationController)
                 } else {
@@ -165,9 +165,8 @@ class MainTabBarController: ESTabBarController {
                     
                     if let tabTitle = viewController.tabBarItem.title {
                         if tabTitle == "Breathe" {
-                            let icon = FAKIonIcons.flameIcon(withSize: 70)
-                            let flameImage = icon?.image(with: CGSize(width: 70, height: 70))
-                            viewController.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(), title: "", image: flameImage, selectedImage: flameImage)
+                            let flameImage = UIImage(named: "flame")
+                            viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Breathe", image: flameImage, selectedImage: flameImage)
                         } else if tabTitle == "Profile" {
                             let icon = FAKIonIcons.iosPersonIcon(withSize: 25)
                             let userImage = icon?.image(with: CGSize(width: 25, height: 25))

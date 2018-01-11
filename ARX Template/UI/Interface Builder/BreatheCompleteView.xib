@@ -29,13 +29,13 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You did 1,000 breaths of fire" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eht-Nn-EgY">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You did 1,000 breaths of fire" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eht-Nn-EgY">
                                     <rect key="frame" x="80" y="88" width="215" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FireEmoji" translatesAutoresizingMaskIntoConstraints="NO" id="JMM-TO-4tV">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flame" translatesAutoresizingMaskIntoConstraints="NO" id="JMM-TO-4tV">
                                     <rect key="frame" x="56.5" y="123" width="262.5" height="262"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="JMM-TO-4tV" secondAttribute="height" multiplier="1:1" id="be4-qs-a6O"/>
@@ -123,6 +123,7 @@
                                 <constraint firstItem="Omp-m5-LQ5" firstAttribute="top" secondItem="4J4-nc-gZl" secondAttribute="top" constant="52" id="EUG-zs-Oag"/>
                                 <constraint firstItem="8YA-M2-EaM" firstAttribute="top" secondItem="4J4-nc-gZl" secondAttribute="top" constant="10" id="HFt-E1-fp2"/>
                                 <constraint firstItem="Bik-P9-3SE" firstAttribute="leading" secondItem="u4V-Xv-VYV" secondAttribute="trailing" constant="-50" id="K3u-cS-V17"/>
+                                <constraint firstItem="Eht-Nn-EgY" firstAttribute="leading" secondItem="4J4-nc-gZl" secondAttribute="leading" constant="20" id="MdC-0Y-bFF"/>
                                 <constraint firstItem="22n-sC-VY7" firstAttribute="width" secondItem="4J4-nc-gZl" secondAttribute="width" id="O6d-c0-dLM"/>
                                 <constraint firstItem="Omp-m5-LQ5" firstAttribute="centerX" secondItem="4J4-nc-gZl" secondAttribute="centerX" id="OZH-sU-TTk"/>
                                 <constraint firstItem="Eht-Nn-EgY" firstAttribute="centerX" secondItem="4J4-nc-gZl" secondAttribute="centerX" id="Qxn-De-tfe"/>
@@ -137,6 +138,7 @@
                                 <constraint firstItem="Bik-P9-3SE" firstAttribute="centerX" secondItem="4J4-nc-gZl" secondAttribute="centerX" id="t5q-j1-ubH"/>
                                 <constraint firstItem="4hq-YZ-Ina" firstAttribute="top" secondItem="JMM-TO-4tV" secondAttribute="bottom" constant="10" id="vCI-1f-o7o"/>
                                 <constraint firstItem="Bik-P9-3SE" firstAttribute="top" secondItem="6c0-Hy-XXv" secondAttribute="bottom" constant="10" id="xOm-V5-YGY"/>
+                                <constraint firstAttribute="trailing" secondItem="Eht-Nn-EgY" secondAttribute="trailing" constant="20" id="yqJ-PA-Nxd"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -179,6 +181,6 @@
         </view>
     </objects>
     <resources>
-        <image name="FireEmoji" width="512" height="512"/>
+        <image name="flame" width="250" height="250"/>
     </resources>
 </document>

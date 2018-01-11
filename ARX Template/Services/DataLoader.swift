@@ -25,11 +25,11 @@ struct DataLoader {
         var text = ""
         switch state {
         case .ScanningEmpty:
-            text = "Scan the floor slowly to map out your virtual gym"
+            text = "Scan the surface slowly to map out the floor"
         case .ScanningProgress:
             text = "Surface detected! Continue scanning to increase floor space"
         case .PlacedEditing:
-            text = "Use two fingers to scale/rotate, tap when ready"
+            text = "Use two fingers to scale/rotate the Teacher, tap ✓ when ready"
         default:
             break
         }

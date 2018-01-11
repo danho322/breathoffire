@@ -1050,7 +1050,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wy9-qi-ryr">
-                                <rect key="frame" x="137" y="347" width="100" height="100"/>
+                                <rect key="frame" x="137" y="327" width="100" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Ap0-fK-y7y"/>
@@ -1237,7 +1237,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="bGy-L5-bog" firstAttribute="top" secondItem="cuu-kW-rEx" secondAttribute="bottom" constant="10" id="1JZ-k3-EJA"/>
-                            <constraint firstItem="hpw-Pw-RqP" firstAttribute="top" secondItem="wy9-qi-ryr" secondAttribute="bottom" constant="10" id="21y-JF-OhP"/>
+                            <constraint firstItem="hpw-Pw-RqP" firstAttribute="top" secondItem="wy9-qi-ryr" secondAttribute="bottom" constant="30" id="21y-JF-OhP"/>
                             <constraint firstItem="ba6-jE-09U" firstAttribute="leading" secondItem="auA-Qr-nK7" secondAttribute="leading" constant="15" id="5Ar-Im-xOT"/>
                             <constraint firstItem="ZiE-8E-3Ig" firstAttribute="trailing" secondItem="auA-Qr-nK7" secondAttribute="trailing" constant="-15" id="5mL-g5-z6t"/>
                             <constraint firstItem="wy9-qi-ryr" firstAttribute="centerX" secondItem="hpw-Pw-RqP" secondAttribute="centerX" id="6pf-Ks-Zss"/>

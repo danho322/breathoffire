@@ -315,8 +315,8 @@ class FeedViewController: UIViewController {
     }
     
     func handleLiveBreathTap() {
-        let alert = UIAlertController(title: "Breathe with Purpose",
-                                      message: "Start a breathing session that anybody can join.\n\nSet an intention for you and others to focus on, and let the universe manifest it.",
+        let alert = UIAlertController(title: "Start a live session",
+                                      message: "Set an intention for you and others to focus on, and let the universe manifest it.",
                                       preferredStyle: .alert)
         
         alert.addTextField { (textField) in
