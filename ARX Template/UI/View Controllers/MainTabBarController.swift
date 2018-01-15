@@ -224,6 +224,9 @@ class MainTabBarController: ESTabBarController {
     }
 
     @objc func onHelpTap() {
+        AudioDetectionService.sharedInstance.getCurrentBPM()
+        return
+        
         if let helpVC = storyboard?.instantiateViewController(withIdentifier: "InfoViewIdentifier") {
             present(helpVC, animated: true, completion: nil)
             //                optionsVC.titleLabel.text = selectLabel.text
