@@ -19,7 +19,7 @@ class AudioDetectionService: NSObject {
     let recordSettings: [String : AnyObject] = [AVSampleRateKey : NSNumber(value: Float(16000)),
                                                 AVFormatIDKey : NSNumber(value: Int32(kAudioFormatMPEG4AAC)),
                                                 AVNumberOfChannelsKey : NSNumber(value: 1),
-                                                AVEncoderAudioQualityKey : NSNumber(value: Int32(AVAudioQuality.low.rawValue))]
+                                                AVEncoderAudioQualityKey : NSNumber(value: Int32(AVAudioQuality.high.rawValue))]
 
     
     override init() {
@@ -109,7 +109,7 @@ extension AudioDetectionService: AVAudioRecorderDelegate {
             
         }
         if shouldAnalyze {
-//            play()
+            play()
             let ret = BPMAnalyzer.core.getBpmFrom(recorder.url, completion: {[weak self] (bpm) in
                 print("CURENT BPM \(bpm)")
             })

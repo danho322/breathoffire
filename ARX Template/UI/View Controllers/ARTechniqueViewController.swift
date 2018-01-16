@@ -566,7 +566,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         DispatchQueue.global().async {
             var uke: Uke?
             if object is Instructor && !self.virtualObjects.contains(where: { ($0 is Uke) }) {
-                uke = Uke()
+                uke = Uke(type: self.sequenceToLoad?.instructorType)
                 uke!.viewController = self
                 uke!.loadModel()
                 self.virtualObjects.append(uke!)

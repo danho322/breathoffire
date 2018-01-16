@@ -14,6 +14,7 @@ enum InstructorType: Int {
     case generic = 0
     case dennySimple = 1
     case dennyComplex = 2
+    case armTriangle = 3
     
     func fileName() -> String {
         switch self {
@@ -23,11 +24,18 @@ enum InstructorType: Int {
             return "final_complete_character2"
         case .dennyComplex:
             return "character_proper_rig_complex"
+        case .armTriangle:
+            return "arm_triangle_rig"
         }
     }
     
     func armtatureName() -> String {
-        return "Armtr"
+        switch self {
+        case .armTriangle:
+            return "Armtr"
+        default:
+            return "Armtr"
+        }
     }
 }
 
@@ -67,9 +75,14 @@ class Instructor: VirtualObject {
         addPhysicsBody(nodeName: "Danny_Prokopo_002")
         
         modelLoaded = true
+        
+        enumerateChildNodes({ node, stop in
+            print("child node: \(node.name)")
+        })
     }
     
     override func armatureNode() -> SCNNode? {
+        
         return childNode(withName: armatureName, recursively: true)
     }
     

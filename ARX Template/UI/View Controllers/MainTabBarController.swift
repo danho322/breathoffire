@@ -201,7 +201,6 @@ class MainTabBarController: ESTabBarController {
         super.viewWillDisappear(animated)
         
         self.coachMarksController.stop(immediately: true)
-        SessionManager.sharedInstance.onTutorialShow(type: .Walkthrough)
     }
     
     func displayWalkthrough() {
@@ -261,6 +260,8 @@ extension MainTabBarController: UINavigationControllerDelegate {
 
 extension MainTabBarController: BWWalkthroughViewControllerDelegate {
     func walkthroughCloseButtonPressed() {
+        SessionManager.sharedInstance.onTutorialShow(type: .Walkthrough)
+
         walkthroughVC?.dismiss(animated: true, completion: nil)
         
         coachMarksController.start(on: self)

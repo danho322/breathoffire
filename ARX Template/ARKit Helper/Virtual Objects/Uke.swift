@@ -10,14 +10,30 @@ import UIKit
 import SceneKit
 
 class Uke: VirtualObject {
+    var type: InstructorType
+    
     override init() {
+        type = .generic
         super.init()
+
         self.name = "Virtual object root node"
         self.modelName = "JiujitsuModel4"
         self.fileExtension = "dae"
         self.thumbImage = UIImage(named: "cup")
         self.title = "NakedMale"
         self.armatureName = "Armtr"
+    }
+    
+    init(type: InstructorType? = nil) {
+        let typeToUse = type ?? .generic
+        self.type = typeToUse
+        super.init()
+        self.name = "Virtual object root node"
+        self.modelName =  typeToUse.fileName()
+        self.fileExtension = "dae"
+        self.thumbImage = UIImage(named: "cup")
+        self.title = "Jiujitsu"
+        self.armatureName = typeToUse.armtatureName()
     }
     
     required init?(coder aDecoder: NSCoder) {
