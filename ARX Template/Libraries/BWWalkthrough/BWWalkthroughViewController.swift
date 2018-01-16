@@ -108,6 +108,7 @@ import UIKit
         super.viewDidLoad()
         
         // Initialize UI Elements
+        view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         
         pageControl?.addTarget(self, action: #selector(BWWalkthroughViewController.pageControlDidTouch), for: UIControlEvents.touchUpInside)
         

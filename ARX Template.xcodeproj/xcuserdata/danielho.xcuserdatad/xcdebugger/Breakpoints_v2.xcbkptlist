@@ -324,7 +324,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/FirebaseService.swift"
-            timestampString = "537742173.702166"
+            timestampString = "537836590.407405"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "255"
@@ -340,11 +340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "537822627.617523"
+            timestampString = "537836590.407516"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
             landmarkName = "joinLiveSession(key:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -356,11 +356,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/FeedViewController.swift"
-            timestampString = "537394653.567364"
+            timestampString = "537836590.407604"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -388,7 +388,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/FirebaseService.swift"
-            timestampString = "537742173.703166"
+            timestampString = "537836590.407704"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "439"
@@ -436,11 +436,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "537822627.617779"
+            timestampString = "537836590.407823"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1847"
-            endingLineNumber = "1847"
+            startingLineNumber = "1840"
+            endingLineNumber = "1840"
             landmarkName = "onUserJoined(userName:userCount:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -452,11 +452,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/UI/View Controllers/ARTechniqueViewController.swift"
-            timestampString = "537822627.6178761"
+            timestampString = "537836590.4079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1299"
-            endingLineNumber = "1299"
+            startingLineNumber = "1292"
+            endingLineNumber = "1292"
             landmarkName = "testAddUser(index:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -468,7 +468,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/Services/AudioDetectionService.swift"
-            timestampString = "537822627.618036"
+            timestampString = "537836590.407987"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "68"
@@ -484,13 +484,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/ARKit Helper/Virtual Objects/Instructor.swift"
-            timestampString = "537822627.618158"
+            timestampString = "537836590.40808"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
             endingLineNumber = "28"
             landmarkName = "fileName()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "@objc ARX_Template.Instructor.init() -&gt; ARX_Template.Instructor"
+                  moduleName = "ARX Template"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielho/Dropbox/Public/Modeling%20Files/ARX%20Template/ARX%20Template/ARKit%20Helper/Virtual%20Objects/Instructor.swift"
+                  timestampString = "537833024.953914"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "37">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ARX_Template.Instructor.__ivar_destroyer"
+                  moduleName = "ARX Template"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielho/Dropbox/Public/Modeling%20Files/ARX%20Template/ARX%20Template/ARKit%20Helper/Virtual%20Objects/Instructor.swift"
+                  timestampString = "537833024.958444"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ARX_Template.Instructor.__deallocating_deinit"
+                  moduleName = "ARX Template"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielho/Dropbox/Public/Modeling%20Files/ARX%20Template/ARX%20Template/ARKit%20Helper/Virtual%20Objects/Instructor.swift"
+                  timestampString = "537833024.962513"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -500,12 +547,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARX Template/ARKit Helper/Virtual Objects/Instructor.swift"
-            timestampString = "537822627.6182311"
+            timestampString = "537836590.408149"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "66"
             endingLineNumber = "66"
             landmarkName = "loadModel()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARX Template/Services/FirebaseService.swift"
+            timestampString = "537836590.4082"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "581"
+            endingLineNumber = "581"
+            landmarkName = "retrieveDB()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

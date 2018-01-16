@@ -210,14 +210,12 @@ class MainTabBarController: ESTabBarController {
         let page_zero = stb.instantiateViewController(withIdentifier: "walk0")
         let page_one = stb.instantiateViewController(withIdentifier: "walk1")
         let page_two = stb.instantiateViewController(withIdentifier: "walk2")
-        let page_three = stb.instantiateViewController(withIdentifier: "walk3")
         
         // Attach the pages to the master
         walkthrough.delegate = self
         walkthrough.add(viewController:page_zero)
         walkthrough.add(viewController:page_one)
         walkthrough.add(viewController:page_two)
-        walkthrough.add(viewController:page_three)
         walkthroughVC = walkthrough
         present(walkthrough, animated: true, completion: nil)
     }
@@ -269,7 +267,7 @@ extension MainTabBarController: BWWalkthroughViewControllerDelegate {
     
     func walkthroughPageDidChange(_ pageNumber: Int) {
         print("now at \(pageNumber)")
-        walkthroughVC?.closeButton?.isHidden = pageNumber != 3
+        walkthroughVC?.closeButton?.isHidden = pageNumber != 2
     }
 }
 
@@ -277,7 +275,8 @@ extension MainTabBarController: BWWalkthroughViewControllerDelegate {
 
 extension MainTabBarController: CoachMarksControllerDataSource, CoachMarksControllerDelegate {
     func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
-        return WalthroughInstructionType.count.rawValue
+        return 0
+//        return WalthroughInstructionType.count.rawValue
     }
     
     func coachMarksController(_ coachMarksController: CoachMarksController,
@@ -290,7 +289,7 @@ extension MainTabBarController: CoachMarksControllerDataSource, CoachMarksContro
         
         let hintText = WalthroughInstructionType(rawValue: index)?.hintText()
         coachViews.bodyView.hintLabel.text = hintText
-        coachViews.bodyView.nextLabel.text = "Ok"
+        coachViews.bodyView.nextLabel.text = "✓"
         
         return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }

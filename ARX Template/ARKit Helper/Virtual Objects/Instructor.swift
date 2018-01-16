@@ -75,10 +75,6 @@ class Instructor: VirtualObject {
         addPhysicsBody(nodeName: "Danny_Prokopo_002")
         
         modelLoaded = true
-        
-        enumerateChildNodes({ node, stop in
-            print("child node: \(node.name)")
-        })
     }
     
     override func armatureNode() -> SCNNode? {

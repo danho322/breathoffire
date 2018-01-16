@@ -264,7 +264,7 @@ extension OptionsViewController: UITableViewDataSource {
 
 extension OptionsViewController: CoachMarksControllerDataSource, CoachMarksControllerDelegate {
     func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
-        return 2
+        return 0
     }
     
     func coachMarksController(_ coachMarksController: CoachMarksController,
@@ -277,7 +277,7 @@ extension OptionsViewController: CoachMarksControllerDataSource, CoachMarksContr
         
         let hintText = index == 0 ? "Here is the daily exercise" : "Here are the pacakges"
         coachViews.bodyView.hintLabel.text = hintText
-        coachViews.bodyView.nextLabel.text = "Ok"
+        coachViews.bodyView.nextLabel.text = "✓"
         
         return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }

@@ -149,15 +149,10 @@ class FeedViewController: UIViewController {
     
     internal var cellHeights = [IndexPath:CGFloat]()
     
-    let coachMarksController = CoachMarksController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        coachMarksController.dataSource = self
-        coachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
-        
         view.backgroundColor = ThemeManager.sharedInstance.feedBackgroundColor()
         tableView.backgroundColor = UIColor.clear
 
@@ -210,7 +205,6 @@ class FeedViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.coachMarksController.stop(immediately: true)
     }
     
     class func createGifDataFrom(imagePathArray: [String], completion: @escaping (Data)->Void) {
@@ -308,12 +302,7 @@ class FeedViewController: UIViewController {
     }
     
     // MARK: - Live Session
-    func checkShouldStartTutorial() {
-        if !FirebaseService.sharedInstance.isDownloadingDB && SessionManager.sharedInstance.shouldShowTutorial(type: .Options) {
-            coachMarksController.start(on: self)
-        }
-    }
-    
+
     func handleLiveBreathTap() {
         let alert = UIAlertController(title: "Start a live session",
                                       message: "Set an intention for you and others to focus on, and let the universe manifest it.",
@@ -431,26 +420,5 @@ extension FeedViewController: UITableViewDataSource {
         print(gestureRecognizer)
         print(otherGestureRecognizer)
         return true
-    }
- }
- 
- extension FeedViewController: CoachMarksControllerDataSource, CoachMarksControllerDelegate {
-    func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
-        return 2
-    }
-    
-    func coachMarksController(_ coachMarksController: CoachMarksController,
-                              coachMarkAt index: Int) -> CoachMark {
-        return coachMarksController.helper.makeCoachMark(for: tableView.cellForRow(at: IndexPath(row: 0, section: index)))
-    }
-    
-    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?) {
-        let coachViews = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, arrowOrientation: coachMark.arrowOrientation)
-        
-        let hintText = index == 0 ? "Here is the daily exercise" : "Here are the pacakges"
-        coachViews.bodyView.hintLabel.text = hintText
-        coachViews.bodyView.nextLabel.text = "Ok"
-        
-        return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }
  }

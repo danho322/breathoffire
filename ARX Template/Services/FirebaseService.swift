@@ -537,27 +537,49 @@ class FirebaseService: NSObject {
     
     func retrieveDB() {
         isDownloadingDB = true
-        let sectionNamesRef = Database.database().reference().child("sequenceListSections/\(Constants.AppKey)")
+        let sectionNamesRef = Database.database().reference().child("sequenceSections/\(Constants.AppKey)")
         sectionNamesRef.observe(.value, with: { [unowned self] snapshot in
             self.sequenceSections.removeAll()
             if let sectionSequenceArray = snapshot.value as? NSArray {
                 var sectionDownloadedCount = 0
                 for sectionSequence in sectionSequenceArray {
-                    print(sectionSequenceArray)
-                    if let sectionString = sectionSequence as? String {
-                        print("downloading \(sectionString)")
-                        self.retrieveSection(sectionSequence: sectionString) {
-                            print("finished \(sectionString)")
+                    
+                    
+                    if let sectionSequence = sectionSequence as? [String: Any] {
+                        if let sectionString = sectionSequence["name"] as? String,
+                            let enabledInt = sectionSequence["enabled"] as? Int {
+                            #if DEBUG
+                                print("downloading \(sectionString)")
+                                self.retrieveSection(sectionSequence: sectionString) {
+                                    print("finished \(sectionString)")
+                                    sectionDownloadedCount += 1
+                                    self.downloadDelegate?.firebaseServiceSectionDownloaded(count: sectionDownloadedCount, total: sectionSequenceArray.count)
+                                    if sectionDownloadedCount == sectionSequenceArray.count {
+                                        self.isDownloadingDB = false
+                                        self.downloadDelegate?.firebaseServiceSectionDownloadFinish()
+                                    }
+                                }
+                                self.sequenceSections.append(sectionString)
+                            #else
+                                if enabledInt == 1 {
+                                    print("downloading \(sectionString)")
+                                    self.retrieveSection(sectionSequence: sectionString) {
+                                        print("finished \(sectionString)")
+                                        sectionDownloadedCount += 1
+                                        self.downloadDelegate?.firebaseServiceSectionDownloaded(count: sectionDownloadedCount, total: sectionSequenceArray.count)
+                                        if sectionDownloadedCount == sectionSequenceArray.count {
+                                            self.isDownloadingDB = false
+                                            self.downloadDelegate?.firebaseServiceSectionDownloadFinish()
+                                        }
+                                    }
+                                    self.sequenceSections.append(sectionString)
+                                } else {
+                                    sectionDownloadedCount += 1
+                                }
+                            #endif
+                        } else {
                             sectionDownloadedCount += 1
-                            self.downloadDelegate?.firebaseServiceSectionDownloaded(count: sectionDownloadedCount, total: sectionSequenceArray.count)
-                            if sectionDownloadedCount == sectionSequenceArray.count {
-                                self.isDownloadingDB = false
-                                self.downloadDelegate?.firebaseServiceSectionDownloadFinish()
-                            }
                         }
-                        self.sequenceSections.append(sectionString)
-                    } else {
-                        sectionDownloadedCount += 1
                     }
                 }
             }
@@ -571,7 +593,13 @@ class FirebaseService: NSObject {
                     if let animationPackage = animationPackage as? NSDictionary {
                         let package = AnimationPackage(snapshotDict: animationPackage)
                         if package.packageName.characters.count > 0 {
-                            self.animationPackages.append(package)
+                            #if DEBUG
+                                self.animationPackages.append(package)
+                            #else
+                                if package.enabled == 1 {
+                                    self.animationPackages.append(package)
+                                }
+                            #endif
                         }
                     }
                 }
@@ -923,12 +951,14 @@ struct AnimationPackage {
     let packageDescription: String
     let imageBGPath: String
     let tokenCost: Int
+    let enabled: Int
     
     init(snapshotDict: NSDictionary) {
         packageName = snapshotDict["packageName"] as? String ?? ""
         packageDescription = snapshotDict["packageDescription"] as? String ?? ""
         imageBGPath = snapshotDict["imageBGPath"] as? String ?? ""
         tokenCost = snapshotDict["tokenCost"] as? Int ?? 1
+        enabled = snapshotDict["enabled"] as? Int ?? 0
     }
 }
 

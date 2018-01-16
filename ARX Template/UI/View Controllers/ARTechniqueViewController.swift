@@ -45,7 +45,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     internal var sliderValue: Float = 0.5
     
-    internal let placingCoachMarksController = CoachMarksController()
     internal let techniqueCoachMarksController = CoachMarksController()
     internal var instructionService: InstructionService?
     internal var breathTimerService: BreathTimerService?
@@ -86,11 +85,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         }
 
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        
-        placingCoachMarksController.dataSource = self
-        placingCoachMarksController.delegate = self
-        placingCoachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
-        placingCoachMarksController.overlay.allowTap = true
         
         techniqueCoachMarksController.dataSource = self
         techniqueCoachMarksController.delegate = self
@@ -184,7 +178,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		session.pause()
         cancelScreenshotSelector()
         
-        placingCoachMarksController.stop(immediately: true)
         techniqueCoachMarksController.stop(immediately: true)
 	}
 
@@ -1974,29 +1967,6 @@ extension ARTechniqueViewController: UIGestureRecognizerDelegate {
 
 // MARK: - Tutorial
 
-enum PlacingInstructionType: Int {
-    case placeButton = 0
-    case count = 1
-    
-    func view(vc: ARTechniqueViewController) -> UIView? {
-        switch self {
-        case .placeButton:
-            return vc.addObjectButton
-        default:
-            return nil
-        }
-    }
-    
-    func hintText() -> String {
-        switch self {
-        case .placeButton:
-            return "When reay, tap here to place your instructor"
-        default:
-            return ""
-        }
-    }
-}
-
 enum TechniqueInstructionType: Int {
     case hudButton = 0
     case cameraButton = 1
@@ -2036,33 +2006,22 @@ enum TechniqueInstructionType: Int {
 
 extension ARTechniqueViewController: CoachMarksControllerDataSource {
     func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
-        if coachMarksController === placingCoachMarksController {
-            return PlacingInstructionType.count.rawValue
-        } else {
-            return TechniqueInstructionType.count.rawValue
-        }
+        return 0
+//        return TechniqueInstructionType.count.rawValue
     }
     
     func coachMarksController(_ coachMarksController: CoachMarksController,
                               coachMarkAt index: Int) -> CoachMark {
-        var view = TechniqueInstructionType(rawValue: index)?.view(vc: self)
-        if coachMarksController === placingCoachMarksController {
-            view = PlacingInstructionType(rawValue: index)?.view(vc: self)
-        }
-        print("make coach mark for \(view)")
+        let view = TechniqueInstructionType(rawValue: index)?.view(vc: self)
         return coachMarksController.helper.makeCoachMark(for: view)
     }
     
     func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?) {
         let coachViews = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, arrowOrientation: coachMark.arrowOrientation)
         
-        var hintText = TechniqueInstructionType(rawValue: index)?.hintText()
-        if coachMarksController === placingCoachMarksController {
-            hintText = PlacingInstructionType(rawValue: index)?.hintText()
-        }
-        
+        let hintText = TechniqueInstructionType(rawValue: index)?.hintText()        
         coachViews.bodyView.hintLabel.text = hintText ?? ""
-        coachViews.bodyView.nextLabel.text = "Ok"
+        coachViews.bodyView.nextLabel.text = "✓"
         
         return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
     }
