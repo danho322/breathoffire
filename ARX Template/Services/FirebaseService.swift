@@ -574,8 +574,10 @@ class FirebaseService: NSObject {
                                     }
                                     self.sequenceSections.append(sectionString)
                                 } else {
+                                    print("skipping")
                                     sectionDownloadedCount += 1
                                 }
+                                print("out of loop")
                             #endif
                         } else {
                             sectionDownloadedCount += 1

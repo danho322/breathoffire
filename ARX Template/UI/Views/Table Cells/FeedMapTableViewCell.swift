@@ -83,7 +83,7 @@ class FeedMapTableViewCell: UITableViewCell {
             }
         }
         if let center = center {
-            mapRegion = MKCoordinateRegionMake(center, span)
+            mapRegion = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.5, 0.5))
         }
         mapView.region = mapRegion
 
