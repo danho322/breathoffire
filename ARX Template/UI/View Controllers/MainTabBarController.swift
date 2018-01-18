@@ -143,17 +143,14 @@ class MainTabBarController: ESTabBarController {
         var newViewControllers: [UIViewController] = []
         if let viewControllers = viewControllers {
             for viewController in viewControllers {
-                if viewController is CommunityViewController {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let communityVC = storyboard.instantiateViewController(withIdentifier: "FeedViewControllerIdentifier")
-                    
-                    let navigationController = ARXNavigationController(rootViewController: communityVC)
-                    communityVC.title = "Community"
+                if let navigationController = viewController as? ARXNavigationController,
+                    viewController.title == "Community" {
+                    if let communityVC = navigationController.viewControllers.first {
+                        communityVC.title = "Community"
+                        let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                        communityVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
+                    }
                     navigationController.delegate = self
-                    let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
-                    communityVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
-                    
-                    
                     let tabIcon = FAKFontAwesome.usersIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     navigationController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Community", image: tabIcon, selectedImage: tabIcon)
                     
@@ -164,9 +161,9 @@ class MainTabBarController: ESTabBarController {
                     }
                     
                     if let tabTitle = viewController.tabBarItem.title {
-                        if tabTitle == "Breathe" {
+                        if tabTitle == "Exercises" {
                             let flameImage = UIImage(named: "flame")
-                            viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Breathe", image: flameImage, selectedImage: flameImage)
+                            viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Exercises", image: flameImage, selectedImage: flameImage)
                         } else if tabTitle == "Profile" {
                             let icon = FAKIonIcons.iosPersonIcon(withSize: 25)
                             let userImage = icon?.image(with: CGSize(width: 25, height: 25))

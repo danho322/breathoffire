@@ -69,7 +69,7 @@ class OptionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Breathe"
+        title = "Exercises"
         
         StoreKitService().retrieveProductData()
         

@@ -22,7 +22,8 @@ class WalkthroughFinalViewController: BWWalkthroughPageViewController {
     }
     
     func startARTechnique(sequenceContainer: AnimationSequenceDataContainer?, liveSessionInfo: LiveSessionInfo? = nil) {
-        if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let arVC = storyboard.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
             let sequenceContainer = sequenceContainer {
             arVC.sequenceToLoad = sequenceContainer
             if let liveSessionInfo = liveSessionInfo {
@@ -32,9 +33,14 @@ class WalkthroughFinalViewController: BWWalkthroughPageViewController {
                 self.navigationController?.popToRootViewController(animated: true)
                 self.tabBarController?.selectedIndex = 0
             }
-            self.present(arVC, animated: true, completion: {
-                self.dismiss(animated: false, completion: nil)
-            })
+            
+            if let presentingVC = self.presentingViewController {
+                self.dismiss(animated: true, completion: {
+                    presentingVC.present(arVC, animated: true, completion: { [unowned presentingVC] in
+                        presentingVC.dismiss(animated: false, completion: nil)
+                    })
+                })
+            }
         }
     }
 }
