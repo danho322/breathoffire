@@ -99,13 +99,16 @@ class BreatheStartTableViewCell: UITableViewCell {
     }
     
     @IBAction func onStartTap(_ sender: Any) {
+        // TODO: hook up duration and ar mode
         startHandler?(intentionTextField.text)
     }
     
     @IBAction func onDurationSliderChanged(_ sender: Any) {
+        // TODO: hook up
     }
     
     @IBAction func onArModeSwitchChanged(_ sender: Any) {
+        // TODO: hook up
     }
     
     @IBAction func onAudioEnabledSwitchChanged(_ sender: Any) {
