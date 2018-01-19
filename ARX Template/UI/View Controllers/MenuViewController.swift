@@ -48,7 +48,6 @@ class MenuViewController: UIViewController {
         }
         
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        enterButton.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         aboutButton.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         settingsButton.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         sportLabel.textColor = ThemeManager.sharedInstance.textColor()
@@ -58,8 +57,6 @@ class MenuViewController: UIViewController {
         selectLabel.textColor = ThemeManager.sharedInstance.textColor()
         selectLabel.font = ThemeManager.sharedInstance.heavyFont(20)
 
-        let gameIcon = FAKMaterialIcons.gamepadIcon(withSize: 25)
-        gameIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         
         let infoIcon = FAKFoundationIcons.infoIcon(withSize: 25)
         infoIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
@@ -67,7 +64,11 @@ class MenuViewController: UIViewController {
         let settingIcon = FAKMaterialIcons.settingsIcon(withSize: 25)
         settingIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         
+        enterButton.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
+        let gameIcon = FAKMaterialIcons.gamepadIcon(withSize: 25)
+        gameIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
         enterButton.setAttributedTitle(gameIcon?.attributedString(), for: .normal)
+        
         aboutButton.setAttributedTitle(infoIcon?.attributedString(), for: .normal)
         settingsButton.setAttributedTitle(settingIcon?.attributedString(), for: .normal)
         isHeroEnabled = true

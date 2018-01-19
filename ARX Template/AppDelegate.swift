@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Database.database().isPersistenceEnabled = true
         SessionManager.sharedInstance.onStart()
         
-        Sound.enabled = true    // comment out to save default
+//        Sound.enabled = true    // comment out to save default
         Sound.category = .playback
         
         SwiftyStoreKit.completeTransactions(atomically: true) { purchases in

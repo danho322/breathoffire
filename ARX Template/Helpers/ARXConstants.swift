@@ -26,4 +26,5 @@ struct CellIdentifiers {
     static let FeedMapCellIdentifier = "FeedMapCellIdentifier"
     static let RankingCellIdentifier = "RankingCellIdentifier"
     static let LiveSessionCellIdentifier = "LiveSessionCellIdentifier"
+    static let BreatheStartTableViewCellIdentifier = "BreatheStartTableViewCellIdentifier"
 }

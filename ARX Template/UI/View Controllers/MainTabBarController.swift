@@ -134,11 +134,9 @@ class MainTabBarController: ESTabBarController {
         tabBar.shadowImage = transparentImage
         let darkImage = UIImage(named: "background_dark")
         tabBar.backgroundImage = darkImage
-        
         coachMarksController.dataSource = self
         coachMarksController.delegate = self
         coachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
-
         // Replace viewcontrollers set up in storyboard
         var newViewControllers: [UIViewController] = []
         if let viewControllers = viewControllers {
@@ -147,11 +145,11 @@ class MainTabBarController: ESTabBarController {
                     viewController.title == "Community" {
                     if let communityVC = navigationController.viewControllers.first {
                         communityVC.title = "Community"
-                        let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
-                        communityVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
+//                        let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+//                        communityVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
                     }
-                    navigationController.delegate = self
-                    let tabIcon = FAKFontAwesome.usersIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+//                    navigationController.delegate = self
+                    let tabIcon = FAKIonIcons.iosPeopleIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     navigationController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Community", image: tabIcon, selectedImage: tabIcon)
                     
                     newViewControllers.append(navigationController)
@@ -161,18 +159,26 @@ class MainTabBarController: ESTabBarController {
                     }
                     
                     if let tabTitle = viewController.tabBarItem.title {
-                        if tabTitle == "Exercises" {
+                        if tabTitle == "Home" {
+                            if let navigationController = viewController as? ARXNavigationController,
+                                let homeVC = navigationController.viewControllers.first {
+                                let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                                homeVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
+                                navigationController.delegate = self
+                            }
+                            
                             let flameImage = UIImage(named: "flame")
-                            viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Exercises", image: flameImage, selectedImage: flameImage)
+                            viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Home", image: flameImage, selectedImage: flameImage)
+                        } else if tabTitle == "Exercises" {
+                            let icon = FAKFontAwesome.fireIcon(withSize: 25)
+                            let iconImage = icon?.image(with: CGSize(width: 25, height: 25))
+                            viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Exercises", image: iconImage, selectedImage: iconImage)
                         } else if tabTitle == "Profile" {
                             let icon = FAKIonIcons.iosPersonIcon(withSize: 25)
                             let userImage = icon?.image(with: CGSize(width: 25, height: 25))
                             viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Profile", image: userImage, selectedImage: userImage)
-                            
                         }
                     }
-                    
-                    
                     newViewControllers.append(viewController)
                 }
             }
@@ -184,6 +190,9 @@ class MainTabBarController: ESTabBarController {
             if SessionManager.sharedInstance.shouldShowTutorial(type: .Walkthrough) {
                 self?.displayWalkthrough()
             }
+            
+            self?.selectedIndex = 0
+
         }
     }
 

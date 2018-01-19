@@ -25,7 +25,7 @@ class MeViewController: UIViewController {
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
 
         userNameLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-        userNameLabel.font = ThemeManager.sharedInstance.defaultFont(20)
+        userNameLabel.font = ThemeManager.sharedInstance.heavyFont(20)
         
         loginButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
         loginButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)

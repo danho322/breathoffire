@@ -18,13 +18,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eW0-7c-3qN">
-                        <rect key="frame" x="15" y="30" width="345" height="0.0"/>
+                        <rect key="frame" x="15" y="30" width="345" height="175"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WlN-PR-lNh">
-                        <rect key="frame" x="232" y="70" width="120" height="205"/>
+                        <rect key="frame" x="232" y="245" width="120" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="120" id="8uP-oC-NR9"/>
                         </constraints>
@@ -46,6 +46,7 @@
                     <constraint firstItem="WlN-PR-lNh" firstAttribute="top" secondItem="eW0-7c-3qN" secondAttribute="bottom" constant="40" id="DLi-Tr-0Re"/>
                     <constraint firstItem="eW0-7c-3qN" firstAttribute="top" secondItem="zK5-xh-xAa" secondAttribute="top" constant="30" id="P70-ho-qbL"/>
                     <constraint firstItem="eW0-7c-3qN" firstAttribute="leading" secondItem="zK5-xh-xAa" secondAttribute="leading" constant="15" id="WwF-cV-Rr6"/>
+                    <constraint firstAttribute="bottom" secondItem="eW0-7c-3qN" secondAttribute="bottom" priority="750" constant="20" id="aQY-lD-kP7"/>
                     <constraint firstAttribute="trailing" secondItem="eW0-7c-3qN" secondAttribute="trailing" constant="15" id="adR-TT-IfH"/>
                     <constraint firstAttribute="trailing" secondItem="WlN-PR-lNh" secondAttribute="trailing" constant="23" id="uuB-gy-BFP"/>
                     <constraint firstAttribute="bottom" secondItem="WlN-PR-lNh" secondAttribute="bottom" constant="19.5" id="vze-IF-lUJ"/>
@@ -54,6 +55,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="breatheButton" destination="WlN-PR-lNh" id="7cv-O3-b1n"/>
+                <outlet property="breatheButtonBottomConstraint" destination="vze-IF-lUJ" id="C2b-ER-RDG"/>
                 <outlet property="motivationLabel" destination="eW0-7c-3qN" id="Z8i-Ug-UwV"/>
             </connections>
             <point key="canvasLocation" x="-183.5" y="48.5"/>

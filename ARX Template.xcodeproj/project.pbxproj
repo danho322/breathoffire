@@ -137,6 +137,20 @@
 		D494188F1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D494188E1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift */; };
 		D49418911F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49418901F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift */; };
 		D49418931F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D49418921F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib */; };
+		D49F66262010367100D1E248 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F66252010367100D1E248 /* HomeViewController.swift */; };
+		D49F662820114A6300D1E248 /* BreatheStartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D49F662720114A6300D1E248 /* BreatheStartTableViewCell.xib */; };
+		D49F662A20114B6400D1E248 /* BreatheStartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F662920114B6400D1E248 /* BreatheStartTableViewCell.swift */; };
+		D49F663820114D5F00D1E248 /* AkiraTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F662C20114D5E00D1E248 /* AkiraTextField.swift */; };
+		D49F663920114D5F00D1E248 /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F662D20114D5E00D1E248 /* HoshiTextField.swift */; };
+		D49F663A20114D5F00D1E248 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D49F662E20114D5E00D1E248 /* Info.plist */; };
+		D49F663B20114D5F00D1E248 /* IsaoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F662F20114D5E00D1E248 /* IsaoTextField.swift */; };
+		D49F663C20114D5F00D1E248 /* JiroTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663020114D5E00D1E248 /* JiroTextField.swift */; };
+		D49F663D20114D5F00D1E248 /* KaedeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663120114D5E00D1E248 /* KaedeTextField.swift */; };
+		D49F663E20114D5F00D1E248 /* MadokaTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663220114D5E00D1E248 /* MadokaTextField.swift */; };
+		D49F663F20114D5F00D1E248 /* MinoruTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663320114D5E00D1E248 /* MinoruTextField.swift */; };
+		D49F664020114D5F00D1E248 /* TextFieldEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663520114D5E00D1E248 /* TextFieldEffects.swift */; };
+		D49F664120114D5F00D1E248 /* YokoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663620114D5E00D1E248 /* YokoTextField.swift */; };
+		D49F664220114D5F00D1E248 /* YoshikoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663720114D5E00D1E248 /* YoshikoTextField.swift */; };
 		D4A04AF81F09FD7900BEA822 /* Uke.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A04AF71F09FD7900BEA822 /* Uke.swift */; };
 		D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A04AF11F09FD3C00BEA822 /* Candle.swift */; };
 		D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A04AF21F09FD3C00BEA822 /* Chair.swift */; };
@@ -342,6 +356,21 @@
 		D494188E1F23DF2D00CA83E2 /* OptionsMyPackagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsMyPackagesTableViewCell.swift; sourceTree = "<group>"; };
 		D49418901F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTechniquesTableViewCell.swift; sourceTree = "<group>"; };
 		D49418921F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsTechniquesTableViewCell.xib; sourceTree = "<group>"; };
+		D49F66252010367100D1E248 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D49F662720114A6300D1E248 /* BreatheStartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BreatheStartTableViewCell.xib; sourceTree = "<group>"; };
+		D49F662920114B6400D1E248 /* BreatheStartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreatheStartTableViewCell.swift; sourceTree = "<group>"; };
+		D49F662C20114D5E00D1E248 /* AkiraTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AkiraTextField.swift; sourceTree = "<group>"; };
+		D49F662D20114D5E00D1E248 /* HoshiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoshiTextField.swift; sourceTree = "<group>"; };
+		D49F662E20114D5E00D1E248 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D49F662F20114D5E00D1E248 /* IsaoTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsaoTextField.swift; sourceTree = "<group>"; };
+		D49F663020114D5E00D1E248 /* JiroTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JiroTextField.swift; sourceTree = "<group>"; };
+		D49F663120114D5E00D1E248 /* KaedeTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KaedeTextField.swift; sourceTree = "<group>"; };
+		D49F663220114D5E00D1E248 /* MadokaTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MadokaTextField.swift; sourceTree = "<group>"; };
+		D49F663320114D5E00D1E248 /* MinoruTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinoruTextField.swift; sourceTree = "<group>"; };
+		D49F663420114D5E00D1E248 /* TextFieldEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldEffects.h; sourceTree = "<group>"; };
+		D49F663520114D5E00D1E248 /* TextFieldEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldEffects.swift; sourceTree = "<group>"; };
+		D49F663620114D5E00D1E248 /* YokoTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YokoTextField.swift; sourceTree = "<group>"; };
+		D49F663720114D5E00D1E248 /* YoshikoTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoshikoTextField.swift; sourceTree = "<group>"; };
 		D4A04AF11F09FD3C00BEA822 /* Candle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candle.swift; sourceTree = "<group>"; };
 		D4A04AF21F09FD3C00BEA822 /* Chair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chair.swift; sourceTree = "<group>"; };
 		D4A04AF31F09FD3C00BEA822 /* Cup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cup.swift; sourceTree = "<group>"; };
@@ -450,6 +479,7 @@
 		D40347291F5C6902008AF23D /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D49F662B20114D5E00D1E248 /* TextFieldEffects */,
 				D4589A7C20080EF500C17922 /* BPMAnalyser */,
 				D403472A1F5C691E008AF23D /* BWWalkthrough */,
 			);
@@ -486,6 +516,7 @@
 				D4EE12E61F6107B100A55E9F /* LoginViewController.swift */,
 				D45118D51F68FBF400610F08 /* WalkthroughFinalViewController.swift */,
 				D42917861FB0334400996BD4 /* CommunityViewController.swift */,
+				D49F66252010367100D1E248 /* HomeViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -541,6 +572,7 @@
 				D4FA886B1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift */,
 				D454DC621FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift */,
 				D462007020047F250049E5CC /* LiveSessionTableViewCell.swift */,
+				D49F662920114B6400D1E248 /* BreatheStartTableViewCell.swift */,
 			);
 			path = "Table Cells";
 			sourceTree = "<group>";
@@ -602,6 +634,7 @@
 				D454DC601FA68EEE0021D203 /* FeedHorizontalScrollViewTableViewCell.xib */,
 				D454DC661FA76BC50021D203 /* FeedGifView.xib */,
 				D462006B20047EEB0049E5CC /* LiveSessionTableViewCell.xib */,
+				D49F662720114A6300D1E248 /* BreatheStartTableViewCell.xib */,
 			);
 			path = "Interface Builder";
 			sourceTree = "<group>";
@@ -807,6 +840,25 @@
 			path = Audio;
 			sourceTree = "<group>";
 		};
+		D49F662B20114D5E00D1E248 /* TextFieldEffects */ = {
+			isa = PBXGroup;
+			children = (
+				D49F662C20114D5E00D1E248 /* AkiraTextField.swift */,
+				D49F662D20114D5E00D1E248 /* HoshiTextField.swift */,
+				D49F662E20114D5E00D1E248 /* Info.plist */,
+				D49F662F20114D5E00D1E248 /* IsaoTextField.swift */,
+				D49F663020114D5E00D1E248 /* JiroTextField.swift */,
+				D49F663120114D5E00D1E248 /* KaedeTextField.swift */,
+				D49F663220114D5E00D1E248 /* MadokaTextField.swift */,
+				D49F663320114D5E00D1E248 /* MinoruTextField.swift */,
+				D49F663420114D5E00D1E248 /* TextFieldEffects.h */,
+				D49F663520114D5E00D1E248 /* TextFieldEffects.swift */,
+				D49F663620114D5E00D1E248 /* YokoTextField.swift */,
+				D49F663720114D5E00D1E248 /* YoshikoTextField.swift */,
+			);
+			path = TextFieldEffects;
+			sourceTree = "<group>";
+		};
 		D4A04AF01F09FD3C00BEA822 /* Virtual Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -946,6 +998,7 @@
 				D491147E1F7B77FA00F8402E /* 9_SufiGrindOtherDirection.m4a in Resources */,
 				D491147F1F7B77FA00F8402E /* 10_SpinalFlexCrossedLegs.m4a in Resources */,
 				D49114801F7B77FA00F8402E /* 11_SpinalFlexSeated.m4a in Resources */,
+				D49F662820114A6300D1E248 /* BreatheStartTableViewCell.xib in Resources */,
 				D49114811F7B77FA00F8402E /* 12_SpinalFlexKnees.m4a in Resources */,
 				D49114821F7B77FA00F8402E /* 13_SpinalTwistGyanMudraSeatedPosition.m4a in Resources */,
 				D49114831F7B77FA00F8402E /* 14_TorsoTwistGyanMudraSeated.m4a in Resources */,
@@ -964,6 +1017,7 @@
 				D43988F81F6798A300AE367C /* UserPackagesCollectionCell.xib in Resources */,
 				D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */,
 				D42917891FB0338500996BD4 /* quake.plist in Resources */,
+				D49F663A20114D5F00D1E248 /* Info.plist in Resources */,
 				D49418931F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib in Resources */,
 				D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */,
 				D4A72D2C1F3ACA0300553086 /* BreathTimerView.xib in Resources */,
@@ -1064,17 +1118,23 @@
 			files = (
 				D403472F1F5C6AD5008AF23D /* BWWalkthroughPageViewController.swift in Sources */,
 				D40347301F5C6AD5008AF23D /* BWWalkthroughViewController.swift in Sources */,
+				D49F66262010367100D1E248 /* HomeViewController.swift in Sources */,
 				D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */,
+				D49F663820114D5F00D1E248 /* AkiraTextField.swift in Sources */,
 				D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */,
 				D4CF117F200D3D4600FDA96A /* Superpowered.mm in Sources */,
 				D468FE341F49156B00DEBAE6 /* MainTabBarController.swift in Sources */,
 				D4589A8020080F0700C17922 /* BMPAnalyzer.swift in Sources */,
 				D4A72D2E1F3ACA2D00553086 /* BreathTimerView.swift in Sources */,
+				D49F663E20114D5F00D1E248 /* MadokaTextField.swift in Sources */,
 				D4A091C01F2070AE00C03805 /* ARXUtilities.swift in Sources */,
 				D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */,
 				D45621461F0BEDC40052E218 /* UIViewProtocols.swift in Sources */,
+				D49F664020114D5F00D1E248 /* TextFieldEffects.swift in Sources */,
 				D4A04AFB1F09FF2100BEA822 /* Cup.swift in Sources */,
+				D49F664220114D5F00D1E248 /* YoshikoTextField.swift in Sources */,
 				D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */,
+				D49F663B20114D5F00D1E248 /* IsaoTextField.swift in Sources */,
 				D4A04AFC1F09FF2100BEA822 /* Instructor.swift in Sources */,
 				D454DC631FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift in Sources */,
 				D4EE12E51F61071B00A55E9F /* LoginViewModel.swift in Sources */,
@@ -1083,16 +1143,20 @@
 				D4A04AFD1F09FF2100BEA822 /* Lamp.swift in Sources */,
 				D4EE12E01F61066600A55E9F /* ARXViewModel.swift in Sources */,
 				D4DF08151F414FAE00E8F0EE /* FeedTableViewCell.swift in Sources */,
+				D49F663D20114D5F00D1E248 /* KaedeTextField.swift in Sources */,
 				D46D950D1F4168C100098689 /* MeViewController.swift in Sources */,
 				D4A04AFE1F09FF2100BEA822 /* Vase.swift in Sources */,
 				D4EE12E71F6107B100A55E9F /* LoginViewController.swift in Sources */,
+				D49F663C20114D5F00D1E248 /* JiroTextField.swift in Sources */,
 				D427C9451F0770D30096C2A1 /* InstructionView.swift in Sources */,
 				D43D4BB91F048476002F369F /* ARSettingsViewController.swift in Sources */,
 				D43D4BB81F0483C1002F369F /* ARTechniqueViewController.swift in Sources */,
 				D43751551F5DB967004B6B9E /* InfoViewController.swift in Sources */,
 				D45520731FB4A518006EC132 /* GradientView.swift in Sources */,
+				D49F663F20114D5F00D1E248 /* MinoruTextField.swift in Sources */,
 				D494188B1F23203400CA83E2 /* OptionsMOTDTableViewCell.swift in Sources */,
 				D4D731891EFB8B8400C65E99 /* SceneKitExtensions.swift in Sources */,
+				D49F662A20114B6400D1E248 /* BreatheStartTableViewCell.swift in Sources */,
 				D4D7318B1EFB8B8400C65E99 /* DataLoader.swift in Sources */,
 				D45621421F0B59730052E218 /* TechniqueTableCell.swift in Sources */,
 				D43988FE1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift in Sources */,
@@ -1106,10 +1170,12 @@
 				D49418911F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift in Sources */,
 				D4589A7B20080C8D00C17922 /* AudioDetectionService.swift in Sources */,
 				D43D4BAD1F048282002F369F /* PlaneDebugVisualization.swift in Sources */,
+				D49F664120114D5F00D1E248 /* YokoTextField.swift in Sources */,
 				D43D4BB61F048282002F369F /* VirtualObjectSelectionViewController.swift in Sources */,
 				D48A5F741EFCC48F00A46A73 /* MenuViewController.swift in Sources */,
 				D45621441F0B5B420052E218 /* SpruceAnimatingViewController.swift in Sources */,
 				D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */,
+				D49F663920114D5F00D1E248 /* HoshiTextField.swift in Sources */,
 				D43D4BAA1F048282002F369F /* Gesture.swift in Sources */,
 				D45621481F0CB3D00052E218 /* StatManager.swift in Sources */,
 				D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */,

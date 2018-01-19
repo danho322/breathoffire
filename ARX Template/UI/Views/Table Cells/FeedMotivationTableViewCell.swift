@@ -11,6 +11,7 @@ import UIKit
 class FeedMotivationTableViewCell: UITableViewCell {
     @IBOutlet weak var motivationLabel: UILabel!
     @IBOutlet weak var breatheButton: UIButton!
+    @IBOutlet weak var breatheButtonBottomConstraint: NSLayoutConstraint!
     
     var breatheHandler: (()->Void)?
     
@@ -20,11 +21,6 @@ class FeedMotivationTableViewCell: UITableViewCell {
         
         motivationLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         motivationLabel.font = ThemeManager.sharedInstance.heavyFont(16)
-        
-        FirebaseService.sharedInstance.retrieveMotivationOfTheDay() { [unowned self] quote in
-            // was the bird quote 9/3
-            self.motivationLabel.text = quote
-        }
         
         breatheButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
         breatheButton.setTitle("Live Breathe", for: .normal)
@@ -36,6 +32,16 @@ class FeedMotivationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func updateQuote(_ quote: String?, hideBreatheButton: Bool = false) {
+        motivationLabel.text = quote
+        if hideBreatheButton {
+            breatheButton.isHidden = true
+            if breatheButtonBottomConstraint != nil {
+                breatheButtonBottomConstraint.isActive = false
+            }
+        }
     }
 
     @IBAction func onBreatheTap(_ sender: Any) {

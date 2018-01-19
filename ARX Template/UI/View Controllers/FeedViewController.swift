@@ -11,18 +11,15 @@ import SDWebImage
 import FirebaseAnalytics
 import Instructions
 
-struct FeedConstants {
-}
-
 enum FeedViewSectionTypes: Int {
-    case motivation = 0
-    case map = 1
-    case liveSessions = 2
-    case feed = 3
-    case userRanking = 4
-    case breathRanking = 5
-    case dayRanking = 6
-    case count = 7
+    case motivation = 100
+    case map = 0
+    case liveSessions = 1
+    case feed = 2
+    case userRanking = 3
+    case breathRanking = 4
+    case dayRanking = 5
+    case count = 6
     
     func rowCount(vc: FeedViewController) -> Int {
         if self == .feed {
@@ -43,6 +40,7 @@ enum FeedViewSectionTypes: Int {
     func cell(indexPath: IndexPath, vc: FeedViewController) -> UITableViewCell {
         if self == .motivation {
             if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMotivationCellIdentifier) as? FeedMotivationTableViewCell {
+                cell.updateQuote(vc.quoteOfDay)
                 cell.breatheHandler = { [unowned vc] in
                     vc.handleLiveBreathTap()
                     Analytics.logEvent("feed_breath_tap", parameters: nil)
@@ -146,6 +144,7 @@ class FeedViewController: UIViewController {
     internal var userRankings: [UserData] = []
     internal var dayRankings: [UserData] = []
     internal var breathRankings: [UserData] = []
+    internal var quoteOfDay: String?
     
     internal var cellHeights = [IndexPath:CGFloat]()
     
@@ -199,6 +198,11 @@ class FeedViewController: UIViewController {
         
         FirebaseService.sharedInstance.retrieveMaxAttributes(attribute: UserAttribute.maxTimeStreak) { [unowned self] topBreathUsers in
             self.breathRankings = topBreathUsers
+            self.tableView.reloadData()
+        }
+        
+        FirebaseService.sharedInstance.retrieveMotivationOfTheDay() { [unowned self] quote in
+            self.quoteOfDay = quote
             self.tableView.reloadData()
         }
     }
@@ -324,21 +328,21 @@ class FeedViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func startARTechnique(sequenceContainer: AnimationSequenceDataContainer?, liveSessionInfo: LiveSessionInfo? = nil) {
-        if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
-            let sequenceContainer = sequenceContainer {
-            arVC.sequenceToLoad = sequenceContainer
-            if let liveSessionInfo = liveSessionInfo {
-                arVC.liveSessionInfo = liveSessionInfo
+        func startARTechnique(sequenceContainer: AnimationSequenceDataContainer?, liveSessionInfo: LiveSessionInfo? = nil) {
+            if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
+                let sequenceContainer = sequenceContainer {
+                arVC.sequenceToLoad = sequenceContainer
+                if let liveSessionInfo = liveSessionInfo {
+                    arVC.liveSessionInfo = liveSessionInfo
+                }
+                arVC.dismissCompletionHandler = {
+                    self.navigationController?.popToRootViewController(animated: true)
+                    self.tabBarController?.selectedIndex = 0
+                }
+                self.present(arVC, animated: true, completion: nil)
+                
             }
-            arVC.dismissCompletionHandler = {
-                self.navigationController?.popToRootViewController(animated: true)
-                self.tabBarController?.selectedIndex = 0
-            }
-            self.present(arVC, animated: true, completion: nil)
-            
         }
-    }
 }
 
 extension FeedViewController: UITableViewDelegate {

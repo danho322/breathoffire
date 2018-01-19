@@ -82,7 +82,7 @@ class OptionsViewController: UIViewController {
         coachMarksController.overlay.color = ThemeManager.sharedInstance.backgroundColor(alpha: 0.8)
         
         var sections: [OptionCellSectionType] = []
-        sections.append(.moveOfDay)
+//        sections.append(.moveOfDay)
 //        let packages = DataLoader.sharedInstance.packages()
 //        for package in packages {
 //            let hasPackage = SessionManager.sharedInstance.hasPackage(packageName: package.packageName)
@@ -121,10 +121,6 @@ class OptionsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         checkShouldStartTutorial()
-        
-        ARXLocationService.sharedInstance.retrieveUserLocation(userData: nil, handler: { coordinate in
-            
-        })
     }
     
     func checkShouldStartTutorial() {

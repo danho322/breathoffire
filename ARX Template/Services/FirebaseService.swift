@@ -122,6 +122,7 @@ class FirebaseService: NSObject {
     var instructionDataDict: [String: [AnimationInstructionData]] = Dictionary()
     
     var motivationQuotes: [String] = []
+    var manifestationQuotes: [String] = []
     
     override init() {
         super.init()
@@ -354,7 +355,7 @@ class FirebaseService: NSObject {
         }
     }
     
-    // MARK: - Motivation
+    // MARK: - Quotes
     
     func retrieveMotivationOfTheDay(completionHandler: @escaping ((String)->Void)) {
         let dayCount = Date().timeIntervalSince1970 / (60 * 60 * 24)
@@ -370,8 +371,35 @@ class FirebaseService: NSObject {
     }
     
     func retrieveMotivation(completion: (()->Void)? = nil) {
-        let ref = Database.database().reference().child("motivationQuotes")
-        ref.observe(.value, with: { [unowned self] snapshot in
+        retrieveQuotes(quoteRefName: "motivationalQuotes")  { [unowned self] quotes in
+            self.motivationQuotes = quotes
+            completion?()
+        }
+    }
+    
+    func retrieveRandomManifestation(completionHandler: @escaping ((String)->Void)) {
+        let count = manifestationQuotes.count
+        if count > 0 {
+            let randomIndex = Int(arc4random_uniform(UInt32(count)))
+            let quote = manifestationQuotes[randomIndex]
+            completionHandler(quote)
+        } else {
+            retrieveManifestation() { [unowned self] in
+                self.retrieveRandomManifestation(completionHandler: completionHandler)
+            }
+        }
+    }
+    
+    func retrieveManifestation(completion: (()->Void)? = nil) {
+        retrieveQuotes(quoteRefName: "manifestationQuotes")  { [unowned self] quotes in
+            self.manifestationQuotes = quotes
+            completion?()
+        }
+    }
+    
+    func retrieveQuotes(quoteRefName: String, completion: (([String])->Void)? = nil) {
+        let ref = Database.database().reference().child(quoteRefName)
+        ref.observe(.value, with: { snapshot in
             var quotes: [String] = []
             if let motivationArray = snapshot.value as? NSArray {
                 for motivation in motivationArray {
@@ -380,8 +408,7 @@ class FirebaseService: NSObject {
                     }
                 }
             }
-            self.motivationQuotes = quotes
-            completion?()
+            completion?(quotes)
         })
     }
     
