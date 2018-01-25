@@ -232,7 +232,6 @@ class MainTabBarController: ESTabBarController {
         
         if let helpVC = storyboard?.instantiateViewController(withIdentifier: "InfoViewIdentifier") {
             present(helpVC, animated: true, completion: nil)
-            //                optionsVC.titleLabel.text = selectLabel.text
         }
     }
     
