@@ -27,8 +27,9 @@ class BreatheStartTableViewCell: UITableViewCell {
     @IBOutlet weak var audioEnabledSwitch: UISwitch!
     
     
+    var startHandler: ((String?, DurationSequenceType, Bool)->Void)?
     
-    var startHandler: ((String?)->Void)?
+    internal var selectedDurationSequenceType = DurationSequenceType.sequence6
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +37,8 @@ class BreatheStartTableViewCell: UITableViewCell {
         
         intentionTextField.textColor = ThemeManager.sharedInstance.textColor()
         intentionTextField.font = ThemeManager.sharedInstance.defaultFont(14)
+        intentionTextField.text = StatManager.sharedIntance.lastIntention()
+        intentionTextField.delegate = self
         
         selectedInfoLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         selectedInfoLabel.font = ThemeManager.sharedInstance.defaultFont(12)
@@ -53,12 +56,15 @@ class BreatheStartTableViewCell: UITableViewCell {
         durationTitleLabel.font = ThemeManager.sharedInstance.defaultFont(14)
         
         durationSlider.tintColor = ThemeManager.sharedInstance.focusColor()
+        durationSlider.value = StatManager.sharedIntance.lastDurationSliderValue()
+        onDurationSliderChanged(durationSlider)
         
         durationOutputLabel.textColor = ThemeManager.sharedInstance.textColor()
         durationOutputLabel.font = ThemeManager.sharedInstance.defaultFont(14)
         
         arModeLabel.textColor = ThemeManager.sharedInstance.textColor()
         arModeLabel.font = ThemeManager.sharedInstance.defaultFont(14)
+        arModeSwitch.isOn = StatManager.sharedIntance.lastArMode()
         
         audioEnabledLabel.textColor = ThemeManager.sharedInstance.textColor()
         audioEnabledLabel.font = ThemeManager.sharedInstance.defaultFont(14)
@@ -99,12 +105,34 @@ class BreatheStartTableViewCell: UITableViewCell {
     }
     
     @IBAction func onStartTap(_ sender: Any) {
+        StatManager.sharedIntance.onIntentionPlay(intentionTextField.text ?? "",
+                                                  durationSliderValue: durationSlider.value,
+                                                  arMode: arModeSwitch.isOn)
         // TODO: hook up duration and ar mode
-        startHandler?(intentionTextField.text)
+        startHandler?(intentionTextField.text, selectedDurationSequenceType, arModeSwitch.isOn)
     }
     
     @IBAction func onDurationSliderChanged(_ sender: Any) {
         // TODO: hook up
+        if let slider = sender as? UISlider {
+            var durationSequenceType: DurationSequenceType = .sequence6
+            let total: Float = 7
+            if slider.value < 1 / total {
+                durationSequenceType = .sequence0
+            } else if slider.value < 2 / total {
+                durationSequenceType = .sequence1
+            } else if slider.value < 3 / total {
+                durationSequenceType = .sequence2
+            } else if slider.value < 4 / total {
+                durationSequenceType = .sequence3
+            } else if slider.value < 5 / total {
+                durationSequenceType = .sequence4
+            } else if slider.value < 6 / total {
+                durationSequenceType = .sequence5
+            }
+            selectedDurationSequenceType = durationSequenceType
+            durationOutputLabel.text = durationSequenceType.labelText()
+        }
     }
     
     @IBAction func onArModeSwitchChanged(_ sender: Any) {
@@ -116,5 +144,11 @@ class BreatheStartTableViewCell: UITableViewCell {
             Sound.enabled = audioSwitch.isOn
         }
     }
-    
+}
+
+extension BreatheStartTableViewCell: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

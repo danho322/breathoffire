@@ -371,7 +371,7 @@ class FirebaseService: NSObject {
     }
     
     func retrieveMotivation(completion: (()->Void)? = nil) {
-        retrieveQuotes(quoteRefName: "motivationalQuotes")  { [unowned self] quotes in
+        retrieveQuotes(quoteRefName: "motivationQuotes")  { [unowned self] quotes in
             self.motivationQuotes = quotes
             completion?()
         }

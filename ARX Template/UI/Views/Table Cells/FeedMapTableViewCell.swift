@@ -13,11 +13,15 @@ class FeedMapTableViewCell: UITableViewCell {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var heatImageView: UIImageView!
+    @IBOutlet weak var motivationLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         mapView.delegate = self
+        
+        motivationLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+        motivationLabel.font = ThemeManager.sharedInstance.heavyFont(16)
         
         backgroundColor = ThemeManager.sharedInstance.backgroundColor()
     }
@@ -94,6 +98,10 @@ class FeedMapTableViewCell: UITableViewCell {
             let heatMap = LFHeatMap.heatMap(for: self.mapView, boost: 1, locations: locations, weights: weights)
             self.heatImageView.image = heatMap
         })
+    }
+    
+    func updateQuote(_ quote: String?) {
+        motivationLabel.text = quote
     }
 }
 

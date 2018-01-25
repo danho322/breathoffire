@@ -29,46 +29,6 @@ enum HomeViewSectionTypes: Int {
                 cell.updateQuote(vc.quoteOfDay, hideBreatheButton: true)
                 return cell
             }
-//        } else if self == .map {
-//            if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMapCellIdentifier) as? FeedMapTableViewCell {
-//                let locations = vc.feedItems.filter({ $0.coordinate != nil }).map({ CLLocation(latitude: $0.coordinate!.latitude, longitude: $0.coordinate!.longitude) })
-//                cell.update(locations: locations)
-//                return cell
-//            }
-//        } else if self == .feed {
-//            let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedHorizontalScrollViewIdentifier, for: indexPath)
-//            if let cell = cell as? FeedHorizontalScrollViewTableViewCell {
-//                cell.update(feedItems: vc.feedItems, optionsHandler: { key in
-//                    if let item = vc.feedItems.filter({ $0.key == key }).first {
-//                        vc.displayFeedOptions(feedItem: item, indexPath: indexPath)
-//                    }},
-//                            outerScrollView: vc.tableView)
-//            }
-//            return cell
-//        } else {
-//            var isRanking = true
-//            var textLabel = ""
-//            var detailLabel = ""
-//            var location: String?
-//            if self == .userRanking  {
-//                if let user = vc.userRankings[safe: indexPath.row] {
-//                    textLabel = user.userName
-//                    location = user.city
-//                    detailLabel = "\(BreathTimerService.timeString(time: Double(user.timeStreakCount)))"
-//                }
-//            } else if self == .dayRanking {
-//                if let user = vc.dayRankings[safe: indexPath.row] {
-//                    textLabel = user.userName
-//                    location = user.city
-//                    let dayString = user.maxDayStreak == 1 ? "day" : "days"
-//                    detailLabel = "\(user.maxDayStreak) \(dayString)"
-//                }
-//            } else if self == .breathRanking {
-//                if let user = vc.breathRankings[safe: indexPath.row] {
-//                    textLabel = user.userName
-//                    location = user.city
-//                    detailLabel = "\(BreathTimerService.timeString(time: Double(user.maxTimeStreak)))"
-//                }
         } else if self == .liveSessions {
             if let session = vc.liveSessions[safe: indexPath.row],
                 let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.LiveSessionCellIdentifier, for: indexPath) as? LiveSessionTableViewCell{
@@ -77,39 +37,21 @@ enum HomeViewSectionTypes: Int {
             }
         } else if self == .breathe {
             if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.BreatheStartTableViewCellIdentifier, for: indexPath) as? BreatheStartTableViewCell {
-                cell.startHandler = { [unowned vc] intention in
-                    vc.startARTechnique(sequenceContainer: DataLoader.sharedInstance.moveOfTheDay(),
-                                          liveSessionInfo: LiveSessionInfo(type: .create, liveSession: nil, intention: intention))
+                cell.startHandler = { [unowned vc] intention, durationSequenceType, arMode in
+                    let sequence = DataLoader.sharedInstance.sequenceData(sequenceName: durationSequenceType.sequenceName())
+                    vc.startARTechnique(sequenceContainer: sequence,
+                                          liveSessionInfo: LiveSessionInfo(type: .create, liveSession: nil, intention: intention),
+                                          isAREnabled: arMode)
                 }
                 return cell
             }
-//            if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.BreatheStartTableViewCellIdentifier, for: indexPath) as? BreatheStartTableViewCell {
-//                return cell
-//            }
         }
-//
-//            if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.RankingCellIdentifier, for: indexPath) as? RankingTableViewCell, isRanking {
-//                cell.rankingLabel.text = "\(indexPath.row + 1)"
-//                cell.userNameLabel.text = textLabel
-//                cell.locationLabel.text = location
-//                cell.rankingDescriptionLabel.text = detailLabel
-//                return cell
-//            }
-//        }
         return UITableViewCell()
     }
     
     func heightForSectionHeader(vc: HomeViewController) -> CGFloat {
-//        if self == .userRanking {
-//            return vc.userRankings.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
-//        } else if self == .dayRanking {
-//            return vc.dayRankings.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
-//        } else if self == .breathRanking {
-//            return vc.breathRankings.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
         if self == .liveSessions {
             return vc.liveSessions.count == 0 ? CGFloat.leastNonzeroMagnitude : 30
-//        } else {
-//            return CGFloat.leastNonzeroMagnitude
         }
         return CGFloat.leastNonzeroMagnitude
     }
@@ -176,10 +118,11 @@ class HomeViewController: UIViewController {
     
     // MARK: - Live Session
     
-    func startARTechnique(sequenceContainer: AnimationSequenceDataContainer?, liveSessionInfo: LiveSessionInfo? = nil) {
+    func startARTechnique(sequenceContainer: AnimationSequenceDataContainer?, liveSessionInfo: LiveSessionInfo? = nil, isAREnabled: Bool) {
         if let arVC = storyboard?.instantiateViewController(withIdentifier: "ARTechniqueIdentifier") as? ARTechniqueViewController,
             let sequenceContainer = sequenceContainer {
             arVC.sequenceToLoad = sequenceContainer
+            arVC.isARModeEnabled = isAREnabled
             if let liveSessionInfo = liveSessionInfo {
                 arVC.liveSessionInfo = liveSessionInfo
             }
@@ -195,11 +138,15 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate {
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        UIApplication.shared.sendAction(#selector(UIApplication.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let sectionType = HomeViewSectionTypes(rawValue: indexPath.section) {
             if sectionType == .liveSessions, let liveSession = liveSessions[safe: indexPath.row] {
                 startARTechnique(sequenceContainer: DataLoader.sharedInstance.sequenceData(sequenceName: liveSession.sequenceName),
-                                 liveSessionInfo: LiveSessionInfo(type: .join, liveSession: liveSession, intention: nil))
+                                 liveSessionInfo: LiveSessionInfo(type: .join, liveSession: liveSession, intention: nil), isAREnabled: true)
             }
         }
     }

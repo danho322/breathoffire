@@ -103,6 +103,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
         audioSwitch.onTintColor = ThemeManager.sharedInstance.focusColor()
 
         audioSwitch.isOn = Sound.enabled
+        modeSwitch.isOn = StatManager.sharedIntance.lastArMode()
         
 //        animations = [.slide(.up, .slightly), .fadeIn]
 //        sortFunction = LinearSortFunction(direction: .topToBottom, interObjectDelay: 0.05)

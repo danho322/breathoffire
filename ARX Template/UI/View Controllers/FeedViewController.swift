@@ -51,6 +51,7 @@ enum FeedViewSectionTypes: Int {
             if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedMapCellIdentifier) as? FeedMapTableViewCell {
                 let locations = vc.feedItems.filter({ $0.coordinate != nil }).map({ CLLocation(latitude: $0.coordinate!.latitude, longitude: $0.coordinate!.longitude) })
                 cell.update(locations: locations)
+                cell.updateQuote(vc.quoteOfDay)
                 return cell
             }
         } else if self == .feed {

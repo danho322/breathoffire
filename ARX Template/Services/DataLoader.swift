@@ -216,6 +216,48 @@ struct SceneModelData {
     let armatureName: String
 }
 
+enum DurationSequenceType {
+    case sequence0, sequence1, sequence2, sequence3, sequence4, sequence5, sequence6
+    
+    func labelText() -> String {
+        switch self {
+        case .sequence0:
+            return "2 min"
+        case .sequence1:
+            return "4 min"
+        case .sequence2:
+            return "7 min"
+        case .sequence3:
+            return "13 min"
+        case .sequence4:
+            return "19 min"
+        case .sequence5:
+            return "25 min"
+        case .sequence6:
+            return "No time limit"
+        }
+    }
+    
+    func sequenceName() -> String {
+        switch self {
+        case .sequence0:
+            return "Breath of Fire 1:1"
+        case .sequence1:
+            return "Breath of Fire 3:1"
+        case .sequence2:
+            return "Breath of Fire 5:2"
+        case .sequence3:
+            return "Breath of Fire 10:3"
+        case .sequence4:
+            return "Breath of Fire 15:4"
+        case .sequence5:
+            return "Breath of Fire 20:5"
+        case .sequence6:
+            return "Breath of Fire Challenge"
+        }
+    }
+}
+
 enum ARObjectPlacementState {
     case
     ScanningEmpty,

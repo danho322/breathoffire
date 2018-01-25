@@ -8,7 +8,7 @@
 
 import Foundation
 
-// Not really used
+// Used for persistence
 struct StatManager {
     static let sharedIntance = StatManager()
     
@@ -29,5 +29,23 @@ struct StatManager {
         UserDefaults.standard.set(Date(), for: .lastPlay)
         UserDefaults.standard.set(playCountToday() + 1, for: .playCountToday)
         UserDefaults.standard.set(playCount() + 1, for: .playCount)
+    }
+    
+    func lastIntention() -> String? {
+        return UserDefaults.standard.string(for: .intention)
+    }
+    
+    func onIntentionPlay(_ intention: String, durationSliderValue: Float, arMode: Bool) {
+        UserDefaults.standard.set(intention, for: .intention)
+        UserDefaults.standard.set(durationSliderValue, for: .durationSliderValue)
+        UserDefaults.standard.set(arMode, for: .arMode)
+    }
+    
+    func lastDurationSliderValue() -> Float {
+        return Float(UserDefaults.standard.double(for: .durationSliderValue))
+    }
+    
+    func lastArMode() -> Bool {
+        return UserDefaults.standard.bool(for: .arMode)
     }
 }
