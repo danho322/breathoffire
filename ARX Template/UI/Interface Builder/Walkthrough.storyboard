@@ -71,7 +71,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walkthru_place" translatesAutoresizingMaskIntoConstraints="NO" id="MxQ-bX-9bL">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walkthru_instructor" translatesAutoresizingMaskIntoConstraints="NO" id="MxQ-bX-9bL">
                                 <rect key="frame" x="-0.5" y="0.0" width="375" height="265"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -121,7 +121,7 @@ Hint: Place your phone on a table or chair and sit in front of it.</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walkthru_instructor" translatesAutoresizingMaskIntoConstraints="NO" id="G9c-Gw-UBY">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walkthru_place" translatesAutoresizingMaskIntoConstraints="NO" id="G9c-Gw-UBY">
                                 <rect key="frame" x="-0.5" y="0.0" width="375" height="265"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -352,6 +352,6 @@ Hint: Place your phone on a table or chair and sit in front of it.</string>
     <resources>
         <image name="walkthru_connect" width="1500" height="1060"/>
         <image name="walkthru_instructor" width="1500" height="1060"/>
-        <image name="walkthru_place" width="1200" height="848"/>
+        <image name="walkthru_place" width="1500" height="1060"/>
     </resources>
 </document>

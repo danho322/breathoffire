@@ -13,7 +13,9 @@ class BreatheStartTableViewCell: UITableViewCell {
 
     @IBOutlet weak var intentionTextField: HoshiTextField!
     @IBOutlet weak var liveSessionContainer: UIView!
+    @IBOutlet weak var liveSessionImageView: UIImageView!
     @IBOutlet weak var soloSessionContainer: UIView!
+    @IBOutlet weak var soloSessionImageView: UIImageView!
     @IBOutlet weak var selectedInfoLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     
@@ -43,6 +45,11 @@ class BreatheStartTableViewCell: UITableViewCell {
         selectedInfoLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         selectedInfoLabel.font = ThemeManager.sharedInstance.defaultFont(12)
         
+        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+        
+        liveSessionImageView.image = liveSessionImageView.image!.withRenderingMode(.alwaysTemplate)
+        soloSessionImageView.image = soloSessionImageView.image!.withRenderingMode(.alwaysTemplate)
         
         startButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
         startButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
@@ -91,17 +98,25 @@ class BreatheStartTableViewCell: UITableViewCell {
     // MARK: - Tap Handlers
     
     @objc internal func onLiveTap(sender: AnyObject) {
-        liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
+        liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
+//        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.focusColor()
         soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
-//        selectedMode = .breathe
+//        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         selectedInfoLabel.text = "Create an open breathing session, where people around the world can join."
+        
+        liveSessionImageView.tintColor = ThemeManager.sharedInstance.focusColor()
+        soloSessionImageView.tintColor = ThemeManager.sharedInstance.foregroundColor()
     }
     
     @objc internal func onSoloTap(sender: AnyObject) {
         liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
-        soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
-//        selectedMode = .jiujitsu
+//        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
+        soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
+//        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.focusColor()
         selectedInfoLabel.text = "Start a focused breathing session on your own."
+        
+        liveSessionImageView.tintColor = ThemeManager.sharedInstance.foregroundColor()
+        soloSessionImageView.tintColor = ThemeManager.sharedInstance.focusColor()
     }
     
     @IBAction func onStartTap(_ sender: Any) {

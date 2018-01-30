@@ -51,7 +51,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="B2N-o0-umu"/>
                                     <constraint firstAttribute="height" constant="90" id="ECi-lF-X80"/>
@@ -68,7 +68,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="ay6-xq-tIC" firstAttribute="centerX" secondItem="EjW-at-SS0" secondAttribute="centerX" id="EDM-6D-GXt"/>
                                     <constraint firstAttribute="height" constant="90" id="HCp-6l-rUi"/>
@@ -203,9 +203,11 @@
                 <outlet property="durationTitleLabel" destination="3KO-hB-zru" id="ULK-hF-j7D"/>
                 <outlet property="intentionTextField" destination="CCW-re-17n" id="jsz-yr-uYa"/>
                 <outlet property="liveSessionContainer" destination="zgz-NX-9Kq" id="Lqp-Uc-cDG"/>
+                <outlet property="liveSessionImageView" destination="2Gf-xK-VlW" id="LBV-Id-MBk"/>
                 <outlet property="selectedInfoLabel" destination="n1d-eJ-ZLy" id="PuK-Fn-gdD"/>
                 <outlet property="settingTitleLabel" destination="nx6-0v-7ee" id="SjY-JV-qhL"/>
                 <outlet property="soloSessionContainer" destination="EjW-at-SS0" id="gXP-Xb-og5"/>
+                <outlet property="soloSessionImageView" destination="ay6-xq-tIC" id="AKD-rk-iBX"/>
                 <outlet property="startButton" destination="6f8-iK-S5p" id="0IA-PS-HK2"/>
             </connections>
             <point key="canvasLocation" x="23.5" y="352"/>

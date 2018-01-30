@@ -20,7 +20,7 @@ class FeedMapTableViewCell: UITableViewCell {
         // Initialization code
         mapView.delegate = self
         
-        motivationLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+        motivationLabel.textColor = ThemeManager.sharedInstance.backgroundColor()
         motivationLabel.font = ThemeManager.sharedInstance.heavyFont(16)
         
         backgroundColor = ThemeManager.sharedInstance.backgroundColor()
@@ -102,6 +102,18 @@ class FeedMapTableViewCell: UITableViewCell {
     
     func updateQuote(_ quote: String?) {
         motivationLabel.text = quote
+//        guard let quote = quote else {
+//            return
+//        }
+//
+//        let strokeTextAttributes: [NSAttributedStringKey : Any] = [
+//            NSAttributedStringKey.font : ThemeManager.sharedInstance.heavyFont(20),
+//            NSAttributedStringKey.foregroundColor: ThemeManager.sharedInstance.focusForegroundColor(),
+//            NSAttributedStringKey.strokeColor : UIColor.black,
+//            NSAttributedStringKey.strokeWidth : -2.0,
+//        ]
+//
+//        motivationLabel.attributedText = NSAttributedString(string: quote, attributes: strokeTextAttributes)
     }
 }
 
