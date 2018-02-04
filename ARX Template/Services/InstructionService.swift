@@ -73,9 +73,9 @@ class InstructionService: NSObject {
                 breathSound.play()
             }
             
-            let myUtterance = AVSpeechUtterance(string: instruction.text)
-            myUtterance.rate = 0.4
-            synth.speak(myUtterance)
+//            let myUtterance = AVSpeechUtterance(string: instruction.text)
+//            myUtterance.rate = 0.4
+//            synth.speak(myUtterance)
         }
     }
 }

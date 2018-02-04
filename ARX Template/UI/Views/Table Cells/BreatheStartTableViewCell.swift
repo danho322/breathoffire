@@ -98,25 +98,25 @@ class BreatheStartTableViewCell: UITableViewCell {
     // MARK: - Tap Handlers
     
     @objc internal func onLiveTap(sender: AnyObject) {
-        liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
+        liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
 //        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.focusColor()
         soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
 //        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         selectedInfoLabel.text = "Create an open breathing session, where people around the world can join."
         
-        liveSessionImageView.tintColor = ThemeManager.sharedInstance.focusColor()
+        liveSessionImageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
         soloSessionImageView.tintColor = ThemeManager.sharedInstance.foregroundColor()
     }
     
     @objc internal func onSoloTap(sender: AnyObject) {
         liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
 //        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
-        soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
+        soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
 //        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.focusColor()
         selectedInfoLabel.text = "Start a focused breathing session on your own."
         
         liveSessionImageView.tintColor = ThemeManager.sharedInstance.foregroundColor()
-        soloSessionImageView.tintColor = ThemeManager.sharedInstance.focusColor()
+        soloSessionImageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
     }
     
     @IBAction func onStartTap(_ sender: Any) {

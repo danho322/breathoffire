@@ -15,6 +15,7 @@ enum InstructorType: Int {
     case dennySimple = 1
     case dennyComplex = 2
     case armTriangle = 3
+    case yogaFlowA = 4
     
     func fileName() -> String {
         switch self {
@@ -26,6 +27,8 @@ enum InstructorType: Int {
             return "character_proper_rig_complex"
         case .armTriangle:
             return "arm_triangle_rig"
+        case .yogaFlowA:
+            return "char1"
         }
     }
     
@@ -33,6 +36,8 @@ enum InstructorType: Int {
         switch self {
         case .armTriangle:
             return "Armtr"
+        case .yogaFlowA:
+            return "Root"
         default:
             return "Armtr"
         }
