@@ -115,7 +115,7 @@ class PackageDetailsViewController: UIViewController {
         
         
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
-        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
         backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
         
         purchaseButton.backgroundColor = ThemeManager.sharedInstance.focusColor()

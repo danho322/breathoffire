@@ -59,14 +59,14 @@ class MenuViewController: UIViewController {
 
         
         let infoIcon = FAKFoundationIcons.infoIcon(withSize: 25)
-        infoIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        infoIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
         
         let settingIcon = FAKMaterialIcons.settingsIcon(withSize: 25)
-        settingIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        settingIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
         
         enterButton.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
         let gameIcon = FAKMaterialIcons.gamepadIcon(withSize: 25)
-        gameIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        gameIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
         enterButton.setAttributedTitle(gameIcon?.attributedString(), for: .normal)
         
         aboutButton.setAttributedTitle(infoIcon?.attributedString(), for: .normal)

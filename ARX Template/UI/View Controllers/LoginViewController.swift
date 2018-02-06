@@ -228,7 +228,7 @@ class LoginViewController: UIViewController, UITableViewDelegate, UITableViewDat
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
-        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
         backButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
         
         viewModel?.errorStringOutput.producer.startWithValues({ [unowned self] _ in

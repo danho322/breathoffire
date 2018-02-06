@@ -80,7 +80,7 @@ class BreatheCompleteView: XibView {
         view.communityButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
         
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
-        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
         view.dismissButton.setAttributedTitle(backIcon?.attributedString(), for: .normal)
         let circleIcon = FAKIonIcons.iosCircleOutlineIcon(withSize: 25)
         circleIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())

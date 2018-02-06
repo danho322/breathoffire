@@ -162,7 +162,9 @@ class MainTabBarController: ESTabBarController {
                         if tabTitle == "Home" {
                             if let navigationController = viewController as? ARXNavigationController,
                                 let homeVC = navigationController.viewControllers.first {
-                                let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
+                                let infoIcon = FAKIonIcons.informationCircledIcon(withSize: 25)
+                                infoIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
+                                let icon = infoIcon?.image(with: CGSize(width: 25, height: 25))
                                 homeVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
                                 navigationController.delegate = self
                             }

@@ -110,7 +110,7 @@ class CharacterAnimationPickerViewController: SpruceAnimatingViewController {
 //        animationView = tableView
         
         let backIcon = FAKMaterialIcons.closeIcon(withSize: 25)
-        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.iconColor())
+        backIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusColor())
         
         self.sceneView.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         DispatchQueue.global().async {

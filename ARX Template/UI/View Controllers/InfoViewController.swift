@@ -107,7 +107,7 @@ class InfoViewController: UIViewController {
         ctaButton.backgroundColor = UIColor.clear
         ctaButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(14)
 //        ctaButton.setTitle("", for: .normal)
-        ctaButton.setTitleColor(ThemeManager.sharedInstance.iconColor(), for: .normal)
+        ctaButton.setTitleColor(ThemeManager.sharedInstance.focusColor(), for: .normal)
         
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         segmentedControl.tintColor = ThemeManager.sharedInstance.focusColor()

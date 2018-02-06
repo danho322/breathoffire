@@ -23,7 +23,7 @@ class RankingTableViewCell: UITableViewCell {
         
         backgroundColor = UIColor.clear
         rankingBGView.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
-        rankingLabel.textColor = ThemeManager.sharedInstance.iconColor()
+        rankingLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
         userNameLabel.textColor = ThemeManager.sharedInstance.textColor()
         locationLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
         rankingDescriptionLabel.textColor = ThemeManager.sharedInstance.textColor()
