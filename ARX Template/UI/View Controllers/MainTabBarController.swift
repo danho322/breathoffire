@@ -171,7 +171,6 @@ class MainTabBarController: ESTabBarController {
                             viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Home", image: flameImage, selectedImage: flameImage)
                         } else if tabTitle == "Exercises" {
                             #if DEBUG
-                                
                             #else
                                 shouldAdd = false
                             #endif
