@@ -145,10 +145,7 @@ class MainTabBarController: ESTabBarController {
                     viewController.title == "Community" {
                     if let communityVC = navigationController.viewControllers.first {
                         communityVC.title = "Community"
-//                        let icon = FAKIonIcons.informationCircledIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
-//                        communityVC.navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(onHelpTap))
                     }
-//                    navigationController.delegate = self
                     let tabIcon = FAKIonIcons.iosPeopleIcon(withSize: 25).image(with: CGSize(width: 25, height: 25))
                     navigationController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Community", image: tabIcon, selectedImage: tabIcon)
                     
@@ -158,6 +155,7 @@ class MainTabBarController: ESTabBarController {
                         viewController.delegate = self
                     }
                     
+                    var shouldAdd = true
                     if let tabTitle = viewController.tabBarItem.title {
                         if tabTitle == "Home" {
                             if let navigationController = viewController as? ARXNavigationController,
@@ -172,6 +170,11 @@ class MainTabBarController: ESTabBarController {
                             let flameImage = UIImage(named: "flame")
                             viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Home", image: flameImage, selectedImage: flameImage)
                         } else if tabTitle == "Exercises" {
+                            #if DEBUG
+                                
+                            #else
+                                shouldAdd = false
+                            #endif
                             let icon = FAKFontAwesome.fireIcon(withSize: 25)
                             let iconImage = icon?.image(with: CGSize(width: 25, height: 25))
                             viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Exercises", image: iconImage, selectedImage: iconImage)
@@ -181,7 +184,9 @@ class MainTabBarController: ESTabBarController {
                             viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Profile", image: userImage, selectedImage: userImage)
                         }
                     }
-                    newViewControllers.append(viewController)
+                    if shouldAdd {
+                        newViewControllers.append(viewController)
+                    }
                 }
             }
         }

@@ -8,6 +8,48 @@
 
 import UIKit
 
+enum SessionType: Int {
+    case open = 0
+    case solo = 1
+    case flowA = 2
+    case count = 3
+    
+    func imageName() -> String {
+        switch self {
+        case .solo:
+            return "sessionClosedIcon"
+        case .open:
+            return "sessionOpenIcon"
+        case .flowA:
+            return "flowAIcon"
+        default:
+            return ""
+        }
+    }
+    
+    func infoString() -> String {
+        switch self {
+        case .solo:
+            return "Start a focused breathing session on your own."
+        case .open:
+            return "Create an open breathing session, where people around the world can join."
+        case .flowA:
+            return "Start a yoga flow to warm up the body."
+        default:
+            return ""
+        }
+    }
+    
+    func sequenceName() -> String? {
+        switch self {
+        case .flowA:
+            return "Yoga Flow A"
+        default:
+            return nil
+        }
+    }
+}
+
 enum HomeViewSectionTypes: Int {
     case motivation = 0
     case breathe = 1
@@ -37,10 +79,17 @@ enum HomeViewSectionTypes: Int {
             }
         } else if self == .breathe {
             if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.BreatheStartTableViewCellIdentifier, for: indexPath) as? BreatheStartTableViewCell {
-                cell.startHandler = { [unowned vc] intention, durationSequenceType, arMode in
-                    let sequence = DataLoader.sharedInstance.sequenceData(sequenceName: durationSequenceType.sequenceName())
+                cell.startHandler = { [unowned vc] sessionType, intention, durationSequenceType, arMode in
+                    var liveSessionInfo: LiveSessionInfo?
+                    var sequence = DataLoader.sharedInstance.sequenceData(sequenceName: durationSequenceType.sequenceName())
+                    if sessionType == .open {
+                        liveSessionInfo = LiveSessionInfo(type: .create, liveSession: nil, intention: intention)
+                    } else if let sequenceName = sessionType.sequenceName() {
+                        sequence = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName)
+                    }
+                    
                     vc.startARTechnique(sequenceContainer: sequence,
-                                          liveSessionInfo: LiveSessionInfo(type: .create, liveSession: nil, intention: intention),
+                                          liveSessionInfo: liveSessionInfo,
                                           isAREnabled: arMode)
                 }
                 return cell

@@ -165,8 +165,8 @@ enum StatType: Int {
     case currentTimeStreak = 2
     case maxDayStreak = 3
     case maxTimeStreak = 4
-    case packages = 5
-    case count = 6
+    case count = 5
+    case packages = 6
     
     func title() -> String {
         switch self {

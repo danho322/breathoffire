@@ -19,12 +19,12 @@ class FeedMotivationTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        motivationLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
-        motivationLabel.font = ThemeManager.sharedInstance.heavyFont(16)
+        motivationLabel.textColor = ThemeManager.sharedInstance.textColor()
+        motivationLabel.font = ThemeManager.sharedInstance.defaultFont(16)
         
         breatheButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
         breatheButton.setTitle("Live Breathe", for: .normal)
-        breatheButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
+        breatheButton.setTitleColor(ThemeManager.sharedInstance.labelTitleColor(), for: .normal)
         breatheButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(16)
     }
 

@@ -8,16 +8,16 @@
 
 import UIKit
 import SwiftySound
+import iCarousel
 
 class BreatheStartTableViewCell: UITableViewCell {
 
+    @IBOutlet var ARModeSettingsTopConstraint: NSLayoutConstraint!
+    @IBOutlet var ARModeDurationTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var intentionTextField: HoshiTextField!
-    @IBOutlet weak var liveSessionContainer: UIView!
-    @IBOutlet weak var liveSessionImageView: UIImageView!
-    @IBOutlet weak var soloSessionContainer: UIView!
-    @IBOutlet weak var soloSessionImageView: UIImageView!
     @IBOutlet weak var selectedInfoLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var sessionTypeCarousel: iCarousel!
     
     @IBOutlet weak var settingTitleLabel: UILabel!
     @IBOutlet weak var durationTitleLabel: UILabel!
@@ -29,7 +29,7 @@ class BreatheStartTableViewCell: UITableViewCell {
     @IBOutlet weak var audioEnabledSwitch: UISwitch!
     
     
-    var startHandler: ((String?, DurationSequenceType, Bool)->Void)?
+    var startHandler: ((SessionType, String?, DurationSequenceType, Bool)->Void)?
     
     internal var selectedDurationSequenceType = DurationSequenceType.sequence6
     
@@ -38,18 +38,13 @@ class BreatheStartTableViewCell: UITableViewCell {
         // Initialization code
         
         intentionTextField.textColor = ThemeManager.sharedInstance.textColor()
-        intentionTextField.font = ThemeManager.sharedInstance.defaultFont(14)
+        intentionTextField.placeholderColor = ThemeManager.sharedInstance.textColor()
+        intentionTextField.font = ThemeManager.sharedInstance.heavyFont(14)
         intentionTextField.text = StatManager.sharedIntance.lastIntention()
         intentionTextField.delegate = self
         
         selectedInfoLabel.textColor = ThemeManager.sharedInstance.focusForegroundColor()
         selectedInfoLabel.font = ThemeManager.sharedInstance.defaultFont(12)
-        
-        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
-        
-        liveSessionImageView.image = liveSessionImageView.image!.withRenderingMode(.alwaysTemplate)
-        soloSessionImageView.image = soloSessionImageView.image!.withRenderingMode(.alwaysTemplate)
         
         startButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
         startButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
@@ -76,16 +71,11 @@ class BreatheStartTableViewCell: UITableViewCell {
         audioEnabledLabel.textColor = ThemeManager.sharedInstance.textColor()
         audioEnabledLabel.font = ThemeManager.sharedInstance.defaultFont(14)
 
-        liveSessionContainer.layer.borderWidth = 5
-        soloSessionContainer.layer.borderWidth = 5
-        
-        let tap0 = UITapGestureRecognizer(target: self, action: #selector(self.onLiveTap))
-        liveSessionContainer.addGestureRecognizer(tap0)
-        
-        let tap1 = UITapGestureRecognizer(target: self, action: #selector(self.onSoloTap))
-        soloSessionContainer.addGestureRecognizer(tap1)
+        sessionTypeCarousel.dataSource = self
+        sessionTypeCarousel.delegate = self
+        sessionTypeCarousel.type = .rotary
      
-        onLiveTap(sender: self)
+        updateUI(carouselIndex: 0)
         audioEnabledSwitch.isOn = Sound.enabled
     }
 
@@ -97,34 +87,35 @@ class BreatheStartTableViewCell: UITableViewCell {
 
     // MARK: - Tap Handlers
     
-    @objc internal func onLiveTap(sender: AnyObject) {
-        liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
-//        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.focusColor()
-        soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
-//        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
-        selectedInfoLabel.text = "Create an open breathing session, where people around the world can join."
-        
-        liveSessionImageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
-        soloSessionImageView.tintColor = ThemeManager.sharedInstance.foregroundColor()
-    }
-    
-    @objc internal func onSoloTap(sender: AnyObject) {
-        liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
-//        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
-        soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
-//        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.focusColor()
-        selectedInfoLabel.text = "Start a focused breathing session on your own."
-        
-        liveSessionImageView.tintColor = ThemeManager.sharedInstance.foregroundColor()
-        soloSessionImageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
-    }
+//    @objc internal func onLiveTap(sender: AnyObject) {
+//        liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
+////        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.focusColor()
+//        soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
+////        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
+//        selectedInfoLabel.text = "Create an open breathing session, where people around the world can join."
+//
+//        liveSessionImageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
+//        soloSessionImageView.tintColor = ThemeManager.sharedInstance.foregroundColor()
+//    }
+//
+//    @objc internal func onSoloTap(sender: AnyObject) {
+//        liveSessionContainer.layer.borderColor = ThemeManager.sharedInstance.foregroundColor().cgColor
+////        liveSessionContainer.backgroundColor = ThemeManager.sharedInstance.foregroundColor()
+//        soloSessionContainer.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
+////        soloSessionContainer.backgroundColor = ThemeManager.sharedInstance.focusColor()
+//        selectedInfoLabel.text = "Start a focused breathing session on your own."
+//
+//        liveSessionImageView.tintColor = ThemeManager.sharedInstance.foregroundColor()
+//        soloSessionImageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
+//    }
     
     @IBAction func onStartTap(_ sender: Any) {
         StatManager.sharedIntance.onIntentionPlay(intentionTextField.text ?? "",
                                                   durationSliderValue: durationSlider.value,
                                                   arMode: arModeSwitch.isOn)
         // TODO: hook up duration and ar mode
-        startHandler?(intentionTextField.text, selectedDurationSequenceType, arModeSwitch.isOn)
+        let sessionType = SessionType(rawValue: sessionTypeCarousel.currentItemIndex) ?? SessionType.solo
+        startHandler?(sessionType, intentionTextField.text, selectedDurationSequenceType, arModeSwitch.isOn)
     }
     
     @IBAction func onDurationSliderChanged(_ sender: Any) {
@@ -165,5 +156,70 @@ extension BreatheStartTableViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension BreatheStartTableViewCell: iCarouselDelegate {
+    
+    func updateUI(carouselIndex: Int) {
+        if let type = SessionType(rawValue: carouselIndex) {
+            selectedInfoLabel.text = type.infoString()
+            let hasSequence: Bool = type.sequenceName() != nil
+            durationSlider.isHidden = hasSequence
+            durationOutputLabel.isHidden = hasSequence
+            durationTitleLabel.isHidden = hasSequence
+            ARModeDurationTopConstraint.isActive = !hasSequence
+            ARModeSettingsTopConstraint.isActive = hasSequence
+        }
+    }
+    func carouselCurrentItemIndexDidChange(_ carousel: iCarousel) {
+        updateUI(carouselIndex: carousel.currentItemIndex)
+    }
+    
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+//        handlePackageTap(packageName: purchasedPackages[index].packageName)
+    }
+}
+
+extension BreatheStartTableViewCell: iCarouselDataSource {
+    func numberOfItems(in carousel: iCarousel) -> Int {
+        return SessionType.count.rawValue
+    }
+    
+    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+        var reusedView: UIView?
+        
+        //reuse view if available, otherwise create a new view
+        if let view = view {
+            reusedView = view
+        } else {
+            
+            reusedView = UIView(frame: CGRect(x: 0, y: 0, width: carousel.frame.size.height, height: carousel.frame.size.height))
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: carousel.frame.size.height, height: carousel.frame.size.height))
+            reusedView?.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
+            reusedView?.layer.borderWidth = 5
+            reusedView?.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
+
+            if let type = SessionType(rawValue: index) {
+                imageView.image = UIImage(named: type.imageName())
+            }
+            imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
+            
+            
+            reusedView?.contentMode = .scaleAspectFill
+            reusedView?.layer.masksToBounds = true
+            
+            reusedView?.addSubview(imageView)
+        }
+        
+        return reusedView!
+    }
+    
+    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
+        if (option == .spacing) {
+            return value * 2.1
+        }
+        return value
     }
 }
