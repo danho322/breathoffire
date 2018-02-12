@@ -361,6 +361,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                         print("\(uploadCount) out of \(uploadTotal)")
                         if uploadCount == uploadTotal {
                             self.executeShareSaveWithLocation(rating: rating, comment: comment, pathArray: pathArray)
+                            
                         }
                     } else {
                         print("an upload error ocurred")
@@ -392,6 +393,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                                               rating: rating,
                                               comment: comment)
                 FirebaseService.sharedInstance.saveBreathFeedItem(feedItem)
+                FirebaseService.sharedInstance.trimExtraFeed()
             })
         }
     }

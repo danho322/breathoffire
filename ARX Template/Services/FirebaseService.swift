@@ -468,6 +468,52 @@ class FirebaseService: NSObject {
         ref.setValue(feedItem.valueDict())
     }
     
+    func trimExtraFeed() {
+        let limit = 49
+        retrieveBreathFeed(allowedUpdates: 0, completionHandler: { breathFeed in
+            if breathFeed.count > limit {
+                let lastTimestamp = breathFeed[limit].timestamp
+                // delete timestamp < last
+                let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
+                ref.observeSingleEvent(of: .value, with: { snapshot in
+                    var items: [BreathFeedItem] = []
+                    if let feedDict = snapshot.value as? NSDictionary {
+                        for (key, feedItemDict) in feedDict {
+                            if let feedItemDict = feedItemDict as? NSDictionary {
+                                let feedItem = BreathFeedItem(key: key as? String, snapshotDict: feedItemDict)
+                                if feedItem.timestamp < lastTimestamp {
+                                    items.append(feedItem)
+                                }
+                            }
+                        }
+                        
+                    }
+                    
+                    for breathItem in items {
+                        for path in breathItem.imagePathArray {
+                            let storage = Storage.storage()
+                            let storageRef = storage.reference()
+                            let imageRef = storageRef.child(path)
+                            imageRef.delete(completion: { error in
+                                if let error = error {
+                                    print("error deleting image: \(error.localizedDescription)")
+                                }
+                            })
+                        }
+                        if let key = breathItem.key {
+                            ref.child(key).setValue(nil)
+                        }
+                        
+                    }
+                    
+                })
+
+            }
+            
+        })
+                
+    }
+    
     func retrieveBreathFeed(allowedUpdates: Int, completionHandler: @escaping (([BreathFeedItem])->Void)) {
         var count = 0
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
@@ -486,7 +532,7 @@ class FirebaseService: NSObject {
                         }
                     }
                     count += 1
-                    if count == allowedUpdates {
+                    if count >= allowedUpdates {
                         if let handle = handle {
                             ref.removeObserver(withHandle: handle)
                         }

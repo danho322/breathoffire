@@ -62,7 +62,6 @@ enum HomeViewSectionTypes: Int {
         } else {
             return 1
         }
-        return 0
     }
     
     func cell(indexPath: IndexPath, vc: HomeViewController) -> UITableViewCell {
@@ -142,6 +141,8 @@ class HomeViewController: UIViewController {
         tableView.register(breatheCellNib, forCellReuseIdentifier: CellIdentifiers.BreatheStartTableViewCellIdentifier)
         let liveSessionCellNib = UINib(nibName: String(describing: LiveSessionTableViewCell.self), bundle: nil)
         tableView.register(liveSessionCellNib , forCellReuseIdentifier: CellIdentifiers.LiveSessionCellIdentifier)
+        
+        FirebaseService.sharedInstance.trimExtraFeed()
     }
     
     override func viewWillAppear(_ animated: Bool) {
