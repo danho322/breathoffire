@@ -39,6 +39,7 @@ class BreatheStartTableViewCell: UITableViewCell {
         
         intentionTextField.textColor = ThemeManager.sharedInstance.textColor()
         intentionTextField.placeholderColor = ThemeManager.sharedInstance.textColor()
+        intentionTextField.borderInactiveColor = ThemeManager.sharedInstance.focusColor()
         intentionTextField.font = ThemeManager.sharedInstance.heavyFont(14)
         intentionTextField.text = StatManager.sharedIntance.lastIntention()
         intentionTextField.delegate = self
@@ -57,7 +58,7 @@ class BreatheStartTableViewCell: UITableViewCell {
         durationTitleLabel.textColor = ThemeManager.sharedInstance.textColor()
         durationTitleLabel.font = ThemeManager.sharedInstance.defaultFont(14)
         
-        durationSlider.tintColor = ThemeManager.sharedInstance.focusColor()
+        durationSlider.tintColor = ThemeManager.sharedInstance.iconColor()
         durationSlider.value = StatManager.sharedIntance.lastDurationSliderValue()
         onDurationSliderChanged(durationSlider)
         
@@ -67,9 +68,13 @@ class BreatheStartTableViewCell: UITableViewCell {
         arModeLabel.textColor = ThemeManager.sharedInstance.textColor()
         arModeLabel.font = ThemeManager.sharedInstance.defaultFont(14)
         arModeSwitch.isOn = StatManager.sharedIntance.lastArMode()
+        arModeSwitch.tintColor = ThemeManager.sharedInstance.iconColor()
+        arModeSwitch.onTintColor = ThemeManager.sharedInstance.iconColor()
         
         audioEnabledLabel.textColor = ThemeManager.sharedInstance.textColor()
         audioEnabledLabel.font = ThemeManager.sharedInstance.defaultFont(14)
+        audioEnabledSwitch.tintColor = ThemeManager.sharedInstance.iconColor()
+        audioEnabledSwitch.onTintColor = ThemeManager.sharedInstance.iconColor()
 
         sessionTypeCarousel.dataSource = self
         sessionTypeCarousel.delegate = self
@@ -198,7 +203,7 @@ extension BreatheStartTableViewCell: iCarouselDataSource {
             let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: carousel.frame.size.height, height: carousel.frame.size.height))
             reusedView?.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
             reusedView?.layer.borderWidth = 5
-            reusedView?.layer.borderColor = ThemeManager.sharedInstance.focusColor().cgColor
+            reusedView?.layer.borderColor = ThemeManager.sharedInstance.iconColor().cgColor
 
             if let type = SessionType(rawValue: index) {
                 imageView.image = UIImage(named: type.imageName())
@@ -218,7 +223,7 @@ extension BreatheStartTableViewCell: iCarouselDataSource {
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if (option == .spacing) {
-            return value * 2.1
+            return value * 1.9
         }
         return value
     }
