@@ -270,9 +270,21 @@ extension VirtualObject: CAAnimationDelegate {
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        func executeIncrement() {
+            delegate?.virtualObjectDidFinishAnimation(self)
+            incrementAnimation()
+        }
         anim.speed = 0
-        delegate?.virtualObjectDidFinishAnimation(self)
-        incrementAnimation()
+        if currentAnimationIndex < animationSequence.count {
+            let currentAnimation = animationSequence[currentAnimationIndex]
+            if currentAnimation.postDelay > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + currentAnimation.postDelay) {
+                    executeIncrement()
+                }
+            } else {
+                executeIncrement()
+            }
+        }
     }
     
     @objc func incrementAnimation() {

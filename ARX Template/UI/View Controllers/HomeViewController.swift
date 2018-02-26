@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import ReactiveCocoa
+import ReactiveSwift
+import Result
 
 enum SessionType: Int {
     case open = 0
@@ -119,6 +122,11 @@ class HomeViewController: UIViewController {
     internal var liveSessions: [LiveSession] = []
     internal var cellHeights = [IndexPath:CGFloat]()
     internal var quoteOfDay: String?
+    internal var disposables = CompositeDisposable()
+    
+    deinit {
+        disposables.dispose()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,6 +151,10 @@ class HomeViewController: UIViewController {
         tableView.register(liveSessionCellNib , forCellReuseIdentifier: CellIdentifiers.LiveSessionCellIdentifier)
         
         FirebaseService.sharedInstance.trimExtraFeed()
+        
+        disposables += NotificationCenter.default.reactive.notifications(forName: Notification.Name.UIKeyboardWillShow).producer.startWithValues({ [weak self] notification in
+            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: HomeViewSectionTypes.breathe.rawValue), at: .top, animated: true)
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -188,7 +200,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         UIApplication.shared.sendAction(#selector(UIApplication.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     

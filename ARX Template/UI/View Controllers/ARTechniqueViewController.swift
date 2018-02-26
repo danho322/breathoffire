@@ -202,14 +202,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         let stb = UIStoryboard(name: "Walkthrough", bundle: nil)
         let walkthrough = stb.instantiateViewController(withIdentifier: "walk") as! BWWalkthroughViewController
         let page_zero = stb.instantiateViewController(withIdentifier: "arwalk0")
-        let page_one = stb.instantiateViewController(withIdentifier: "arwalk1")
-        let page_two = stb.instantiateViewController(withIdentifier: "arwalk2")
         
         // Attach the pages to the master
         walkthrough.delegate = self
         walkthrough.add(viewController:page_zero)
-        walkthrough.add(viewController:page_one)
-        walkthrough.add(viewController:page_two)
         walkthroughVC = walkthrough
         present(walkthrough, animated: true, completion: nil)
     }
@@ -1061,16 +1057,17 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         ambientLightNode.light!.color = UIColor(red: 1, green: 1, blue: 1, alpha: 0.4)  // Set this to what the environment light is
         sceneView.scene.rootNode.addChildNode(ambientLightNode)
         
+        // shadow plane
         let planeGeo = SCNPlane(width: 15, height: 15)
         let planeMaterial = SCNMaterial()
         planeMaterial.diffuse.contents = UIColor.white
         planeMaterial.colorBufferWriteMask = SCNColorMask(rawValue: 0)
         planeGeo.materials = [planeMaterial]
-        
+
         physicsPlane = SCNNode(geometry: planeGeo)
         physicsPlane!.rotation = SCNVector4Make(1, 0, 0, -Float(Double.pi / 2));
         physicsPlane!.position = SCNVector3(target.position.x, target.position.y, target.position.z)
-        
+
         // this should provide collision
         physicsPlane!.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.static,
                                                shape: SCNPhysicsShape(geometry: planeGeo, options: nil))
@@ -1079,7 +1076,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     
     func setVirtualObject(object: VirtualObject, at pos: SCNVector3) {
         print("setVirtualObject \(object) at \(pos)")
-        object.position = pos
+        object.position = SCNVector3Make(pos.x, pos.y, pos.z)
         
         setupShadowLightsIfNeeded(target: object)
 
@@ -1259,6 +1256,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             scheduleScreenshot()
             
             startTechnique()
+            
+            for object in virtualObjects {
+                // CUSTOM DAE TEST: for y offset
+                let yOffset: Float = 0//(0.1 * object.scale.y)
+                object.position = SCNVector3Make(object.position.x, object.position.y + yOffset, object.position.z)
+            }
         }
         updatePlacementUI()
     }
@@ -1691,7 +1694,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if let last = object.animationSequence.last {
             if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
                 SessionManager.sharedInstance.onPlayFinish(breathTimeInterval: breathTime)
-                
                 
                 checkUpsellLogin() { [unowned self] in
                     let frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: Sizes.ScreenHeight)

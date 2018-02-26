@@ -1104,6 +1104,7 @@ struct AnimationSequenceData {
     var speed: Double = 1
     var ukeSpeed: Double = 1
     var repeatCount: Float = 0
+    var postDelay: TimeInterval = 0
     
     init(instructorAnimation: String, ukeAnimation: String? = nil, delay: TimeInterval = 0, speed: Double = 1, repeatCount: Float = 0) {
         self.instructorAnimation = instructorAnimation
@@ -1120,6 +1121,7 @@ struct AnimationSequenceData {
         speed = snapshotDict["speed"] as? Double ?? 1
         ukeSpeed = snapshotDict["ukeSpeed"] as? Double ?? 1
         repeatCount = snapshotDict["repeat"] as? Float ?? 0
+        postDelay = snapshotDict["postDelay"] as? TimeInterval ?? 0
     }
 }
 

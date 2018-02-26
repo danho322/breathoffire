@@ -18,6 +18,8 @@ enum InstructorType: Int {
     case yogaFlowA = 4
     
     func fileName() -> String {
+        // CUSTOM DAE TEST: dae files in Model.xcnassets in bundle
+//        return "keelan_15k"
         switch self {
         case .generic:
             return "JiujitsuModel4"
@@ -77,7 +79,7 @@ class Instructor: VirtualObject {
 
         
         updateRenderOrder()
-        addPhysicsBody(nodeName: "Danny_Prokopo_002")
+        addPhysicsBody(nodeName: self.armatureName)
         
         modelLoaded = true
     }
