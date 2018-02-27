@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>33</string>
+	<string>34</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -33,12 +33,12 @@
 	<string>This application will use the camera for Augmented Reality.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Contribute to the Breath of Fire heatmap.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Use phone microphone to detect audio.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Save photos of your AR experience</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Save photos of your AR experience</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Use phone microphone to detect audio.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
