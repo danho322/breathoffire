@@ -14,7 +14,7 @@ import SDWebImage
 
 struct GifConstants {
     static let FrameDelay: TimeInterval = 0.1
-    static let FrameCount = 20
+    static let FrameCount = 40
     static let GifImageCompressionQuality: CGFloat = 0.2
 }
 

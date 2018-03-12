@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "walkthru_instructor.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "walkthru_instructor.jpg",
       "scale" : "2x"
     },
     {

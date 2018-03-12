@@ -19,7 +19,7 @@ struct InstructionViewConstants {
 }
 
 class InstructionView: UIView {
-    internal var instructionLabels: [UILabel] = []
+    internal var instructionViews: [UIView] = []
     
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
@@ -29,33 +29,42 @@ class InstructionView: UIView {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
         
         let width = frame.size.width - InstructionViewConstants.InsetPadding * 2
-        let newLabel = UILabel(frame: CGRect(x: InstructionViewConstants.InsetPadding, y: frame.size.height, width: width, height: 0))
-        newLabel.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-        newLabel.textColor = UIColor.white
+        let newLabel = UILabel(frame: CGRect(x: 10, y: 10, width: width - 20, height: 0))
+        newLabel.backgroundColor = .clear
+        newLabel.textColor = .white
         newLabel.numberOfLines = 0
         newLabel.lineBreakMode = .byWordWrapping
-        newLabel.layer.cornerRadius = 5
-        newLabel.layer.masksToBounds = true
         newLabel.text = text
-        newLabel.alpha = 0
-        let constrainedSize = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let constrainedSize = CGSize(width: newLabel.frame.size.width, height: CGFloat.greatestFiniteMagnitude)
         let boundingRect = text.boundingRect(with: constrainedSize, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: newLabel.font], context: nil)
-        let toFrame = CGRect(x: InstructionViewConstants.InsetPadding, y: frame.size.height - boundingRect.size.height - InstructionViewConstants.VerticalSpace, width: constrainedSize.width, height: boundingRect.size.height)
-        addSubview(newLabel)
+        newLabel.frame = CGRect(x: newLabel.frame.origin.x, y: newLabel.frame.origin.y, width: newLabel.frame.size.width, height: boundingRect.size.height)
+        let toFrame = CGRect(x: InstructionViewConstants.InsetPadding, y: frame.size.height - boundingRect.size.height - InstructionViewConstants.VerticalSpace, width: boundingRect.size.width, height: boundingRect.size.height)
+        
+        let fromFrame = CGRect(x: InstructionViewConstants.InsetPadding, y: frame.size.height, width: toFrame.size.width + 20, height: 0)
+        let bgFrame = CGRect(x: toFrame.origin.x, y: toFrame.origin.y, width: toFrame.size.width + 20, height: toFrame.size.height + 20)
+        let bgColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        let bgView = UIView(frame: fromFrame)
+        bgView.backgroundColor = bgColor
+        bgView.layer.cornerRadius = 5
+        bgView.layer.masksToBounds = true
+        bgView.alpha = 0
+        bgView.addSubview(newLabel)
+
+        addSubview(bgView)
         
         UIView.animate(withDuration: InstructionViewConstants.AnimationDuration,
                        animations: {
-                        newLabel.frame = toFrame
-                        newLabel.alpha = 1
+                        bgView.frame = bgFrame
+                        bgView.alpha = 1
         },
                        completion: { finished in
         })
         
-        instructionLabels.insert(newLabel, at: 0)
+        instructionViews.insert(bgView, at: 0)
         var delay: TimeInterval = 0
-        var prevLabel: UILabel?
+        var prevLabel: UIView?
         var i = 0
-        for label in instructionLabels {
+        for label in instructionViews {
             if let prevLabel = prevLabel {
                 UIView.animate(withDuration: InstructionViewConstants.AnimationDuration,
                                delay: delay,
@@ -82,16 +91,16 @@ class InstructionView: UIView {
     }
     
     internal func removeLabelAt(index: Int) {
-        if index < instructionLabels.count {
-            let label = instructionLabels[index]
-            self.instructionLabels.remove(at: index)
+        if index < instructionViews.count {
+            let label = instructionViews[index]
+            self.instructionViews.remove(at: index)
             removeLabel(label: label, completion: {
                 
             })
         }
     }
     
-    internal func removeLabel(label: UILabel, completion: @escaping ()->Void) {
+    internal func removeLabel(label: UIView, completion: @escaping ()->Void) {
         UIView.animate(withDuration: InstructionViewConstants.FadeDuration,
                        animations: {
                         label.alpha = 0
@@ -104,14 +113,14 @@ class InstructionView: UIView {
     
     @objc internal func removeLast() {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
-        if instructionLabels.count > 0 {
-            removeLabelAt(index: instructionLabels.count - 1)
+        if instructionViews.count > 0 {
+            removeLabelAt(index: instructionViews.count - 1)
             self.perform(#selector(removeLast), with: nil, afterDelay: InstructionViewConstants.FadeInterval)
         }
     }
     
     func removeAllLabels() {
-        for label in instructionLabels {
+        for label in instructionViews {
             UIView.animate(withDuration: InstructionViewConstants.AnimationDuration,
                            animations: {
                             label.alpha = 0
@@ -120,6 +129,6 @@ class InstructionView: UIView {
                             label.removeFromSuperview()
             })
         }
-        instructionLabels.removeAll()
+        instructionViews.removeAll()
     }
 }

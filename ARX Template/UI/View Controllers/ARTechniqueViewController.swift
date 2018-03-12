@@ -132,7 +132,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             restartPlaneDetection()
         } else {
             let instructorType: InstructorType = sequenceToLoad?.instructorType ?? .generic
-            let characterScene0 = ARXCharacterSceneView(frame: sceneView.frame, cameraPosition: SCNVector3(x: 0, y: 0.3, z: 2), instructorType: instructorType)
+            let characterScene0 = ARXCharacterSceneView(frame: sceneView.frame, characterRotation: SCNVector4Make(1, 0, 0, Float(Double.pi) / 10), cameraPosition: SCNVector3(x: -0.15, y: 0.3, z: 2), instructorType: instructorType)
             view.insertSubview(characterScene0, aboveSubview: sceneView)
             if let model = characterScene0.model {
                 model.delegate = self
@@ -2094,6 +2094,6 @@ extension ARTechniqueViewController: BWWalkthroughViewControllerDelegate {
     
     func walkthroughPageDidChange(_ pageNumber: Int) {
         print("now at \(pageNumber)")
-        walkthroughVC?.closeButton?.isHidden = pageNumber != 2
+        walkthroughVC?.closeButton?.isHidden = pageNumber != 0
     }
 }

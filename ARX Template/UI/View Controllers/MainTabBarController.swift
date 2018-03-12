@@ -196,9 +196,10 @@ class MainTabBarController: ESTabBarController {
             if SessionManager.sharedInstance.shouldShowTutorial(type: .Walkthrough) {
                 self?.displayWalkthrough()
             }
-            
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            [weak self] in
             self?.selectedIndex = 0
-
         }
     }
 
@@ -222,12 +223,14 @@ class MainTabBarController: ESTabBarController {
         let page_zero = stb.instantiateViewController(withIdentifier: "walk0")
         let page_one = stb.instantiateViewController(withIdentifier: "walk1")
         let page_two = stb.instantiateViewController(withIdentifier: "walk2")
+        let page_three = stb.instantiateViewController(withIdentifier: "arwalk0")
         
         // Attach the pages to the master
         walkthrough.delegate = self
         walkthrough.add(viewController:page_zero)
         walkthrough.add(viewController:page_one)
         walkthrough.add(viewController:page_two)
+        walkthrough.add(viewController:page_three)
         walkthroughVC = walkthrough
         present(walkthrough, animated: true, completion: nil)
     }

@@ -15,7 +15,8 @@ enum SessionType: Int {
     case open = 0
     case solo = 1
     case flowA = 2
-    case count = 3
+    case combat = 3
+    case count = 4
     
     func imageName() -> String {
         switch self {
@@ -25,6 +26,8 @@ enum SessionType: Int {
             return "sessionOpenIcon"
         case .flowA:
             return "flowAIcon"
+        case .combat:
+            return "nervous"
         default:
             return ""
         }
@@ -33,11 +36,13 @@ enum SessionType: Int {
     func infoString() -> String {
         switch self {
         case .solo:
-            return "Start a focused breathing session on your own."
+            return "Start a focused breathing session on your own. Let breathing bring you focus, clarity, and energy."
         case .open:
-            return "Create an open breathing session, where people around the world can join."
+            return "Create an open breathing session, where people around the world can join. Set an intention, and utilize the power of focused energy from group intention."
         case .flowA:
-            return "Start a yoga flow to warm up the body."
+            return "Start a yoga flow to warm up the body through breathing and body movements."
+        case .combat:
+            return "Use combat breathing to calm down your nerves. Helps control nervous shaking."
         default:
             return ""
         }

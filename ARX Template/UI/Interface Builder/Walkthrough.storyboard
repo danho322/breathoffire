@@ -55,9 +55,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ul0-6p-fE4">
-                                <rect key="frame" x="50" y="333" width="275" height="63"/>
-                                <string key="text">This app brings your virtual instructor into your world. Now you can bring your yoga and meditation practice into the comfort of your home.</string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ul0-6p-fE4">
+                                <rect key="frame" x="50" y="333" width="275" height="101.5"/>
+                                <string key="text">This app brings your virtual instructor into your world. Now you can bring your yoga and meditation practice into the comfort of your home using augmented reality.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -104,10 +104,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ttz-x1-VgS">
-                                <rect key="frame" x="50" y="333" width="275" height="103"/>
-                                <string key="text">Pick an exercise, place your virtual instructor, and set your phone down facing the instructor at eye level.
-Hint: Place your phone on a table or chair and sit in front of it.</string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ttz-x1-VgS">
+                                <rect key="frame" x="50" y="343" width="275" height="142.5"/>
+                                <string key="text">Pick a breathing mode, place your virtual instructor, and set your phone down facing the instructor at eye level.
+Hint: Place your phone on a table or chair in front of you, and prop up the phone using a cup.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -154,8 +154,9 @@ Hint: Place your phone on a table or chair and sit in front of it.</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start or join other sessions around the world and all focus on manifesting your intentions." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2mC-TJ-EWP">
-                                <rect key="frame" x="50" y="343" width="275" height="61"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2mC-TJ-EWP">
+                                <rect key="frame" x="50" y="343" width="275" height="101.5"/>
+                                <string key="text">Start a focused breathing session or create/join an open session and breath with people all around the world, focusing on manifesting your intentions.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -177,7 +178,7 @@ Hint: Place your phone on a table or chair and sit in front of it.</string>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Rd-1T-G7Y">
-                                <rect key="frame" x="156.5" y="465" width="61" height="30"/>
+                                <rect key="frame" x="156.5" y="505.5" width="61" height="30"/>
                                 <state key="normal" title="Try it out"/>
                                 <connections>
                                     <action selector="onTryTap:" destination="7vi-Nd-0J3" eventType="touchUpInside" id="fpi-pi-0G3"/>
@@ -217,7 +218,7 @@ Hint: Place your phone on a table or chair and sit in front of it.</string>
 
 Place your phone in front of you with the camera facing forward. You should have a clear view of your screen without holding it.
 
-Once you place your Teacher, he will guide you through the exercise.</string>
+Once you place your Teacher, you will be guided through the exercise.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
