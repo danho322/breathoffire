@@ -11,6 +11,7 @@ import SceneKit
 import ARKit
 
 enum InstructorType: Int {
+    case none = -1
     case generic = 0
     case dennySimple = 1
     case dennyComplex = 2
@@ -31,6 +32,8 @@ enum InstructorType: Int {
             return "arm_triangle_rig"
         case .yogaFlowA:
             return "char1"
+        default:
+            return ""
         }
     }
     
@@ -85,7 +88,6 @@ class Instructor: VirtualObject {
     }
     
     override func armatureNode() -> SCNNode? {
-        
         return childNode(withName: armatureName, recursively: true)
     }
     

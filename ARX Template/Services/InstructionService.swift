@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 
 protocol InstructionServiceDelegate {
-    func didUpdateInstruction(instruction: AnimationInstructionData)
+    func didUpdateInstruction(instruction: AnimationInstructionData, index: Int?)
 }
 
 class InstructionService: NSObject {
@@ -67,7 +67,10 @@ class InstructionService: NSObject {
     
     @objc func fireInstruction(instruction: Any) {
         if let instruction = instruction as? AnimationInstructionData {
-            delegate.didUpdateInstruction(instruction: instruction)
+            
+            let index = instructionDataArray.index(where: { $0.timestamp == instruction.timestamp && $0.text == instruction.text })
+            
+            delegate.didUpdateInstruction(instruction: instruction, index: index)
             
             if let soundID = instruction.soundID, let breathSound = BreathSound(rawValue: soundID) {
                 breathSound.play()

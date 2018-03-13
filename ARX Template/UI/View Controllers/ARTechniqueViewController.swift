@@ -83,6 +83,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         if Constants.isSimulator {
             isARModeEnabled = false
         }
+        
+        if sequenceToLoad?.instructorType == .none {
+            isARModeEnabled = false
+        }
 
         view.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
         
@@ -1904,8 +1908,16 @@ extension ARTechniqueViewController: CharacterHUDViewDelegate {
 }
 
 extension ARTechniqueViewController: InstructionServiceDelegate {
-    func didUpdateInstruction(instruction: AnimationInstructionData) {
+    func didUpdateInstruction(instruction: AnimationInstructionData, index: Int?) {
         instructionView.addInstruction(text: instruction.text)
+        
+        if let index = index, virtualObjects.first?.childNodes.count == 0 {
+            let last = instructionService?.instructionDataArray.count ?? -1
+            if index == last - 1 {
+                print("HI")
+                onNextAnimationTap(self)
+            }
+        }
     }
 }
 

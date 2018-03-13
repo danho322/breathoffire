@@ -179,7 +179,7 @@ class BreathTimerView: XibView {
             let sound = BreathSound(rawValue: currentBreatheParameter.soundID)
             sound?.play()
             
-            if currentBreatheParameter.breathTimeUp + currentBreatheParameter.breathTimeDown == 0 {
+            if currentBreatheParameter.breathTimeUp + currentBreatheParameter.pause + currentBreatheParameter.breathTimeDown == 0 {
                 return
             }
             
@@ -200,10 +200,16 @@ class BreathTimerView: XibView {
                             fireView.alpha = 0.1
             },
                            completion: { finished in
-                            self.breatheInView(fireView, duration: currentBreatheParameter.breathTimeDown)
-                            self.perform(#selector(BreathTimerView.doBreathAnimation), with: nil, afterDelay: currentBreatheParameter.breathTimeDown)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + currentBreatheParameter.pause, execute: {
+                                self.doDownBreath(fireView: fireView, currentBreatheParameter: currentBreatheParameter)
+                            })
             })
         }
+    }
+    
+    internal func doDownBreath(fireView: UIView, currentBreatheParameter: BreathProgramParameter) {
+        self.breatheInView(fireView, duration: currentBreatheParameter.breathTimeDown)
+        self.perform(#selector(BreathTimerView.doBreathAnimation), with: nil, afterDelay: currentBreatheParameter.breathTimeDown)
     }
     
     internal func breatheInView(_ view: UIView, duration: TimeInterval) {

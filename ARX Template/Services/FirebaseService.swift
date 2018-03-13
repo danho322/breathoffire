@@ -801,6 +801,10 @@ class FirebaseService: NSObject {
         if instructionRefs[animationName] == nil {
             let instructionDataRef = Database.database().reference().child("instructionData/\(animationName)")
             instructionDataRef.observe(.value, with: { [unowned self] snapshot in
+//                if animationName == "Combat Breath Intro" || animationName == "Breath of Fire - Intro" {
+//                    print("\(snapshot.value)")
+//                }
+                
                 if let instructionDict = snapshot.value as? NSDictionary {
                     var instructionArray: [AnimationInstructionData] = []
                     instructionDict.forEach({ obj in
@@ -1221,12 +1225,14 @@ struct BreathProgramSound {
 class BreathProgramParameter {
     let startTime: Double
     let breathTimeUp: Double
+    let pause: Double
     let breathTimeDown: Double
     let soundID: Int
     
     init(snapshotDict: NSDictionary) {
         startTime = snapshotDict["startTime"] as? Double ?? 0
         breathTimeUp = snapshotDict["breathTimeUp"] as? Double ?? 0
+        pause = snapshotDict["pause"] as? Double ?? 0
         breathTimeDown = snapshotDict["breathTimeDown"] as? Double ?? 0
         soundID = snapshotDict["soundID"] as? Int ?? BreathSound.none.rawValue
     }
@@ -1235,7 +1241,8 @@ class BreathProgramParameter {
 func ==<T: BreathProgramParameter>(lhs: T, rhs: T) -> Bool {
     return lhs.startTime == rhs.startTime &&
         rhs.breathTimeUp == lhs.breathTimeUp &&
-        rhs.breathTimeDown == lhs.breathTimeDown
+        rhs.breathTimeDown == lhs.breathTimeDown &&
+        rhs.pause == lhs.pause
 }
 
 

@@ -52,6 +52,8 @@ enum SessionType: Int {
         switch self {
         case .flowA:
             return "Yoga Flow A"
+        case .combat:
+            return "Combat Breathe"
         default:
             return nil
         }

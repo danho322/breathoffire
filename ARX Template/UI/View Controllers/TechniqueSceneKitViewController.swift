@@ -208,7 +208,7 @@ extension TechniqueSceneKitViewController: CharacterHUDViewDelegate {
 }
 
 extension TechniqueSceneKitViewController: InstructionServiceDelegate {
-    func didUpdateInstruction(instruction: AnimationInstructionData) {
+    func didUpdateInstruction(instruction: AnimationInstructionData, index: Int?) {
         print("instruction: \(instruction.text)")
         instructionView.addInstruction(text: instruction.text)
     }
