@@ -11,7 +11,7 @@ import UIKit
 struct InstructionViewConstants {
     static let AnimationDuration: TimeInterval = 0.3
     static let FadeDuration: TimeInterval = 1
-    static let VerticalSpace: CGFloat = 50
+    static let VerticalSpace: CGFloat = 90
     static let AlphaSubtraction: CGFloat = 0.3
     static let MaxInstructions = 3
     static let InsetPadding: CGFloat = 30

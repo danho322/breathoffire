@@ -183,6 +183,21 @@ struct DataLoader {
         }
     }
     
+    func hasARAnimation(sequenceName: String) -> Bool {
+        if let animationData = sequenceData(sequenceName: sequenceName) {
+            for sequenceData in animationData.sequenceArray {
+                if let animationData = characterAnimation(name: sequenceData.instructorAnimation) {
+                    if !animationData.fileName.hasSuffix(".dae") {
+                        return false
+                    }
+                } else {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
     // Content
     
     func moveOfTheDay() -> AnimationSequenceDataContainer? {

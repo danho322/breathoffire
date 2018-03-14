@@ -1156,9 +1156,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIQ-GD-S9b">
-                                <rect key="frame" x="177.5" y="502" width="20" height="45"/>
+                                <rect key="frame" x="177.5" y="517" width="20" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="iag-Zq-m8w"/>
+                                    <constraint firstAttribute="height" constant="30" id="iag-Zq-m8w"/>
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 <connections>

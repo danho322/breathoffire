@@ -14,6 +14,8 @@ class BreatheStartTableViewCell: UITableViewCell {
 
     @IBOutlet var ARModeSettingsTopConstraint: NSLayoutConstraint!
     @IBOutlet var ARModeDurationTopConstraint: NSLayoutConstraint!
+    @IBOutlet var AudioSettingsTopConstraint: NSLayoutConstraint!
+    @IBOutlet var AudioARTopConstraints: NSLayoutConstraint!
     @IBOutlet weak var intentionTextField: HoshiTextField!
     @IBOutlet weak var selectedInfoLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
@@ -49,7 +51,7 @@ class BreatheStartTableViewCell: UITableViewCell {
         
         startButton.backgroundColor = ThemeManager.sharedInstance.focusColor()
         startButton.setTitleColor(ThemeManager.sharedInstance.focusForegroundColor(), for: .normal)
-        startButton.setTitle("Go", for: .normal)
+        startButton.setTitle("Start", for: .normal)
         startButton.titleLabel?.font = ThemeManager.sharedInstance.heavyFont(16)
         
         settingTitleLabel.textColor = ThemeManager.sharedInstance.labelTitleColor()
@@ -120,7 +122,13 @@ class BreatheStartTableViewCell: UITableViewCell {
                                                   arMode: arModeSwitch.isOn)
         // TODO: hook up duration and ar mode
         let sessionType = SessionType(rawValue: sessionTypeCarousel.currentItemIndex) ?? SessionType.solo
-        startHandler?(sessionType, intentionTextField.text, selectedDurationSequenceType, arModeSwitch.isOn)
+        
+        var isARMode = arModeSwitch.isOn
+        if let sequenceName = sessionType.sequenceName() {
+            isARMode = isARMode && DataLoader.sharedInstance.hasARAnimation(sequenceName: sequenceName)
+        }
+        
+        startHandler?(sessionType, intentionTextField.text, selectedDurationSequenceType, isARMode)
     }
     
     @IBAction func onDurationSliderChanged(_ sender: Any) {
@@ -175,8 +183,17 @@ extension BreatheStartTableViewCell: iCarouselDelegate {
             durationTitleLabel.isHidden = hasSequence
             ARModeDurationTopConstraint.isActive = !hasSequence
             ARModeSettingsTopConstraint.isActive = hasSequence
+            var hasAnimation = true
+            if let sequenceName = type.sequenceName() {
+                hasAnimation = DataLoader.sharedInstance.hasARAnimation(sequenceName: sequenceName)
+                arModeSwitch.isHidden = !hasAnimation
+                arModeLabel.isHidden = !hasAnimation
+            }
+            AudioSettingsTopConstraint.isActive = !hasAnimation
+            AudioARTopConstraints.isActive = hasAnimation
         }
     }
+    
     func carouselCurrentItemIndexDidChange(_ carousel: iCarousel) {
         updateUI(carouselIndex: carousel.currentItemIndex)
     }
