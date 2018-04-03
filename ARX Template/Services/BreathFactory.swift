@@ -62,7 +62,7 @@ enum BreathSound: Int {
         case .spinalFlexKnees:
             return "12_SpinalFlexKnees.m4a"
         case .spinalTwistGyanMudraSeated:
-            return "13_SpinalTwistSyanMudraSeatedPosition.m4a"
+            return "13_SpinalTwistGyanMudraSeatedPosition.m4a"
         case .torsoTwistGyanMudraSeated:
             return "14_TorsoTwistGyanMudraSeated.m4a"
         case .corpsePose:

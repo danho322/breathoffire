@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Walkthrough View Controller-->
         <scene sceneID="eZQ-DT-AKc">
@@ -22,8 +27,11 @@
                                 <rect key="frame" x="168" y="610" width="39" height="37"/>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LjO-64-hTR">
-                                <rect key="frame" x="320" y="617" width="39" height="30"/>
-                                <state key="normal" title="Close"/>
+                                <rect key="frame" x="313" y="611" width="46" height="36"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="Close">
+                                    <color key="titleColor" red="0.36008095741271973" green="0.70122629404067993" blue="0.49416184425354004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="close:" destination="GD8-wi-nrw" eventType="touchUpInside" id="A7q-yx-MWj"/>
                                 </connections>
@@ -178,8 +186,11 @@ Hint: Place your phone on a table or chair in front of you, and prop up the phon
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Rd-1T-G7Y">
-                                <rect key="frame" x="156.5" y="505.5" width="61" height="30"/>
-                                <state key="normal" title="Try it out"/>
+                                <rect key="frame" x="150.5" y="505.5" width="73" height="36"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="Try it out">
+                                    <color key="titleColor" red="0.36008095741271973" green="0.70122629404067993" blue="0.49416184425354004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="onTryTap:" destination="7vi-Nd-0J3" eventType="touchUpInside" id="fpi-pi-0G3"/>
                                 </connections>
@@ -259,9 +270,9 @@ Once you place your Teacher, you will be guided through the exercise.</string>
         </scene>
     </scenes>
     <resources>
-        <image name="walkthru_ar" width="1981" height="1400"/>
-        <image name="walkthru_connect" width="1500" height="1060"/>
-        <image name="walkthru_instructor" width="1500" height="1060"/>
-        <image name="walkthru_place" width="1500" height="1060"/>
+        <image name="walkthru_ar" width="990" height="700"/>
+        <image name="walkthru_connect" width="750" height="530"/>
+        <image name="walkthru_instructor" width="750" height="530"/>
+        <image name="walkthru_place" width="750" height="530"/>
     </resources>
 </document>

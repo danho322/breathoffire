@@ -50,7 +50,9 @@ class InstructionView: UIView {
         bgView.alpha = 0
         bgView.addSubview(newLabel)
 
-        addSubview(bgView)
+        if text != "-" {
+            addSubview(bgView)
+        }
         
         UIView.animate(withDuration: InstructionViewConstants.AnimationDuration,
                        animations: {
