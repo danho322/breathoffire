@@ -217,22 +217,33 @@ extension BreatheStartTableViewCell: iCarouselDataSource {
         } else {
             
             reusedView = UIView(frame: CGRect(x: 0, y: 0, width: carousel.frame.size.height, height: carousel.frame.size.height))
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: carousel.frame.size.height, height: carousel.frame.size.height))
             reusedView?.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
             reusedView?.layer.borderWidth = 5
             reusedView?.layer.borderColor = ThemeManager.sharedInstance.iconColor().cgColor
 
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: carousel.frame.size.height, height: carousel.frame.size.height))
+            reusedView?.addSubview(imageView)
             if let type = SessionType(rawValue: index) {
                 imageView.image = UIImage(named: type.imageName())
+                imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
+                imageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
+                
+                if type.isComingSoon() {
+                    let comingSoon = UILabel(frame: CGRect(x:0, y:0, width: 100, height: 20))
+                    comingSoon.text = "COMING SOON"
+                    comingSoon.font = ThemeManager.sharedInstance.heavyFont(10)
+                    comingSoon.textColor = ThemeManager.sharedInstance.focusForegroundColor()
+                    comingSoon.backgroundColor = ThemeManager.sharedInstance.focusColor()
+                    comingSoon.center = CGPoint(x: carousel.frame.size.height / 2, y: carousel.frame.size.height / 2 + 45)
+                    comingSoon.textAlignment = .center
+                    comingSoon.layer.cornerRadius = 10
+                    comingSoon.layer.masksToBounds = true
+                    reusedView?.addSubview(comingSoon)
+                }
             }
-            imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
-            imageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
-            
             
             reusedView?.contentMode = .scaleAspectFill
             reusedView?.layer.masksToBounds = true
-            
-            reusedView?.addSubview(imageView)
         }
         
         return reusedView!

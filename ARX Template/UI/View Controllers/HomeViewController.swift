@@ -58,6 +58,15 @@ enum SessionType: Int {
             return nil
         }
     }
+    
+    func isComingSoon() -> Bool {
+        switch self {
+        case .flowA:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 enum HomeViewSectionTypes: Int {
@@ -89,17 +98,22 @@ enum HomeViewSectionTypes: Int {
         } else if self == .breathe {
             if let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.BreatheStartTableViewCellIdentifier, for: indexPath) as? BreatheStartTableViewCell {
                 cell.startHandler = { [unowned vc] sessionType, intention, durationSequenceType, arMode in
-                    var liveSessionInfo: LiveSessionInfo?
-                    var sequence = DataLoader.sharedInstance.sequenceData(sequenceName: durationSequenceType.sequenceName())
-                    if sessionType == .open {
-                        liveSessionInfo = LiveSessionInfo(type: .create, liveSession: nil, intention: intention)
-                    } else if let sequenceName = sessionType.sequenceName() {
-                        sequence = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName)
-                    }
                     
-                    vc.startARTechnique(sequenceContainer: sequence,
-                                          liveSessionInfo: liveSessionInfo,
-                                          isAREnabled: arMode)
+                    if sessionType.isComingSoon() {
+                        vc.showComingSoonAlert()
+                    } else {
+                        var liveSessionInfo: LiveSessionInfo?
+                        var sequence = DataLoader.sharedInstance.sequenceData(sequenceName: durationSequenceType.sequenceName())
+                        if sessionType == .open {
+                            liveSessionInfo = LiveSessionInfo(type: .create, liveSession: nil, intention: intention)
+                        } else if let sequenceName = sessionType.sequenceName() {
+                            sequence = DataLoader.sharedInstance.sequenceData(sequenceName: sequenceName)
+                        }
+                        
+                        vc.startARTechnique(sequenceContainer: sequence,
+                                            liveSessionInfo: liveSessionInfo,
+                                            isAREnabled: arMode)
+                    }
                 }
                 return cell
             }
@@ -183,6 +197,23 @@ class HomeViewController: UIViewController {
                 self.liveSessions = liveSessions.filter({ $0.creatorUserId != userId })
             }
         }
+    }
+    
+    func showComingSoonAlert() {
+        let alert = UIAlertController(title: "Coming soon",
+                                      message: "This feature will be available soon. Stay tuned!",
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(
+            UIAlertAction(title: "Ok",
+                          style: UIAlertActionStyle.default,
+                          handler: nil
+            )
+        )
+        if let popoverPresentationController = alert.popoverPresentationController {
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceRect = self.view.bounds
+        }
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Live Session
