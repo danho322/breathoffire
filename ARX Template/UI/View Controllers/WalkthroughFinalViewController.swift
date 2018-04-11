@@ -36,9 +36,7 @@ class WalkthroughFinalViewController: BWWalkthroughPageViewController {
             
             if let presentingVC = self.presentingViewController {
                 self.dismiss(animated: true, completion: {
-                    presentingVC.present(arVC, animated: true, completion: { [unowned presentingVC] in
-                        presentingVC.dismiss(animated: false, completion: nil)
-                    })
+                    presentingVC.present(arVC, animated: true, completion: nil)
                 })
             }
         }

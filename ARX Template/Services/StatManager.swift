@@ -46,6 +46,6 @@ struct StatManager {
     }
     
     func lastArMode() -> Bool {
-        return UserDefaults.standard.bool(for: .arMode)
+        return UserDefaults.standard.bool(for: .arMode, defaultValue: true)
     }
 }

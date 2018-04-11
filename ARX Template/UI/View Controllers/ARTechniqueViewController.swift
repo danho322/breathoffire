@@ -540,6 +540,9 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                 showDebugVisuals = shouldShowDebugVisuals
             }
         } else {
+            exitButton.isHidden = true
+            restartExperienceButton.isHidden = true
+            screenshotButton.isHidden = true
             statusLabel.text = nil
             statusLabel.isHidden = true
             statusImageViewContainer.isHidden = statusLabel.isHidden
@@ -1631,27 +1634,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	}
     
     @IBAction func onExitTap(_ sender: Any) {
-        let alertMessage = UIAlertController(title: NSLocalizedString("Exit Session?", comment: "Action sheet title"),
-                                             message: nil,
-                                             preferredStyle: .actionSheet)
-        
-        
-        alertMessage.addAction(UIAlertAction(title: NSLocalizedString("Exit", comment: "Ok button title"), style: .default, handler: { [unowned self] _ in
-            self.dismiss()
-        }))
-        
-        alertMessage.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { [unowned self] _ in
-            self.hudDidTapPlay()
-        }))
-        
-        alertMessage.popoverPresentationController?.sourceView = endButton
-        alertMessage.popoverPresentationController?.sourceRect = endButton.frame
-        alertMessage.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
-        if let popoverPresentationController = alertMessage.popoverPresentationController {
-            popoverPresentationController.sourceView = self.view
-            popoverPresentationController.sourceRect = self.view.bounds
-        }
-        self.present(alertMessage, animated: true, completion: nil)
+        onEndTap(sender)
     }
     
     @IBAction func onEndTap(_ sender: Any) {

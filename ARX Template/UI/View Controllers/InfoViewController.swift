@@ -210,7 +210,7 @@ extension InfoViewController: BWWalkthroughViewControllerDelegate {
     
     func walkthroughPageDidChange(_ pageNumber: Int) {
         print("now at \(pageNumber)")
-        walkthroughVC?.closeButton?.isHidden = pageNumber != 4
+        walkthroughVC?.closeButton?.isHidden = pageNumber != 3
     }
 }
 

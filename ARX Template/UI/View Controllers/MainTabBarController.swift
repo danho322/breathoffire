@@ -281,7 +281,7 @@ extension MainTabBarController: BWWalkthroughViewControllerDelegate {
     
     func walkthroughPageDidChange(_ pageNumber: Int) {
         print("now at \(pageNumber)")
-        walkthroughVC?.closeButton?.isHidden = pageNumber != 2
+        walkthroughVC?.closeButton?.isHidden = pageNumber != 3
     }
 }
 
