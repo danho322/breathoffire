@@ -11,7 +11,7 @@ import SwiftyStoreKit
 import SwiftySound
 import FirebaseAnalytics
 import FirebaseDatabase
-
+import Armchair
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        Sound.enabled = true    // comment out to save default
         Sound.category = .playback
+        
+        Armchair.appID("1282236696")
+        Armchair.significantEventsUntilPrompt(3)
+        Armchair.daysUntilPrompt(2)
+        Armchair.usesUntilPrompt(4)
         
         SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
             for purchase in purchases {

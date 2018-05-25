@@ -11,3 +11,4 @@ github "ReactiveCocoa/ReactiveCocoa" == 6.0.1
 github "Frugghi/SwiftLCS" == 1.1.1
 github "eggswift/ESTabBarController" == 2.5
 github "1024jp/GzipSwift" == 4.0.0
+github "UrbanApps/Armchair"

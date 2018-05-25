@@ -16,7 +16,14 @@ class LiveSessionManager {
     static let sharedInstance = LiveSessionManager()
     
     func currentSessions(sessionHandler: @escaping ([LiveSession])->Void) {
-        FirebaseService.sharedInstance.getCurrentSessions(sessionHandler: sessionHandler)
+        let completion: ([LiveSession])->Void = { sessions in
+            var sessionsToReturn = sessions
+            if let currentUserId = SessionManager.sharedInstance.currentUserData?.userId {
+                sessionsToReturn = sessionsToReturn.filter({ $0.creatorUserId != currentUserId })
+            }
+            sessionHandler(sessionsToReturn)
+        }
+        FirebaseService.sharedInstance.getCurrentSessions(sessionHandler: completion)
     }
 
     // MARK: - Live Session Creator

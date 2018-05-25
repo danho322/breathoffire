@@ -193,6 +193,7 @@
 		D4EE12E01F61066600A55E9F /* ARXViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE12DF1F61066600A55E9F /* ARXViewModel.swift */; };
 		D4EE12E51F61071B00A55E9F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE12E41F61071B00A55E9F /* LoginViewModel.swift */; };
 		D4EE12E71F6107B100A55E9F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE12E61F6107B100A55E9F /* LoginViewController.swift */; };
+		D4F3CE05208F8147006CFA99 /* Armchair.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F3CE04208F8147006CFA99 /* Armchair.framework */; };
 		D4FA886A1F9AB8F900837DB6 /* FeedMotivationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4FA88691F9AB8F900837DB6 /* FeedMotivationTableViewCell.xib */; };
 		D4FA886C1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FA886B1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift */; };
 		D4FA88851F9B278600837DB6 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = D4A04AFF1F0A08D100BEA822 /* Models.scnassets */; };
@@ -424,6 +425,7 @@
 		D4EE12E41F61071B00A55E9F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D4EE12E61F6107B100A55E9F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D4EE12E81F61A3E800A55E9F /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		D4F3CE04208F8147006CFA99 /* Armchair.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Armchair.framework; path = Carthage/build/ios/Armchair.framework; sourceTree = "<group>"; };
 		D4FA88691F9AB8F900837DB6 /* FeedMotivationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedMotivationTableViewCell.xib; sourceTree = "<group>"; };
 		D4FA886B1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMotivationTableViewCell.swift; sourceTree = "<group>"; };
 		D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerViewController.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				D46F915E1F0EFD5F003B7F8A /* libsqlite3.tbd in Frameworks */,
 				D46F91451F0EFB64003B7F8A /* FirebaseAnalytics.framework in Frameworks */,
 				D46F91461F0EFB64003B7F8A /* FirebaseAuth.framework in Frameworks */,
+				D4F3CE05208F8147006CFA99 /* Armchair.framework in Frameworks */,
 				D46F91471F0EFB64003B7F8A /* FirebaseCore.framework in Frameworks */,
 				D46F91481F0EFB64003B7F8A /* FirebaseCoreDiagnostics.framework in Frameworks */,
 				D46F91491F0EFB64003B7F8A /* FirebaseCrash.framework in Frameworks */,
@@ -662,6 +665,7 @@
 		D48A5F6E1EFC9B5100A46A73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4F3CE04208F8147006CFA99 /* Armchair.framework */,
 				D4589A8320080F3C00C17922 /* CoreMedia.framework */,
 				D4589A8120080F2F00C17922 /* AudioToolbox.framework */,
 				D4D2019D1F6AE7950032F168 /* Gzip.framework */,
@@ -924,7 +928,6 @@
 				D49102F31EFB05CE008A528E /* Sources */,
 				D49102F41EFB05CE008A528E /* Frameworks */,
 				D49102F51EFB05CE008A528E /* Resources */,
-				D48A5F721EFC9BF500A46A73 /* ShellScript */,
 				D45AAC031F250E1F00BE41E0 /* Embed Frameworks */,
 				D4A316AF1F7E03E800FB22AB /* ShellScript */,
 				D4FA88681F9A787B00837DB6 /* Firebase Crash Upload */,
@@ -1039,33 +1042,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D48A5F721EFC9BF500A46A73 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Hero.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FontAwesomeKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Spruce.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyStoreKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftySound.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/HCSStarRatingView.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/iCarousel.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Instructions.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftLCS.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ESTabBarController.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Gzip.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks ";
-		};
 		D4A316AF1F7E03E800FB22AB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1088,6 +1064,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftLCS.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftySound.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyStoreKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Armchair.framework",
 			);
 			outputPaths = (
 			);
@@ -1366,6 +1343,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Frameworks/Firebase",
+					"$(PROJECT_DIR)/Carthage/build/ios",
 				);
 				INFOPLIST_FILE = "ARX Template/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1403,6 +1381,7 @@
 					"$(PROJECT_DIR)/Firebase/**",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Frameworks/Firebase",
+					"$(PROJECT_DIR)/Carthage/build/ios",
 				);
 				INFOPLIST_FILE = "ARX Template/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

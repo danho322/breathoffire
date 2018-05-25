@@ -91,7 +91,7 @@ enum HomeViewSectionTypes: Int {
             }
         } else if self == .liveSessions {
             if let session = vc.liveSessions[safe: indexPath.row],
-                let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.LiveSessionCellIdentifier, for: indexPath) as? LiveSessionTableViewCell{
+                let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.LiveSessionCellIdentifier, for: indexPath) as? LiveSessionTableViewCell {
                 cell.configure(session)
                 return cell
             }

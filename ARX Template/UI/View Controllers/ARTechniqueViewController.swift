@@ -1703,6 +1703,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 imageArray)
                         },
                                                                    dismissHandler: {
+                                                                    self.saveToBreathFeed(rating: nil, comment: nil, screenShotArray:
+                                                                        [])
                                                                     self.dismiss()
                     })
                     breathCompletionView.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)

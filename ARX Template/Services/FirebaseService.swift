@@ -259,7 +259,7 @@ class FirebaseService: NSObject {
     }
     
     func getCurrentSessions(sessionHandler: @escaping ([LiveSession])->Void) {
-        let startTimestamp = Date().timeIntervalSince1970 - LiveSession.PingFrequency
+        let startTimestamp = Date().timeIntervalSince1970 - LiveSession.PingFrequency * 60 // give it a longer lifespan
         let ref = Database.database().reference().child("liveSessions/\(Constants.AppKey)")
         ref.queryOrdered(byChild: LiveSession.PingTimestampKey)
             .queryStarting(atValue: startTimestamp)
@@ -470,7 +470,7 @@ class FirebaseService: NSObject {
     
     func trimExtraFeed() {
         let limit = 49
-        retrieveBreathFeed(allowedUpdates: 0, completionHandler: { breathFeed in
+        retrieveBreathFeed(allowedUpdates: 0, imagesOnly: true, completionHandler: { breathFeed in
             if breathFeed.count > limit {
                 let lastTimestamp = breathFeed[limit].timestamp
                 // delete timestamp < last
@@ -514,12 +514,12 @@ class FirebaseService: NSObject {
                 
     }
     
-    func retrieveBreathFeed(allowedUpdates: Int, completionHandler: @escaping (([BreathFeedItem])->Void)) {
+    func retrieveBreathFeed(allowedUpdates: Int, imagesOnly: Bool, completionHandler: @escaping (([BreathFeedItem])->Void)) {
         var count = 0
         let ref = Database.database().reference().child("feed/\(Constants.AppKey)")
         var handle: UInt?
         handle = ref.queryOrdered(byChild: "timestamp")
-            .queryLimited(toLast: 50)
+//            .queryLimited(toLast: 50)
             .observe(.value, with: { [unowned self] snapshot in
                 var items: [BreathFeedItem] = []
                 if let feedDict = snapshot.value as? NSDictionary {
@@ -538,7 +538,11 @@ class FirebaseService: NSObject {
                         }
                     }
                 }
-                completionHandler(items.sorted(by: { $0.timestamp > $1.timestamp }))
+                var itemsToReturn = items
+                if imagesOnly {
+                    itemsToReturn = items.filter({ $0.imagePathArray.count > 0 })
+                }
+                completionHandler(itemsToReturn.sorted(by: { $0.timestamp > $1.timestamp }))
         })
     }
     

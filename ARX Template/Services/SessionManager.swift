@@ -11,6 +11,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseAnalytics
 import CoreLocation
+import Armchair
 
 // Stores the user specific data
 enum UserAttribute: String {
@@ -132,14 +133,16 @@ class SessionManager {
     
     func onPlayFinish(breathTimeInterval: TimeInterval = 0) {
         var attributeContainers: [IncrementAttributeContainer] = []
-        
         let breathTime = Int(breathTimeInterval)
         if let currentUserData = currentUserData {
             let lastPlay = Date(timeIntervalSince1970: currentUserData.lastStreakTimestamp)
-            if Calendar.current.isDateInYesterday(lastPlay) {
-                attributeContainers.append(IncrementAttributeContainer(attribute: .dayStreakCount, count: 1, defaultValue: 1))
+            let withinDayDistance = Date().timeIntervalSince(lastPlay) < 60 * 60 * 24 * 1
+            let withinStreakDistance = Date().timeIntervalSince(lastPlay) < 60 * 60 * 24 * 2
+            
+            if withinDayDistance {
                 attributeContainers.append(IncrementAttributeContainer(attribute: .timeStreakCount, count: breathTime, defaultValue: 0))
-            } else if Calendar.current.isDateInToday(lastPlay) {
+            } else if withinStreakDistance {
+                attributeContainers.append(IncrementAttributeContainer(attribute: .dayStreakCount, count: 1, defaultValue: 1))
                 attributeContainers.append(IncrementAttributeContainer(attribute: .timeStreakCount, count: breathTime, defaultValue: 0))
             } else if !Calendar.current.isDateInToday(lastPlay) {
                 FirebaseService.sharedInstance.setUserAttribute(userId: currentUserData.userId, attribute: .dayStreakCount, value: 1)
@@ -152,6 +155,8 @@ class SessionManager {
                 self.updateLongestStreaks(userId: currentUser.userId)
             })
         }
+        
+        Armchair.userDidSignificantEvent(true)
     }
     
     func onLogin() {

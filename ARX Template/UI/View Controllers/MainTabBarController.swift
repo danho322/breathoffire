@@ -167,7 +167,7 @@ class MainTabBarController: ESTabBarController {
                                 navigationController.delegate = self
                             }
                             
-                            let flameImage = UIImage(named: "flame")
+                            let flameImage = UIImage(named: "flameIcon")
                             viewController.tabBarItem = ESTabBarItem.init(ExampleBasicContentView(), title: "Home", image: flameImage, selectedImage: flameImage)
                         } else if tabTitle == "Exercises" {
                             #if DEBUG
@@ -197,10 +197,6 @@ class MainTabBarController: ESTabBarController {
                 self?.displayWalkthrough()
             }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            [weak self] in
-            self?.selectedIndex = 0
-        }
     }
 
     override func viewDidLoad() {
@@ -208,6 +204,7 @@ class MainTabBarController: ESTabBarController {
 
         // Do any additional setup after loading the view.
         // note: viewDidLoad is called twice for some reason, not sure if there are two instances of it
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

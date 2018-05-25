@@ -57,7 +57,14 @@ enum FeedViewSectionTypes: Int {
         } else if self == .feed {
             let cell = vc.tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.FeedHorizontalScrollViewIdentifier, for: indexPath)
             if let cell = cell as? FeedHorizontalScrollViewTableViewCell {
-                cell.update(feedItems: vc.feedItems, optionsHandler: { key in
+                var feedItems: [BreathFeedItem] = []
+                for (index, item) in vc.feedItems.enumerated() {
+                    feedItems.append(item)
+                    if index >= 50 {
+                        break
+                    }
+                }
+                cell.update(feedItems: feedItems, optionsHandler: { key in
                     if let item = vc.feedItems.filter({ $0.key == key }).first {
                         vc.displayFeedOptions(feedItem: item, indexPath: indexPath)
                     }},
@@ -182,7 +189,7 @@ class FeedViewController: UIViewController {
             }
         }
         
-        FirebaseService.sharedInstance.retrieveBreathFeed(allowedUpdates: 2) { [unowned self] items in
+        FirebaseService.sharedInstance.retrieveBreathFeed(allowedUpdates: 2, imagesOnly: false) { [unowned self] items in
             self.feedItems = items.filter({ $0.imagePathArray.count > 0 })
             self.tableView.reloadData()
         }
