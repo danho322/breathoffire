@@ -347,7 +347,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     func saveToBreathFeed(rating: Int?, comment: String?, screenShotArray: [UIImage]) {
         var index = 0
         var uploadCount = 0
-        let uploadTotal = screenShot.count
+        let uploadTotal = screenShotArray.count
         var pathDict: [Int: String] = Dictionary<Int, String>()
         if screenShotArray.count > 0 {
             for image in screenShotArray {
@@ -1646,7 +1646,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         
         
         alertMessage.addAction(UIAlertAction(title: NSLocalizedString("End", comment: "Ok button title"), style: .default, handler: { [unowned self] _ in
-            self.finishSequence(object: self.virtualObjects.first!, timeBreathed: breathTime)
+            self.finishSequence(object: self.virtualObjects.first, timeBreathed: breathTime)
         }))
         
         alertMessage.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { [unowned self] _ in
@@ -1669,8 +1669,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         breathTimerService?.stop()
     }
     
-    func finishSequence(object: VirtualObject, timeBreathed: TimeInterval? = nil) {
-        print("finished with sequence \(object.animationSequence)")
+    func finishSequence(object: VirtualObject?, timeBreathed: TimeInterval? = nil) {
         stopTechniqueServices()
         
         var breathTime = breathTimerService?.breathProgram.sessionTime ?? 0
@@ -1678,7 +1677,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             breathTime = timeBreathed
         }
         
-        if let last = object.animationSequence.last {
+        if let last = object?.animationSequence.last {
             if let data = DataLoader.sharedInstance.characterAnimation(name: last.instructorAnimation) {
                 SessionManager.sharedInstance.onPlayFinish(breathTimeInterval: breathTime)
                 
@@ -1736,6 +1735,8 @@ imageArray)
                     breathCompletionView.animateIn()
                 }
             }
+        } else {
+            self.dismiss()
         }
     }
     

@@ -863,8 +863,8 @@ class FirebaseService: NSObject {
                     return
                 }
                 // Metadata contains file metadata such as size, content-type, and download URL.
-                let downloadURL = metadata.downloadURL
-                completion(path)
+                let downloadURL = metadata.name
+                completion(downloadURL)
             }
         } else {
             completion(nil)

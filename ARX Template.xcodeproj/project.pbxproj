@@ -1084,7 +1084,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:1097443524790:ios:3c30c8166b8a29ae\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${SRCROOT}\"/Frameworks/Firebase/upload-sym \"${SRCROOT}/CrashFiles/arx-template-firebase-crashreporting-6x7af-67f6dd7e00.json\"";
+			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\n#GOOGLE_APP_ID=1:1097443524790:ios:3c30c8166b8a29ae\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n#\"${SRCROOT}\"/Frameworks/Firebase/upload-sym \"${SRCROOT}/CrashFiles/arx-template-firebase-crashreporting-6x7af-67f6dd7e00.json\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
