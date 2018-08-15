@@ -13,8 +13,8 @@ import Result
 
 enum SessionType: Int {
     case open = 0
-    case solo = 1
-    case flowA = 2
+    case flowA = 1
+    case solo = 2
     case combat = 3
     case count = 4
     
@@ -61,10 +61,19 @@ enum SessionType: Int {
     
     func isComingSoon() -> Bool {
         switch self {
-        case .flowA:
-            return true
+//        case .flowA:
+//            return true
         default:
             return false
+        }
+    }
+    
+    func badgeString() -> String? {
+        switch self {
+        case .flowA:
+            return "BETA"
+        default:
+            return nil
         }
     }
 }

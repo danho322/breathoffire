@@ -142,7 +142,6 @@
 		D49F662A20114B6400D1E248 /* BreatheStartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F662920114B6400D1E248 /* BreatheStartTableViewCell.swift */; };
 		D49F663820114D5F00D1E248 /* AkiraTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F662C20114D5E00D1E248 /* AkiraTextField.swift */; };
 		D49F663920114D5F00D1E248 /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F662D20114D5E00D1E248 /* HoshiTextField.swift */; };
-		D49F663A20114D5F00D1E248 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D49F662E20114D5E00D1E248 /* Info.plist */; };
 		D49F663B20114D5F00D1E248 /* IsaoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F662F20114D5E00D1E248 /* IsaoTextField.swift */; };
 		D49F663C20114D5F00D1E248 /* JiroTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663020114D5E00D1E248 /* JiroTextField.swift */; };
 		D49F663D20114D5F00D1E248 /* KaedeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F663120114D5E00D1E248 /* KaedeTextField.swift */; };
@@ -1020,7 +1019,6 @@
 				D43988F81F6798A300AE367C /* UserPackagesCollectionCell.xib in Resources */,
 				D4C0CF1E1F250A3300EB252D /* OptionsPackageTableViewCell.xib in Resources */,
 				D42917891FB0338500996BD4 /* quake.plist in Resources */,
-				D49F663A20114D5F00D1E248 /* Info.plist in Resources */,
 				D49418931F23DF7100CA83E2 /* OptionsTechniquesTableViewCell.xib in Resources */,
 				D4ECE16D1F22C7F400E8B788 /* Fire.scnp in Resources */,
 				D4A72D2C1F3ACA0300553086 /* BreathTimerView.xib in Resources */,
@@ -1070,7 +1068,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		D4FA88681F9A787B00837DB6 /* Firebase Crash Upload */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1084,7 +1082,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\n#GOOGLE_APP_ID=1:1097443524790:ios:3c30c8166b8a29ae\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n#\"${SRCROOT}\"/Frameworks/Firebase/upload-sym \"${SRCROOT}/CrashFiles/arx-template-firebase-crashreporting-6x7af-67f6dd7e00.json\"";
+			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\n#GOOGLE_APP_ID=1:1097443524790:ios:3c30c8166b8a29ae\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n#\"${SRCROOT}\"/Frameworks/Firebase/upload-sym \"${SRCROOT}/CrashFiles/arx-template-firebase-crashreporting-6x7af-67f6dd7e00.json\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

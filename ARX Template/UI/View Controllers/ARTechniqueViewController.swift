@@ -1338,7 +1338,12 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         
         let frames = GifConstants.FrameCount
         let interval: TimeInterval = GifConstants.FrameDelay
+        var delayOffset: TimeInterval = 0
         for index in 1...frames {
+            delayOffset = 10 + randSec + TimeInterval(index) * interval
+            DispatchQueue.main.asyncAfter(deadline: .now() + delayOffset, execute: {
+                    self.captureScreenshot()
+            })
             perform(#selector(ARTechniqueViewController.captureScreenshot), with: nil, afterDelay: 10 + randSec + TimeInterval(index) * interval)
         }
     }
@@ -1350,6 +1355,21 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     @objc func captureScreenshot() {
         let image = sceneView.snapshot()
         screenShot.append(image)
+        
+//        var screenshotImage: UIImage?
+//        let layer = sceneView.layer
+//        let scale = UIScreen.main.scale
+//        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
+//        guard let context = UIGraphicsGetCurrentContext() else {
+//            return
+//
+//        }
+//        layer.render(in:context)
+//        screenshotImage = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        if let image = screenshotImage {
+//            screenShot.append(image)
+//        }
     }
 	
     // MARK: - Planes
@@ -1702,8 +1722,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 imageArray)
                         },
                                                                    dismissHandler: {
-                                                                    self.saveToBreathFeed(rating: nil, comment: nil, screenShotArray:
-                                                                        [])
                                                                     self.dismiss()
                     })
                     breathCompletionView.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)

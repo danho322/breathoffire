@@ -215,7 +215,6 @@ extension BreatheStartTableViewCell: iCarouselDataSource {
         if let view = view {
             reusedView = view
         } else {
-            
             reusedView = UIView(frame: CGRect(x: 0, y: 0, width: carousel.frame.size.height, height: carousel.frame.size.height))
             reusedView?.backgroundColor = ThemeManager.sharedInstance.backgroundColor()
             reusedView?.layer.borderWidth = 5
@@ -228,9 +227,9 @@ extension BreatheStartTableViewCell: iCarouselDataSource {
                 imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
                 imageView.tintColor = ThemeManager.sharedInstance.focusForegroundColor()
                 
-                if type.isComingSoon() {
+                if let badgeString = type.badgeString() {
                     let comingSoon = UILabel(frame: CGRect(x:0, y:0, width: 100, height: 20))
-                    comingSoon.text = "COMING SOON"
+                    comingSoon.text = badgeString
                     comingSoon.font = ThemeManager.sharedInstance.heavyFont(10)
                     comingSoon.textColor = ThemeManager.sharedInstance.focusForegroundColor()
                     comingSoon.backgroundColor = ThemeManager.sharedInstance.focusColor()
