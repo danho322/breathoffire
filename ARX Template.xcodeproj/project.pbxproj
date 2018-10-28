@@ -27,17 +27,7 @@
 		D43988FA1F67994500AE367C /* UserPackagesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */; };
 		D43988FC1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */; };
 		D43988FE1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43988FD1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift */; };
-		D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B971F048282002F369F /* FocusSquare.swift */; };
-		D43D4BAA1F048282002F369F /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B981F048282002F369F /* Gesture.swift */; };
-		D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B991F048282002F369F /* HitTestVisualization.swift */; };
-		D43D4BAC1F048282002F369F /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B9A1F048282002F369F /* Plane.swift */; };
-		D43D4BAD1F048282002F369F /* PlaneDebugVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B9B1F048282002F369F /* PlaneDebugVisualization.swift */; };
-		D43D4BAE1F048282002F369F /* ARCameraTrackingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B9C1F048282002F369F /* ARCameraTrackingState.swift */; };
-		D43D4BAF1F048282002F369F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B9D1F048282002F369F /* Utilities.swift */; };
-		D43D4BB51F048282002F369F /* TextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4BA41F048282002F369F /* TextManager.swift */; };
-		D43D4BB61F048282002F369F /* VirtualObjectSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4BA51F048282002F369F /* VirtualObjectSelectionViewController.swift */; };
 		D43D4BB81F0483C1002F369F /* ARTechniqueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48AAFB11F04803F0091B261 /* ARTechniqueViewController.swift */; };
-		D43D4BB91F048476002F369F /* ARSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D4B951F048282002F369F /* ARSettingsViewController.swift */; };
 		D44162C71F8744DE0044A37C /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44162C61F8744DE0044A37C /* RankingTableViewCell.swift */; };
 		D44162C91F87454C0044A37C /* RankingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D44162C81F87454C0044A37C /* RankingTableViewCell.xib */; };
 		D447EFCC1F5835DE0047DEF0 /* gong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D447EFCB1F58340C0047DEF0 /* gong.m4a */; };
@@ -196,6 +186,15 @@
 		D4FA886A1F9AB8F900837DB6 /* FeedMotivationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4FA88691F9AB8F900837DB6 /* FeedMotivationTableViewCell.xib */; };
 		D4FA886C1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FA886B1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift */; };
 		D4FA88851F9B278600837DB6 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = D4A04AFF1F0A08D100BEA822 /* Models.scnassets */; };
+		D4FE050B21842C5D0001DBDF /* ARCameraTrackingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE050121842C5C0001DBDF /* ARCameraTrackingState.swift */; };
+		D4FE050C21842C5D0001DBDF /* PlaneDebugVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE050321842C5C0001DBDF /* PlaneDebugVisualization.swift */; };
+		D4FE050D21842C5D0001DBDF /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE050421842C5C0001DBDF /* Plane.swift */; };
+		D4FE050E21842C5D0001DBDF /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE050521842C5C0001DBDF /* FocusSquare.swift */; };
+		D4FE050F21842C5D0001DBDF /* HitTestVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE050621842C5C0001DBDF /* HitTestVisualization.swift */; };
+		D4FE051021842C5D0001DBDF /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE050721842C5C0001DBDF /* Gesture.swift */; };
+		D4FE051121842C5D0001DBDF /* VirtualObjectSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE050821842C5D0001DBDF /* VirtualObjectSelectionViewController.swift */; };
+		D4FE051221842C5D0001DBDF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE050921842C5D0001DBDF /* Utilities.swift */; };
+		D4FE0514218438310001DBDF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE0513218438300001DBDF /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -237,16 +236,6 @@
 		D43988F91F67994500AE367C /* UserPackagesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPackagesCollectionCell.swift; sourceTree = "<group>"; };
 		D43988FB1F67A17500AE367C /* CharacterAnimationPickerDescriptionTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterAnimationPickerDescriptionTableCell.xib; sourceTree = "<group>"; };
 		D43988FD1F67A28300AE367C /* CharacterAnimationPickerDescriptionTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerDescriptionTableCell.swift; sourceTree = "<group>"; };
-		D43D4B951F048282002F369F /* ARSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARSettingsViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/ARSettingsViewController.swift; sourceTree = "<group>"; };
-		D43D4B971F048282002F369F /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
-		D43D4B981F048282002F369F /* Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
-		D43D4B991F048282002F369F /* HitTestVisualization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitTestVisualization.swift; sourceTree = "<group>"; };
-		D43D4B9A1F048282002F369F /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
-		D43D4B9B1F048282002F369F /* PlaneDebugVisualization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaneDebugVisualization.swift; sourceTree = "<group>"; };
-		D43D4B9C1F048282002F369F /* ARCameraTrackingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARCameraTrackingState.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/ARCameraTrackingState.swift; sourceTree = "<group>"; };
-		D43D4B9D1F048282002F369F /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/Utilities.swift; sourceTree = "<group>"; };
-		D43D4BA41F048282002F369F /* TextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextManager.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/TextManager.swift; sourceTree = "<group>"; };
-		D43D4BA51F048282002F369F /* VirtualObjectSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VirtualObjectSelectionViewController.swift; path = ../../../../SampleProjects/PlacingObjects/ARKitExample/VirtualObjectSelectionViewController.swift; sourceTree = "<group>"; };
 		D44162C61F8744DE0044A37C /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		D44162C81F87454C0044A37C /* RankingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankingTableViewCell.xib; sourceTree = "<group>"; };
 		D447EFCB1F58340C0047DEF0 /* gong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = gong.m4a; sourceTree = "<group>"; };
@@ -427,6 +416,15 @@
 		D4F3CE04208F8147006CFA99 /* Armchair.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Armchair.framework; path = Carthage/build/ios/Armchair.framework; sourceTree = "<group>"; };
 		D4FA88691F9AB8F900837DB6 /* FeedMotivationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedMotivationTableViewCell.xib; sourceTree = "<group>"; };
 		D4FA886B1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMotivationTableViewCell.swift; sourceTree = "<group>"; };
+		D4FE050121842C5C0001DBDF /* ARCameraTrackingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARCameraTrackingState.swift; sourceTree = "<group>"; };
+		D4FE050321842C5C0001DBDF /* PlaneDebugVisualization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaneDebugVisualization.swift; sourceTree = "<group>"; };
+		D4FE050421842C5C0001DBDF /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		D4FE050521842C5C0001DBDF /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
+		D4FE050621842C5C0001DBDF /* HitTestVisualization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitTestVisualization.swift; sourceTree = "<group>"; };
+		D4FE050721842C5C0001DBDF /* Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
+		D4FE050821842C5D0001DBDF /* VirtualObjectSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualObjectSelectionViewController.swift; sourceTree = "<group>"; };
+		D4FE050921842C5D0001DBDF /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		D4FE0513218438300001DBDF /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D4FE5BF11EFB81FA00A7E7B0 /* CharacterAnimationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAnimationPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -588,19 +586,6 @@
 			path = "Collection Cells";
 			sourceTree = "<group>";
 		};
-		D43D4B961F048282002F369F /* UI Elements */ = {
-			isa = PBXGroup;
-			children = (
-				D43D4B971F048282002F369F /* FocusSquare.swift */,
-				D43D4B981F048282002F369F /* Gesture.swift */,
-				D43D4B991F048282002F369F /* HitTestVisualization.swift */,
-				D43D4B9A1F048282002F369F /* Plane.swift */,
-				D43D4B9B1F048282002F369F /* PlaneDebugVisualization.swift */,
-			);
-			name = "UI Elements";
-			path = "../../../../SampleProjects/PlacingObjects/ARKitExample/UI Elements";
-			sourceTree = "<group>";
-		};
 		D44B24E21F182E6300459032 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -721,13 +706,12 @@
 			isa = PBXGroup;
 			children = (
 				D4A04AF01F09FD3C00BEA822 /* Virtual Objects */,
-				D43D4B9C1F048282002F369F /* ARCameraTrackingState.swift */,
-				D43D4B951F048282002F369F /* ARSettingsViewController.swift */,
-				D43D4BA41F048282002F369F /* TextManager.swift */,
-				D43D4B961F048282002F369F /* UI Elements */,
-				D43D4B9D1F048282002F369F /* Utilities.swift */,
-				D43D4BA51F048282002F369F /* VirtualObjectSelectionViewController.swift */,
+				D4FE050121842C5C0001DBDF /* ARCameraTrackingState.swift */,
+				D4FE050921842C5D0001DBDF /* Utilities.swift */,
+				D4FE050221842C5C0001DBDF /* UI Elements */,
+				D4FE050821842C5D0001DBDF /* VirtualObjectSelectionViewController.swift */,
 				D4B06A8F1F2AD87C004DFE50 /* Nodes.swift */,
+				D4FE0513218438300001DBDF /* SettingsViewController.swift */,
 			);
 			path = "ARKit Helper";
 			sourceTree = "<group>";
@@ -917,6 +901,18 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		D4FE050221842C5C0001DBDF /* UI Elements */ = {
+			isa = PBXGroup;
+			children = (
+				D4FE050321842C5C0001DBDF /* PlaneDebugVisualization.swift */,
+				D4FE050421842C5C0001DBDF /* Plane.swift */,
+				D4FE050521842C5C0001DBDF /* FocusSquare.swift */,
+				D4FE050621842C5C0001DBDF /* HitTestVisualization.swift */,
+				D4FE050721842C5C0001DBDF /* Gesture.swift */,
+			);
+			path = "UI Elements";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1097,19 +1093,25 @@
 				D4A04AF91F09FF2100BEA822 /* Candle.swift in Sources */,
 				D49F663820114D5F00D1E248 /* AkiraTextField.swift in Sources */,
 				D4A04AFA1F09FF2100BEA822 /* Chair.swift in Sources */,
+				D4FE050B21842C5D0001DBDF /* ARCameraTrackingState.swift in Sources */,
 				D4CF117F200D3D4600FDA96A /* Superpowered.mm in Sources */,
 				D468FE341F49156B00DEBAE6 /* MainTabBarController.swift in Sources */,
+				D4FE051021842C5D0001DBDF /* Gesture.swift in Sources */,
 				D4589A8020080F0700C17922 /* BMPAnalyzer.swift in Sources */,
+				D4FE050C21842C5D0001DBDF /* PlaneDebugVisualization.swift in Sources */,
 				D4A72D2E1F3ACA2D00553086 /* BreathTimerView.swift in Sources */,
 				D49F663E20114D5F00D1E248 /* MadokaTextField.swift in Sources */,
+				D4FE050E21842C5D0001DBDF /* FocusSquare.swift in Sources */,
 				D4A091C01F2070AE00C03805 /* ARXUtilities.swift in Sources */,
 				D4C0CF201F250A4F00EB252D /* OptionsPackageTableViewCell.swift in Sources */,
 				D45621461F0BEDC40052E218 /* UIViewProtocols.swift in Sources */,
 				D49F664020114D5F00D1E248 /* TextFieldEffects.swift in Sources */,
 				D4A04AFB1F09FF2100BEA822 /* Cup.swift in Sources */,
 				D49F664220114D5F00D1E248 /* YoshikoTextField.swift in Sources */,
+				D4FE051221842C5D0001DBDF /* Utilities.swift in Sources */,
 				D42A6C511F1422AE00A3F2F0 /* TechniqueSearchable.swift in Sources */,
 				D49F663B20114D5F00D1E248 /* IsaoTextField.swift in Sources */,
+				D4FE050F21842C5D0001DBDF /* HitTestVisualization.swift in Sources */,
 				D4A04AFC1F09FF2100BEA822 /* Instructor.swift in Sources */,
 				D454DC631FA68F650021D203 /* FeedHorizontalScrollViewTableViewCell.swift in Sources */,
 				D4EE12E51F61071B00A55E9F /* LoginViewModel.swift in Sources */,
@@ -1124,7 +1126,6 @@
 				D4EE12E71F6107B100A55E9F /* LoginViewController.swift in Sources */,
 				D49F663C20114D5F00D1E248 /* JiroTextField.swift in Sources */,
 				D427C9451F0770D30096C2A1 /* InstructionView.swift in Sources */,
-				D43D4BB91F048476002F369F /* ARSettingsViewController.swift in Sources */,
 				D43D4BB81F0483C1002F369F /* ARTechniqueViewController.swift in Sources */,
 				D43751551F5DB967004B6B9E /* InfoViewController.swift in Sources */,
 				D45520731FB4A518006EC132 /* GradientView.swift in Sources */,
@@ -1144,32 +1145,28 @@
 				D44EE60F1EFCDFA0003A1A3E /* OptionsViewController.swift in Sources */,
 				D49418911F23DF4E00CA83E2 /* OptionsTechniquesTableViewCell.swift in Sources */,
 				D4589A7B20080C8D00C17922 /* AudioDetectionService.swift in Sources */,
-				D43D4BAD1F048282002F369F /* PlaneDebugVisualization.swift in Sources */,
 				D49F664120114D5F00D1E248 /* YokoTextField.swift in Sources */,
-				D43D4BB61F048282002F369F /* VirtualObjectSelectionViewController.swift in Sources */,
 				D48A5F741EFCC48F00A46A73 /* MenuViewController.swift in Sources */,
 				D45621441F0B5B420052E218 /* SpruceAnimatingViewController.swift in Sources */,
-				D43D4BA91F048282002F369F /* FocusSquare.swift in Sources */,
 				D49F663920114D5F00D1E248 /* HoshiTextField.swift in Sources */,
-				D43D4BAA1F048282002F369F /* Gesture.swift in Sources */,
+				D4FE0514218438310001DBDF /* SettingsViewController.swift in Sources */,
 				D45621481F0CB3D00052E218 /* StatManager.swift in Sources */,
 				D4A091C21F2071C900C03805 /* ARXConstants.swift in Sources */,
 				D43988FA1F67994500AE367C /* UserPackagesCollectionCell.swift in Sources */,
 				D4A04AF81F09FD7900BEA822 /* Uke.swift in Sources */,
 				D4FA886C1F9AB9A900837DB6 /* FeedMotivationTableViewCell.swift in Sources */,
+				D4FE051121842C5D0001DBDF /* VirtualObjectSelectionViewController.swift in Sources */,
 				D4B93FCB1F4BDABE00BE092E /* FeedMapTableViewCell.swift in Sources */,
 				D4D731881EFB8B5E00C65E99 /* CharacterAnimationPickerViewController.swift in Sources */,
 				D46A6E181F0FEECF0096446C /* FirebaseService.swift in Sources */,
 				D49102FF1EFB05CE008A528E /* TechniqueARViewController.swift in Sources */,
 				D4B93FC31F4A83F700BE092E /* ARXNavigationController.swift in Sources */,
-				D43D4BAC1F048282002F369F /* Plane.swift in Sources */,
 				D454DC5D1FA5545C0021D203 /* ARXLocationService.swift in Sources */,
 				D422C2AE1F2717A00022B111 /* PackageDetailsDescriptionTableViewCell.swift in Sources */,
 				D4A43C061F1C858400978F69 /* StoreKitService.swift in Sources */,
 				D45352BD1EFDDCA600C09259 /* CharacterHUDView.swift in Sources */,
-				D43D4BAB1F048282002F369F /* HitTestVisualization.swift in Sources */,
-				D43D4BAE1F048282002F369F /* ARCameraTrackingState.swift in Sources */,
 				D454DC5F1FA68D3D0021D203 /* PaginatedScrollView.swift in Sources */,
+				D4FE050D21842C5D0001DBDF /* Plane.swift in Sources */,
 				D42917871FB0334400996BD4 /* CommunityViewController.swift in Sources */,
 				D454DC651FA76AAD0021D203 /* FeedGifView.swift in Sources */,
 				D4C4D5E91F21BD64000CE79D /* ARXCharacterSceneView.swift in Sources */,
@@ -1183,8 +1180,6 @@
 				D462007120047F250049E5CC /* LiveSessionTableViewCell.swift in Sources */,
 				D437DCD31FE0E27600AB5A0C /* LiveSessionManager.swift in Sources */,
 				D45352C51F00CCEC00C09259 /* InstructionService.swift in Sources */,
-				D43D4BB51F048282002F369F /* TextManager.swift in Sources */,
-				D43D4BAF1F048282002F369F /* Utilities.swift in Sources */,
 				D4C201C51FB178C50014DA12 /* AnimationHelper.swift in Sources */,
 				D46F91771F0F04AA003B7F8A /* SessionManager.swift in Sources */,
 				D42917851FB032B400996BD4 /* LFHeatMap.m in Sources */,

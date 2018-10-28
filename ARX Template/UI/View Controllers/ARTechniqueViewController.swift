@@ -19,6 +19,22 @@ struct ARTechniqueConstants {
 
 class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate {
     
+    // MARK: - Hackathon
+    
+    var testViewController: UIViewController?
+    func displayViewController(_ viewController: UIViewController?) {
+        guard let screenCenter = screenCenter else { return }
+        
+        let (worldPos, planeAnchor, hitAPlane) = worldPositionFromScreenPosition(screenCenter, objectPos: focusSquare?.position)
+        if let worldPos = worldPos {
+            let plane = SCNPlane(width: 3.8, height: 5.7)
+            plane.firstMaterial?.diffuse.contents = viewController?.view
+            let planeNode = SCNNode(geometry: plane)
+            planeNode.position = worldPos
+            sceneView.scene.rootNode.addChildNode(planeNode)
+        }
+    }
+    
     @IBOutlet weak var breathTimerView: BreathTimerView!
     @IBOutlet weak var instructionView: InstructionView!
     var walkthroughVC: BWWalkthroughViewController?
@@ -478,6 +494,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        displayViewController(testViewController)
 //        print("handleTap")
 //        let tapPoint = recognizer.location(in: sceneView)
 //        let result = sceneView.hitTest(tapPoint, types: .estimatedHorizontalPlane)
@@ -731,11 +748,9 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	var trackingFallbackTimer: Timer?
 
 	func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        textManager.showTrackingQualityInfo(for: camera.trackingState, autoHide: !self.showDebugVisuals)
-
         switch camera.trackingState {
         case .notAvailable:
-            textManager.escalateFeedback(for: camera.trackingState, inSeconds: 5.0)
+            break
         case .limited:
             if use3DOFTrackingFallback {
                 // After 10 seconds of limited quality, fall back to 3DOF mode.
@@ -744,11 +759,8 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
                     self.trackingFallbackTimer?.invalidate()
                     self.trackingFallbackTimer = nil
                 })
-            } else {
-                textManager.escalateFeedback(for: camera.trackingState, inSeconds: 10.0)
             }
         case .normal:
-            textManager.cancelScheduledMessage(forType: .trackingStateEscalation)
             if use3DOFTrackingFallback && trackingFallbackTimer != nil {
                 trackingFallbackTimer!.invalidate()
                 trackingFallbackTimer = nil
@@ -781,15 +793,11 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	func sessionWasInterrupted(_ session: ARSession) {
         instructionService?.stop()
         cancelScreenshotSelector()
-		textManager.blurBackground()
-		textManager.showAlert(title: "Session Interrupted", message: "The session will be reset after the interruption has ended.")
-	}
+    }
 		
 	func sessionInterruptionEnded(_ session: ARSession) {
-		textManager.unblurBackground()
 		session.run(sessionConfig, options: [.resetTracking, .removeExistingAnchors])
 		restartExperience(self)
-		textManager.showMessage("RESETTING SESSION")
 	}
 	
     // MARK: - Ambient Light Estimation
@@ -831,7 +839,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     @objc fileprivate func delayedTouchesBegan() {
         for object in virtualObjects {
             if currentGesture == nil {
-                currentGesture = Gesture.startGestureFromTouches(currentTouchesSet, self.sceneView, object, currentPlacementState)
+                currentGesture = Gesture.startGestureFromTouches(currentTouchesSet,
+                                                                 self.sceneView,
+                                                                 object)
+//                                                                 currentPlacementState)
             } else {
                 currentGesture = currentGesture!.updateGestureFromTouches(currentTouchesSet, .touchBegan)
             }
@@ -917,12 +928,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             distance = String(format: "%.2f", distanceToUser)
             scale = String(format: "%.2f", object.scale.x)
         }
-		textManager.showDebugMessage("Distance: \(distance) m\nRotation: \(angleDegrees)°\nScale: \(scale)x")
 	}
 	
 	func moveVirtualObjectToPosition(_ pos: SCNVector3?, _ instantly: Bool, _ filterPosition: Bool) {
 		guard let newPosition = pos else {
-			textManager.showMessage("CANNOT PLACE OBJECT\nTry moving left or right.")
 			// Reset the content selection in the menu only if the content has not yet been initially placed.
 			if virtualObjects.count == 0 {
 				resetVirtualObject()
@@ -1170,8 +1179,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             // Drop the object onto the plane if it is near it.
             let verticalAllowance: Float = 0.03
             if objectPos.y > -verticalAllowance && objectPos.y < verticalAllowance {
-                textManager.showDebugMessage("OBJECT MOVED\nSurface detected nearby")
-                
                 SCNTransaction.begin()
                 SCNTransaction.animationDuration = 0.5
                 SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -1243,9 +1250,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		// Abort if we are about to load another object to avoid concurrent modifications of the scene.
 		if isLoadingObject { return }
 		
-		textManager.cancelScheduledMessage(forType: .contentPlacement)
-		
-        if !currentPlacementState.isPlaced() {
+		if !currentPlacementState.isPlaced() {
             var pos = SCNVector3Zero
             if let lastFocusSquarePos = self.focusSquare?.lastPosition {
                 pos = lastFocusSquarePos
@@ -1257,7 +1262,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 
             //DH: do we want to stop plane detection?
 //            stopPlaneDetection()
-            hitTestVisualization?.remove()
+            hitTestVisualization = nil
             showHitTestAPIVisualization = false
             
             scheduleScreenshot()
@@ -1341,10 +1346,9 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         var delayOffset: TimeInterval = 0
         for index in 1...frames {
             delayOffset = 10 + randSec + TimeInterval(index) * interval
-            DispatchQueue.main.asyncAfter(deadline: .now() + delayOffset, execute: {
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).asyncAfter(deadline: .now() + delayOffset, execute: {
                     self.captureScreenshot()
             })
-            perform(#selector(ARTechniqueViewController.captureScreenshot), with: nil, afterDelay: 10 + randSec + TimeInterval(index) * interval)
         }
     }
     
@@ -1379,18 +1383,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
 		print("ADD PLANE")
 		let pos = SCNVector3.positionFromTransform(anchor.transform)
-		textManager.showDebugMessage("NEW SURFACE DETECTED AT \(pos.friendlyString())")
-        
 		let plane = Plane(anchor, showDebugVisuals)
 		
 		planes[anchor] = plane
 		node.addChildNode(plane)
-		
-		textManager.cancelScheduledMessage(forType: .planeEstimation)
-		textManager.showMessage("SURFACE DETECTED")
-		if virtualObjects.count == 0 {
-			textManager.scheduleMessage("TAP + TO PLACE AN OBJECT", inSeconds: 7.5, messageType: .contentPlacement)
-		}
 	}
 		
     func updatePlane(anchor: ARPlaneAnchor) {
@@ -1418,9 +1414,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 			trackingFallbackTimer = nil
 		}
 		
-		textManager.scheduleMessage("FIND A SURFACE TO PLACE AN OBJECT",
-		                            inSeconds: 7.5,
-		                            messageType: .planeEstimation)
 	}
     
     func stopPlaneDetection() {
@@ -1439,8 +1432,7 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		focusSquare = FocusSquare()
 		sceneView.scene.rootNode.addChildNode(focusSquare!)
 		
-		textManager.scheduleMessage("TRY MOVING LEFT OR RIGHT", inSeconds: 5.0, messageType: .focusSquare)
-    }
+	}
 	
 	func updateFocusSquare() {
 		guard let screenCenter = screenCenter else { return }
@@ -1458,7 +1450,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
             if moveObject {
                 moveVirtualObjectToPosition(worldPos, false, hitAPlane)
             }
-			textManager.cancelScheduledMessage(forType: .focusSquare)
 		}
 	}
     
@@ -1549,8 +1540,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 	@IBOutlet weak var messageLabel: UILabel!
 	@IBOutlet weak var debugMessageLabel: UILabel!
 	
-	var textManager: TextManager!
-	
     func setupUIControls() {
         let closeIcon = FAKIonIcons.closeIcon(withSize: 25)
         closeIcon?.addAttribute(NSAttributedStringKey.foregroundColor.rawValue, value: ThemeManager.sharedInstance.focusForegroundColor())
@@ -1564,8 +1553,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
         endButton.layer.cornerRadius = 10
         endButton.layer.masksToBounds = true
         
-        textManager = TextManager(viewController: self)
-		
         // hide debug message view
 		debugMessageLabel.isHidden = true
 		
@@ -1586,9 +1573,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		DispatchQueue.main.async {
 			self.restartExperienceButtonIsEnabled = false
 			
-			self.textManager.cancelAllScheduledMessages()
-			self.textManager.dismissPresentedAlert()
-			self.textManager.showMessage("STARTING A NEW SESSION")
 			self.use3DOFTracking = false
 			
             self.updateSettings()
@@ -1643,7 +1627,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
 		case .restricted, .denied:
 			let title = "Photos access denied"
 			let message = "Please enable Photos access for this application in Settings > Privacy to allow saving screenshots."
-			textManager.showAlert(title: title, message: message)
 		case .notDetermined:
 			PHPhotoLibrary.requestAuthorization({ (authorizationStatus) in
 				if authorizationStatus == .authorized {
@@ -1779,23 +1762,23 @@ imageArray)
 	@IBOutlet weak var settingsButton: UIButton!
 	
 	@IBAction func showSettings(_ button: UIButton) {
-		let storyboard = UIStoryboard(name: "Main", bundle: nil)
-		guard let settingsViewController = storyboard.instantiateViewController(withIdentifier: "ARSettingsViewController") as? ARSettingsViewController else {
-			return
-		}
-		
-		let barButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissSettings))
-		settingsViewController.navigationItem.rightBarButtonItem = barButtonItem
-		settingsViewController.title = "Options"
-		
-		let navigationController = UINavigationController(rootViewController: settingsViewController)
-		navigationController.modalPresentationStyle = .popover
-		navigationController.popoverPresentationController?.delegate = self
-		navigationController.preferredContentSize = CGSize(width: sceneView.bounds.size.width - 20, height: sceneView.bounds.size.height - 50)
-		self.present(navigationController, animated: true, completion: nil)
-		
-		navigationController.popoverPresentationController?.sourceView = settingsButton
-		navigationController.popoverPresentationController?.sourceRect = settingsButton.bounds
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        guard let settingsViewController = storyboard.instantiateViewController(withIdentifier: "ARSettingsViewController") as? ARSettingsViewController else {
+//            return
+//        }
+//        
+//        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissSettings))
+//        settingsViewController.navigationItem.rightBarButtonItem = barButtonItem
+//        settingsViewController.title = "Options"
+//        
+//        let navigationController = UINavigationController(rootViewController: settingsViewController)
+//        navigationController.modalPresentationStyle = .popover
+//        navigationController.popoverPresentationController?.delegate = self
+//        navigationController.preferredContentSize = CGSize(width: sceneView.bounds.size.width - 20, height: sceneView.bounds.size.height - 50)
+//        self.present(navigationController, animated: true, completion: nil)
+//        
+//        navigationController.popoverPresentationController?.sourceView = settingsButton
+//        navigationController.popoverPresentationController?.sourceRect = settingsButton.bounds
 	}
 	
     @objc
@@ -1806,7 +1789,6 @@ imageArray)
 	
 	private func updateSettings() {
 		let defaults = UserDefaults.standard
-		
 		showDebugVisuals = defaults.bool(for: .debugMode)
 		toggleAmbientLightEstimation(defaults.bool(for: .ambientLightEstimation))
 		dragOnInfinitePlanesEnabled = defaults.bool(for: .dragOnInfinitePlanes)
@@ -1822,17 +1804,11 @@ imageArray)
 	
 	func displayErrorMessage(title: String, message: String, allowRestart: Bool = false) {
 		// Blur the background.
-		textManager.blurBackground()
-		
 		if allowRestart {
 			// Present an alert informing about the error that has occurred.
 			let restartAction = UIAlertAction(title: "Reset", style: .default) { _ in
-				self.textManager.unblurBackground()
 				self.restartExperience(self)
 			}
-			textManager.showAlert(title: title, message: message, actions: [restartAction])
-		} else {
-			textManager.showAlert(title: title, message: message, actions: [])
 		}
 	}
 	

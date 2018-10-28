@@ -239,6 +239,8 @@ class HomeViewController: UIViewController {
                 self.navigationController?.popToRootViewController(animated: true)
                 self.tabBarController?.selectedIndex = 0
             }
+            // testing for hackathon
+            arVC.testViewController = self
             self.present(arVC, animated: true, completion: nil)
             
         }

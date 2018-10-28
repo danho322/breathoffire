@@ -17,6 +17,14 @@ enum Setting: String {
     case use3DOFTracking
     case use3DOFFallback
 	case useOcclusionPlanes
+    
+    case playCount
+    case playCountToday
+    case lastPlay
+    case intention
+    case arMode
+    case durationSliderValue
+    case tutorialFlag
 
     // Integer state used in virtual object picker
     case selectedObjectID
@@ -30,7 +38,11 @@ enum Setting: String {
     }
 }
 extension UserDefaults {
-    func bool(for setting: Setting) -> Bool {
+    func bool(for setting: Setting, defaultValue: Bool? = nil) -> Bool {
+        if let defaultValue = defaultValue,
+            object(forKey: setting.rawValue) == nil {
+            return defaultValue
+        }
         return bool(forKey: setting.rawValue)
     }
     func set(_ bool: Bool, for setting: Setting) {
@@ -41,6 +53,30 @@ extension UserDefaults {
     }
     func set(_ integer: Int, for setting: Setting) {
         set(integer, forKey: setting.rawValue)
+    }
+    func double(for setting: Setting) -> Double {
+        return double(forKey: setting.rawValue)
+    }
+    func set(_ double: Double, for setting: Setting) {
+        set(double, forKey: setting.rawValue)
+    }
+    func float(for setting: Setting) -> Float {
+        return float(forKey: setting.rawValue)
+    }
+    func set(_ float: Float, for setting: Setting) {
+        set(float, forKey: setting.rawValue)
+    }
+    func date(for setting: Setting) -> Date? {
+        return object(forKey: setting.rawValue) as? Date
+    }
+    func set(_ date: Date, for setting: Setting) {
+        set(date, forKey: setting.rawValue)
+    }
+    func string(for setting: Setting) -> String? {
+        return object(forKey: setting.rawValue) as? String
+    }
+    func set(_ string: String, for setting: Setting) {
+        set(string, forKey: setting.rawValue)
     }
 }
 
