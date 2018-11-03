@@ -494,7 +494,6 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
-        displayViewController(testViewController)
 //        print("handleTap")
 //        let tapPoint = recognizer.location(in: sceneView)
 //        let result = sceneView.hitTest(tapPoint, types: .estimatedHorizontalPlane)
@@ -1339,16 +1338,14 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     // MARK: - Screenshot
     
     func scheduleScreenshot() {
-        let randSec = TimeInterval(arc4random_uniform(30))
+        let randSec = TimeInterval(arc4random_uniform(10))
         
         let frames = GifConstants.FrameCount
         let interval: TimeInterval = GifConstants.FrameDelay
         var delayOffset: TimeInterval = 0
         for index in 1...frames {
             delayOffset = 10 + randSec + TimeInterval(index) * interval
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).asyncAfter(deadline: .now() + delayOffset, execute: {
-                    self.captureScreenshot()
-            })
+            perform(#selector(ARTechniqueViewController.captureScreenshot), with: nil, afterDelay: delayOffset)
         }
     }
     
@@ -1357,8 +1354,10 @@ class ARTechniqueViewController: UIViewController, ARSCNViewDelegate, UIPopoverP
     }
     
     @objc func captureScreenshot() {
-        let image = sceneView.snapshot()
-        screenShot.append(image)
+        if let thisSceneView = self.sceneView {
+            let snapshot = thisSceneView.snapshot()
+            self.screenShot.append(snapshot)
+        }
         
 //        var screenshotImage: UIImage?
 //        let layer = sceneView.layer

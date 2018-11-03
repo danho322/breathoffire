@@ -328,12 +328,15 @@ class TwoFingerGesture: Gesture {
 			}
 		}
 		
-		allowTranslation = firstTouchWasOnObject
-		allowRotation = firstTouchWasOnObject
-		// Allow scale if the fingers are on the object or if the object is scaled very small, and if the scale gesture has been enabled in Settings.
-		let scaleGestureEnabled = UserDefaults.standard.bool(for: .scaleWithPinchGesture)
-		allowScaling = scaleGestureEnabled && (firstTouchWasOnObject || objectBaseScale < 0.1)
-		
+//        allowTranslation = firstTouchWasOnObject
+//        allowRotation = firstTouchWasOnObject
+//        // Allow scale if the fingers are on the object or if the object is scaled very small, and if the scale gesture has been enabled in Settings.
+//        let scaleGestureEnabled = UserDefaults.standard.bool(for: .scaleWithPinchGesture)
+//        allowScaling = scaleGestureEnabled && (firstTouchWasOnObject || objectBaseScale < 0.1)
+        allowTranslation = false
+        allowRotation = true
+        allowScaling = true
+        
 		let loc2ToLoc1 = loc1 - loc2
 		initialDistanceBetweenFingers = loc2ToLoc1.length()
 		
